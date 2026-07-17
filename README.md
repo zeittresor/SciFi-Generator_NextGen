@@ -13,6 +13,10 @@ Die Story und das detaillierte Auswahlprotokoll bleiben standardmäßig ausgeble
 
 <img width="451" height="903" alt="fhurehjk" src="https://github.com/user-attachments/assets/0dc2f59b-acfa-4bcb-8ba5-84aa76baa632" />
 
+##Example Output (Ton anschalten!):
+
+https://github.com/user-attachments/assets/62fc7715-aa29-4c5a-b296-fa0a8c4d4353
+
 ## Funktionen
 
 - Zufällige Science-Fiction-Geschichten aus externen Satzteil-Dateien
