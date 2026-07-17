@@ -9,6 +9,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from story_engine import APP_VERSION, StoryEngine, StoryEngineError  # noqa: E402
+from audio_mixer import read_pcm_wav  # noqa: E402
 from theme_manager import ThemeManager  # noqa: E402
 
 
@@ -45,10 +46,24 @@ def main() -> int:
         ROOT / "data" / "sounds" / "background.wav",
         ROOT / "tools" / "list_winrt_voices.ps1",
         ROOT / "tools" / "synthesize_winrt.ps1",
+        ROOT / "tools" / "synthesize_sapi.ps1",
+        ROOT / "audio_export.py",
+        ROOT / "audio_mixer.py",
+        ROOT / "data" / "vars" / "jump_missing_story.ini",
+        ROOT / "data" / "vars" / "jump_story_already_used.ini",
     )
     for path in required_files:
         if not path.is_file():
             errors.append(f"Required file is missing: {path.relative_to(ROOT)}")
+
+    try:
+        background_samples, background_rate = read_pcm_wav(
+            ROOT / "data" / "sounds" / "background.wav"
+        )
+        if background_samples.size == 0 or background_rate < 1:
+            errors.append("Background WAV could not be decoded")
+    except Exception as exc:
+        errors.append(f"Background WAV verification failed: {exc}")
 
     try:
         sample = engine.generate(seed=60_001)

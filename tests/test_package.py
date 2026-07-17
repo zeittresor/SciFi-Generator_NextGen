@@ -16,6 +16,7 @@ class PackageTests(unittest.TestCase):
     def test_windows_voice_scripts_exist(self):
         self.assertTrue((ROOT / "tools" / "list_winrt_voices.ps1").is_file())
         self.assertTrue((ROOT / "tools" / "synthesize_winrt.ps1").is_file())
+        self.assertTrue((ROOT / "tools" / "synthesize_sapi.ps1").is_file())
 
     def test_installer_uses_external_verifier_without_delayed_expansion(self):
         installer = (ROOT / "install_windows.bat").read_text(encoding="utf-8")
@@ -57,6 +58,27 @@ class PackageTests(unittest.TestCase):
         self.assertLess(readme.index("## Funktionen"), readme.index("## English summary"))
         english = readme.split("## English summary", 1)[1]
         self.assertLess(len(english.split()), 180)
+
+    def test_jump_lifecycle_and_audio_export_are_present(self):
+        app_source = (ROOT / "app.py").read_text(encoding="utf-8")
+        self.assertIn("self.story_completed", app_source)
+        self.assertIn("jump_missing_story.ini", app_source)
+        self.assertIn("jump_story_already_used.ini", app_source)
+        self.assertIn("def save_story_audio", app_source)
+        self.assertIn("QProgressDialog", app_source)
+        self.assertIn("AudioExportWorker", app_source)
+        self.assertTrue((ROOT / "audio_mixer.py").is_file())
+        self.assertTrue((ROOT / "audio_export.py").is_file())
+        self.assertTrue((ROOT / "data" / "vars" / "jump_missing_story.ini").is_file())
+        self.assertTrue((ROOT / "data" / "vars" / "jump_story_already_used.ini").is_file())
+
+    def test_audio_dependency_and_documentation(self):
+        requirements = (ROOT / "requirements.txt").read_text(encoding="utf-8")
+        self.assertIn("numpy", requirements.lower())
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("## Audioexport", readme)
+        self.assertIn("FFmpeg", readme)
+        self.assertIn("nur einmal vollständig", readme)
 
 
 if __name__ == "__main__":

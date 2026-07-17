@@ -1,5 +1,18 @@
 # Changelog
 
+## 60.4 — 2026-07-18
+
+- Added explicit jump lifecycle tracking: a calculated story can be completed once and then requires a newly calculated sector jump.
+- Added lightly irritated spoken notices for attempts to jump without a calculated story or to replay an already completed jump.
+- Kept interrupted or failed narration retryable so a manual stop does not consume the current story.
+- Added WAV audio export using the selected Windows voice, speech rate, voice volume, bridge ambience setting and background volume.
+- Added asynchronous export progress with phase descriptions and cancellation.
+- Added optional MP3 export when `tools/ffmpeg.exe` or an FFmpeg executable in PATH is available.
+- Added native WinRT and SAPI file-synthesis paths plus automatic matching of Qt voice names to exportable Windows voices.
+- Added a PCM WAV mixer that loops the configured background sound to the narration length and prevents clipping.
+- Added external sentence files for the two spoken invalid-jump states.
+- Updated installer verification, tests and German-first public documentation.
+
 ## 60.3 — 2026-07-17
 
 - Added automatic responsive UI scaling when the application window is enlarged.

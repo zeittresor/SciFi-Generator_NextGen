@@ -5,17 +5,18 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from PySide6.QtCore import Qt, QTimer, QUrl
+from PySide6.QtCore import Qt, QThread, QTimer, QUrl
 from PySide6.QtGui import QAction, QDesktopServices, QFont, QIcon, QResizeEvent
 from PySide6.QtMultimedia import QAudioOutput, QMediaPlayer
 from PySide6.QtTextToSpeech import QTextToSpeech
 from PySide6.QtWidgets import (
     QApplication, QCheckBox, QComboBox, QFileDialog, QFormLayout, QFrame,
     QGroupBox, QHBoxLayout, QLabel, QLayout, QMainWindow, QMessageBox,
-    QProgressBar, QPushButton, QScrollArea, QSizePolicy, QSlider, QSpinBox,
+    QProgressBar, QProgressDialog, QPushButton, QScrollArea, QSizePolicy, QSlider, QSpinBox,
     QTabWidget, QTextEdit, QVBoxLayout, QWidget,
 )
 
+from audio_export import AudioExportRequest, AudioExportWorker, find_ffmpeg
 from story_engine import APP_VERSION, GenerationResult, StoryEngine, StoryEngineError
 from theme_manager import ThemeManager
 from tts_services import SapiTtsService, WinRtTtsService
@@ -68,6 +69,9 @@ class MainWindow(QMainWindow):
         self.playback_active = False
         self.active_backend: str | None = None
         self.speech_state = "ready"
+        self.playback_purpose = "generic"
+        self.story_completed = False
+        self.current_activation_text = ""
         self._pending_background = False
         self._winrt_audio_file: str | None = None
         self.voice_catalogs: dict[str, list[dict]] = {"winrt": [], "sapi": [], "qt": []}
@@ -76,6 +80,9 @@ class MainWindow(QMainWindow):
         self.saved_voice_backend = ""
         self.saved_voice_id = ""
         self.saved_voice_name = ""
+        self._export_thread: QThread | None = None
+        self._export_worker: AudioExportWorker | None = None
+        self._export_dialog: QProgressDialog | None = None
 
         app = QApplication.instance()
         self._base_app_font = QFont(app.font())
@@ -174,7 +181,10 @@ class MainWindow(QMainWindow):
         self.generate_button.setToolTip("Erzeugt eine neue Geschichte, liest sie aber noch nicht vor.")
         self.generate_button.clicked.connect(self.generate_story)
         self.execute_button = QPushButton("Sprung durchführen")
-        self.execute_button.setToolTip("Liest die zuvor berechnete Geschichte mit der ausgewählten Windows-Stimme vor.")
+        self.execute_button.setToolTip(
+            "Liest die zuvor berechnete Geschichte einmal vollständig vor. "
+            "Für eine weitere Erzählung muss danach ein neuer Sektor-Sprung berechnet werden."
+        )
         self.execute_button.clicked.connect(self.execute_jump)
         self.execute_button.setEnabled(False)
         self.toggle_story_button = QPushButton("Story / Log einblenden  >")
@@ -235,6 +245,15 @@ class MainWindow(QMainWindow):
         self.selection_button.setToolTip("Liest den markierten Text vor; ohne Markierung wird die ganze Story gelesen.")
         self.selection_button.clicked.connect(self.speak_selection)
         speech_layout.addWidget(self.selection_button)
+
+        self.audio_export_button = QPushButton("Story als Audiodatei speichern …")
+        self.audio_export_button.setToolTip(
+            "Erzeugt eine WAV-Datei aus der aktuellen Story und mischt auf Wunsch "
+            "die eingestellte Brückenatmosphäre hinzu. MP3 wird angeboten, wenn FFmpeg gefunden wurde."
+        )
+        self.audio_export_button.clicked.connect(self.save_story_audio)
+        self.audio_export_button.setEnabled(False)
+        speech_layout.addWidget(self.audio_export_button)
         right.addWidget(speech_group)
 
         ambience_group = QGroupBox("Brückenatmosphäre")
@@ -355,6 +374,9 @@ class MainWindow(QMainWindow):
         save_action = QAction("Story speichern …", self)
         save_action.triggered.connect(self.save_story)
         file_menu.addAction(save_action)
+        export_audio_action = QAction("Story als Audiodatei speichern …", self)
+        export_audio_action.triggered.connect(self.save_story_audio)
+        file_menu.addAction(export_audio_action)
         open_vars = QAction("Satzteil-Ordner öffnen", self)
         open_vars.triggered.connect(lambda: self._open_path(VARS_DIR))
         file_menu.addAction(open_vars)
@@ -486,7 +508,8 @@ class MainWindow(QMainWindow):
 
         counts = [f"{BACKEND_LABELS[key]}: {len(self.voice_catalogs[key])}" for key in ("winrt", "sapi", "qt")]
         self.voice_count_label.setText(f"{total} Einträge — " + ", ".join(counts))
-        self.execute_button.setEnabled(bool(self.result and total))
+        self.execute_button.setEnabled(bool(total) and not self.playback_active)
+        self.audio_export_button.setEnabled(bool(self.result and total) and self._export_thread is None)
 
     def _voice_changed(self, index: int) -> None:
         if index < 0:
@@ -599,8 +622,11 @@ class MainWindow(QMainWindow):
 
     def generate_story(self) -> None:
         self.stop_playback()
+        self.story_completed = False
+        self.current_activation_text = ""
         self.generate_button.setEnabled(False)
         self.execute_button.setEnabled(False)
+        self.audio_export_button.setEnabled(False)
         self.progress.setValue(0)
         seed = self.seed_spin.value() or None
 
@@ -630,6 +656,7 @@ class MainWindow(QMainWindow):
         self.status_label.setText(f"Sektor-Sprung berechnet. Seed: {self.result.seed}.{hidden_note}")
         self.generate_button.setEnabled(True)
         self.execute_button.setEnabled(self.voice_combo.count() > 0)
+        self.audio_export_button.setEnabled(self.voice_combo.count() > 0)
         if self.write_log.isChecked():
             self._write_generation_log()
 
@@ -645,18 +672,52 @@ class MainWindow(QMainWindow):
         except OSError as exc:
             QMessageBox.warning(self, "Log konnte nicht gespeichert werden", str(exc))
 
-    def execute_jump(self) -> None:
+    def _random_notice(self, filename: str, fallback: str) -> str:
+        try:
+            notice = self.engine.random_line(filename, ignore_blank_lines=True)
+            if self.legacy_umlauts.isChecked():
+                notice = self.engine.legacy_umlaut_conversion(notice)
+            return notice
+        except StoryEngineError:
+            return fallback
+
+    def _current_narration_text(self) -> str:
         story = self.story_edit.toPlainText().strip()
         if not story:
-            self._speak("Ernsthaft? Sie müssen zunächst einen Sektor-Sprung berechnen.", with_background=False)
+            return ""
+        if not self.current_activation_text:
+            try:
+                activation = self.engine.random_line("jumpdrive_activated.ini", ignore_blank_lines=True)
+                if self.legacy_umlauts.isChecked():
+                    activation = self.engine.legacy_umlaut_conversion(activation)
+            except StoryEngineError:
+                activation = "Sprungantrieb aktiviert."
+            self.current_activation_text = activation
+        return f"{self.current_activation_text}\n{story}"
+
+    def execute_jump(self) -> None:
+        if self.playback_active:
             return
-        try:
-            activation = self.engine.random_line("jumpdrive_activated.ini", ignore_blank_lines=True)
-            if self.legacy_umlauts.isChecked():
-                activation = self.engine.legacy_umlaut_conversion(activation)
-        except StoryEngineError:
-            activation = "Sprungantrieb aktiviert."
-        self._speak(f"{activation}\n{story}", with_background=self.background_check.isChecked())
+        if not self.result or not self.story_edit.toPlainText().strip():
+            notice = self._random_notice(
+                "jump_missing_story.ini",
+                "Ernsthaft? Sie müssen zuerst einen Sektor-Sprung berechnen.",
+            )
+            self._speak(notice, with_background=False, purpose="notice")
+            return
+        if self.story_completed:
+            notice = self._random_notice(
+                "jump_story_already_used.ini",
+                "Nein. Diesen Sektor-Sprung haben wir bereits durchgeführt. Berechnen Sie bitte einen neuen.",
+            )
+            self._speak(notice, with_background=False, purpose="notice")
+            return
+        narration = self._current_narration_text()
+        self._speak(
+            narration,
+            with_background=self.background_check.isChecked(),
+            purpose="jump",
+        )
 
     def speak_selection(self) -> None:
         cursor = self.story_edit.textCursor()
@@ -666,17 +727,19 @@ class MainWindow(QMainWindow):
         if not text:
             self.status_label.setText("Kein Text zum Vorlesen vorhanden.")
             return
-        self._speak(text, with_background=False)
+        self._speak(text, with_background=False, purpose="selection")
 
-    def _speak(self, text: str, *, with_background: bool) -> None:
+    def _speak(self, text: str, *, with_background: bool, purpose: str = "generic") -> None:
         entry = self.voice_combo.currentData()
         if not entry:
             QMessageBox.warning(self, "Keine Stimme", "Es wurde keine verwendbare TTS-Stimme gefunden.")
             return
         self.stop_playback()
         self.playback_active = True
+        self.playback_purpose = purpose
         self.active_backend = entry["backend"]
         self._pending_background = with_background
+        self.execute_button.setEnabled(False)
         self.stop_button.setEnabled(True)
         self.pause_button.setText("Pause")
         self.narration_audio.setVolume(1.0)
@@ -743,7 +806,9 @@ class MainWindow(QMainWindow):
 
     def stop_playback(self) -> None:
         was_active = self.playback_active
+        stopped_purpose = self.playback_purpose
         self.playback_active = False
+        self.playback_purpose = "generic"
         self.active_backend = None
         self.speech_state = "ready"
         self.qt_tts.stop()
@@ -759,8 +824,12 @@ class MainWindow(QMainWindow):
         self.pause_button.setEnabled(False)
         self.stop_button.setEnabled(False)
         self.pause_button.setText("Pause")
+        self.execute_button.setEnabled(self.voice_combo.count() > 0)
         if was_active:
-            self.status_label.setText("Wiedergabe gestoppt.")
+            if stopped_purpose == "jump" and not self.story_completed:
+                self.status_label.setText("Wiedergabe gestoppt. Der aktuelle Sprung kann erneut durchgeführt werden.")
+            else:
+                self.status_label.setText("Wiedergabe gestoppt.")
 
     def _qt_tts_state_changed(self, state: QTextToSpeech.State) -> None:
         mapping = {
@@ -796,11 +865,14 @@ class MainWindow(QMainWindow):
         elif state == "error":
             self.background_player.stop()
             self.playback_active = False
+            self.playback_purpose = "generic"
             self.pause_button.setEnabled(False)
             self.stop_button.setEnabled(False)
+            self.execute_button.setEnabled(self.voice_combo.count() > 0)
             self.status_label.setText("Fehler bei der Sprachausgabe. Details stehen in der TTS-Stimmendiagnose.")
 
     def _finish_playback(self) -> None:
+        completed_purpose = self.playback_purpose
         self.background_player.stop()
         self.narration_player.stop()
         self.narration_player.setSource(QUrl())
@@ -809,12 +881,182 @@ class MainWindow(QMainWindow):
             Path(self._winrt_audio_file).unlink(missing_ok=True)
             self._winrt_audio_file = None
         self.playback_active = False
+        self.playback_purpose = "generic"
         self.active_backend = None
         self.speech_state = "ready"
         self.pause_button.setEnabled(False)
         self.stop_button.setEnabled(False)
         self.pause_button.setText("Pause")
-        self.status_label.setText("Sprung abgeschlossen. Story kann erneut abgespielt werden.")
+        self.execute_button.setEnabled(self.voice_combo.count() > 0)
+        if completed_purpose == "jump":
+            self.story_completed = True
+            self.status_label.setText(
+                "Sprung abgeschlossen. Für die nächste Erzählung muss ein neuer Sektor-Sprung berechnet werden."
+            )
+        elif completed_purpose == "notice":
+            self.status_label.setText("Bitte zunächst einen neuen Sektor-Sprung berechnen.")
+        else:
+            self.status_label.setText("Wiedergabe abgeschlossen.")
+
+    def _resolve_audio_export_voice(self, selected: dict) -> dict | None:
+        backend = selected.get("backend", "")
+        if backend in {"winrt", "sapi"}:
+            return selected
+        selected_name = " ".join(str(selected.get("name", "")).lower().split())
+        selected_locale = str(selected.get("locale", "")).lower()
+        for candidate_backend in ("winrt", "sapi"):
+            candidates = self.voice_catalogs.get(candidate_backend, [])
+            for candidate in candidates:
+                candidate_name = " ".join(str(candidate.get("name", "")).lower().split())
+                candidate_locale = str(candidate.get("locale", "")).lower()
+                if candidate_name == selected_name and (
+                    not selected_locale or not candidate_locale or selected_locale == candidate_locale
+                ):
+                    return candidate
+        return None
+
+    def save_story_audio(self) -> None:
+        if self._export_thread is not None:
+            self.status_label.setText("Ein Audioexport läuft bereits.")
+            return
+        if not self.result or not self.story_edit.toPlainText().strip():
+            QMessageBox.information(
+                self,
+                "Keine berechnete Story",
+                "Berechnen Sie zuerst einen Sektor-Sprung, bevor Sie eine Audiodatei erzeugen.",
+            )
+            return
+        selected = self.voice_combo.currentData() or {}
+        export_voice = self._resolve_audio_export_voice(selected)
+        if not export_voice:
+            QMessageBox.warning(
+                self,
+                "Stimme nicht exportierbar",
+                "Die ausgewählte Qt-Stimme kann nicht direkt in eine Audiodatei geschrieben werden "
+                "und es wurde keine gleichnamige Windows-OneCore/WinRT- oder SAPI-Stimme gefunden. "
+                "Bitte wählen Sie für den Export eine Windows-Stimme aus.",
+            )
+            return
+
+        ffmpeg_path = find_ffmpeg(TOOLS_DIR)
+        filters = "WAV-Audiodatei (*.wav)"
+        if ffmpeg_path:
+            filters += ";;MP3-Audiodatei (*.mp3)"
+        default = BASE_DIR / f"scifi_story_{datetime.now().strftime('%Y%m%d_%H%M%S')}.wav"
+        filename, selected_filter = QFileDialog.getSaveFileName(
+            self,
+            "Story als Audiodatei speichern",
+            str(default),
+            filters,
+        )
+        if not filename:
+            return
+        output_path = Path(filename)
+        if not output_path.suffix:
+            output_path = output_path.with_suffix(".mp3" if "MP3" in selected_filter else ".wav")
+        if output_path.suffix.lower() not in {".wav", ".mp3"}:
+            output_path = output_path.with_suffix(".wav")
+
+        narration = self._current_narration_text()
+        background_path = (
+            SOUND_FILE
+            if self.background_check.isChecked() and SOUND_FILE.is_file()
+            else None
+        )
+        request = AudioExportRequest(
+            text=narration,
+            backend=str(export_voice.get("backend", "")),
+            voice_id=str(export_voice.get("id", "")),
+            rate=self.rate_slider.value(),
+            voice_volume=self.voice_volume.value(),
+            background_path=background_path,
+            background_volume=self.background_volume.value(),
+            output_path=output_path,
+            tools_dir=TOOLS_DIR,
+            temp_dir=TEMP_DIR,
+            ffmpeg_path=ffmpeg_path,
+        )
+
+        dialog = QProgressDialog(
+            "Audioexport wird vorbereitet …",
+            "Abbrechen",
+            0,
+            100,
+            self,
+        )
+        dialog.setWindowTitle(f"{APP_NAME} – Audioexport")
+        dialog.setWindowModality(Qt.WindowModality.WindowModal)
+        dialog.setMinimumDuration(0)
+        dialog.setAutoClose(False)
+        dialog.setAutoReset(False)
+        dialog.setValue(0)
+
+        thread = QThread(self)
+        worker = AudioExportWorker(request)
+        worker.moveToThread(thread)
+        thread.started.connect(worker.run)
+        worker.progress.connect(self._audio_export_progress)
+        worker.finished.connect(self._audio_export_finished)
+        worker.error.connect(self._audio_export_failed)
+        worker.canceled.connect(self._audio_export_canceled)
+        worker.finished.connect(thread.quit)
+        worker.error.connect(thread.quit)
+        worker.canceled.connect(thread.quit)
+        worker.finished.connect(worker.deleteLater)
+        worker.error.connect(worker.deleteLater)
+        worker.canceled.connect(worker.deleteLater)
+        thread.finished.connect(self._audio_export_thread_finished)
+        dialog.canceled.connect(self._cancel_audio_export)
+
+        self._export_thread = thread
+        self._export_worker = worker
+        self._export_dialog = dialog
+        self.audio_export_button.setEnabled(False)
+        self.status_label.setText("Story wird als Audiodatei exportiert …")
+        dialog.show()
+        thread.start()
+
+    def _audio_export_progress(self, value: int, message: str) -> None:
+        if self._export_dialog is not None:
+            self._export_dialog.setLabelText(message)
+            self._export_dialog.setValue(value)
+        self.status_label.setText(message)
+
+    def _cancel_audio_export(self) -> None:
+        if self._export_worker is not None:
+            self.status_label.setText("Audioexport wird abgebrochen …")
+            self._export_worker.cancel()
+
+    def _audio_export_finished(self, filename: str) -> None:
+        if self._export_dialog is not None:
+            self._export_dialog.setValue(100)
+            self._export_dialog.close()
+        self.status_label.setText(f"Audiodatei gespeichert: {filename}")
+        QMessageBox.information(
+            self,
+            "Audioexport abgeschlossen",
+            f"Die Story wurde als Audiodatei gespeichert:\n{filename}",
+        )
+
+    def _audio_export_failed(self, message: str) -> None:
+        if self._export_dialog is not None:
+            self._export_dialog.close()
+        self.status_label.setText("Audioexport fehlgeschlagen.")
+        QMessageBox.critical(self, "Audioexport fehlgeschlagen", message)
+
+    def _audio_export_canceled(self) -> None:
+        if self._export_dialog is not None:
+            self._export_dialog.close()
+        self.status_label.setText("Audioexport abgebrochen.")
+
+    def _audio_export_thread_finished(self) -> None:
+        thread = self._export_thread
+        self._export_thread = None
+        self._export_worker = None
+        self._export_dialog = None
+        self.audio_export_button.setEnabled(bool(self.result and self.voice_combo.count()))
+        if thread is not None:
+            thread.deleteLater()
 
     def save_story(self) -> None:
         story = self.story_edit.toPlainText()
@@ -840,7 +1082,10 @@ class MainWindow(QMainWindow):
         self.log_edit.clear()
         self.result = None
         self.current_log = ""
-        self.execute_button.setEnabled(False)
+        self.story_completed = False
+        self.current_activation_text = ""
+        self.execute_button.setEnabled(self.voice_combo.count() > 0)
+        self.audio_export_button.setEnabled(False)
         self.progress.setValue(0)
         self.status_label.setText("Text gelöscht. Bitte nächsten Sektor-Sprung berechnen.")
 
@@ -858,6 +1103,8 @@ class MainWindow(QMainWindow):
             "Die Themes liegen als externe JSON-Dateien im Ordner <code>themes</code> und werden "
             "vor der Verwendung automatisch auf ausreichenden Textkontrast geprüft.<br><br>"
             "Die Stimmensuche kombiniert Windows OneCore/WinRT, native Windows-SAPI und Qt.<br><br>"
+            "Berechnete Stories können samt der aktuell eingestellten Brückenatmosphäre als WAV "
+            "und bei vorhandenem FFmpeg auch als MP3 exportiert werden.<br><br>"
             "Der enthaltene Hintergrundklang ist eine neu erzeugte, generische Sci-Fi-Atmosphäre; "
             "es sind keine Star-Trek-Audiodateien enthalten.<br><br>"
             "Original source / updates: github.com/zeittresor",
@@ -866,6 +1113,19 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event) -> None:
         self._save_settings()
         self.stop_playback()
+        if self._export_worker is not None:
+            self._export_worker.cancel()
+        if self._export_thread is not None:
+            self._export_thread.quit()
+            if not self._export_thread.wait(10_000):
+                QMessageBox.warning(
+                    self,
+                    "Audioexport läuft noch",
+                    "Der laufende Audioexport konnte noch nicht sauber beendet werden. "
+                    "Bitte warten Sie kurz und schließen Sie die Anwendung danach erneut.",
+                )
+                event.ignore()
+                return
         self.sapi_service.shutdown()
         super().closeEvent(event)
 

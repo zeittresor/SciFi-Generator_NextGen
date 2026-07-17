@@ -1,6 +1,6 @@
 # SciFi-Generator
 
-**Aktuelle Version: 60.3**
+**Aktuelle Version: 60.4**
 
 Der **SciFi-Generator** ist eine lokale Windows-Desktopanwendung, die zufällige Science-Fiction-Missionsberichte aus frei bearbeitbaren Textbausteinen zusammensetzt und anschließend mit einer installierten Text-to-Speech-Stimme vorliest.
 
@@ -11,14 +11,16 @@ Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 
 Die Story und das detaillierte Auswahlprotokoll bleiben standardmäßig ausgeblendet und werden nur bei Bedarf über **Story / Log einblenden** geöffnet.
 
-<img width="507" height="927" alt="hjfgdksk" src="https://github.com/user-attachments/assets/c573e80d-865f-47f2-8218-5ab91bdea81e" />
-
 ## Funktionen
 
 - Zufällige Science-Fiction-Geschichten aus externen Satzteil-Dateien
 - Windows-Sprachausgabe über OneCore/WinRT, SAPI und Qt TextToSpeech
 - Auswahl der Stimme sowie Regelung von Geschwindigkeit und Lautstärke
 - Pause, Fortsetzen und Stoppen der Sprachausgabe
+- Schutz vor versehentlicher Wiederholung: Ein berechneter Sprung kann nur einmal vollständig durchgeführt werden
+- Leicht irritierte TTS-Hinweise, wenn noch kein Sprung berechnet wurde oder die vorhandene Story bereits erzählt ist
+- Audioexport als WAV einschließlich der aktuell eingestellten Stimme und Brückenatmosphäre
+- Optionaler MP3-Export, wenn FFmpeg verfügbar ist
 - Optionale, in einer Schleife abgespielte Brückenatmosphäre mit eigener Lautstärke
 - Kompakte Oberfläche mit ausblendbarer Story- und Protokollansicht
 - Scrollbarer Bedienbereich mit vertikaler und bei Bedarf horizontaler Scrollleiste
@@ -44,11 +46,30 @@ Der Installer erzeugt eine lokale `.venv`, installiert die benötigten Pakete un
 2. Geschwindigkeit sowie Sprach- und Hintergrundlautstärke einstellen.
 3. **Sektor-Sprung berechnen** anklicken.
 4. **Sprung durchführen** anklicken, um die Story vorzulesen.
-5. Über **Story / Log einblenden** kann die Geschichte angesehen, bearbeitet oder gespeichert und das Auswahlprotokoll geprüft werden.
+5. Über **Story als Audiodatei speichern …** kann dieselbe Erzählung mit den aktuellen Lautstärkeeinstellungen exportiert werden.
+6. Über **Story / Log einblenden** kann die Geschichte angesehen, bearbeitet oder gespeichert und das Auswahlprotokoll geprüft werden.
+
+Ein berechneter Sektor-Sprung wird nach einer vollständig abgeschlossenen Wiedergabe als durchgeführt markiert. Ein weiterer Klick auf **Sprung durchführen** startet daher nicht dieselbe Story erneut, sondern lässt die ausgewählte Stimme leicht irritiert darauf hinweisen, dass zuerst ein neuer Sprung berechnet werden muss. Wird die Wiedergabe manuell gestoppt oder schlägt sie fehl, darf der aktuelle Sprung erneut gestartet werden.
 
 Der Bedienbereich wird nicht auf eine zu geringe Fensterhöhe zusammengestaucht. Reicht der verfügbare Platz nicht aus, erscheinen automatisch vertikale beziehungsweise horizontale Scrollleisten. Das gilt insbesondere für kleinere Displays, hohe Windows-Skalierungswerte und umfangreiche Stimmennamen.
 
 Wird das Fenster vergrößert, skaliert die Oberfläche automatisch mit: Schrift, Schaltflächen, Eingabefelder, Regler, Abstände, Kontrollkästchen und Scrollleisten werden bis zu einer sinnvollen Obergrenze gemeinsam vergrößert. Beim Verkleinern bleiben die Elemente lesbar und werden nicht unter ihre normale Größe geschrumpft; stattdessen übernimmt der Scrollbereich.
+
+## Audioexport
+
+Mit **Story als Audiodatei speichern …** wird die aktuelle Erzählung unabhängig von der Echtzeitwiedergabe als Datei erzeugt. Der Export verwendet:
+
+- den zur Story gehörenden Aktivierungssatz des Sprungantriebs
+- die ausgewählte Windows-Stimme
+- die eingestellte Sprechgeschwindigkeit
+- die eingestellte Sprachlautstärke
+- den aktivierten Hintergrundsound und dessen aktuelle Lautstärke
+
+WAV-Dateien werden direkt durch die Anwendung erzeugt. Der Vorgang läuft in einem separaten Arbeitsthread, zeigt den aktuellen Verarbeitungsschritt und kann abgebrochen werden. Die Brückenatmosphäre wird automatisch bis zum Ende der Sprachausgabe wiederholt und mit der Stimme gemischt.
+
+MP3 erscheint zusätzlich im Speicherdialog, wenn entweder `tools/ffmpeg.exe` vorhanden ist oder `ffmpeg` über die Windows-PATH-Variable gefunden wird. FFmpeg wird aus Lizenz- und Paketgrößengründen nicht mitgeliefert.
+
+Für den Dateiexport werden Windows-OneCore/WinRT- oder SAPI-Stimmen verwendet. Ist in der Oberfläche eine Qt-Stimme ausgewählt, versucht die Anwendung eine gleichnamige Windows-Stimme zuzuordnen. Ist das nicht möglich, fordert sie zur Auswahl einer exportierbaren Windows-Stimme auf.
 
 ## Eigene Textbausteine
 
@@ -138,6 +159,6 @@ Für das Gesamtpaket wurde noch keine endgültige Weiterverteilungslizenz festge
 
 ## English summary
 
-**SciFi-Generator v60.3** is a local Windows application that assembles randomized science-fiction mission reports from editable text fragments and narrates them with an installed TTS voice. The original two-step workflow is preserved: **Sektor-Sprung berechnen** generates a story, and **Sprung durchführen** reads it aloud.
+**SciFi-Generator v60.4** is a local Windows application that assembles randomized science-fiction mission reports from editable text fragments and narrates them with an installed TTS voice. The original two-step workflow is preserved: **Sektor-Sprung berechnen** generates a story, and **Sprung durchführen** reads it aloud.
 
-The application supports Windows OneCore/WinRT, SAPI and Qt voices, optional bridge ambience, reproducible seeds, detailed generation logs, external contrast-checked JSON themes, a scrollable control panel and responsive UI scaling. Install Python 3.10 or newer, extract the archive and run `install_windows.bat`.
+The application supports Windows OneCore/WinRT, SAPI and Qt voices, one-time story execution, spoken notices for missing or already completed jumps, WAV export with mixed bridge ambience, optional MP3 export through FFmpeg, reproducible seeds, detailed logs, external contrast-checked JSON themes and responsive UI scaling. Install Python 3.10 or newer, extract the archive and run `install_windows.bat`.
