@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "Matrix",
+  "description": "Schwarz-grünes Terminal-Theme",
+  "palette": {
+    "window_bg": "#030904",
+    "window_text": "#A8FFB0",
+    "panel_bg": "#071408",
+    "input_bg": "#010401",
+    "input_text": "#B8FFBF",
+    "button_bg": "#0D2511",
+    "button_text": "#B8FFBF",
+    "button_hover": "#16421D",
+    "button_pressed": "#081A0B",
+    "border": "#49B85A",
+    "disabled_bg": "#0A160C",
+    "disabled_text": "#75A87B",
+    "selection_bg": "#7CFF8A",
+    "selection_text": "#001A04",
+    "accent": "#174D20",
+    "progress_bg": "#010401",
+    "progress_text": "#B8FFBF",
+    "tooltip_bg": "#D8FFDC",
+    "tooltip_text": "#001A04"
+  }
+}

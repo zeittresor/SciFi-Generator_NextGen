@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "Purple",
+  "description": "Dunkles violettes Theme",
+  "palette": {
+    "window_bg": "#1B1028",
+    "window_text": "#F7EDFF",
+    "panel_bg": "#28163C",
+    "input_bg": "#100818",
+    "input_text": "#FFF7FF",
+    "button_bg": "#4B2868",
+    "button_text": "#FFFFFF",
+    "button_hover": "#68408A",
+    "button_pressed": "#351C4B",
+    "border": "#B38BD2",
+    "disabled_bg": "#30203E",
+    "disabled_text": "#C6B4D3",
+    "selection_bg": "#D8A7FF",
+    "selection_text": "#1A0727",
+    "accent": "#5B3475",
+    "progress_bg": "#100818",
+    "progress_text": "#FFF7FF",
+    "tooltip_bg": "#F2DDFF",
+    "tooltip_text": "#1A0727"
+  }
+}

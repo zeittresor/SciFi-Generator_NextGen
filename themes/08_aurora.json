@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "Aurora",
+  "description": "Dunkles Nordlicht-Theme mit Cyan-Akzent",
+  "palette": {
+    "window_bg": "#071B20",
+    "window_text": "#ECFFFB",
+    "panel_bg": "#0D2A2E",
+    "input_bg": "#031013",
+    "input_text": "#F2FFFD",
+    "button_bg": "#164B4B",
+    "button_text": "#FFFFFF",
+    "button_hover": "#1F6D67",
+    "button_pressed": "#103A3A",
+    "border": "#79D8C8",
+    "disabled_bg": "#153337",
+    "disabled_text": "#B6D2CE",
+    "selection_bg": "#8AF5DC",
+    "selection_text": "#04201B",
+    "accent": "#17635A",
+    "progress_bg": "#031013",
+    "progress_text": "#F2FFFD",
+    "tooltip_bg": "#D7FFF6",
+    "tooltip_text": "#04201B"
+  }
+}

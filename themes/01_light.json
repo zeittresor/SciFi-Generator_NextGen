@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "Light",
+  "description": "Helles, neutrales Theme mit hohem Kontrast",
+  "palette": {
+    "window_bg": "#F4F6F8",
+    "window_text": "#17202A",
+    "panel_bg": "#E8EDF2",
+    "input_bg": "#FFFFFF",
+    "input_text": "#101820",
+    "button_bg": "#D7E0E8",
+    "button_text": "#101820",
+    "button_hover": "#C3D1DC",
+    "button_pressed": "#AEBFCB",
+    "border": "#667788",
+    "disabled_bg": "#D9DEE3",
+    "disabled_text": "#59636D",
+    "selection_bg": "#185FA5",
+    "selection_text": "#FFFFFF",
+    "accent": "#8CC8F2",
+    "progress_bg": "#FFFFFF",
+    "progress_text": "#101820",
+    "tooltip_bg": "#FFF4C2",
+    "tooltip_text": "#101820"
+  }
+}

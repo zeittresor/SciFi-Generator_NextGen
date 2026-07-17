@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "Sepia",
+  "description": "Warme Papierfarben bei klar lesbarem Dunkelbraun",
+  "palette": {
+    "window_bg": "#F1E4C8",
+    "window_text": "#2C2115",
+    "panel_bg": "#E4D1AA",
+    "input_bg": "#FFF8E8",
+    "input_text": "#241A10",
+    "button_bg": "#D5BE91",
+    "button_text": "#251A0F",
+    "button_hover": "#C5A873",
+    "button_pressed": "#AD8C59",
+    "border": "#715C3C",
+    "disabled_bg": "#D9C9AA",
+    "disabled_text": "#665846",
+    "selection_bg": "#6D3F1F",
+    "selection_text": "#FFFFFF",
+    "accent": "#D9A66A",
+    "progress_bg": "#FFF8E8",
+    "progress_text": "#241A10",
+    "tooltip_bg": "#FFF2B6",
+    "tooltip_text": "#241A10"
+  }
+}

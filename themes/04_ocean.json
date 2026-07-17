@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "Ocean",
+  "description": "Dunkles blau-türkises Theme",
+  "palette": {
+    "window_bg": "#0B2533",
+    "window_text": "#EAF9FF",
+    "panel_bg": "#103444",
+    "input_bg": "#061820",
+    "input_text": "#F4FCFF",
+    "button_bg": "#15506A",
+    "button_text": "#FFFFFF",
+    "button_hover": "#1C6A8A",
+    "button_pressed": "#0F3E52",
+    "border": "#69B7D3",
+    "disabled_bg": "#173844",
+    "disabled_text": "#B4CCD5",
+    "selection_bg": "#7DE3FF",
+    "selection_text": "#06212C",
+    "accent": "#176B85",
+    "progress_bg": "#061820",
+    "progress_text": "#FFFFFF",
+    "tooltip_bg": "#D8F7FF",
+    "tooltip_text": "#06212C"
+  }
+}

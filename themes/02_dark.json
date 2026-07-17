@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "Dark",
+  "description": "Dunkles Theme mit deutlich abgesetzten Bedienelementen",
+  "palette": {
+    "window_bg": "#1B1D21",
+    "window_text": "#F2F4F7",
+    "panel_bg": "#24272D",
+    "input_bg": "#0F1115",
+    "input_text": "#FFFFFF",
+    "button_bg": "#343941",
+    "button_text": "#FFFFFF",
+    "button_hover": "#48505B",
+    "button_pressed": "#272B31",
+    "border": "#788493",
+    "disabled_bg": "#2B2F35",
+    "disabled_text": "#AEB6C0",
+    "selection_bg": "#7CB7FF",
+    "selection_text": "#08111D",
+    "accent": "#315A85",
+    "progress_bg": "#0F1115",
+    "progress_text": "#FFFFFF",
+    "tooltip_bg": "#FFF1A8",
+    "tooltip_text": "#171717"
+  }
+}

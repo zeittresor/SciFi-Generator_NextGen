@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "Hellfire",
+  "description": "Dunkles rot-warmes Theme",
+  "palette": {
+    "window_bg": "#210907",
+    "window_text": "#FFE9D9",
+    "panel_bg": "#32100B",
+    "input_bg": "#120302",
+    "input_text": "#FFF2E8",
+    "button_bg": "#5B1A0F",
+    "button_text": "#FFF4EC",
+    "button_hover": "#842515",
+    "button_pressed": "#421108",
+    "border": "#E0753D",
+    "disabled_bg": "#38130E",
+    "disabled_text": "#CDA99A",
+    "selection_bg": "#FFB347",
+    "selection_text": "#2A0900",
+    "accent": "#7B2514",
+    "progress_bg": "#120302",
+    "progress_text": "#FFF2E8",
+    "tooltip_bg": "#FFE0A8",
+    "tooltip_text": "#2A0900"
+  }
+}

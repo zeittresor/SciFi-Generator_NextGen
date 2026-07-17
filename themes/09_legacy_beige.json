@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "name": "Legacy Beige",
+  "description": "An die frühere kompakte VB.NET-Oberfläche angelehnt",
+  "palette": {
+    "window_bg": "#E7E2D6",
+    "window_text": "#171717",
+    "panel_bg": "#D8D2C5",
+    "input_bg": "#FFFFFF",
+    "input_text": "#111111",
+    "button_bg": "#C9C9C9",
+    "button_text": "#111111",
+    "button_hover": "#B8C7D8",
+    "button_pressed": "#A9B5C2",
+    "border": "#656565",
+    "disabled_bg": "#D4D0C8",
+    "disabled_text": "#5C5C5C",
+    "selection_bg": "#0B5FA5",
+    "selection_text": "#FFFFFF",
+    "accent": "#9EC8E6",
+    "progress_bg": "#FFFFFF",
+    "progress_text": "#111111",
+    "tooltip_bg": "#FFF7C7",
+    "tooltip_text": "#111111"
+  }
+}
