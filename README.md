@@ -11,6 +11,8 @@ Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 
 Die Story und das detaillierte Auswahlprotokoll bleiben standardmäßig ausgeblendet und werden nur bei Bedarf über **Story / Log einblenden** geöffnet.
 
+<img width="507" height="927" alt="hjfgdksk" src="https://github.com/user-attachments/assets/c573e80d-865f-47f2-8218-5ab91bdea81e" />
+
 ## Funktionen
 
 - Zufällige Science-Fiction-Geschichten aus externen Satzteil-Dateien
