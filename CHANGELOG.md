@@ -1,5 +1,26 @@
 # Changelog
 
+## 60.7 — 2026-07-18
+
+- Added a selectable output type for either a pure image series or a complete illustrated-audio-story production package.
+- Added target-specific total-package instructions for ChatGPT, Grok, Gemini, Stable Diffusion and custom systems.
+- Added exact per-scene narration text, separate image/audio/clip filenames, audio-driven visual timing and configurable crossfade duration.
+- Added video requirements for 1920×1080, 30 fps, H.264/AAC output and an ordered scene assembly workflow.
+- Added ZIP-package requirements covering final video, images, scene audio, clips, prompts, manifest and production log.
+- Added an explicit offline fallback requesting a complete Python/FFmpeg build package with Windows SAPI/WinRT TTS, progress reporting, logging and cancellation.
+- Extended JSON export, prompt profiles, installation verification, examples, tests and German-first documentation.
+
+## 60.6 — 2026-07-18
+
+- Added a required target-AI selector for ChatGPT, Grok, Gemini, Stable Diffusion and a freely named Other system.
+- Added external JSON prompt profiles in `prompt_profiles/`, including reload and diagnostics actions.
+- Added an explicit image-series execution instruction at the beginning of every storyboard export so a fresh chat is told to generate images instead of merely analysing the text.
+- Added a global visual series bible covering ship, system, planet, alien, style, aspect ratio, continuity and excluded elements.
+- Added target-specific scene wrappers and workflow guidance. Stable Diffusion output now uses separate positive prompts plus a global negative prompt and warns that scenes must be submitted individually.
+- Added target-aware Ollama refinement; diffusion targets request compact English positive prompts while conversational targets receive natural-language generation instructions.
+- Extended TXT/Markdown and JSON exports with target AI, target mode, aspect ratio and the complete executable instruction document.
+- Updated installer verification, public documentation and tests for all five external prompt profiles.
+
 ## 60.5 — 2026-07-18
 
 - Added an optional storyboard / image-prompt feature with 6 to 10 key scenes per generated story.

@@ -56,14 +56,14 @@ QTabBar::tab:selected, QTabBar::tab:hover {{
     background-color: {p['button_hover']};
     color: {p['button_text']};
 }}
-QTextEdit, QPlainTextEdit, QLineEdit, QComboBox, QSpinBox, QListView, QAbstractItemView {{
+QTextEdit, QPlainTextEdit, QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox, QListView, QAbstractItemView {{
     background-color: {p['input_bg']};
     color: {p['input_text']};
     border: 1px solid {p['border']};
     selection-background-color: {p['selection_bg']};
     selection-color: {p['selection_text']};
 }}
-QLineEdit, QComboBox, QSpinBox {{
+QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {{
     min-height: {px(26)}px;
     padding: {px(2)}px {px(5)}px;
 }}

@@ -1,0 +1,36 @@
+{
+  "id": "stable_diffusion",
+  "name": "Stable Diffusion",
+  "mode": "diffusion",
+  "header_title": "STEUERANWEISUNG FÜR STABLE-DIFFUSION-WORKFLOW",
+  "instruction_intro": "Stable-Diffusion-Oberflächen erzeugen üblicherweise ein Bild pro Prompt. Übergib deshalb jeden nummerierten POSITIVE PROMPT separat an das Bildmodell oder lass eine externe Automation die Szenen nacheinander ausführen. Der Steuerblock selbst ist für die bedienende Person bzw. den Workflow-Runner bestimmt und nicht als einzelner Bildprompt gedacht.",
+  "instruction_rules": [
+    "Erzeuge {scene_count} einzelne Dateien scene_01 bis scene_{scene_count_padded}; niemals alle Szenen in einem einzigen Prompt oder als Collage.",
+    "Verwende für alle Szenen dasselbe Modell, denselben Stil-Preset und das Seitenverhältnis {aspect_ratio}.",
+    "Nutze nach Möglichkeit denselben Grund-Seed sowie Referenzbild-, IP-Adapter-, ControlNet- oder Character-Reference-Funktionen für wiederkehrende Elemente.",
+    "Speichere Szene 1 als Schiffs-/Systemreferenz und die erste Alien-Szene zusätzlich als Kreaturenreferenz.",
+    "Übernimm den GLOBAL NEGATIVE PROMPT bei jeder Szene.",
+    "Phonetische Schreibweisen im deutschen Storytext sind sinngemäß zu interpretieren; sichtbarer Text ist zu vermeiden.",
+    "Falls das verwendete Modell mit englischen Prompts zuverlässiger arbeitet, kann eine Promptübersetzung oder Ollama-Verfeinerung aktiviert werden."
+  ],
+  "scene_prefix": "POSITIVE PROMPT",
+  "scene_suffix": "same recurring spacecraft and world design, visual continuity with previous scene, cinematic 16:9 film still",
+  "negative_prompt": "text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting",
+  "output_notes": [
+    "Jeder POSITIVE PROMPT ist einzeln zu generieren.",
+    "Ein gleicher Seed allein garantiert keine Serienkontinuität; Referenz- und Konsistenzwerkzeuge sind vorzuziehen, sofern die verwendete Oberfläche sie anbietet."
+  ],
+  "package_header_title": "GESAMTAUFTRAG FÜR EINEN STABLE-DIFFUSION-VIDEO-WORKFLOW",
+  "package_instruction_intro": "Behandle dieses Dokument als Produktionsmanifest für einen lokalen Workflow. Stable Diffusion erzeugt die einzelnen Szenenbilder; eine Orchestrierung oder ein lokal erzeugtes Python-/FFmpeg-Skript erstellt daraus zusammen mit TTS-Audiodateien die illustrierte Audiogeschichte, synchronisiert die Szenendauer und exportiert das fertige Video und ZIP-Paket.",
+  "package_instruction_rules": [
+    "Übergib jeden BILDGENERIERUNGS-AUFTRAG einzeln an Stable Diffusion und verwende GLOBAL NEGATIVE PROMPT sowie Referenz-/Konsistenzfunktionen.",
+    "Erzeuge die Audiodateien außerhalb des Bildmodells über die ausgewählte Windows-SAPI-/WinRT-Stimme oder eine ausdrücklich gewählte Alternative.",
+    "Erstelle aus jedem Bild und seiner Audiodatei einen eigenen Clip; die Clipdauer entspricht der Audiodauer.",
+    "Verbinde die Clips über FFmpeg mit Crossfades von ungefähr {transition_seconds} Sekunden und exportiere {output_video}.",
+    "Da Stable Diffusion selbst üblicherweise keine komplette Audio-/Video-Orchestrierung übernimmt, liefere ein vollständiges lokales Build-Skript und {output_zip} mit allen Prompts, Assets und Manifestdaten."
+  ],
+  "package_output_notes": [
+    "Dieser Gesamtauftrag ist für einen Workflow-Runner, eine Bedienperson oder ein Orchestrierungs-LLM gedacht, nicht als einzelner Stable-Diffusion-Bildprompt.",
+    "Für konsistente Serien sind Referenzbilder, IP-Adapter, ControlNet oder vergleichbare Werkzeuge einem identischen Seed allein vorzuziehen."
+  ]
+}

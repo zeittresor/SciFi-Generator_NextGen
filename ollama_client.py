@@ -75,17 +75,36 @@ class OllamaClient:
         local_scenes: list[StoryboardScene],
         model: str,
         *,
+        target_name: str = "Andere",
+        target_mode: str = "generic",
         timeout: float = 240.0,
     ) -> list[StoryboardScene]:
         if not model.strip():
             raise OllamaClientError("Es wurde kein Ollama-Modell ausgewählt.")
         outline_lines = [f"{scene.index}. {scene.title}: {scene.summary}" for scene in local_scenes]
+        target_guidance = (
+            f"Die Zielanwendung ist {target_name}. "
+            "Formuliere natürliche, ausführliche Einzelbild-Aufträge, die in einer konversationellen Bildgenerierung direkt verwendet werden können. "
+        )
+        if target_mode == "diffusion":
+            target_guidance = (
+                f"Die Zielanwendung ist {target_name}. "
+                "Formuliere für jede Szene einen kompakten POSITIVE PROMPT in englischer Sprache, geeignet für ein modernes Stable-Diffusion-/Diffusionsmodell. "
+                "Nutze klare visuelle Begriffe und kommagetrennte Qualitäts-, Stil-, Kamera- und Kontinuitätsmerkmale. "
+                "Füge keinen Negative Prompt in das Szenenfeld ein; dieser wird später global ergänzt. "
+            )
+        elif target_mode == "generic":
+            target_guidance = (
+                f"Die Zielanwendung ist {target_name}. "
+                "Formuliere pro Szene einen eigenständigen, allgemein verständlichen Bildgenerierungs-Prompt. "
+            )
         instruction = (
             "Du erhältst eine zufällig generierte Sci-Fi-Story und einen bereits vorbereiteten Ablauf mit Schlüsselszenen. "
             "Erstelle für jede Szene einen hochwertigen Prompt für einen externen KI-Bildgenerator. "
+            + target_guidance +
             "Die Bildprompts sollen realistisch, cineastisch, atmosphärisch und stilistisch untereinander konsistent sein. "
             "Wichtige Regeln: kein Text im Bild, keine Wasserzeichen, keine UI-Elemente, keine Comic-Optik, "
-            "sondern authentisch wirkende Science-Fiction. "
+            "sondern authentisch wirkende Science-Fiction. Wiederkehrendes Schiff, Welt und Alien müssen gleich beschrieben werden. "
             "Gib ausschließlich JSON im folgenden Format zurück: "
             '{"scenes":[{"index":1,"title":"...","summary":"...","prompt":"..."}]}.\n\n'
             "Story:\n"

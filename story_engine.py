@@ -24,6 +24,7 @@ class Selection:
     source: str
     line_number: int | None
     raw_text: str
+    rendered_text: str = ""
 
 
 @dataclass(frozen=True)
@@ -51,6 +52,8 @@ class GenerationResult:
             if item.line_number is not None:
                 lines.append(f"Zeile: {item.line_number}")
             lines.append(f"Text: {item.raw_text}")
+            if item.rendered_text and item.rendered_text != item.raw_text:
+                lines.append(f"Ausgabe: {item.rendered_text}")
             lines.append("")
         lines.extend([
             "RAW STORY (Originalschreibweise)",
@@ -164,16 +167,26 @@ class StoryEngine:
                     save_as = step.get("save_as")
                     if save_as:
                         saved[str(save_as)] = raw
-                    fragments.append(raw + suffix)
-                    selections.append(Selection(current, kind, label, f"data/vars/{filename}", line_number, raw))
+                    fragment = raw + suffix
+                    fragments.append(fragment)
+                    rendered_fragment = self.legacy_umlaut_conversion(fragment) if legacy_umlauts else fragment
+                    selections.append(
+                        Selection(
+                            current, kind, label, f"data/vars/{filename}", line_number, raw, rendered_fragment
+                        )
+                    )
                     progress_name = filename
                 elif kind == "value":
                     name = str(step.get("name", ""))
                     if name not in saved:
                         raise StoryEngineError(f"Gespeicherter Wert ist nicht verfügbar: {name}")
                     raw = saved[name]
-                    fragments.append(raw + suffix)
-                    selections.append(Selection(current, kind, label, f"<gespeichert:{name}>", None, raw))
+                    fragment = raw + suffix
+                    fragments.append(fragment)
+                    rendered_fragment = self.legacy_umlaut_conversion(fragment) if legacy_umlauts else fragment
+                    selections.append(
+                        Selection(current, kind, label, f"<gespeichert:{name}>", None, raw, rendered_fragment)
+                    )
                     progress_name = name
                 else:
                     raise StoryEngineError(f"Unbekannter Schritttyp: {kind}")

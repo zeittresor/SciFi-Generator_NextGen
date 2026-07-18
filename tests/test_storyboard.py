@@ -17,6 +17,8 @@ class StoryboardTests(unittest.TestCase):
         self.assertEqual(8, len(scenes))
         self.assertTrue(all(scene.prompt for scene in scenes))
         self.assertTrue(all(scene.summary for scene in scenes))
+        self.assertTrue(all(scene.narration_text for scene in scenes))
+        self.assertGreater(len(scenes[0].narration_text), len(scenes[0].summary) / 2)
 
     def test_scene_count_is_clamped(self):
         self.assertEqual(6, len(generate_storyboard(self.result, 1)))

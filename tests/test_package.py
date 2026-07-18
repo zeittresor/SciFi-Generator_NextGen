@@ -91,5 +91,32 @@ class PackageTests(unittest.TestCase):
         self.assertIn("Ollama (lokales Modell)", app_source)
         self.assertIn("self.prompts_edit", app_source)
 
+    def test_target_ai_prompt_profiles_are_packaged(self):
+        app_source = (ROOT / "app.py").read_text(encoding="utf-8")
+        self.assertIn("Zielsystem / LLM:", app_source)
+        self.assertIn("PromptProfileManager", app_source)
+        self.assertIn("storyboard_target_ai", app_source)
+        self.assertTrue((ROOT / "prompt_profile_manager.py").is_file())
+        for filename in (
+            "01_chatgpt.json",
+            "02_grok.json",
+            "03_gemini.json",
+            "04_stable_diffusion.json",
+            "05_other.json",
+        ):
+            self.assertTrue((ROOT / "prompt_profiles" / filename).is_file())
+
+
+    def test_total_media_package_prompt_is_packaged(self):
+        self.assertTrue((ROOT / "media_package_generator.py").is_file())
+        app_source = (ROOT / "app.py").read_text(encoding="utf-8")
+        self.assertIn("Gesamtpaket (Bilder + Audio + Video)", app_source)
+        self.assertIn("Gesamtpaket-Prompt erzeugen", app_source)
+        self.assertIn("render_media_package_text", app_source)
+        self.assertIn("storyboard_transition_seconds", app_source)
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("## Gesamtpaket-Prompt: Bilder, Audio und Video", readme)
+        self.assertIn("build_story_video.py", readme)
+
 if __name__ == "__main__":
     unittest.main()

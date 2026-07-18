@@ -1,0 +1,38 @@
+{
+  "id": "gemini",
+  "name": "Gemini",
+  "mode": "conversational",
+  "header_title": "ARBEITSAUFTRAG FÜR GEMINI-BILDGENERIERUNG",
+  "instruction_intro": "Erzeuge auf Grundlage der folgenden nummerierten Szenen eine zusammenhängende Bildserie. Nutze die konversationelle Bildgenerierung, um pro Szene ein separates Bild zu erstellen und die etablierten visuellen Elemente in den Folgebildern konsistent weiterzuführen.",
+  "instruction_rules": [
+    "Erzeuge genau {scene_count} getrennte Bilder im Seitenverhältnis {aspect_ratio}.",
+    "Verarbeite die Szenen in der Nummernfolge und verwende bereits erzeugte Bilder als Kontext oder Referenz, sofern möglich.",
+    "Erzeuge keine Collage und keine Seite mit mehreren Panels.",
+    "Behalte Raumschiff, Planet, Alien, Raumanzüge, Farbwelt und Materialästhetik über alle Szenen bei.",
+    "Jede Szene soll wie ein Filmstill aus derselben Produktion wirken.",
+    "Keine sichtbare Schrift, Benutzeroberflächen, Logos oder Wasserzeichen.",
+    "Absichtlich phonetische Schreibweisen sind semantisch zu deuten, nicht wörtlich ins Bild zu übertragen.",
+    "Beginne mit der Bildproduktion und liefere nicht lediglich eine Promptkritik."
+  ],
+  "scene_prefix": "Separates Bild für diese Storyboard-Szene erzeugen:",
+  "scene_suffix": "Nutze den visuellen Kontext früherer Szenen und ändere wiederkehrende Designs nicht unnötig.",
+  "negative_prompt": "",
+  "output_notes": [
+    "Die Ausgabe ist für eine konversationelle Gemini-Bildsitzung formuliert.",
+    "Bei vielen Szenen kann die Serie nacheinander innerhalb derselben Unterhaltung erzeugt werden."
+  ],
+  "package_header_title": "GESAMTAUFTRAG FÜR GEMINI — ILLUSTRIERTE AUDIOGESCHICHTE",
+  "package_instruction_intro": "Erstelle aus den nummerierten Szenen eine vollständige audiovisuelle Erzählung. Halte wiederkehrende Motive über die Bildserie konsistent, vertone jede Szene separat, passe den visuellen Abschnitt an die tatsächliche Audiodauer an, setze sanfte Übergänge und liefere das fertige Video sowie möglichst ein ZIP mit allen Assets.",
+  "package_instruction_rules": [
+    "Nutze konversationelle Bildgenerierung und behalte den visuellen Kontext vorheriger Szenen bei, sofern verfügbar.",
+    "Erzeuge pro Szene ein separates Bild und eine separate Audiodatei mit identischer Stimme.",
+    "Nutze für die Vertonung bevorzugt die eigene native Sprachausgabe des Zielsystems, sofern sie Audiodateien exportieren kann; andernfalls verwende die im Produktionsauftrag angegebene Windows-SAPI-/WinRT-Stimme als Fallback.",
+    "Verwende exakt den jeweiligen NARRATIONSTEXT und sprich keine Metadaten oder Promptanweisungen mit.",
+    "Wenn direkte Medienerzeugung oder Dateibündelung nicht möglich ist, erstelle ein vollständiges offline ausführbares Python-/FFmpeg-Produktionspaket.",
+    "Liefere am Ende {output_video} und möglichst {output_zip}, nicht nur eine Beschreibung der Arbeitsschritte."
+  ],
+  "package_output_notes": [
+    "Die Szenen sollen innerhalb derselben Unterhaltung nacheinander produziert werden, damit die Bildkontinuität erhalten bleibt.",
+    "Ein lokaler Fallback darf die ausgewählte Windows-TTS-Stimme und FFmpeg verwenden."
+  ]
+}

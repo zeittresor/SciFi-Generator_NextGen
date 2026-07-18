@@ -1,0 +1,38 @@
+{
+  "id": "grok",
+  "name": "Grok",
+  "mode": "conversational",
+  "header_title": "ARBEITSAUFTRAG FÜR GROK-IMAGINE",
+  "instruction_intro": "Erzeuge aus dem folgenden Storyboard eine chronologische, visuell konsistente Bildserie. Nutze die Bildgenerierung und erstelle pro nummerierter Szene ein separates Ergebnis, nicht nur eine textliche Bewertung der Prompts.",
+  "instruction_rules": [
+    "Erzeuge insgesamt {scene_count} einzelne Bilder in der Reihenfolge scene_01 bis scene_{scene_count_padded}.",
+    "Nutze das Seitenverhältnis {aspect_ratio} für jedes Bild.",
+    "Falls Stapel-/Batch-Erzeugung verfügbar ist, behandle jede Szene als eigenen Prompt innerhalb derselben Serie.",
+    "Nutze vorherige Bilder als Referenz oder Bildinput, sobald Raumschiff, Welt oder Alien bereits etabliert wurden und die Oberfläche dies unterstützt.",
+    "Keine Collage, keine Panels, keine eingeblendeten Beschriftungen, Logos oder Wasserzeichen.",
+    "Erhalte denselben realistischen, cineastischen Retro-Sci-Fi-Look und dieselben Objekt- und Kreaturendesigns.",
+    "Phonetische Schreibweisen im Storytext sind sinngemäß zu interpretieren und nicht sichtbar darzustellen.",
+    "Antworte mit den erzeugten Bildern statt mit einer reinen Textanalyse."
+  ],
+  "scene_prefix": "Grok-Imagine-Szene — als eigenständiges Bild erzeugen:",
+  "scene_suffix": "Visuelle Kontinuität mit allen vorherigen Szenen beibehalten; keine Schrift im Bild.",
+  "negative_prompt": "",
+  "output_notes": [
+    "Die Szenen können bei vorhandener Batch-Funktion gemeinsam angestoßen, müssen aber als getrennte Bilder ausgegeben werden.",
+    "Referenzbilder sollten bei späteren Szenen wiederverwendet werden, soweit verfügbar."
+  ],
+  "package_header_title": "GESAMTAUFTRAG FÜR GROK — ILLUSTRIERTE AUDIOGESCHICHTE",
+  "package_instruction_intro": "Produziere aus dem folgenden Storyboard eine chronologische audiovisuelle Science-Fiction-Geschichte. Erzeuge getrennte Bilder und Audios für jede Szene, synchronisiere die Bilddauer mit der jeweiligen Sprachausgabe, überblende weich zwischen den Szenen und liefere ein zusammenhängendes Video samt Produktionspaket.",
+  "package_instruction_rules": [
+    "Verwende Bildgenerierung oder Imagine-Funktionen für getrennte, visuell konsistente Szenenbilder, soweit verfügbar.",
+    "Verwende eine konsistente Stimme für alle NARRATIONSTEXTE und erzeuge pro Szene eine eigene Audiodatei.",
+    "Nutze für die Vertonung bevorzugt die eigene native Sprachausgabe des Zielsystems, sofern sie Audiodateien exportieren kann; andernfalls verwende die im Produktionsauftrag angegebene Windows-SAPI-/WinRT-Stimme als Fallback.",
+    "Falls direkte TTS-, Video- oder ZIP-Ausgabe nicht verfügbar ist, generiere ein vollständiges lokales Produktionsskript mit Python und FFmpeg.",
+    "Ordne alle Dateien eindeutig scene_01 bis scene_{scene_count_padded} zu und liefere am Ende {output_video} sowie möglichst {output_zip}.",
+    "Antworte nicht nur mit einer Analyse oder Promptkritik, sondern führe die Medienproduktion soweit technisch möglich aus."
+  ],
+  "package_output_notes": [
+    "Batch-Erzeugung darf verwendet werden, solange jede Szene als eigene Datei erhalten bleibt.",
+    "Der Offline-Fallback soll ohne Cloud-API-Zwang lauffähig sein."
+  ]
+}

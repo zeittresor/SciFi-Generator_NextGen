@@ -1,0 +1,38 @@
+{
+  "id": "chatgpt",
+  "name": "ChatGPT",
+  "mode": "conversational",
+  "header_title": "ARBEITSAUFTRAG FÜR CHATGPT-BILDGENERIERUNG",
+  "instruction_intro": "Erzeuge aus den nachfolgenden nummerierten Storyboard-Szenen eine zusammenhängende Bildserie. Erzeuge für jeden Szenenabschnitt genau ein separates Bild und beginne direkt mit der Bildgenerierung; liefere keine bloße Analyse oder Zusammenfassung.",
+  "instruction_rules": [
+    "Erzeuge genau {scene_count} einzelne Bilder, eines pro nummerierter Szene, in der vorgegebenen Reihenfolge.",
+    "Verwende für alle Bilder das Seitenverhältnis {aspect_ratio}.",
+    "Erzeuge keine Collage und kein Mehrfachpanel; jede Szene ist eine eigene Bilddatei.",
+    "Bewahre dieselben Designs für Raumschiff, Planet, Besatzung, Alien und wiederkehrende Technik über die gesamte Serie.",
+    "Verwende frühere erzeugte Bilder als visuelle Referenz für spätere Szenen, soweit das System dies unterstützt.",
+    "Keine Schrift, Untertitel, Logos, Benutzeroberflächen oder Wasserzeichen im Bild.",
+    "Interpretiere absichtlich phonetische oder fehlerhafte Schreibweisen sinngemäß und bilde sie nicht als Text ab.",
+    "Ordne die Ergebnisse eindeutig als scene_01 bis scene_{scene_count_padded} zu."
+  ],
+  "scene_prefix": "Erzeuge diese Szene jetzt als separates Bild im selben visuellen Universum:",
+  "scene_suffix": "Halte die globale Serienkontinuität ein und verwende das etablierte Design wiederkehrender Elemente.",
+  "negative_prompt": "",
+  "output_notes": [
+    "Dieser Block ist für einen neuen Chat gedacht und enthält den ausdrücklichen Auftrag zur Bildserien-Erzeugung.",
+    "Bei begrenzter paralleler Bildgenerierung sollen die Szenen nacheinander erzeugt werden."
+  ],
+  "package_header_title": "GESAMTAUFTRAG FÜR CHATGPT — ILLUSTRIERTE AUDIOGESCHICHTE",
+  "package_instruction_intro": "Erstelle aus den nachfolgenden Storyboard-Szenen eine vollständige bilduntermalte Audiogeschichte. Erzeuge zuerst die konsistente Bildserie, vertone danach jeden Szenenabschnitt separat, passe die sichtbare Dauer jeder Szene exakt an ihre Audiodatei an, verbinde alle Szenen mit sanften Übergängen und stelle das fertige Video sowie die Produktionsdateien möglichst als ZIP bereit.",
+  "package_instruction_rules": [
+    "Nutze vorhandene Bild-, Sprach-, Datei- und Codewerkzeuge aktiv und beginne mit der Produktion, statt den Auftrag nur zu kommentieren.",
+    "Erzeuge die Szenenbilder nacheinander innerhalb derselben Unterhaltung und verwende frühere Bilder als visuelle Referenz, soweit dies unterstützt wird.",
+    "Nutze für die Vertonung bevorzugt die eigene native Sprachausgabe des Zielsystems, sofern sie Audiodateien exportieren kann; andernfalls verwende die im Produktionsauftrag angegebene Windows-SAPI-/WinRT-Stimme als Fallback.",
+    "Nutze für jede Szene ausschließlich den angegebenen NARRATIONSTEXT als Audioinhalt; Systemanweisungen, Zusammenfassungen und Bildprompts dürfen nicht gesprochen werden.",
+    "Falls die direkte Audio- oder Videoerzeugung in dieser Sitzung nicht verfügbar ist, erstelle ein lokal ausführbares Python-/FFmpeg-Paket, das die fehlenden Produktionsschritte automatisiert.",
+    "Packe das Endergebnis und alle relevanten Quelldateien nach Möglichkeit in {output_zip}."
+  ],
+  "package_output_notes": [
+    "Der Auftrag ist für einen neuen Chat gedacht und verlangt ausdrücklich eine fertige audiovisuelle Geschichte statt einer bloßen Einschätzung.",
+    "Wenn nur ein Teil der Medienwerkzeuge verfügbar ist, sollen vorhandene Assets erzeugt und die übrigen Schritte durch das mitgelieferte Offline-Skript abgeschlossen werden."
+  ]
+}

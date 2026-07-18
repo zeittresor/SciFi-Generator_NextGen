@@ -1,0 +1,38 @@
+{
+  "id": "other",
+  "name": "Andere",
+  "mode": "generic",
+  "header_title": "ALLGEMEINER ARBEITSAUFTRAG FÜR EINE BILDSYNTHESE-KI",
+  "instruction_intro": "Erzeuge aus den nachfolgenden nummerierten Storyboard-Abschnitten eine zusammenhängende Bildserie. Für jede Szene ist ein separates Bild zu erstellen; der Text soll nicht nur analysiert oder zusammengefasst werden.",
+  "instruction_rules": [
+    "Erzeuge genau {scene_count} einzelne Bilder im Seitenverhältnis {aspect_ratio}.",
+    "Verarbeite die Szenen in der angegebenen Reihenfolge.",
+    "Keine Collage und kein Mehrfachpanel; eine Datei pro Szene.",
+    "Behalte wiederkehrende Designs und den Stil über die gesamte Serie hinweg bei.",
+    "Nutze Referenzbilder oder feste Seeds, soweit die Zielanwendung dies unterstützt.",
+    "Keine sichtbare Schrift, Logos, Benutzeroberflächen oder Wasserzeichen.",
+    "Interpretiere fehlerhafte oder phonetische Schreibweisen sinngemäß.",
+    "Liefere die Bilder und keine bloße Bewertung der Prompts."
+  ],
+  "scene_prefix": "Separates Szenenbild erzeugen:",
+  "scene_suffix": "Globale Kontinuität und wiederkehrende Designs beibehalten.",
+  "negative_prompt": "text, captions, watermark, logo, interface, collage, inconsistent recurring objects",
+  "output_notes": [
+    "Im Feld 'Andere KI' kann ein eigener Zielname angegeben werden.",
+    "Für reine Diffusionsmodelle sind die Szenen einzeln zu übergeben."
+  ],
+  "package_header_title": "ALLGEMEINER GESAMTAUFTRAG — ILLUSTRIERTE AUDIOGESCHICHTE",
+  "package_instruction_intro": "Erzeuge aus dem folgenden Storyboard eine vollständige bilduntermalte Audiogeschichte: getrennte Bilder und Audiodateien pro Szene, an die Audiodauer angepasste visuelle Abschnitte, sanfte Übergänge, ein chronologisch zusammengesetztes Video und möglichst ein ZIP-Paket mit allen Produktionsdateien.",
+  "package_instruction_rules": [
+    "Nutze die Medienfunktionen des angegebenen Zielsystems, soweit sie verfügbar sind.",
+    "Erzeuge pro Szene ein Bild und eine Audiodatei und verwende exakt den jeweiligen NARRATIONSTEXT.",
+    "Nutze für die Vertonung bevorzugt die eigene native Sprachausgabe des Zielsystems, sofern sie Audiodateien exportieren kann; andernfalls verwende die im Produktionsauftrag angegebene Windows-SAPI-/WinRT-Stimme als Fallback.",
+    "Halte wiederkehrende Designs und dieselbe Stimme über alle Szenen konsistent.",
+    "Falls direkte Bild-, TTS-, Video- oder ZIP-Erzeugung nicht möglich ist, liefere ein vollständiges offline ausführbares Python-/FFmpeg-Produktionspaket.",
+    "Liefere das fertige Video {output_video} und möglichst das Paket {output_zip}, nicht nur eine Arbeitsbeschreibung."
+  ],
+  "package_output_notes": [
+    "Der konkrete Zielname aus dem Feld Andere KI wird in den Produktionsauftrag übernommen.",
+    "Für reine Bildmodelle muss ein externer Workflow-Runner die TTS- und Videoschritte übernehmen."
+  ]
+}

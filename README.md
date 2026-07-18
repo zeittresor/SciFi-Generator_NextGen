@@ -1,10 +1,8 @@
 # SciFi-Generator
 
-**Aktuelle Version: 60.5**
+**Aktuelle Version: 60.7**
 
 Der **SciFi-Generator** ist eine lokale Windows-Desktopanwendung, die zufällige Science-Fiction-Missionsberichte aus frei bearbeitbaren Textbausteinen zusammensetzt und anschließend mit einer installierten Text-to-Speech-Stimme vorliest.
-
-<img width="451" height="903" alt="623465651-0dc2f59b-acfa-4bcb-8ba5-84aa76baa632" src="https://github.com/user-attachments/assets/03589b1b-6f22-44e4-bb3c-14a827df59a1" />
 
 Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 
@@ -34,6 +32,12 @@ Die Story, das detaillierte Auswahlprotokoll und optionale Bild-Prompts bleiben 
 - Projektlokale Python-Umgebung und optionales Wheelhouse für Offline-Installationen
 - Optionales Storyboard mit 6 bis 10 Schlüsselszenen und direkt nutzbaren Bild-Prompts
 - Wahlweise lokale Prompt-Erzeugung oder Verfeinerung über einen laufenden Ollama-Server
+- Ziel-KI-Profile für ChatGPT, Grok, Gemini, Stable Diffusion und frei benennbare andere Systeme
+- Ausführbarer Steuerprompt am Anfang der Ausgabe, damit eine neue KI-Sitzung tatsächlich die Bildserie erzeugt statt den Text nur zu analysieren
+- Globale Serienbibel für wiederkehrendes Schiff, Welt, Alien, Stil und Seitenverhältnis
+- Wahlweise **Bildserie** oder **Gesamtpaket** mit Bildern, Szenen-TTS, zeitlich angepassten Filmabschnitten, sanften Übergängen, Video- und ZIP-Anforderung
+- Exakte, nicht gekürzte Narrationstexte pro Szene für eine saubere abschnittsweise Vertonung
+- Offline-Fallback-Anweisung für Python/FFmpeg, falls das Zielsystem Audio, Video oder ZIP nicht direkt erzeugen kann
 
 ## Schnellstart unter Windows
 
@@ -51,8 +55,11 @@ Der Installer erzeugt eine lokale `.venv`, installiert die benötigten Pakete un
 3. **Sektor-Sprung berechnen** anklicken.
 4. **Sprung durchführen** anklicken, um die Story vorzulesen.
 5. Über **Story als Audiodatei speichern …** kann dieselbe Erzählung mit den aktuellen Lautstärkeeinstellungen exportiert werden.
-6. Über **Bild-Prompts erzeugen** kann ein optionales Storyboard mit Schlüsselszenen erzeugt werden.
-7. Über **Story / Log / Prompts einblenden** kann die Geschichte angesehen, bearbeitet oder gespeichert, das Auswahlprotokoll geprüft und das Storyboard angezeigt werden.
+6. Im Bereich **Bildserie / Storyboard** unter **Ausgabeart** zwischen **Bildserie** und **Gesamtpaket (Bilder + Audio + Video)** wählen.
+7. Das gewünschte **Zielsystem / LLM** auswählen: ChatGPT, Grok, Gemini, Stable Diffusion oder Andere.
+8. Bei einem Gesamtpaket optional die Dauer der sanften Überblendung einstellen. Die aktuell ausgewählte TTS-Stimme, Sprechgeschwindigkeit, Sprachlautstärke und Brückenatmosphäre werden in den Produktionsauftrag übernommen.
+9. Über **Bild-Prompts erzeugen** beziehungsweise **Gesamtpaket-Prompt erzeugen** wird das entsprechende Anweisungsdokument erstellt.
+10. Über **Story / Log / Prompts einblenden** kann die Story, das Auswahlprotokoll und der vollständige Produktionsauftrag angezeigt werden.
 
 Ein berechneter Sektor-Sprung wird nach einer vollständig abgeschlossenen Wiedergabe als durchgeführt markiert. Ein weiterer Klick auf **Sprung durchführen** startet daher nicht dieselbe Story erneut, sondern lässt die ausgewählte Stimme leicht irritiert darauf hinweisen, dass zuerst ein neuer Sprung berechnet werden muss. Wird die Wiedergabe manuell gestoppt oder schlägt sie fehl, darf der aktuelle Sprung erneut gestartet werden.
 
@@ -65,12 +72,49 @@ Wird das Fenster vergrößert, skaliert die Oberfläche automatisch mit: Schrift
 
 Zusätzlich zur erzählten Story kann der SciFi-Generator auf Wunsch ein kleines Storyboard mit **6 bis 10 Schlüsselszenen** erzeugen. Diese Texte werden **nicht vorgelesen**, sondern nur im optionalen Prompt-Tab angezeigt oder bei Bedarf gespeichert.
 
-Zur Auswahl stehen zwei Modi:
+Die **Prompt-Verfeinerung** kann auf zwei Arten erfolgen:
 
 - **Lokal (regelbasiert):** Die App zerlegt die generierte Story anhand der bekannten Missionsabschnitte in Schlüsselszenen und erstellt dafür direkt nutzbare Bild-Prompts.
-- **Ollama (lokales Modell):** Wenn auf dem System ein Ollama-Server läuft, kann ein lokales Modell die vorbereiteten Szenen zusätzlich sprachlich verfeinern. Fällt Ollama aus oder ist kein Modell verfügbar, bleibt die lokale Prompt-Erzeugung weiterhin nutzbar.
+- **Ollama (lokales Modell):** Wenn auf dem System ein Ollama-Server läuft, kann ein lokales Modell die vorbereiteten Szenen zusätzlich sprachlich und zielsystemspezifisch verfeinern. Fällt Ollama aus oder ist kein Modell verfügbar, bleibt die lokale Prompt-Erzeugung weiterhin nutzbar.
 
-Die erzeugten Bild-Prompts eignen sich als Vorlage für externe Bildgeneratoren oder für eine spätere Bildserien-/Slideshow-Funktion. Über **Bild-Prompts speichern …** können sie als TXT, Markdown oder JSON exportiert werden.
+Unabhängig davon wird eine **Ziel-KI** gewählt:
+
+- **ChatGPT:** konversationeller Arbeitsauftrag, der ausdrücklich separate Bilder pro Szene verlangt und frühere Bilder als Referenz weiterverwenden lässt.
+- **Grok:** Bildserien-Auftrag mit getrennten Szenen und Hinweisen für Batch-/Referenzfunktionen, soweit diese verfügbar sind.
+- **Gemini:** konversationeller Serienauftrag mit fortlaufender visueller Kontinuität innerhalb derselben Bildsitzung.
+- **Stable Diffusion:** Workflow-Steuerblock, einzelne Positive Prompts und ein globaler Negative Prompt. Jede Szene wird separat an das Diffusionsmodell übergeben.
+- **Andere:** allgemeines Profil mit frei eintragbarem Namen der Zielanwendung.
+
+Am Anfang der Ausgabe steht nun ein ausdrücklicher **Arbeitsauftrag zur Erzeugung der Bildserie**. Darauf folgt eine globale visuelle Serienbibel für Schiff, Sternensystem, Planetenoberfläche, Alien, Bildstil und Ausschlüsse. Erst danach folgen die nummerierten Szenenprompts. Dadurch wird beim Einfügen in einen neuen Chat klar, dass Bilder erzeugt werden sollen und nicht lediglich eine Analyse des Storyboards erwartet wird.
+
+Die Ziel-KI-Profile liegen als extern bearbeitbare JSON-Dateien im Ordner:
+
+```text
+prompt_profiles/
+```
+
+Über **Ansicht → Prompt-Profile neu laden** können Änderungen ohne Programmanpassung übernommen werden. **Hilfe → Prompt-Profilprüfung** zeigt geladene und abgelehnte Dateien.
+
+Die erzeugten Bild-Prompts eignen sich als Vorlage für externe Bildgeneratoren oder für eine spätere Bildserien-/Slideshow-Funktion. Über **Bild-Prompts speichern …** können sie als TXT, Markdown oder JSON exportiert werden. Der JSON-Export enthält zusätzlich Ziel-KI, Profilmodus, Seitenverhältnis, globalen Negative Prompt und das vollständige Anweisungsdokument.
+
+## Gesamtpaket-Prompt: Bilder, Audio und Video
+
+Neben einer reinen Bildserie kann die App einen vollständigen **Gesamtpaket-Produktionsauftrag** erzeugen. Dieser ist dafür gedacht, in eine neue Sitzung eines geeigneten LLMs oder in einen automatisierten Medienworkflow übernommen zu werden.
+
+Der Auftrag verlangt ausdrücklich:
+
+- ein separates, visuell konsistentes Bild pro Schlüsselszene
+- eine eigene Audiodatei pro Szene mit dem **exakten Narrationstext** dieses Abschnitts
+- dieselbe Stimme in allen Szenen
+- eine sichtbare Szenendauer, die sich an der tatsächlichen Audiodauer orientiert
+- sanfte Crossfades zwischen den Szenen
+- optionale Brückenatmosphäre mit der in der App eingestellten Lautstärke
+- ein chronologisch zusammengesetztes MP4-Video in 1920 × 1080 bei 30 fps
+- möglichst ein ZIP-Paket mit Video, Einzelbildern, Audiodateien, Szenenclips, Prompts und `manifest.json`
+
+Die Vorgaben der aktuell ausgewählten TTS-Stimme, des Backends, der Sprechgeschwindigkeit sowie der Sprach- und Hintergrundlautstärke werden automatisch in das Dokument eingetragen. Systemanweisungen, Zusammenfassungen und Bildprompts dürfen ausdrücklich **nicht** mitgesprochen werden.
+
+Kann das Zielsystem die Medien nicht direkt erzeugen, verlangt der Gesamtpaket-Prompt stattdessen ein vollständig offline ausführbares Produktionspaket mit `build_story_video.py`, `build_video.bat`, `requirements.txt`, FFmpeg-Workflow, Fortschrittsanzeige, Logdatei und Abbruchmöglichkeit. Für Stable Diffusion wird deutlich gemacht, dass das Bildmodell die Einzelbilder liefert, während ein externer Runner oder das erzeugte Skript TTS, Timing, Übergänge, Videoschnitt und ZIP übernimmt.
 
 ## Audioexport
 
@@ -158,6 +202,7 @@ Mit `build_wheelhouse.bat` können die benötigten Python-Pakete einmalig bei be
 - `run_tests.bat` führt die enthaltenen Tests aus.
 - **Hilfe → TTS-Stimmendiagnose** zeigt erkannte Stimmen und Backend-Fehler.
 - **Hilfe → Theme-Prüfung** zeigt gültige und abgelehnte Theme-Dateien.
+- **Hilfe → Prompt-Profilprüfung** zeigt die externen Ziel-KI-Profile und eventuelle Ladefehler.
 - `install_windows.bat` kann erneut ausgeführt werden, um die lokale Umgebung zu reparieren oder zu aktualisieren.
 - Die App-Version wird zentral aus `version.txt` gelesen und erscheint auch in den Generierungsprotokollen.
 
@@ -176,6 +221,6 @@ Für das Gesamtpaket wurde noch keine endgültige Weiterverteilungslizenz festge
 
 ## English summary
 
-**SciFi-Generator v60.5** is a local Windows application that assembles randomized science-fiction mission reports from editable text fragments and narrates them with an installed TTS voice. The original two-step workflow is preserved: **Sektor-Sprung berechnen** generates a story, and **Sprung durchführen** reads it aloud.
+**SciFi-Generator v60.7** is a local Windows application that assembles randomized science-fiction mission reports from editable text fragments and narrates them with an installed TTS voice. The original two-step workflow is preserved: **Sektor-Sprung berechnen** generates a story, and **Sprung durchführen** reads it aloud.
 
-The application supports Windows OneCore/WinRT, SAPI and Qt voices, one-time story execution, spoken notices for missing or already completed jumps, WAV export with mixed bridge ambience, optional MP3 export through FFmpeg, reproducible seeds, detailed logs, external contrast-checked JSON themes, responsive UI scaling and optional storyboard/image prompts. Those prompts can be generated locally or refined through a running local Ollama model. Install Python 3.10 or newer, extract the archive and run `install_windows.bat`.
+The application supports Windows OneCore/WinRT, SAPI and Qt voices, WAV/optional MP3 export, reproducible seeds, logs, external themes and optional storyboards. Output can be generated either as an executable image-series instruction or as a complete illustrated-audio-story production brief with per-scene narration, audio-driven scene timing, crossfades, MP4 and ZIP packaging requirements. Target profiles adapt the workflow for ChatGPT, Grok, Gemini, Stable Diffusion or a custom system, with an offline Python/FFmpeg fallback when direct media creation is unavailable. Install Python 3.10 or newer, extract the archive and run `install_windows.bat`.

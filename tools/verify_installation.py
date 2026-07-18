@@ -11,6 +11,9 @@ if str(ROOT) not in sys.path:
 from story_engine import APP_VERSION, StoryEngine, StoryEngineError  # noqa: E402
 from audio_mixer import read_pcm_wav  # noqa: E402
 from theme_manager import ThemeManager  # noqa: E402
+from prompt_profile_manager import PromptProfileManager  # noqa: E402
+from storyboard_generator import generate_storyboard, render_storyboard_text  # noqa: E402
+from media_package_generator import MediaPackageSettings, render_media_package_text  # noqa: E402
 
 
 def main() -> int:
@@ -41,6 +44,15 @@ def main() -> int:
     print(f"Themes: {len(manager.themes)}")
     errors.extend(f"Theme: {message}" for message in manager.errors)
 
+    prompt_manager = PromptProfileManager(ROOT / "prompt_profiles")
+    prompt_manager.load()
+    print(f"Prompt profiles: {len(prompt_manager.profiles)}")
+    errors.extend(f"Prompt profile: {message}" for message in prompt_manager.errors)
+    expected_prompt_profiles = {"ChatGPT", "Grok", "Gemini", "Stable Diffusion", "Andere"}
+    missing_profiles = expected_prompt_profiles.difference(prompt_manager.profiles)
+    if missing_profiles:
+        errors.append("Missing target AI prompt profiles: " + ", ".join(sorted(missing_profiles)))
+
     required_files = (
         ROOT / "app.py",
         ROOT / "data" / "sounds" / "background.wav",
@@ -49,6 +61,10 @@ def main() -> int:
         ROOT / "tools" / "synthesize_sapi.ps1",
         ROOT / "audio_export.py",
         ROOT / "audio_mixer.py",
+        ROOT / "storyboard_generator.py",
+        ROOT / "prompt_profile_manager.py",
+        ROOT / "ollama_client.py",
+        ROOT / "media_package_generator.py",
         ROOT / "data" / "vars" / "jump_missing_story.ini",
         ROOT / "data" / "vars" / "jump_story_already_used.ini",
     )
@@ -69,6 +85,29 @@ def main() -> int:
         sample = engine.generate(seed=60_001)
         if not sample.display_story or len(sample.selections) < 80:
             errors.append("Deterministic test generation returned incomplete output")
+        scenes = generate_storyboard(sample, 8)
+        for profile_name in expected_prompt_profiles:
+            profile = prompt_manager.get(profile_name)
+            if profile is None:
+                continue
+            document = render_storyboard_text(
+                scenes,
+                source="Verification",
+                profile=profile,
+                custom_target_name="Custom target" if profile_name == "Andere" else "",
+            )
+            if "AUSFÜHRBARER BILDSERIEN-AUFTRAG" not in document or "scene_01.png" not in document:
+                errors.append(f"Prompt profile render failed: {profile_name}")
+            package_document = render_media_package_text(
+                scenes,
+                full_story=sample.display_story,
+                source="Verification",
+                profile=profile,
+                custom_target_name="Custom target" if profile_name == "Andere" else "",
+                settings=MediaPackageSettings(voice_name="Verification Voice"),
+            )
+            if "GESAMTPAKET-PRODUKTIONSAUFTRAG" not in package_document or "scene_01.wav" not in package_document:
+                errors.append(f"Media package render failed: {profile_name}")
     except StoryEngineError as exc:
         errors.append(f"Test generation failed: {exc}")
 
