@@ -4,6 +4,8 @@
 
 Der **SciFi-Generator** ist eine lokale Windows-Desktopanwendung, die zufällige Science-Fiction-Missionsberichte aus frei bearbeitbaren Textbausteinen zusammensetzt und anschließend mit einer installierten Text-to-Speech-Stimme vorliest.
 
+<img width="451" height="903" alt="623465651-0dc2f59b-acfa-4bcb-8ba5-84aa76baa632" src="https://github.com/user-attachments/assets/03589b1b-6f22-44e4-bb3c-14a827df59a1" />
+
 Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 
 1. **Sektor-Sprung berechnen** erzeugt eine neue Geschichte.
