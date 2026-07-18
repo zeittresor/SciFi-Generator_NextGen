@@ -1,5 +1,14 @@
 # Changelog
 
+## 60.5 — 2026-07-18
+
+- Added an optional storyboard / image-prompt feature with 6 to 10 key scenes per generated story.
+- Added a dedicated **Bild-Prompts** tab and a hidden-by-default prompt view alongside story and generation log.
+- Added local rule-based prompt generation that derives scene prompts directly from the known story structure.
+- Added optional Ollama integration for refining the locally prepared prompts when a local Ollama server and model are available.
+- Added Ollama model refresh, diagnostics, prompt export and graceful fallback to local prompt generation.
+- Updated the German-first README and package tests to cover the new storyboard workflow.
+
 ## 60.4 — 2026-07-18
 
 - Added explicit jump lifecycle tracking: a calculated story can be completed once and then requires a newly calculated sector jump.

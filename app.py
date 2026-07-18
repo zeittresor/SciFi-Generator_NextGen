@@ -5,7 +5,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from PySide6.QtCore import Qt, QThread, QTimer, QUrl
+from PySide6.QtCore import Qt, QObject, Signal, QThread, QTimer, QUrl
 from PySide6.QtGui import QAction, QDesktopServices, QFont, QIcon, QResizeEvent
 from PySide6.QtMultimedia import QAudioOutput, QMediaPlayer
 from PySide6.QtTextToSpeech import QTextToSpeech
@@ -18,6 +18,8 @@ from PySide6.QtWidgets import (
 
 from audio_export import AudioExportRequest, AudioExportWorker, find_ffmpeg
 from story_engine import APP_VERSION, GenerationResult, StoryEngine, StoryEngineError
+from storyboard_generator import StoryboardScene, generate_storyboard, render_storyboard_text
+from ollama_client import OllamaClient, OllamaClientError
 from theme_manager import ThemeManager
 from tts_services import SapiTtsService, WinRtTtsService
 
@@ -60,6 +62,52 @@ QScrollBar:horizontal {{ height: {px(14)}px; }}
 """
 
 
+class StoryboardGenerationWorker(QObject):
+    progress = Signal(int, str)
+    finished = Signal(object, str, str, str)
+    error = Signal(str)
+
+    def __init__(self, story_text: str, local_scenes: list[StoryboardScene], use_ollama: bool, model_name: str):
+        super().__init__()
+        self.story_text = story_text
+        self.local_scenes = local_scenes
+        self.use_ollama = use_ollama
+        self.model_name = model_name
+        self._canceled = False
+
+    def cancel(self) -> None:
+        self._canceled = True
+
+    def run(self) -> None:
+        if self._canceled:
+            return
+        self.progress.emit(15, "Storyboard wird vorbereitet …")
+        scenes = self.local_scenes
+        source = "Lokal"
+        model = ""
+        note = ""
+        if self.use_ollama and self.model_name.strip():
+            self.progress.emit(45, "Ollama verfeinert die Bild-Prompts …")
+            try:
+                client = OllamaClient()
+                scenes = client.generate_storyboard_prompts(
+                    self.story_text,
+                    self.local_scenes,
+                    self.model_name.strip(),
+                )
+                source = "Ollama"
+                model = self.model_name.strip()
+            except OllamaClientError as exc:
+                note = str(exc)
+                source = "Lokal"
+                model = ""
+        if self._canceled:
+            return
+        self.progress.emit(100, "Bild-Prompts bereit.")
+        self.finished.emit(scenes, source, model, note)
+
+
+
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
@@ -83,6 +131,12 @@ class MainWindow(QMainWindow):
         self._export_thread: QThread | None = None
         self._export_worker: AudioExportWorker | None = None
         self._export_dialog: QProgressDialog | None = None
+        self.storyboard_scenes: list[StoryboardScene] = []
+        self.storyboard_text = ""
+        self.ollama_client = OllamaClient()
+        self._storyboard_thread: QThread | None = None
+        self._storyboard_worker: StoryboardGenerationWorker | None = None
+        self._storyboard_dialog: QProgressDialog | None = None
 
         app = QApplication.instance()
         self._base_app_font = QFont(app.font())
@@ -131,6 +185,7 @@ class MainWindow(QMainWindow):
         self._validate_installation()
         self.winrt_service.refresh_voices()
         QTimer.singleShot(0, self._update_ui_scale)
+        QTimer.singleShot(150, self.refresh_ollama_models)
 
     def _build_ui(self) -> None:
         self.setWindowTitle(f"{APP_NAME} v{APP_VERSION}")
@@ -155,8 +210,13 @@ class MainWindow(QMainWindow):
         self.log_edit = QTextEdit()
         self.log_edit.setReadOnly(True)
         self.log_edit.setAcceptRichText(False)
+        self.prompts_edit = QTextEdit()
+        self.prompts_edit.setReadOnly(True)
+        self.prompts_edit.setAcceptRichText(False)
+        self.prompts_edit.setPlaceholderText("Hier können optional Bild-Prompts bzw. ein Storyboard angezeigt werden …")
         self.tabs.addTab(self.story_edit, "Story")
         self.tabs.addTab(self.log_edit, "Auswahlprotokoll")
+        self.tabs.addTab(self.prompts_edit, "Bild-Prompts")
         self.tabs.setMinimumWidth(570)
         self.tabs.hide()
         root.addWidget(self.tabs, 2)
@@ -187,8 +247,8 @@ class MainWindow(QMainWindow):
         )
         self.execute_button.clicked.connect(self.execute_jump)
         self.execute_button.setEnabled(False)
-        self.toggle_story_button = QPushButton("Story / Log einblenden  >")
-        self.toggle_story_button.setToolTip("Blendet die berechnete Story und das Auswahlprotokoll ein oder aus.")
+        self.toggle_story_button = QPushButton("Story / Log / Prompts einblenden  >")
+        self.toggle_story_button.setToolTip("Blendet die berechnete Story, das Auswahlprotokoll und optionale Bild-Prompts ein oder aus.")
         self.toggle_story_button.clicked.connect(self.toggle_story_panel)
         action_layout.addWidget(self.generate_button)
         action_layout.addWidget(self.execute_button)
@@ -291,6 +351,49 @@ class MainWindow(QMainWindow):
         options_layout.addLayout(seed_form)
         right.addWidget(options_group)
 
+        storyboard_group = QGroupBox("Bildserie / Storyboard")
+        storyboard_layout = QVBoxLayout(storyboard_group)
+        storyboard_form = QFormLayout()
+        storyboard_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        storyboard_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
+        self.prompt_mode_combo = QComboBox()
+        self.prompt_mode_combo.addItems(["Lokal (regelbasiert)", "Ollama (lokales Modell)"])
+        self.prompt_mode_combo.currentIndexChanged.connect(self._update_storyboard_mode_controls)
+        storyboard_form.addRow("Prompt-Modus:", self.prompt_mode_combo)
+        self.scene_count_spin = QSpinBox()
+        self.scene_count_spin.setRange(6, 10)
+        self.scene_count_spin.setValue(8)
+        storyboard_form.addRow("Schlüsselszenen:", self.scene_count_spin)
+        self.ollama_model_combo = QComboBox()
+        self.ollama_model_combo.setEditable(True)
+        self.ollama_model_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+        self.ollama_model_combo.setMinimumContentsLength(18)
+        storyboard_form.addRow("Ollama-Modell:", self.ollama_model_combo)
+        storyboard_layout.addLayout(storyboard_form)
+
+        storyboard_button_row = QHBoxLayout()
+        self.refresh_ollama_button = QPushButton("Modelle prüfen")
+        self.refresh_ollama_button.setToolTip("Prüft, ob ein lokaler Ollama-Server läuft, und liest die verfügbaren Modelle ein.")
+        self.refresh_ollama_button.clicked.connect(self.refresh_ollama_models)
+        self.generate_prompts_button = QPushButton("Bild-Prompts erzeugen")
+        self.generate_prompts_button.setToolTip("Erzeugt optionale Bild-Prompts / ein Storyboard zur aktuellen Story. Diese Texte werden nicht vorgelesen.")
+        self.generate_prompts_button.clicked.connect(self.generate_storyboard_prompts)
+        storyboard_button_row.addWidget(self.refresh_ollama_button)
+        storyboard_button_row.addWidget(self.generate_prompts_button)
+        storyboard_layout.addLayout(storyboard_button_row)
+
+        storyboard_save_row = QHBoxLayout()
+        self.save_prompts_button = QPushButton("Bild-Prompts speichern …")
+        self.save_prompts_button.clicked.connect(self.save_storyboard_prompts)
+        self.save_prompts_button.setEnabled(False)
+        storyboard_save_row.addWidget(self.save_prompts_button)
+        storyboard_layout.addLayout(storyboard_save_row)
+
+        self.storyboard_info_label = QLabel("Optional: Lokal sofort erzeugbar oder – falls verfügbar – über Ollama verfeinerbar.")
+        self.storyboard_info_label.setWordWrap(True)
+        storyboard_layout.addWidget(self.storyboard_info_label)
+        right.addWidget(storyboard_group)
+
         utility_row = QHBoxLayout()
         self.save_button = QPushButton("Speichern …")
         self.save_button.clicked.connect(self.save_story)
@@ -334,6 +437,7 @@ class MainWindow(QMainWindow):
 
         self._populate_theme_combo()
         self._build_menus()
+        self._update_storyboard_mode_controls()
 
     def resizeEvent(self, event: QResizeEvent) -> None:
         super().resizeEvent(event)
@@ -377,6 +481,9 @@ class MainWindow(QMainWindow):
         export_audio_action = QAction("Story als Audiodatei speichern …", self)
         export_audio_action.triggered.connect(self.save_story_audio)
         file_menu.addAction(export_audio_action)
+        export_prompts_action = QAction("Bild-Prompts speichern …", self)
+        export_prompts_action.triggered.connect(self.save_storyboard_prompts)
+        file_menu.addAction(export_prompts_action)
         open_vars = QAction("Satzteil-Ordner öffnen", self)
         open_vars.triggered.connect(lambda: self._open_path(VARS_DIR))
         file_menu.addAction(open_vars)
@@ -392,7 +499,7 @@ class MainWindow(QMainWindow):
         file_menu.addAction(quit_action)
 
         view_menu = self.menuBar().addMenu("Ansicht")
-        toggle_action = QAction("Story / Log ein- oder ausblenden", self)
+        toggle_action = QAction("Story / Log / Prompts ein- oder ausblenden", self)
         toggle_action.triggered.connect(self.toggle_story_panel)
         view_menu.addAction(toggle_action)
         open_themes = QAction("Theme-Ordner öffnen", self)
@@ -403,6 +510,9 @@ class MainWindow(QMainWindow):
         view_menu.addAction(reload_themes)
 
         help_menu = self.menuBar().addMenu("Hilfe")
+        ollama_diag = QAction("Ollama / Storyboard prüfen", self)
+        ollama_diag.triggered.connect(self.show_ollama_diagnostics)
+        help_menu.addAction(ollama_diag)
         voice_diag = QAction("TTS-Stimmendiagnose", self)
         voice_diag.triggered.connect(self.show_voice_diagnostics)
         help_menu.addAction(voice_diag)
@@ -430,11 +540,11 @@ class MainWindow(QMainWindow):
         showing = self.tabs.isVisible()
         if showing:
             self.tabs.hide()
-            self.toggle_story_button.setText("Story / Log einblenden  >")
+            self.toggle_story_button.setText("Story / Log / Prompts einblenden  >")
             self.resize(BASE_COMPACT_WIDTH, self.height())
         else:
             self.tabs.show()
-            self.toggle_story_button.setText("<  Story / Log ausblenden")
+            self.toggle_story_button.setText("<  Story / Log / Prompts ausblenden")
             self.resize(max(1020, self.width() + 630), max(650, self.height()))
 
     def _load_qt_voices(self) -> None:
@@ -554,6 +664,12 @@ class MainWindow(QMainWindow):
         self.saved_voice_backend = str(settings.get("voice_backend", ""))
         self.saved_voice_id = str(settings.get("voice_id", ""))
         self.saved_voice_name = str(settings.get("voice_name", ""))
+        self.prompt_mode_combo.setCurrentText(str(settings.get("storyboard_mode", "Lokal (regelbasiert)")))
+        self.scene_count_spin.setValue(int(settings.get("storyboard_scene_count", 8)))
+        saved_ollama_model = str(settings.get("ollama_model", ""))
+        if saved_ollama_model:
+            self.ollama_model_combo.addItem(saved_ollama_model)
+            self.ollama_model_combo.setCurrentText(saved_ollama_model)
         theme = str(settings.get("theme", "Legacy Beige"))
         if theme in self.theme_manager.themes:
             self.theme_combo.setCurrentText(theme)
@@ -577,6 +693,9 @@ class MainWindow(QMainWindow):
             "voice_backend": entry.get("backend", ""),
             "voice_id": entry.get("id", ""),
             "voice_name": entry.get("name", ""),
+            "storyboard_mode": self.prompt_mode_combo.currentText(),
+            "storyboard_scene_count": self.scene_count_spin.value(),
+            "ollama_model": self.ollama_model_combo.currentText().strip(),
         }
         try:
             SETTINGS_FILE.write_text(json.dumps(settings, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -624,9 +743,14 @@ class MainWindow(QMainWindow):
         self.stop_playback()
         self.story_completed = False
         self.current_activation_text = ""
+        self.storyboard_scenes = []
+        self.storyboard_text = ""
+        self.prompts_edit.clear()
+        self.save_prompts_button.setEnabled(False)
         self.generate_button.setEnabled(False)
         self.execute_button.setEnabled(False)
         self.audio_export_button.setEnabled(False)
+        self.save_prompts_button.setEnabled(False)
         self.progress.setValue(0)
         seed = self.seed_spin.value() or None
 
@@ -657,6 +781,9 @@ class MainWindow(QMainWindow):
         self.generate_button.setEnabled(True)
         self.execute_button.setEnabled(self.voice_combo.count() > 0)
         self.audio_export_button.setEnabled(self.voice_combo.count() > 0)
+        self.storyboard_info_label.setText(
+            "Optional: Bild-Prompts können jetzt lokal erzeugt oder über Ollama verfeinert werden."
+        )
         if self.write_log.isChecked():
             self._write_generation_log()
 
@@ -1058,6 +1185,205 @@ class MainWindow(QMainWindow):
         if thread is not None:
             thread.deleteLater()
 
+    def _update_storyboard_mode_controls(self) -> None:
+        use_ollama = self.prompt_mode_combo.currentText().startswith("Ollama")
+        self.ollama_model_combo.setEnabled(use_ollama)
+        self.refresh_ollama_button.setEnabled(True)
+        if use_ollama:
+            self.storyboard_info_label.setText(
+                "Ollama-Modus aktiv: Lokale Schlüsselszenen werden vorbereitet und optional von einem laufenden Ollama-Modell verfeinert."
+            )
+        elif not self.storyboard_scenes:
+            self.storyboard_info_label.setText(
+                "Optional: Lokal sofort erzeugbar oder – falls verfügbar – über Ollama verfeinerbar."
+            )
+
+    def refresh_ollama_models(self) -> None:
+        current = self.ollama_model_combo.currentText().strip()
+        self.ollama_model_combo.blockSignals(True)
+        self.ollama_model_combo.clear()
+        try:
+            models = self.ollama_client.list_models()
+        except OllamaClientError as exc:
+            if current:
+                self.ollama_model_combo.addItem(current)
+                self.ollama_model_combo.setCurrentText(current)
+            self.storyboard_info_label.setText(
+                "Ollama wurde nicht gefunden oder antwortet nicht. Lokale Bild-Prompts bleiben weiterhin verfügbar."
+            )
+            self.ollama_model_combo.blockSignals(False)
+            return
+        if not models:
+            if current:
+                self.ollama_model_combo.addItem(current)
+                self.ollama_model_combo.setCurrentText(current)
+            self.storyboard_info_label.setText("Ollama ist erreichbar, aber es wurden keine Modelle gemeldet.")
+            self.ollama_model_combo.blockSignals(False)
+            return
+        self.ollama_model_combo.addItems(models)
+        if current and current in models:
+            self.ollama_model_combo.setCurrentText(current)
+        self.ollama_model_combo.blockSignals(False)
+        self.storyboard_info_label.setText(f"Ollama erreichbar: {len(models)} Modell(e) gefunden.")
+
+    def show_ollama_diagnostics(self) -> None:
+        try:
+            models = self.ollama_client.list_models()
+            lines = ["Ollama-Server: erreichbar", "", "Modelle:"]
+            if models:
+                lines.extend(f"  • {name}" for name in models)
+            else:
+                lines.append("  (keine Modelle gemeldet)")
+        except OllamaClientError as exc:
+            lines = ["Ollama-Server: nicht erreichbar", "", str(exc)]
+        lines.extend(["", "Hinweis: Die Storyboard-Funktion arbeitet immer lokal.", "Wenn Ollama erreichbar ist, können die Bild-Prompts zusätzlich verfeinert werden."])
+        QMessageBox.information(self, "Ollama / Storyboard prüfen", "\n".join(lines))
+
+    def generate_storyboard_prompts(self) -> None:
+        if self._storyboard_thread is not None:
+            self.status_label.setText("Eine Bild-Prompt-Erzeugung läuft bereits.")
+            return
+        if not self.result or not self.story_edit.toPlainText().strip():
+            QMessageBox.information(
+                self,
+                "Keine berechnete Story",
+                "Berechnen Sie zuerst einen Sektor-Sprung, bevor Sie Bild-Prompts erzeugen.",
+            )
+            return
+        local_scenes = generate_storyboard(self.result, self.scene_count_spin.value())
+        use_ollama = self.prompt_mode_combo.currentText().startswith("Ollama")
+        model_name = self.ollama_model_combo.currentText().strip()
+        if use_ollama and not model_name:
+            self.refresh_ollama_models()
+            model_name = self.ollama_model_combo.currentText().strip()
+        if use_ollama and not model_name:
+            QMessageBox.information(
+                self,
+                "Kein Ollama-Modell ausgewählt",
+                "Es wurde kein Ollama-Modell gefunden oder ausgewählt. Die App kann die Bild-Prompts aber weiterhin lokal erzeugen.",
+            )
+            use_ollama = False
+
+        dialog = QProgressDialog("Bild-Prompts werden erzeugt …", "Abbrechen", 0, 100, self)
+        dialog.setWindowTitle(f"{APP_NAME} – Storyboard")
+        dialog.setWindowModality(Qt.WindowModality.WindowModal)
+        dialog.setMinimumDuration(0)
+        dialog.setAutoClose(False)
+        dialog.setAutoReset(False)
+        dialog.setValue(0)
+
+        thread = QThread(self)
+        worker = StoryboardGenerationWorker(self.story_edit.toPlainText(), local_scenes, use_ollama, model_name)
+        worker.moveToThread(thread)
+        thread.started.connect(worker.run)
+        worker.progress.connect(self._storyboard_generation_progress)
+        worker.finished.connect(self._storyboard_generation_finished)
+        worker.error.connect(self._storyboard_generation_failed)
+        worker.finished.connect(thread.quit)
+        worker.error.connect(thread.quit)
+        worker.finished.connect(worker.deleteLater)
+        worker.error.connect(worker.deleteLater)
+        thread.finished.connect(self._storyboard_thread_finished)
+        dialog.canceled.connect(self._cancel_storyboard_generation)
+
+        self._storyboard_thread = thread
+        self._storyboard_worker = worker
+        self._storyboard_dialog = dialog
+        self.generate_prompts_button.setEnabled(False)
+        self.save_prompts_button.setEnabled(False)
+        self.status_label.setText("Bild-Prompts werden erzeugt …")
+        dialog.show()
+        thread.start()
+
+    def _storyboard_generation_progress(self, value: int, message: str) -> None:
+        if self._storyboard_dialog is not None:
+            self._storyboard_dialog.setLabelText(message)
+            self._storyboard_dialog.setValue(value)
+        self.status_label.setText(message)
+
+    def _cancel_storyboard_generation(self) -> None:
+        if self._storyboard_worker is not None:
+            self._storyboard_worker.cancel()
+        if self._storyboard_thread is not None:
+            self._storyboard_thread.quit()
+        if self._storyboard_dialog is not None:
+            self._storyboard_dialog.close()
+        self.status_label.setText("Bild-Prompt-Erzeugung abgebrochen.")
+
+    def _storyboard_generation_finished(self, scenes: object, source: str, model: str, note: str) -> None:
+        scene_list = list(scenes or [])
+        self.storyboard_scenes = scene_list
+        self.storyboard_text = render_storyboard_text(scene_list, source=source, model=model)
+        self.prompts_edit.setPlainText(self.storyboard_text)
+        if not self.tabs.isVisible():
+            self.toggle_story_panel()
+        self.tabs.setCurrentWidget(self.prompts_edit)
+        self.save_prompts_button.setEnabled(bool(scene_list))
+        if self._storyboard_dialog is not None:
+            self._storyboard_dialog.setValue(100)
+            self._storyboard_dialog.close()
+        if note:
+            self.storyboard_info_label.setText(
+                f"Bild-Prompts lokal erzeugt. Ollama-Hinweis: {note}"
+            )
+            self.status_label.setText("Bild-Prompts lokal erzeugt (Ollama-Fallback).")
+        else:
+            self.storyboard_info_label.setText(
+                f"Bild-Prompts bereit ({source}{' / ' + model if model else ''})."
+            )
+            self.status_label.setText("Bild-Prompts wurden erzeugt.")
+
+    def _storyboard_generation_failed(self, message: str) -> None:
+        if self._storyboard_dialog is not None:
+            self._storyboard_dialog.close()
+        self.status_label.setText("Bild-Prompt-Erzeugung fehlgeschlagen.")
+        QMessageBox.critical(self, "Bild-Prompts fehlgeschlagen", message)
+
+    def _storyboard_thread_finished(self) -> None:
+        thread = self._storyboard_thread
+        self._storyboard_thread = None
+        self._storyboard_worker = None
+        self._storyboard_dialog = None
+        self.generate_prompts_button.setEnabled(True)
+        if thread is not None:
+            thread.deleteLater()
+
+    def save_storyboard_prompts(self) -> None:
+        if not self.storyboard_text.strip():
+            QMessageBox.information(self, "Keine Bild-Prompts", "Es gibt noch keine Bild-Prompts zum Speichern.")
+            return
+        default = BASE_DIR / f"scifi_storyboard_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+        filename, _ = QFileDialog.getSaveFileName(
+            self, "Bild-Prompts speichern", str(default),
+            "Textdatei (*.txt);;Markdown (*.md);;JSON (*.json);;Alle Dateien (*)",
+        )
+        if not filename:
+            return
+        path = Path(filename)
+        try:
+            if path.suffix.lower() == ".json":
+                payload = {
+                    "app_version": APP_VERSION,
+                    "scene_count": len(self.storyboard_scenes),
+                    "scenes": [
+                        {
+                            "index": scene.index,
+                            "title": scene.title,
+                            "summary": scene.summary,
+                            "prompt": scene.prompt,
+                            "start_step": scene.start_step,
+                            "end_step": scene.end_step,
+                        }
+                        for scene in self.storyboard_scenes
+                    ],
+                }
+                path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8-sig")
+            else:
+                path.write_text(self.storyboard_text, encoding="utf-8-sig")
+            self.status_label.setText(f"Bild-Prompts gespeichert: {path}")
+        except OSError as exc:
+            QMessageBox.critical(self, "Speicherfehler", str(exc))
+
     def save_story(self) -> None:
         story = self.story_edit.toPlainText()
         if not story.strip():
@@ -1084,8 +1410,12 @@ class MainWindow(QMainWindow):
         self.current_log = ""
         self.story_completed = False
         self.current_activation_text = ""
+        self.storyboard_scenes = []
+        self.storyboard_text = ""
+        self.prompts_edit.clear()
         self.execute_button.setEnabled(self.voice_combo.count() > 0)
         self.audio_export_button.setEnabled(False)
+        self.save_prompts_button.setEnabled(False)
         self.progress.setValue(0)
         self.status_label.setText("Text gelöscht. Bitte nächsten Sektor-Sprung berechnen.")
 
@@ -1105,6 +1435,7 @@ class MainWindow(QMainWindow):
             "Die Stimmensuche kombiniert Windows OneCore/WinRT, native Windows-SAPI und Qt.<br><br>"
             "Berechnete Stories können samt der aktuell eingestellten Brückenatmosphäre als WAV "
             "und bei vorhandenem FFmpeg auch als MP3 exportiert werden.<br><br>"
+            "Zusätzlich können optionale Bild-Prompts bzw. kleine Storyboards lokal oder über Ollama erzeugt werden.<br><br>"
             "Der enthaltene Hintergrundklang ist eine neu erzeugte, generische Sci-Fi-Atmosphäre; "
             "es sind keine Star-Trek-Audiodateien enthalten.<br><br>"
             "Original source / updates: github.com/zeittresor",
@@ -1126,6 +1457,11 @@ class MainWindow(QMainWindow):
                 )
                 event.ignore()
                 return
+        if self._storyboard_worker is not None:
+            self._storyboard_worker.cancel()
+        if self._storyboard_thread is not None:
+            self._storyboard_thread.quit()
+            self._storyboard_thread.wait(2000)
         self.sapi_service.shutdown()
         super().closeEvent(event)
 

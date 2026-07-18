@@ -1,6 +1,6 @@
 # SciFi-Generator
 
-**Aktuelle Version: 60.4**
+**Aktuelle Version: 60.5**
 
 Der **SciFi-Generator** ist eine lokale Windows-Desktopanwendung, die zufällige Science-Fiction-Missionsberichte aus frei bearbeitbaren Textbausteinen zusammensetzt und anschließend mit einer installierten Text-to-Speech-Stimme vorliest.
 
@@ -9,13 +9,7 @@ Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 1. **Sektor-Sprung berechnen** erzeugt eine neue Geschichte.
 2. **Sprung durchführen** liest die bereits berechnete Geschichte vor.
 
-Die Story und das detaillierte Auswahlprotokoll bleiben standardmäßig ausgeblendet und werden nur bei Bedarf über **Story / Log einblenden** geöffnet.
-
-<img width="451" height="903" alt="fhurehjk" src="https://github.com/user-attachments/assets/0dc2f59b-acfa-4bcb-8ba5-84aa76baa632" />
-
-## Example Output (Ton anschalten!):
-
-https://github.com/user-attachments/assets/62fc7715-aa29-4c5a-b296-fa0a8c4d4353
+Die Story, das detaillierte Auswahlprotokoll und optionale Bild-Prompts bleiben standardmäßig ausgeblendet und werden nur bei Bedarf über **Story / Log / Prompts einblenden** geöffnet.
 
 ## Funktionen
 
@@ -36,6 +30,8 @@ https://github.com/user-attachments/assets/62fc7715-aa29-4c5a-b296-fa0a8c4d4353
 - Externe JSON-Themes mit automatischer Kontrastprüfung
 - Frei bearbeitbare Generierungsreihenfolge in `sequence_legacy.json`
 - Projektlokale Python-Umgebung und optionales Wheelhouse für Offline-Installationen
+- Optionales Storyboard mit 6 bis 10 Schlüsselszenen und direkt nutzbaren Bild-Prompts
+- Wahlweise lokale Prompt-Erzeugung oder Verfeinerung über einen laufenden Ollama-Server
 
 ## Schnellstart unter Windows
 
@@ -53,13 +49,26 @@ Der Installer erzeugt eine lokale `.venv`, installiert die benötigten Pakete un
 3. **Sektor-Sprung berechnen** anklicken.
 4. **Sprung durchführen** anklicken, um die Story vorzulesen.
 5. Über **Story als Audiodatei speichern …** kann dieselbe Erzählung mit den aktuellen Lautstärkeeinstellungen exportiert werden.
-6. Über **Story / Log einblenden** kann die Geschichte angesehen, bearbeitet oder gespeichert und das Auswahlprotokoll geprüft werden.
+6. Über **Bild-Prompts erzeugen** kann ein optionales Storyboard mit Schlüsselszenen erzeugt werden.
+7. Über **Story / Log / Prompts einblenden** kann die Geschichte angesehen, bearbeitet oder gespeichert, das Auswahlprotokoll geprüft und das Storyboard angezeigt werden.
 
 Ein berechneter Sektor-Sprung wird nach einer vollständig abgeschlossenen Wiedergabe als durchgeführt markiert. Ein weiterer Klick auf **Sprung durchführen** startet daher nicht dieselbe Story erneut, sondern lässt die ausgewählte Stimme leicht irritiert darauf hinweisen, dass zuerst ein neuer Sprung berechnet werden muss. Wird die Wiedergabe manuell gestoppt oder schlägt sie fehl, darf der aktuelle Sprung erneut gestartet werden.
 
 Der Bedienbereich wird nicht auf eine zu geringe Fensterhöhe zusammengestaucht. Reicht der verfügbare Platz nicht aus, erscheinen automatisch vertikale beziehungsweise horizontale Scrollleisten. Das gilt insbesondere für kleinere Displays, hohe Windows-Skalierungswerte und umfangreiche Stimmennamen.
 
 Wird das Fenster vergrößert, skaliert die Oberfläche automatisch mit: Schrift, Schaltflächen, Eingabefelder, Regler, Abstände, Kontrollkästchen und Scrollleisten werden bis zu einer sinnvollen Obergrenze gemeinsam vergrößert. Beim Verkleinern bleiben die Elemente lesbar und werden nicht unter ihre normale Größe geschrumpft; stattdessen übernimmt der Scrollbereich.
+
+
+## Storyboard / Bild-Prompts
+
+Zusätzlich zur erzählten Story kann der SciFi-Generator auf Wunsch ein kleines Storyboard mit **6 bis 10 Schlüsselszenen** erzeugen. Diese Texte werden **nicht vorgelesen**, sondern nur im optionalen Prompt-Tab angezeigt oder bei Bedarf gespeichert.
+
+Zur Auswahl stehen zwei Modi:
+
+- **Lokal (regelbasiert):** Die App zerlegt die generierte Story anhand der bekannten Missionsabschnitte in Schlüsselszenen und erstellt dafür direkt nutzbare Bild-Prompts.
+- **Ollama (lokales Modell):** Wenn auf dem System ein Ollama-Server läuft, kann ein lokales Modell die vorbereiteten Szenen zusätzlich sprachlich verfeinern. Fällt Ollama aus oder ist kein Modell verfügbar, bleibt die lokale Prompt-Erzeugung weiterhin nutzbar.
+
+Die erzeugten Bild-Prompts eignen sich als Vorlage für externe Bildgeneratoren oder für eine spätere Bildserien-/Slideshow-Funktion. Über **Bild-Prompts speichern …** können sie als TXT, Markdown oder JSON exportiert werden.
 
 ## Audioexport
 
@@ -165,6 +174,6 @@ Für das Gesamtpaket wurde noch keine endgültige Weiterverteilungslizenz festge
 
 ## English summary
 
-**SciFi-Generator v60.4** is a local Windows application that assembles randomized science-fiction mission reports from editable text fragments and narrates them with an installed TTS voice. The original two-step workflow is preserved: **Sektor-Sprung berechnen** generates a story, and **Sprung durchführen** reads it aloud.
+**SciFi-Generator v60.5** is a local Windows application that assembles randomized science-fiction mission reports from editable text fragments and narrates them with an installed TTS voice. The original two-step workflow is preserved: **Sektor-Sprung berechnen** generates a story, and **Sprung durchführen** reads it aloud.
 
-The application supports Windows OneCore/WinRT, SAPI and Qt voices, one-time story execution, spoken notices for missing or already completed jumps, WAV export with mixed bridge ambience, optional MP3 export through FFmpeg, reproducible seeds, detailed logs, external contrast-checked JSON themes and responsive UI scaling. Install Python 3.10 or newer, extract the archive and run `install_windows.bat`.
+The application supports Windows OneCore/WinRT, SAPI and Qt voices, one-time story execution, spoken notices for missing or already completed jumps, WAV export with mixed bridge ambience, optional MP3 export through FFmpeg, reproducible seeds, detailed logs, external contrast-checked JSON themes, responsive UI scaling and optional storyboard/image prompts. Those prompts can be generated locally or refined through a running local Ollama model. Install Python 3.10 or newer, extract the archive and run `install_windows.bat`.

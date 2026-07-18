@@ -81,5 +81,15 @@ class PackageTests(unittest.TestCase):
         self.assertIn("nur einmal vollständig", readme)
 
 
+
+    def test_storyboard_prompt_feature_is_packaged(self):
+        self.assertTrue((ROOT / "storyboard_generator.py").is_file())
+        self.assertTrue((ROOT / "ollama_client.py").is_file())
+        app_source = (ROOT / "app.py").read_text(encoding="utf-8")
+        self.assertIn("Bild-Prompts erzeugen", app_source)
+        self.assertIn("def generate_storyboard_prompts", app_source)
+        self.assertIn("Ollama (lokales Modell)", app_source)
+        self.assertIn("self.prompts_edit", app_source)
+
 if __name__ == "__main__":
     unittest.main()
