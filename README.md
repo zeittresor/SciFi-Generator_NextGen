@@ -1,6 +1,6 @@
 # SciFi-Generator
 
-**Aktuelle Version: 60.7**
+**Aktuelle Version: 60.9**
 
 Der **SciFi-Generator** ist eine lokale Windows-Desktopanwendung, die zufällige Science-Fiction-Missionsberichte aus frei bearbeitbaren Textbausteinen zusammensetzt und anschließend mit einer installierten Text-to-Speech-Stimme vorliest.
 
