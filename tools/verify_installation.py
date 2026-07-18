@@ -104,9 +104,23 @@ def main() -> int:
                 source="Verification",
                 profile=profile,
                 custom_target_name="Custom target" if profile_name == "Andere" else "",
-                settings=MediaPackageSettings(voice_name="Verification Voice"),
+                settings=MediaPackageSettings(
+                    voice_name="Verification Voice",
+                    voice_character="Menschlich / natürlich",
+                    voice_gender="Weiblich",
+                    voice_quality="Beste verfügbare Qualität",
+                ),
             )
-            if "GESAMTPAKET-PRODUKTIONSAUFTRAG" not in package_document or "scene_01.wav" not in package_document:
+            required_package_markers = (
+                "GESAMTPAKET-PRODUKTIONSAUFTRAG",
+                "scene_01.wav",
+                "Stimmcharakter: Menschlich / natürlich",
+                "Stimmliche Wirkung: Weiblich",
+                "TTS-Qualitätsziel: Beste verfügbare Qualität",
+                "Video: 1024x1024, 1:1",
+                "Videofläche: 1024 × 1024 Pixel; Seitenverhältnis 1:1",
+            )
+            if not all(marker in package_document for marker in required_package_markers):
                 errors.append(f"Media package render failed: {profile_name}")
     except StoryEngineError as exc:
         errors.append(f"Test generation failed: {exc}")

@@ -1,5 +1,26 @@
 # Changelog
 
+## 60.9 — 2026-07-19
+
+- Added configurable final-video resolutions for total media-package prompts.
+- Changed the default package resolution to 1024 × 1024 with a 1:1 aspect ratio.
+- Added presets for 512 × 512, 1024 × 1024, 1280 × 720, 1280 × 768, 1920 × 1080, 2560 × 1440 and 3840 × 2160.
+- Added custom width and height fields from 256 to 8192 pixels.
+- Added automatic aspect-ratio calculation and a live format description in the GUI.
+- Added explicit width, height, resolution and aspect-ratio fields to media-package manifests.
+- Added production rules preventing disproportionate stretching and requiring controlled crop, letterbox or pillarbox handling.
+- Persisted the selected resolution profile and custom dimensions in settings.json.
+- Updated examples, README, package validation and automated tests.
+
+## 60.8 — 2026-07-19
+
+- Added total-package voice-character selection: human/natural, neutral or robotic/synthetic.
+- Added selectable feminine, masculine, neutral/androgynous or unrestricted voice presentation.
+- Added a TTS quality target with best-available, high-quality and standard/fast options.
+- Added explicit production rules that prevent low-quality eSpeak/robotic fallbacks when a natural voice is requested.
+- Added compatibility-based fallback handling: unavailable or unsuitable preferred voices must be replaced by the closest matching voice and every substitution must be recorded in the manifest and production log.
+- Extended media-package manifests, saved settings, generated prompts, examples, tests and German-first documentation with the new voice requirements.
+
 ## 60.7 — 2026-07-18
 
 - Added a selectable output type for either a pure image series or a complete illustrated-audio-story production package.

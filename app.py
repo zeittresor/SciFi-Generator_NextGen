@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sys
+from math import gcd
 from datetime import datetime
 from pathlib import Path
 
@@ -48,6 +49,17 @@ BASE_WINDOW_HEIGHT = 720
 BASE_CONTROL_VIEWPORT_WIDTH = 390
 BASE_CONTROL_VIEWPORT_HEIGHT = 680
 MAX_UI_SCALE = 1.50
+
+VIDEO_RESOLUTION_PRESETS = [
+    ("512 × 512 (1:1, kompakt)", 512, 512),
+    ("1024 × 1024 (1:1, Standard)", 1024, 1024),
+    ("1280 × 720 (HD, 16:9)", 1280, 720),
+    ("1280 × 768 (WXGA, 5:3)", 1280, 768),
+    ("1920 × 1080 (Full HD, 16:9)", 1920, 1080),
+    ("2560 × 1440 (QHD, 16:9)", 2560, 1440),
+    ("3840 × 2160 (4K UHD, 16:9)", 3840, 2160),
+    ("Benutzerdefiniert …", 0, 0),
+]
 
 
 def emergency_stylesheet(scale: float = 1.0) -> str:
@@ -159,6 +171,10 @@ class MainWindow(QMainWindow):
         self._storyboard_custom_target = ""
         self._storyboard_output_kind = "Bildserie"
         self._storyboard_transition_seconds = 0.8
+        self._storyboard_video_width = 1024
+        self._storyboard_video_height = 1024
+        self._storyboard_aspect_ratio = "1:1"
+        self._storyboard_media_settings: MediaPackageSettings | None = None
 
         app = QApplication.instance()
         self._base_app_font = QFont(app.font())
@@ -405,6 +421,45 @@ class MainWindow(QMainWindow):
         self.scene_count_spin.setRange(6, 10)
         self.scene_count_spin.setValue(8)
         storyboard_form.addRow("Schlüsselszenen:", self.scene_count_spin)
+
+        self.video_resolution_combo = QComboBox()
+        for label, width, height in VIDEO_RESOLUTION_PRESETS:
+            self.video_resolution_combo.addItem(label, {"width": width, "height": height})
+        self.video_resolution_combo.setCurrentIndex(1)
+        self.video_resolution_combo.setToolTip(
+            "Legt die exakte Zielauflösung des finalen Videos und das Seitenverhältnis der Szenenbilder fest."
+        )
+        self.video_resolution_combo.currentIndexChanged.connect(self._update_video_resolution_controls)
+        storyboard_form.addRow("Videoauflösung:", self.video_resolution_combo)
+        self.video_resolution_label = storyboard_form.labelForField(self.video_resolution_combo)
+
+        self.custom_video_size_widget = QWidget()
+        custom_video_layout = QHBoxLayout(self.custom_video_size_widget)
+        custom_video_layout.setContentsMargins(0, 0, 0, 0)
+        custom_video_layout.setSpacing(6)
+        self.custom_video_width_spin = QSpinBox()
+        self.custom_video_width_spin.setRange(256, 8192)
+        self.custom_video_width_spin.setSingleStep(8)
+        self.custom_video_width_spin.setValue(1024)
+        self.custom_video_width_spin.setSuffix(" px")
+        self.custom_video_height_spin = QSpinBox()
+        self.custom_video_height_spin.setRange(256, 8192)
+        self.custom_video_height_spin.setSingleStep(8)
+        self.custom_video_height_spin.setValue(1024)
+        self.custom_video_height_spin.setSuffix(" px")
+        self.custom_video_width_spin.valueChanged.connect(self._update_video_resolution_controls)
+        self.custom_video_height_spin.valueChanged.connect(self._update_video_resolution_controls)
+        custom_video_layout.addWidget(self.custom_video_width_spin)
+        custom_video_layout.addWidget(QLabel("×"))
+        custom_video_layout.addWidget(self.custom_video_height_spin)
+        storyboard_form.addRow("Eigene Größe:", self.custom_video_size_widget)
+        self.custom_video_size_label = storyboard_form.labelForField(self.custom_video_size_widget)
+
+        self.video_aspect_info_label = QLabel("1:1 — quadratisches Video")
+        self.video_aspect_info_label.setWordWrap(True)
+        storyboard_form.addRow("Seitenverhältnis:", self.video_aspect_info_label)
+        self.video_aspect_info_field_label = storyboard_form.labelForField(self.video_aspect_info_label)
+
         self.transition_spin = QDoubleSpinBox()
         self.transition_spin.setRange(0.0, 5.0)
         self.transition_spin.setDecimals(1)
@@ -414,6 +469,44 @@ class MainWindow(QMainWindow):
         self.transition_spin.setToolTip("Gewünschte Dauer der sanften Überblendung zwischen zwei Szenen im Gesamtpaket.")
         storyboard_form.addRow("Überblendung:", self.transition_spin)
         self.transition_label = storyboard_form.labelForField(self.transition_spin)
+
+        self.package_voice_character_combo = QComboBox()
+        self.package_voice_character_combo.addItems([
+            "Menschlich / natürlich",
+            "Neutral",
+            "Robotisch / synthetisch",
+        ])
+        self.package_voice_character_combo.setToolTip(
+            "Legt fest, ob die Stimme im Gesamtpaket möglichst natürlich wie ein Mensch, neutral oder bewusst robotisch wirken soll."
+        )
+        storyboard_form.addRow("Stimmcharakter:", self.package_voice_character_combo)
+        self.package_voice_character_label = storyboard_form.labelForField(self.package_voice_character_combo)
+
+        self.package_voice_gender_combo = QComboBox()
+        self.package_voice_gender_combo.addItems([
+            "Weiblich",
+            "Männlich",
+            "Neutral / androgyn",
+            "Egal",
+        ])
+        self.package_voice_gender_combo.setToolTip(
+            "Gewünschte stimmliche Wirkung für die Gesamtpaket-Vertonung. Bei einer Ersatzstimme soll diese Vorgabe erhalten bleiben."
+        )
+        storyboard_form.addRow("Stimmliche Wirkung:", self.package_voice_gender_combo)
+        self.package_voice_gender_label = storyboard_form.labelForField(self.package_voice_gender_combo)
+
+        self.package_voice_quality_combo = QComboBox()
+        self.package_voice_quality_combo.addItems([
+            "Beste verfügbare Qualität",
+            "Hohe Qualität",
+            "Standard / schnell",
+        ])
+        self.package_voice_quality_combo.setToolTip(
+            "Bei natürlicher Sprache werden hochwertige beziehungsweise neuronale Stimmen bevorzugt; einfache Roboter-Fallbacks sollen vermieden werden."
+        )
+        storyboard_form.addRow("TTS-Qualität:", self.package_voice_quality_combo)
+        self.package_voice_quality_label = storyboard_form.labelForField(self.package_voice_quality_combo)
+
         self.ollama_model_combo = QComboBox()
         self.ollama_model_combo.setEditable(True)
         self.ollama_model_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
@@ -488,6 +581,7 @@ class MainWindow(QMainWindow):
         self._populate_theme_combo()
         self._build_menus()
         self._update_storyboard_mode_controls()
+        self._update_video_resolution_controls()
         self._update_target_ai_controls()
 
     def resizeEvent(self, event: QResizeEvent) -> None:
@@ -733,7 +827,24 @@ class MainWindow(QMainWindow):
         output_kind = str(settings.get("storyboard_output_kind", "Bildserie"))
         if self.output_kind_combo.findText(output_kind) >= 0:
             self.output_kind_combo.setCurrentText(output_kind)
+        self.custom_video_width_spin.setValue(int(settings.get("package_video_custom_width", 1024)))
+        self.custom_video_height_spin.setValue(int(settings.get("package_video_custom_height", 1024)))
+        resolution_label = str(settings.get("package_video_resolution_preset", "1024 × 1024 (1:1, Standard)"))
+        resolution_index = self.video_resolution_combo.findText(resolution_label)
+        if resolution_index >= 0:
+            self.video_resolution_combo.setCurrentIndex(resolution_index)
+        else:
+            self.video_resolution_combo.setCurrentIndex(1)
         self.transition_spin.setValue(float(settings.get("storyboard_transition_seconds", 0.8)))
+        voice_character = str(settings.get("package_voice_character", "Menschlich / natürlich"))
+        if self.package_voice_character_combo.findText(voice_character) >= 0:
+            self.package_voice_character_combo.setCurrentText(voice_character)
+        voice_gender = str(settings.get("package_voice_gender", "Weiblich"))
+        if self.package_voice_gender_combo.findText(voice_gender) >= 0:
+            self.package_voice_gender_combo.setCurrentText(voice_gender)
+        voice_quality = str(settings.get("package_voice_quality", "Beste verfügbare Qualität"))
+        if self.package_voice_quality_combo.findText(voice_quality) >= 0:
+            self.package_voice_quality_combo.setCurrentText(voice_quality)
         target_ai = str(settings.get("storyboard_target_ai", "ChatGPT"))
         if target_ai in self.prompt_profile_manager.profiles:
             self.target_ai_combo.setCurrentText(target_ai)
@@ -771,6 +882,12 @@ class MainWindow(QMainWindow):
             "storyboard_mode": self.prompt_mode_combo.currentText(),
             "storyboard_output_kind": self.output_kind_combo.currentText(),
             "storyboard_transition_seconds": self.transition_spin.value(),
+            "package_video_resolution_preset": self.video_resolution_combo.currentText(),
+            "package_video_custom_width": self.custom_video_width_spin.value(),
+            "package_video_custom_height": self.custom_video_height_spin.value(),
+            "package_voice_character": self.package_voice_character_combo.currentText(),
+            "package_voice_gender": self.package_voice_gender_combo.currentText(),
+            "package_voice_quality": self.package_voice_quality_combo.currentText(),
             "storyboard_target_ai": self.target_ai_combo.currentText(),
             "storyboard_custom_target": self.custom_target_edit.text().strip(),
             "storyboard_scene_count": self.scene_count_spin.value(),
@@ -1303,6 +1420,44 @@ class MainWindow(QMainWindow):
         if thread is not None:
             thread.deleteLater()
 
+    @staticmethod
+    def _aspect_ratio_text(width: int, height: int) -> str:
+        divisor = gcd(max(1, width), max(1, height))
+        return f"{width // divisor}:{height // divisor}"
+
+    def _selected_video_resolution(self) -> tuple[int, int, str]:
+        data = self.video_resolution_combo.currentData() or {}
+        width = int(data.get("width", 0))
+        height = int(data.get("height", 0))
+        if width <= 0 or height <= 0:
+            width = self.custom_video_width_spin.value()
+            height = self.custom_video_height_spin.value()
+        return width, height, self._aspect_ratio_text(width, height)
+
+    def _update_video_resolution_controls(self) -> None:
+        if not hasattr(self, "video_resolution_combo"):
+            return
+        is_package = self.output_kind_combo.currentText().startswith("Gesamtpaket")
+        data = self.video_resolution_combo.currentData() or {}
+        is_custom = int(data.get("width", 0)) <= 0 or int(data.get("height", 0)) <= 0
+        show_custom = is_package and is_custom
+        self.custom_video_size_widget.setVisible(show_custom)
+        self.custom_video_size_widget.setEnabled(show_custom)
+        if self.custom_video_size_label is not None:
+            self.custom_video_size_label.setVisible(show_custom)
+        width, height, ratio = self._selected_video_resolution()
+        if ratio == "1:1":
+            description = "quadratisches Video"
+        elif ratio == "16:9":
+            description = "Breitbild 16:9"
+        elif width > height:
+            description = "Breitbild"
+        elif height > width:
+            description = "Hochformat"
+        else:
+            description = "benutzerdefiniertes Format"
+        self.video_aspect_info_label.setText(f"{ratio} — {description}; {width} × {height} px")
+
     def _update_target_ai_controls(self) -> None:
         profile = self._selected_prompt_profile()
         is_other = bool(profile and profile.profile_id == "other")
@@ -1316,6 +1471,18 @@ class MainWindow(QMainWindow):
         self.transition_spin.setEnabled(is_package)
         if self.transition_label is not None:
             self.transition_label.setVisible(is_package)
+        for widget, label in (
+            (self.video_resolution_combo, self.video_resolution_label),
+            (self.video_aspect_info_label, self.video_aspect_info_field_label),
+            (self.package_voice_character_combo, self.package_voice_character_label),
+            (self.package_voice_gender_combo, self.package_voice_gender_label),
+            (self.package_voice_quality_combo, self.package_voice_quality_label),
+        ):
+            widget.setVisible(is_package)
+            widget.setEnabled(is_package)
+            if label is not None:
+                label.setVisible(is_package)
+        self._update_video_resolution_controls()
         self.generate_prompts_button.setText(
             "Gesamtpaket-Prompt erzeugen" if is_package else "Bild-Prompts erzeugen"
         )
@@ -1328,7 +1495,9 @@ class MainWindow(QMainWindow):
             hint = (
                 f"Ziel: {target_name}. Die Ausgabe fordert eine vollständige illustrierte Audiogeschichte an: "
                 "Szenenbilder, getrennte TTS-Audios, an die Audiodauer angepasste Bildabschnitte, sanfte Übergänge, "
-                "fertiges Video und möglichst ein ZIP-Paket. Falls direkte Medienerzeugung fehlt, wird ein Offline-Skript verlangt."
+                "fertiges Video und möglichst ein ZIP-Paket. Die gewählte Videoauflösung, das daraus abgeleitete Seitenverhältnis, "
+                "Stimmcharakter, stimmliche Wirkung und Qualitätsziel werden verbindlich in den Auftrag übernommen. "
+                "Falls direkte Medienerzeugung fehlt, wird ein Offline-Skript verlangt."
             )
         elif profile and profile.is_diffusion:
             hint = (
@@ -1421,6 +1590,12 @@ class MainWindow(QMainWindow):
         self._storyboard_custom_target = custom_target_name
         self._storyboard_output_kind = self.output_kind_combo.currentText()
         self._storyboard_transition_seconds = self.transition_spin.value()
+        (
+            self._storyboard_video_width,
+            self._storyboard_video_height,
+            self._storyboard_aspect_ratio,
+        ) = self._selected_video_resolution()
+        self._storyboard_media_settings = self._current_media_package_settings()
         local_scenes = generate_storyboard(self.result, self.scene_count_spin.value())
         use_ollama = self.prompt_mode_combo.currentText().startswith("Ollama")
         model_name = self.ollama_model_combo.currentText().strip()
@@ -1497,9 +1672,14 @@ class MainWindow(QMainWindow):
         voice = self.voice_combo.currentData() or {}
         backend_key = str(voice.get("backend", ""))
         backend_name = BACKEND_LABELS.get(backend_key, backend_key or "Systemstandard")
+        width = max(256, int(self._storyboard_video_width))
+        height = max(256, int(self._storyboard_video_height))
+        aspect_ratio = self._storyboard_aspect_ratio or self._aspect_ratio_text(width, height)
         return MediaPackageSettings(
-            aspect_ratio="16:9",
-            resolution="1920x1080",
+            aspect_ratio=aspect_ratio,
+            resolution=f"{width}x{height}",
+            width=width,
+            height=height,
             fps=30,
             transition_seconds=self._storyboard_transition_seconds,
             output_video="scifi_story.mp4",
@@ -1508,6 +1688,9 @@ class MainWindow(QMainWindow):
             voice_backend=backend_name,
             speech_rate=self.rate_slider.value(),
             voice_volume=self.voice_volume.value(),
+            voice_character=self.package_voice_character_combo.currentText(),
+            voice_gender=self.package_voice_gender_combo.currentText(),
+            voice_quality=self.package_voice_quality_combo.currentText(),
             background_enabled=self.background_check.isChecked() and SOUND_FILE.is_file(),
             background_volume=self.background_volume.value(),
             background_filename=SOUND_FILE.name,
@@ -1529,7 +1712,7 @@ class MainWindow(QMainWindow):
                 model=model,
                 profile=profile,
                 custom_target_name=self._storyboard_custom_target,
-                settings=self._current_media_package_settings(),
+                settings=self._storyboard_media_settings or self._current_media_package_settings(),
             )
         else:
             self.storyboard_text = render_storyboard_text(
@@ -1602,7 +1785,7 @@ class MainWindow(QMainWindow):
                 profile = self.prompt_profile_manager.get(self._storyboard_profile_name)
                 target_name = self._storyboard_custom_target or self._storyboard_profile_name
                 if package_mode and profile:
-                    settings = self._current_media_package_settings()
+                    settings = self._storyboard_media_settings or self._current_media_package_settings()
                     payload = build_media_manifest(
                         self.storyboard_scenes,
                         target_name=target_name,
@@ -1699,6 +1882,7 @@ class MainWindow(QMainWindow):
             "Zusätzlich können ausführbare Bildserien-Aufträge oder vollständige Gesamtpaket-Prompts für "
             "Szenenbilder, TTS-Audio, Videozusammenschnitt und ZIP-Ausgabe erzeugt werden. Die Ausgabe wird für "
             "ChatGPT, Grok, Gemini, Stable Diffusion oder andere Systeme angepasst. "
+            "Bei Gesamtpaketen können außerdem Videoauflösung und Seitenverhältnis sowie Stimmcharakter, stimmliche Wirkung und TTS-Qualitätsziel getrennt vorgegeben werden. "
             "Die Zielprofile liegen extern im Ordner <code>prompt_profiles</code>.<br><br>"
             "Der enthaltene Hintergrundklang ist eine neu erzeugte, generische Sci-Fi-Atmosphäre; "
             "es sind keine Star-Trek-Audiodateien enthalten.<br><br>"

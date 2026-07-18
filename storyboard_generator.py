@@ -189,6 +189,13 @@ def build_visual_bible(scenes: list[StoryboardScene], aspect_ratio: str = "16:9"
     alien_body = _find_scene_summary(scenes, "erste alien", "alien-anatomie")
     alien_face = _find_scene_summary(scenes, "alien-gesicht")
 
+    if aspect_ratio == "1:1":
+        format_text = "Quadratisches Format 1:1"
+    elif aspect_ratio == "16:9":
+        format_text = "Breitbild 16:9"
+    else:
+        format_text = f"Zielformat {aspect_ratio}"
+
     entries = [
         (
             "Bildstil",
@@ -197,7 +204,7 @@ def build_visual_bible(scenes: list[StoryboardScene], aspect_ratio: str = "16:9"
         ),
         (
             "Kameraformat",
-            f"Breitbild {aspect_ratio}; jede Szene als eigenständiger Filmstill, keine Collage und kein Mehrfachpanel.",
+            f"{format_text}; jede Szene als eigenständiger Filmstill, keine Collage und kein Mehrfachpanel.",
         ),
         (
             "Raumschiff",

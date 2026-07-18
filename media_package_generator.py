@@ -9,8 +9,10 @@ from storyboard_generator import StoryboardScene, build_visual_bible
 
 @dataclass(frozen=True)
 class MediaPackageSettings:
-    aspect_ratio: str = "16:9"
-    resolution: str = "1920x1080"
+    aspect_ratio: str = "1:1"
+    resolution: str = "1024x1024"
+    width: int = 1024
+    height: int = 1024
     fps: int = 30
     transition_seconds: float = 0.8
     output_video: str = "scifi_story.mp4"
@@ -19,6 +21,9 @@ class MediaPackageSettings:
     voice_backend: str = "unbekannt"
     speech_rate: int = 0
     voice_volume: int = 100
+    voice_character: str = "Menschlich / natürlich"
+    voice_gender: str = "Weiblich"
+    voice_quality: str = "Beste verfügbare Qualität"
     background_enabled: bool = True
     background_volume: int = 18
     background_filename: str = "background.wav"
@@ -30,6 +35,8 @@ def _format_profile_text(value: str, *, scene_count: int, settings: MediaPackage
         scene_count_padded=f"{scene_count:02d}",
         aspect_ratio=settings.aspect_ratio,
         resolution=settings.resolution,
+        width=settings.width,
+        height=settings.height,
         fps=settings.fps,
         transition_seconds=f"{settings.transition_seconds:.2f}".rstrip("0").rstrip("."),
         output_video=settings.output_video,
@@ -38,6 +45,9 @@ def _format_profile_text(value: str, *, scene_count: int, settings: MediaPackage
         voice_backend=settings.voice_backend,
         speech_rate=settings.speech_rate,
         voice_volume=settings.voice_volume,
+        voice_character=settings.voice_character,
+        voice_gender=settings.voice_gender,
+        voice_quality=settings.voice_quality,
         background_volume=settings.background_volume,
         background_filename=settings.background_filename,
     )
@@ -61,6 +71,8 @@ def build_media_manifest(
         "target_mode": profile.mode,
         "aspect_ratio": settings.aspect_ratio,
         "resolution": settings.resolution,
+        "width": settings.width,
+        "height": settings.height,
         "fps": settings.fps,
         "transition_seconds": settings.transition_seconds,
         "voice": {
@@ -68,6 +80,10 @@ def build_media_manifest(
             "backend": settings.voice_backend,
             "rate": settings.speech_rate,
             "volume": settings.voice_volume,
+            "character": settings.voice_character,
+            "gender_expression": settings.voice_gender,
+            "quality_target": settings.voice_quality,
+            "fallback_policy": "Use the closest available voice matching character, gender expression and quality; log every substitution.",
         },
         "background": {
             "enabled": settings.background_enabled,
@@ -131,6 +147,7 @@ def render_media_package_text(
         f"Video: {settings.resolution}, {settings.aspect_ratio}, {settings.fps} fps",
         f"Übergang: sanfte Überblendung von {transition} Sekunden",
         f"TTS-Vorgabe: {settings.voice_name} [{settings.voice_backend}], Tempo {settings.speech_rate}, Lautstärke {settings.voice_volume}%",
+        f"Stimmcharakter: {settings.voice_character}; stimmliche Wirkung: {settings.voice_gender}; Qualitätsziel: {settings.voice_quality}",
         f"Brückenatmosphäre: {background_description}",
         "",
         profile.package_header_title,
@@ -143,8 +160,13 @@ def render_media_package_text(
 
     generic_rules = [
         "Erzeuge für jede der {scene_count} nummerierten Szenen genau ein separates, visuell konsistentes Bild im Seitenverhältnis {aspect_ratio}.",
+        "Die Zielauflösung des finalen Videos ist exakt {resolution} Pixel. Erzeuge die Szenenbilder möglichst direkt in dieser Auflösung oder mindestens im identischen Seitenverhältnis; keine Verzerrung und kein unkontrolliertes Abschneiden wichtiger Bildinhalte.",
+        "Falls Quellbilder nicht exakt zum Zielseitenverhältnis passen, passe sie durch kontrolliertes Cropping oder dezente Letterbox-/Pillarbox-Flächen an. Strecke Bilder niemals disproportional.",
         "Erzeuge für jede Szene eine eigene Audiodatei scene_XX.wav und sprich ausschließlich den dort angegebenen NARRATIONSTEXT; Zusammenfassung und Bildprompt dürfen nicht mitgesprochen werden.",
         "Verwende über alle Szenen hinweg dieselbe Stimme. Nutze bevorzugt die eigene native Sprachausgabe des Zielsystems, sofern sie Audiodateien exportieren kann; andernfalls verwende {voice_name} über {voice_backend}, mit Tempo {speech_rate} und Lautstärke {voice_volume} Prozent.",
+        "Die Stimme muss die gewünschte Wirkung {voice_gender} und den Charakter {voice_character} besitzen. Das Qualitätsziel lautet {voice_quality}. Diese Vorgaben gelten auch für jede Ersatzstimme.",
+        "Wenn der Charakter 'Menschlich / natürlich' gewählt wurde, nutze eine hochwertige natürliche beziehungsweise neuronale Stimme und vermeide grobe eSpeak-, monotone Roboter- oder stark metallische Ersatzstimmen. Robotische Nachbearbeitung ist nur beim ausdrücklich gewählten robotischen Charakter zulässig.",
+        "Ist die bevorzugte Stimme nicht verfügbar oder widerspricht sie den gewählten Eigenschaften, wähle die bestmögliche passende Ersatzstimme. Eine Abweichung bei Stimme, Charakter oder stimmlicher Wirkung muss in manifest.json und production.log dokumentiert werden; nicht stillschweigend auf eine anders wirkende Stimme wechseln.",
         "Passe die sichtbare Dauer jeder Szene an die tatsächliche Dauer ihrer Audiodatei an. Das Bild bleibt während des zugehörigen Textabschnitts sichtbar; dezente langsame Zoom- oder Schwenkbewegungen sind zulässig.",
         "Blende beim Wechsel zur nächsten Szene sanft über. Verwende eine Crossfade-Dauer von ungefähr {transition_seconds} Sekunden und vermeide harte Bild- oder Tonsprünge.",
         "Erzeuge die Einzelclips scene_01.mp4 bis scene_{scene_count_padded}.mp4 und füge sie in der nummerierten Reihenfolge ohne vertauschte Szenen zusammen.",
@@ -175,8 +197,14 @@ def render_media_package_text(
         f"TTS-Backend/Fallback: {settings.voice_backend}",
         f"Sprechtempo: {settings.speech_rate}",
         f"Sprachlautstärke: {settings.voice_volume}%",
+        f"Stimmcharakter: {settings.voice_character}",
+        f"Stimmliche Wirkung: {settings.voice_gender}",
+        f"TTS-Qualitätsziel: {settings.voice_quality}",
+        "Ersatzstimmen-Regel: Die gewünschte Natürlichkeit und stimmliche Wirkung haben Vorrang vor einer ungeeigneten technisch verfügbaren Stimme; jede Abweichung protokollieren.",
         f"Hintergrundsound: {background_description}",
-        f"Zielauflösung: {settings.resolution}",
+        f"Zielauflösung: {settings.resolution} Pixel",
+        f"Videofläche: {settings.width} × {settings.height} Pixel; Seitenverhältnis {settings.aspect_ratio}",
+        "Skalierung: Seitenverhältnisse bewahren; keine proportionale Verzerrung. Bei abweichenden Quellen kontrolliert beschneiden oder Letterbox/Pillarbox verwenden.",
         f"Bildrate: {settings.fps} fps",
         f"Szenenübergang: Crossfade ca. {transition} s",
         "Timing: Jede visuelle Szene endet erst nach dem Ende ihrer zugehörigen Sprachausgabe; kein Textabschnitt darf abgeschnitten werden.",

@@ -14,7 +14,7 @@
     "Falls das verwendete Modell mit englischen Prompts zuverlässiger arbeitet, kann eine Promptübersetzung oder Ollama-Verfeinerung aktiviert werden."
   ],
   "scene_prefix": "POSITIVE PROMPT",
-  "scene_suffix": "same recurring spacecraft and world design, visual continuity with previous scene, cinematic 16:9 film still",
+  "scene_suffix": "same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio",
   "negative_prompt": "text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting",
   "output_notes": [
     "Jeder POSITIVE PROMPT ist einzeln zu generieren.",
