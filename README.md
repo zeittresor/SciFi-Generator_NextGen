@@ -25,6 +25,12 @@ Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 
 Die Story, das detaillierte Auswahlprotokoll und optionale Bild-Prompts bleiben standardmäßig ausgeblendet und werden nur bei Bedarf über **Story / Log / Prompts einblenden** geöffnet.
 
+Story Beispielausgaben (nachdem man ein Gesamt-Paket an eine LLM geschickt hat - in diesem Fall nur Bildausgaben):
+
+<img width="1672" height="941" alt="alien1" src="https://github.com/user-attachments/assets/27ae8bcb-5de7-45af-8e02-48f7cc98eba6" />
+
+<img width="1672" height="941" alt="story1" src="https://github.com/user-attachments/assets/355c055d-2db4-4af0-b340-b4707ecd789d" />
+
 ## Funktionen
 
 - Zufällige Science-Fiction-Geschichten aus externen Satzteil-Dateien
