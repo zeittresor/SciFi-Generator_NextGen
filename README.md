@@ -237,6 +237,10 @@ Originalquelle und Updates: [github.com/zeittresor](https://github.com/zeittreso
 
 Für das Gesamtpaket wurde noch keine endgültige Weiterverteilungslizenz festgelegt. Vor einer Weitergabe veränderter Builds oder der enthaltenen Textbestände bitte `LICENSE_NOT_SET.txt` beachten.
 
+## Tips
+
+Falls die eingestellte LLM danach fragt was sie mit der Zip Datei (Gesamt-Packet) anfangen soll, sage ihr "Interpretieren alles so gut es geht. Schau dir den Referenz-Bild Style an und erstell erforderliche Bilder in passendem Style, die im ZIP Archiv enthaltenen Anweisungen und interpretieren diese möglichst sinnvoll den Vorgaben entwprechend und zielführend für die zu erstellende Geschichte. Letztlich setz alles so um ohne Rückfragen wie es aus den Anweisungen hervorgeht. Ich danke dir!".
+
 ---
 
 ## English summary
