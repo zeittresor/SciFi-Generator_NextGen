@@ -1,0 +1,110 @@
+﻿SCIFI-GENERATOR — AUSFÜHRBARER BILDSERIEN-AUFTRAG
+Ziel-KI: ChatGPT
+Prompt-Erzeugung: Lokal
+Anzahl Szenen: 8
+Seitenverhältnis: 16:9
+
+ARBEITSAUFTRAG FÜR CHATGPT-BILDGENERIERUNG
+========================================================================
+Erzeuge aus den nachfolgenden nummerierten Storyboard-Szenen eine zusammenhängende Bildserie. Erzeuge für jeden Szenenabschnitt genau ein separates Bild und beginne direkt mit der Bildgenerierung; liefere keine bloße Analyse oder Zusammenfassung.
+
+VERBINDLICHE REGELN
+1. Erzeuge genau 8 einzelne Bilder, eines pro nummerierter Szene, in der vorgegebenen Reihenfolge.
+2. Verwende für alle Bilder das Seitenverhältnis 16:9.
+3. Erzeuge keine Collage und kein Mehrfachpanel; jede Szene ist eine eigene Bilddatei.
+4. Bewahre dieselben Designs für Raumschiff, Planet, Besatzung, Alien und wiederkehrende Technik über die gesamte Serie.
+5. Verwende frühere erzeugte Bilder als visuelle Referenz für spätere Szenen, soweit das System dies unterstützt.
+6. Keine Schrift, Untertitel, Logos, Benutzeroberflächen oder Wasserzeichen im Bild.
+7. Interpretiere absichtlich phonetische oder fehlerhafte Schreibweisen sinngemäß und bilde sie nicht als Text ab.
+8. Ordne die Ergebnisse eindeutig als scene_01 bis scene_08 zu.
+
+GLOBALE VISUELLE SERIENBIBEL
+========================================================================
+Bildstil: Authentisch wirkende, realistische und cineastische Retro-Science-Fiction mit glaubwürdigen Materialien, dramatischer Beleuchtung, klarer Tiefenstaffelung und einem subtil satirisch-ernsten Ton.
+Kameraformat: Breitbild 16:9; jede Szene als eigenständiger Filmstill, keine Collage und kein Mehrfachpanel.
+Raumschiff: Dasselbe robuste retro-futuristische Forschungs- und Landeschiff in jeder Szene: industrielle Konstruktion, sichtbare Nutzungsspuren, glaubwürdige Triebwerke und wiedererkennbare Silhouette.
+Sternensystem: Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen …
+Planet und Oberfläche: Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort … Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan …
+Wiederkehrendes Alien: Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht … An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen
+Kontinuitätsregel: Ein einmal etabliertes Design für Schiff, Welt, Alien, Raumanzüge und Technik darf in späteren Szenen nicht grundlos verändert werden. Frühere Bilder sind, soweit möglich, als Referenz weiterzuverwenden.
+Ausschlüsse: Keine sichtbare Schrift, Untertitel, Logos, Wasserzeichen oder Benutzeroberflächen. Phonetische Schreibweisen aus der Story sind sinngemäß zu interpretieren und nicht als Text abzubilden.
+
+ZIELSYSTEM-HINWEISE
+========================================================================
+- Dieser Block ist für einen neuen Chat gedacht und enthält den ausdrücklichen Auftrag zur Bildserien-Erzeugung.
+- Bei begrenzter paralleler Bildgenerierung sollen die Szenen nacheinander erzeugt werden.
+
+STORYBOARD-SZENEN
+========================================================================
+
+[01] Warp-Austritt und Systemname / Systemanalyse
+Dateiname: scene_01.png
+Schritte: 1-20
+Zusammenfassung: Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen …
+BILDGENERIERUNGS-AUFTRAG:
+Erzeuge diese Szene jetzt als separates Bild im selben visuellen Universum:
+Szene 1: Warp-Austritt und Systemname / Systemanalyse. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen …. Bildkomposition: Weite Totale des Schiffes beim Austritt aus dem Warp, Blick auf das fremde Sternensystem. Panoramablick auf das Sternensystem mit Sonnen, Planeten und begleitender Sensorscan-Ästhetik. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem
+Halte die globale Serienkontinuität ein und verwende das etablierte Design wiederkehrender Elemente.
+
+[02] Zielplanet im Visier
+Dateiname: scene_02.png
+Schritte: 21-24
+Zusammenfassung: im aktüllen Kursfenster befindet sich der Planet baraili Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus..
+BILDGENERIERUNGS-AUFTRAG:
+Erzeuge diese Szene jetzt als separates Bild im selben visuellen Universum:
+Szene 2: Zielplanet im Visier. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: im aktüllen Kursfenster befindet sich der Planet baraili Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus... Bildkomposition: Orbitalansicht des Zielplaneten und seines Umfelds, als würde die Crew den Anflug vorbereiten. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem
+Halte die globale Serienkontinuität ein und verwende das etablierte Design wiederkehrender Elemente.
+
+[03] Oberflächenscan des Planeten
+Dateiname: scene_03.png
+Schritte: 25-45
+Zusammenfassung: Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort …
+BILDGENERIERUNGS-AUFTRAG:
+Erzeuge diese Szene jetzt als separates Bild im selben visuellen Universum:
+Szene 3: Oberflächenscan des Planeten. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort …. Bildkomposition: Detailreicher Überblick über Landschaft, Material, Flüssigkeiten, Temperatur und Wolken des Planeten. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem
+Halte die globale Serienkontinuität ein und verwende das etablierte Design wiederkehrender Elemente.
+
+[04] Landeanflug und Anomalie
+Dateiname: scene_04.png
+Schritte: 46-52
+Zusammenfassung: Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden..
+BILDGENERIERUNGS-AUFTRAG:
+Erzeuge diese Szene jetzt als separates Bild im selben visuellen Universum:
+Szene 4: Landeanflug und Anomalie. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden... Bildkomposition: Dramatische Landesequenz mit Sensorwarnung und erster unnatürlicher Anomalie auf der Oberfläche. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem
+Halte die globale Serienkontinuität ein und verwende das etablierte Design wiederkehrender Elemente.
+
+[05] Erste Alien-Sichtung / Alien-Anatomie
+Dateiname: scene_05.png
+Schritte: 53-66
+Zusammenfassung: Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht …
+BILDGENERIERUNGS-AUFTRAG:
+Erzeuge diese Szene jetzt als separates Bild im selben visuellen Universum:
+Szene 5: Erste Alien-Sichtung / Alien-Anatomie. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht …. Bildkomposition: Erster klarer Blick auf die fremde Lebensform mit Farbe, Transparenz und Größe im Kontext der Umgebung. Ganzkörperdarstellung des Wesens mit Torso, Gliedmaßen oder Implantaten, wie in einem Sci-Fi-Bestiarium. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem
+Halte die globale Serienkontinuität ein und verwende das etablierte Design wiederkehrender Elemente.
+
+[06] Alien-Gesicht und Augen
+Dateiname: scene_06.png
+Schritte: 67-73
+Zusammenfassung: An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen
+BILDGENERIERUNGS-AUFTRAG:
+Erzeuge diese Szene jetzt als separates Bild im selben visuellen Universum:
+Szene 6: Alien-Gesicht und Augen. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen. Bildkomposition: Nahe, verstörende Detailansicht von Gesicht, Mundpartie und Augen des Wesens. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem
+Halte die globale Serienkontinuität ein und verwende das etablierte Design wiederkehrender Elemente.
+
+[07] Kontakt, Irritation und Rückzug
+Dateiname: scene_07.png
+Schritte: 74-85
+Zusammenfassung: Das Wesen hat die Bewegung unserer Sensoren bemerkt, es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab. wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich …
+BILDGENERIERUNGS-AUFTRAG:
+Erzeuge diese Szene jetzt als separates Bild im selben visuellen Universum:
+Szene 7: Kontakt, Irritation und Rückzug. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Das Wesen hat die Bewegung unserer Sensoren bemerkt, es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab. wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich …. Bildkomposition: Spannungsgeladene Szene des missglückten Kontakts und des hektischen Rückzugs zum Schiff. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem
+Halte die globale Serienkontinuität ein und verwende das etablierte Design wiederkehrender Elemente.
+
+[08] Flucht und Sprungvorbereitung
+Dateiname: scene_08.png
+Schritte: 86-90
+Zusammenfassung: Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen..
+BILDGENERIERUNGS-AUFTRAG:
+Erzeuge diese Szene jetzt als separates Bild im selben visuellen Universum:
+Szene 8: Flucht und Sprungvorbereitung. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen... Bildkomposition: Dynamischer Abflug zurück ins All mit Umlaufbahn, Warnboje und vorbereitetem Warp-Sprung. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem
+Halte die globale Serienkontinuität ein und verwende das etablierte Design wiederkehrender Elemente.

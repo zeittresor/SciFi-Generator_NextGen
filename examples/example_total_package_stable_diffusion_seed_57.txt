@@ -1,0 +1,467 @@
+﻿SCIFI-GENERATOR — GESAMTPAKET-PRODUKTIONSAUFTRAG
+Zielsystem / LLM: Stable Diffusion
+Prompt-Erzeugung: Lokal
+Anzahl Szenen: 8
+Video: 1024x1024, 1:1, 8 fps
+Übergang: sanfte Überblendung von 0.8 Sekunden
+TTS-Vorgabe: Microsoft Katja [Windows OneCore/WinRT], Tempo 0, Lautstärke 100%
+Stimmcharakter: Menschlich / natürlich; stimmliche Wirkung: Weiblich; Qualitätsziel: Beste verfügbare Qualität
+Brückenatmosphäre: aktiv, Datei background.wav, Lautstärke 18%
+Stilreferenz: style_reference.png
+Gewünschter Inhalt des finalen Ergebnis-ZIP: fertiges Video, Szenenbilder, Szenenaudios und final_mix.wav, Story, Prompts, Manifest, Log und Build-Dateien
+
+WICHTIG — SOFORT AUSFÜHREN, NICHT NUR DAS ARCHIV PRÜFEN
+========================================================================
+Dies ist ausdrücklich kein reiner Bildserien-Auftrag und keine Bitte um eine Paketinspektion. Fehlende Output-Medien sind die zu erzeugenden Ergebnisse und kein Fehler des Übergabepakets.
+Das hochgeladene Übergabe-ZIP enthält bereits build_story_video.py, build_video.bat, requirements.txt, style_reference.png und die TTS-Helferskripte vollständig im Wurzelverzeichnis sowie zusätzlich unter offline_fallback/. Behaupte nicht, diese Dateien würden fehlen.
+Beginne mit der tatsächlichen Produktion: Erzeuge die Szenenbilder, speichere sie unter images/, erzeuge oder verwende Szenenaudio und führe anschließend die vorhandenen Build-Skripte aus, sofern die Sitzung Video und Audiomischung nicht direkt erledigen kann.
+Arbeite nach der Bildgenerierung ohne erneute Rückfrage mit TTS, Audiomischung, Szenentiming, Videozusammenschnitt und Paketierung weiter, bis scifi_story.mp4 und scifi_story_package.zip vorliegen.
+Nur Bilder, nur eine Dateiliste, nur eine Analyse oder nur Pseudocode erfüllen den Auftrag nicht.
+
+GESAMTAUFTRAG FÜR EINEN STABLE-DIFFUSION-VIDEO-WORKFLOW
+========================================================================
+Behandle dieses Dokument als Produktionsmanifest für einen lokalen Workflow. Stable Diffusion erzeugt die einzelnen Szenenbilder; eine Orchestrierung oder ein lokal erzeugtes Python-/FFmpeg-Skript erstellt daraus zusammen mit TTS-Audiodateien die illustrierte Audiogeschichte, synchronisiert die Szenendauer und exportiert das fertige Video. Das Ergebnis-ZIP enthält ausschließlich die im Lieferumfang aktivierten Bestandteile.
+
+VERBINDLICHER PRODUKTIONSABLAUF
+========================================================================
+1. Übergib jeden BILDGENERIERUNGS-AUFTRAG einzeln an Stable Diffusion und verwende GLOBAL NEGATIVE PROMPT sowie Referenz-/Konsistenzfunktionen.
+2. Erzeuge die Audiodateien außerhalb des Bildmodells über die ausgewählte Windows-SAPI-/WinRT-Stimme oder eine ausdrücklich gewählte Alternative.
+3. Erstelle aus jedem Bild und seiner Audiodatei einen eigenen Clip; die Clipdauer entspricht der Audiodauer.
+4. Verbinde die Clips über FFmpeg mit Crossfades von ungefähr 0.8 Sekunden und exportiere scifi_story.mp4.
+5. Da Stable Diffusion selbst üblicherweise keine komplette Audio-/Video-Orchestrierung übernimmt, nutze ein vollständiges lokales Build-Skript und erzeuge scifi_story_package.zip exakt nach dem ausgewählten Lieferumfang; nicht ausgewählte Prompts, Assets oder Zwischenclips dürfen nicht zusätzlich ausgeliefert werden.
+6. Erzeuge für jede der 8 nummerierten Szenen genau ein separates, visuell konsistentes Bild im Seitenverhältnis 1:1.
+7. Verwende style_reference.png als primären visuellen Stilanker. Sie definiert Renderqualität, Materialtiefe, Beleuchtung, atmosphärische Tiefe und CGI-/3D-Anmutung, nicht den konkreten Szeneninhalt.
+8. Jedes Szenenbild muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken. Verboten sind flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard-, Poster- oder Collage-Optik.
+9. Die Zielauflösung des finalen Videos ist exakt 1024x1024 Pixel. Erzeuge die Szenenbilder möglichst direkt in dieser Auflösung oder mindestens im identischen Seitenverhältnis; keine Verzerrung und kein unkontrolliertes Abschneiden wichtiger Bildinhalte.
+10. Falls Quellbilder nicht exakt zum Zielseitenverhältnis passen, passe sie durch kontrolliertes Cropping oder dezente Letterbox-/Pillarbox-Flächen an. Strecke Bilder niemals disproportional.
+11. Erzeuge für jede Szene eine eigene Audiodatei scene_XX.wav und sprich ausschließlich den dort angegebenen NARRATIONSTEXT; Zusammenfassung und Bildprompt dürfen nicht mitgesprochen werden.
+12. Verwende über alle Szenen hinweg dieselbe Stimme. Nutze bevorzugt die eigene native Sprachausgabe des Zielsystems, sofern sie Audiodateien exportieren kann; andernfalls verwende Microsoft Katja über Windows OneCore/WinRT, mit Tempo 0 und Lautstärke 100 Prozent.
+13. Die Stimme muss die gewünschte Wirkung Weiblich und den Charakter Menschlich / natürlich besitzen. Das Qualitätsziel lautet Beste verfügbare Qualität. Diese Vorgaben gelten auch für jede Ersatzstimme.
+14. Wenn der Charakter 'Menschlich / natürlich' gewählt wurde, nutze eine hochwertige natürliche beziehungsweise neuronale Stimme und vermeide grobe eSpeak-, monotone Roboter- oder stark metallische Ersatzstimmen. Robotische Nachbearbeitung ist nur beim ausdrücklich gewählten robotischen Charakter zulässig.
+15. Ist die bevorzugte Stimme nicht verfügbar oder widerspricht sie den gewählten Eigenschaften, wähle die bestmögliche passende Ersatzstimme. Eine Abweichung bei Stimme, Charakter oder stimmlicher Wirkung muss in manifest.json und production.log dokumentiert werden; nicht stillschweigend auf eine anders wirkende Stimme wechseln.
+16. Passe die sichtbare Dauer jeder Szene an die tatsächliche Dauer ihrer Audiodatei an. Das Bild bleibt während des zugehörigen Textabschnitts sichtbar; dezente langsame Zoom- oder Schwenkbewegungen sind zulässig.
+17. Blende beim Wechsel zur nächsten Szene sanft über. Verwende eine Crossfade-Dauer von ungefähr 0.8 Sekunden und vermeide harte Bild- oder Tonsprünge.
+18. Erzeuge die Einzelclips scene_01.mp4 bis scene_08.mp4 und füge sie in der nummerierten Reihenfolge ohne vertauschte Szenen zusammen.
+19. Exportiere das fertige Video als scifi_story.mp4 in 1024x1024, 8 fps, H.264-Video und AAC-Audio oder einem gleichwertig weit verbreiteten Format.
+20. Falls eine Hintergrundatmosphäre bereitgestellt wurde, verwende exakt die beigefügte Datei assets/background.wav, schleife sie leise unter der gesamten Erzählung, ohne die Stimme zu überdecken, und verwende die angegebene Lautstärke sowie sanfte Ein- und Ausblendungen. Die Atmosphäre darf nicht stillschweigend weggelassen oder durch Stille ersetzt werden.
+21. Erzeuge audio/final_mix.wav als nachweisbaren Mix aus Erzählstimme und – sofern aktiviert – assets/background.wav. Verwende anschließend genau diesen Mix als Audiospur des finalen Videos.
+22. Bevor du Erfolg meldest, prüfe, dass das finale MP4 eine hörbare, nicht-stumme Audiospur besitzt, die komplette Erzählung enthält und bei aktiviertem Hintergrundsound die Brückenatmosphäre hörbar eingemischt wurde.
+23. Packe das finale Ergebnis-ZIP exakt nach dem Abschnitt 'LIEFERUMFANG DES FINALEN ERGEBNIS-ZIP'. Das fertige Video ist immer enthalten; Bilder, Audiodateien, Clips und Projektdateien nur entsprechend der dortigen Auswahl.
+24. Die Lieferumfangsauswahl betrifft ausschließlich das finale zurückgegebene Ergebnis-ZIP. Für die Produktion müssen Szenenbilder, Szenenaudios und final_mix.wav trotzdem erzeugt werden, auch wenn sie anschließend nicht in das Ergebnis-ZIP aufgenommen werden sollen.
+25. Erzeuge keine Collage, keine sichtbare Schrift im Bild, keine Untertitel, Logos, Wasserzeichen oder Benutzeroberflächen, sofern sie nicht ausdrücklich verlangt werden.
+26. Führe den Auftrag möglichst vollständig aus, statt nur eine Analyse, Verbesserungsvorschläge oder eine erneute Zusammenfassung zu liefern. Beende die Arbeit ausdrücklich nicht nach der Erzeugung oder ZIP-Paketierung der Szenenbilder.
+27. Eine Lieferung, die ausschließlich PNG/JPG-Dateien enthält, gilt als fehlgeschlagen. Die Mindestlieferung ist entweder das fertige Video samt Audio und Gesamt-ZIP oder ein vollständig ausführbares Offline-Fallback-ZIP.
+28. Falls die Sitzung Audio oder Video nicht direkt erzeugen kann, verwende die bereits im Übergabe-ZIP enthaltenen echten Dateien build_story_video.py und build_video.bat. Erzeuge zuerst die Szenenbilder unter images/ und führe danach das Skript aus; liefere nicht bloß eine Beschreibung des Fallbacks.
+29. Das beigefügte Offline-Skript verwendet Python und FFmpeg, bevorzugt unter Windows die ausgewählte SAPI-/WinRT-Stimme, protokolliert Ersatzstimmen und mischt die beigefügte background.wav verbindlich in final_mix.wav und das MP4.
+
+GLOBALE VISUELLE SERIENBIBEL
+========================================================================
+Bildstil: Authentisch wirkende, realistische und cineastische Retro-Science-Fiction mit glaubwürdigen Materialien, dramatischer Beleuchtung, klarer Tiefenstaffelung und einem subtil satirisch-ernsten Ton.
+Kameraformat: Quadratisches Format 1:1; jede Szene als eigenständiger Filmstill, keine Collage und kein Mehrfachpanel.
+Raumschiff: Dasselbe robuste retro-futuristische Forschungs- und Landeschiff in jeder Szene: industrielle Konstruktion, sichtbare Nutzungsspuren, glaubwürdige Triebwerke und wiedererkennbare Silhouette.
+Sternensystem: Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen …
+Planet und Oberfläche: Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort … Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan …
+Wiederkehrendes Alien: Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht … An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen
+Kontinuitätsregel: Ein einmal etabliertes Design für Schiff, Welt, Alien, Raumanzüge und Technik darf in späteren Szenen nicht grundlos verändert werden. Frühere Bilder sind, soweit möglich, als Referenz weiterzuverwenden.
+Ausschlüsse: Keine sichtbare Schrift, Untertitel, Logos, Wasserzeichen oder Benutzeroberflächen. Phonetische Schreibweisen aus der Story sind sinngemäß zu interpretieren und nicht als Text abzubilden.
+
+VERBINDLICHER VISUELLER QUALITÄTS- UND STILANKER
+========================================================================
+Primäre Stilreferenz: style_reference.png
+Zielbild: hochwertige, final gerenderte cinematische CGI-/3D-Science-Fiction-Filmstills mit glaubwürdiger räumlicher Tiefe.
+Die Referenz bestimmt Qualitätsniveau, Materialtiefe, Lichtdramaturgie, Detaildichte und filmische Wirkung; ihre konkrete Szene darf nicht blind kopiert werden.
+Verbindlich: physikalisch plausible Beleuchtung, komplexe Hard-Surface- und organische Mikrodetails, volumetrischer Dunst oder atmosphärische Streuung, klare Vordergrund-/Mittelgrund-/Hintergrund-Staffelung und konsistenter Farbraum.
+Ausdrücklich verboten: flacher 2D-Look, einfache geometrische Flächen, Vektor-/Cutout-/Papier-/Icon-Look, Low-Poly, Storyboard/Skizze, Poster, Collage, Panels, sichtbare Schrift, UI, Logos und Wasserzeichen.
+Kontinuität: Frühere Szenenbilder aktiv als Referenz für Schiff, Planet, Alien, Ausrüstung, Materialien, Maßstab und Lichtstimmung weiterverwenden.
+Semantische Übersetzung: Phonetisch oder grammatikalisch ungewöhnliche Storytexte für die Bildgenerierung sinngemäß bereinigen; niemals als sichtbaren Text übernehmen.
+
+AUDIO- UND TTS-QUALITÄTSREGELN
+========================================================================
+Priorität: native exportierbare Stimme des Zielsystems, danach hochwertige neurale/natürliche Stimme.
+Gewünschter Charakter: Menschlich / natürlich; stimmliche Wirkung: Weiblich; Qualitätsziel: Beste verfügbare Qualität.
+Natürlichkeit und Prosodie haben Vorrang vor einem bestimmten Stimmnamen. Eine hochwertige Ersatzstimme ist einer technisch verfügbaren, aber hörbar minderwertigen Legacy-Stimme vorzuziehen.
+Bei natürlichem Stimmcharakter nicht als finale Stimme zulässig: eSpeak/Festival, robotische Linux-Systemstimmen, monotone Legacy-Windows-Stimmen, stark metallische oder abgehackte Prosodie.
+Ist keine Stimme in der geforderten Qualität verfügbar, nicht stillschweigend minderwertig ersetzen: Einschränkung dokumentieren und einen austauschbaren Narrations-Workflow liefern.
+
+AUDIO- UND VIDEOREGELN
+========================================================================
+Stimme: Microsoft Katja
+TTS-Backend/Fallback: Windows OneCore/WinRT
+Sprechtempo: 0
+Sprachlautstärke: 100%
+Stimmcharakter: Menschlich / natürlich
+Stimmliche Wirkung: Weiblich
+TTS-Qualitätsziel: Beste verfügbare Qualität
+Ersatzstimmen-Regel: Die gewünschte Natürlichkeit und stimmliche Wirkung haben Vorrang vor einer ungeeigneten technisch verfügbaren Stimme; jede Abweichung protokollieren.
+Hintergrundsound: aktiv, Datei background.wav, Lautstärke 18%
+Hintergrunddatei im Übergabepaket: assets/background.wav; diese Datei ist verbindlich in final_mix.wav und in die MP4-Audiospur einzumischen.
+Zielauflösung: 1024x1024 Pixel
+Videofläche: 1024 × 1024 Pixel; Seitenverhältnis 1:1
+Skalierung: Seitenverhältnisse bewahren; keine proportionale Verzerrung. Bei abweichenden Quellen kontrolliert beschneiden oder Letterbox/Pillarbox verwenden.
+Bildrate: 8 fps
+Szenenübergang: Crossfade ca. 0.8 s
+Timing: Jede visuelle Szene endet erst nach dem Ende ihrer zugehörigen Sprachausgabe; kein Textabschnitt darf abgeschnitten werden.
+Audio: Lautheit zwischen den Szenen angleichen, Übersteuerung vermeiden und Sprache gegenüber der Atmosphäre priorisieren.
+
+MINDESTLIEFERUNG / COMPLETION GATE
+========================================================================
+1. scifi_story.mp4 existiert, ist abspielbar und enthält eine hörbare, nicht-stumme Audiospur.
+2. Die komplette Story ist vertont; kein NARRATIONSTEXT wurde abgeschnitten oder ausgelassen.
+3. audio/final_mix.wav wurde während der Produktion erzeugt und ist die tatsächlich im Video verwendete Tonmischung.
+4. assets/background.wav ist im final_mix.wav und im finalen MP4 leise, aber hörbar enthalten.
+5. style_reference.png wurde als visueller Stilanker verwendet und die Bilder entsprechen dem final gerenderten CGI-/3D-Filmstill-Ziel.
+6. scifi_story_package.zip enthält exakt den ausgewählten Lieferumfang: fertiges Video, Szenenbilder, Szenenaudios und final_mix.wav, Story, Prompts, Manifest, Log und Build-Dateien.
+7. Ein ZIP mit ausschließlich Bildern und ohne fertiges Video besteht die Prüfung ausdrücklich nicht.
+8. Ist direkte Videoerzeugung technisch unmöglich, muss stattdessen ein vollständig ausführbares Offline-Fallback-ZIP mit echten Skripten und allen verfügbaren Assets geliefert werden; Pseudocode genügt nicht.
+
+LIEFERUMFANG DES FINALEN ERGEBNIS-ZIP
+========================================================================
+Diese Auswahl betrifft nur das zurückgelieferte Ergebnis-ZIP, nicht die internen Produktionsschritte.
+Fertiges Video: JA — scifi_story.mp4
+Szenenbilder im Ergebnis-ZIP: JA
+Szenenaudios und final_mix.wav im Ergebnis-ZIP: JA
+Einzelclips im Ergebnis-ZIP: NEIN
+Story, Prompts, Manifest, Log und Build-Dateien im Ergebnis-ZIP: JA
+
+ERWARTETE PAKETSTRUKTUR
+========================================================================
+scifi_story_package.zip
+├── scifi_story.mp4
+├── images/scene_01.png …
+├── audio/scene_01.wav …
+├── audio/final_mix.wav
+├── story/full_story.txt
+├── prompts/storyboard_and_package_prompt.txt
+├── style_reference.png
+├── manifest.json
+├── production.log
+└── build_story_video.py
+
+ZIELSYSTEM-HINWEISE
+========================================================================
+- Dieser Gesamtauftrag ist für einen Workflow-Runner, eine Bedienperson oder ein Orchestrierungs-LLM gedacht, nicht als einzelner Stable-Diffusion-Bildprompt.
+- Für konsistente Serien sind Referenzbilder, IP-Adapter, ControlNet oder vergleichbare Werkzeuge einem identischen Seed allein vorzuziehen.
+
+SZENEN-PRODUKTIONSPLAN
+========================================================================
+
+[01] Warp-Austritt und Systemname / Systemanalyse
+Story-Schritte: 1-20
+Bilddatei: images/scene_01.png
+Audiodatei: audio/scene_01.wav
+Szenenclip: clips/scene_01.mp4
+NARRATIONSTEXT — exakt für die Sprachausgabe dieser Szene:
+Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen bereich liegen. Ein dichter Nebel aus geladenen Partikeln beeinträchtigt Kommunikation und Langstreckensensoren.
+
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 1: Warp-Austritt und Systemname / Systemanalyse. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen …. Bildkomposition: Weite Totale des Schiffes beim Austritt aus dem Warp, Blick auf das fremde Sternensystem. Panoramablick auf das Sternensystem mit Sonnen, Planeten und begleitender Sensorscan-Ästhetik. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+TIMING-ANWEISUNG:
+Halte dieses Szenenbild beziehungsweise den daraus erzeugten subtil bewegten Clip für die vollständige Dauer von audio/scene_01.wav sichtbar. Danach sanft zur nächsten Szene überblenden.
+
+[02] Zielplanet im Visier
+Story-Schritte: 21-24
+Bilddatei: images/scene_02.png
+Audiodatei: audio/scene_02.wav
+Szenenclip: clips/scene_02.mp4
+NARRATIONSTEXT — exakt für die Sprachausgabe dieser Szene:
+im aktüllen Kursfenster befindet sich der Planet baraili Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus..
+
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 2: Zielplanet im Visier. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: im aktüllen Kursfenster befindet sich der Planet baraili Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus... Bildkomposition: Orbitalansicht des Zielplaneten und seines Umfelds, als würde die Crew den Anflug vorbereiten. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+TIMING-ANWEISUNG:
+Halte dieses Szenenbild beziehungsweise den daraus erzeugten subtil bewegten Clip für die vollständige Dauer von audio/scene_02.wav sichtbar. Danach sanft zur nächsten Szene überblenden.
+
+[03] Oberflächenscan des Planeten
+Story-Schritte: 25-45
+Bilddatei: images/scene_03.png
+Audiodatei: audio/scene_03.wav
+Szenenclip: clips/scene_03.mp4
+NARRATIONSTEXT — exakt für die Sprachausgabe dieser Szene:
+Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort gibt es moderate Wolkenverteilung in hell weiss unterbrochen durch tief gelb verlaufen.. Die Aussicht auf eine belebte Umgebung ist unwarscheinlich wenn auch nicht null.
+
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 3: Oberflächenscan des Planeten. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort …. Bildkomposition: Detailreicher Überblick über Landschaft, Material, Flüssigkeiten, Temperatur und Wolken des Planeten. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+TIMING-ANWEISUNG:
+Halte dieses Szenenbild beziehungsweise den daraus erzeugten subtil bewegten Clip für die vollständige Dauer von audio/scene_03.wav sichtbar. Danach sanft zur nächsten Szene überblenden.
+
+[04] Landeanflug und Anomalie
+Story-Schritte: 46-52
+Bilddatei: images/scene_04.png
+Audiodatei: audio/scene_04.wav
+Szenenclip: clips/scene_04.mp4
+NARRATIONSTEXT — exakt für die Sprachausgabe dieser Szene:
+Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden..
+
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 4: Landeanflug und Anomalie. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden... Bildkomposition: Dramatische Landesequenz mit Sensorwarnung und erster unnatürlicher Anomalie auf der Oberfläche. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+TIMING-ANWEISUNG:
+Halte dieses Szenenbild beziehungsweise den daraus erzeugten subtil bewegten Clip für die vollständige Dauer von audio/scene_04.wav sichtbar. Danach sanft zur nächsten Szene überblenden.
+
+[05] Erste Alien-Sichtung / Alien-Anatomie
+Story-Schritte: 53-66
+Bilddatei: images/scene_05.png
+Audiodatei: audio/scene_05.wav
+Szenenclip: clips/scene_05.mp4
+NARRATIONSTEXT — exakt für die Sprachausgabe dieser Szene:
+Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht man Pranken an starr anmutenden Armen.
+
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 5: Erste Alien-Sichtung / Alien-Anatomie. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht …. Bildkomposition: Erster klarer Blick auf die fremde Lebensform mit Farbe, Transparenz und Größe im Kontext der Umgebung. Ganzkörperdarstellung des Wesens mit Torso, Gliedmaßen oder Implantaten, wie in einem Sci-Fi-Bestiarium. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+TIMING-ANWEISUNG:
+Halte dieses Szenenbild beziehungsweise den daraus erzeugten subtil bewegten Clip für die vollständige Dauer von audio/scene_05.wav sichtbar. Danach sanft zur nächsten Szene überblenden.
+
+[06] Alien-Gesicht und Augen
+Story-Schritte: 67-73
+Bilddatei: images/scene_06.png
+Audiodatei: audio/scene_06.wav
+Szenenclip: clips/scene_06.mp4
+NARRATIONSTEXT — exakt für die Sprachausgabe dieser Szene:
+An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen
+
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 6: Alien-Gesicht und Augen. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen. Bildkomposition: Nahe, verstörende Detailansicht von Gesicht, Mundpartie und Augen des Wesens. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+TIMING-ANWEISUNG:
+Halte dieses Szenenbild beziehungsweise den daraus erzeugten subtil bewegten Clip für die vollständige Dauer von audio/scene_06.wav sichtbar. Danach sanft zur nächsten Szene überblenden.
+
+[07] Kontakt, Irritation und Rückzug
+Story-Schritte: 74-85
+Bilddatei: images/scene_07.png
+Audiodatei: audio/scene_07.wav
+Szenenclip: clips/scene_07.mp4
+NARRATIONSTEXT — exakt für die Sprachausgabe dieser Szene:
+Das Wesen hat die Bewegung unserer Sensoren bemerkt, es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab. wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich bin auf seine Reaktion gespannt.. Das Alien antwortet mit Lichtimpulsen und scheint unser Vorgehen als einen Annährungsversuch zu interpretieren.. Ich glaube langsam ist es an der Zeit zum das Weite suchen.. Das Etwas rudert aktu ell mit den Armen, ich bin der Meinung das dies kein gutes Zeichen ist..
+
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 7: Kontakt, Irritation und Rückzug. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Das Wesen hat die Bewegung unserer Sensoren bemerkt, es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab. wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich …. Bildkomposition: Spannungsgeladene Szene des missglückten Kontakts und des hektischen Rückzugs zum Schiff. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+TIMING-ANWEISUNG:
+Halte dieses Szenenbild beziehungsweise den daraus erzeugten subtil bewegten Clip für die vollständige Dauer von audio/scene_07.wav sichtbar. Danach sanft zur nächsten Szene überblenden.
+
+[08] Flucht und Sprungvorbereitung
+Story-Schritte: 86-90
+Bilddatei: images/scene_08.png
+Audiodatei: audio/scene_08.wav
+Szenenclip: clips/scene_08.mp4
+NARRATIONSTEXT — exakt für die Sprachausgabe dieser Szene:
+Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen..
+
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 8: Flucht und Sprungvorbereitung. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen... Bildkomposition: Dynamischer Abflug zurück ins All mit Umlaufbahn, Warnboje und vorbereitetem Warp-Sprung. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+TIMING-ANWEISUNG:
+Halte dieses Szenenbild beziehungsweise den daraus erzeugten subtil bewegten Clip für die vollständige Dauer von audio/scene_08.wav sichtbar. Danach sanft zur nächsten Szene überblenden.
+
+MANIFEST-VORLAGE
+========================================================================
+{
+  "task": "produce_illustrated_audio_story_video",
+  "target_ai": "Stable Diffusion",
+  "target_profile": "Stable Diffusion",
+  "target_mode": "diffusion",
+  "aspect_ratio": "1:1",
+  "resolution": "1024x1024",
+  "width": 1024,
+  "height": 1024,
+  "fps": 8,
+  "transition_seconds": 0.8,
+  "voice": {
+    "name": "Microsoft Katja",
+    "id": "",
+    "backend": "Windows OneCore/WinRT",
+    "backend_key": "",
+    "rate": 0,
+    "volume": 100,
+    "character": "Menschlich / natürlich",
+    "gender_expression": "Weiblich",
+    "quality_target": "Beste verfügbare Qualität",
+    "native_chatgpt_voice_preferred": false,
+    "legacy_system_voice_allowed_for_final": false,
+    "fallback_policy": "Prefer native target-system audio export. Otherwise use the best available high-quality natural or neural voice matching character and gender expression. Do not silently substitute eSpeak-like, robotic Linux legacy, or basic monotone system voices when a natural final voice was requested. Log every substitution.",
+    "forbidden_for_final": [
+      "eSpeak",
+      "Festival",
+      "robotic Linux TTS",
+      "basic monotone legacy voices",
+      "clearly artificial fallback voices"
+    ]
+  },
+  "background": {
+    "enabled": true,
+    "filename": "background.wav",
+    "asset_path": "assets/background.wav",
+    "volume": 18,
+    "must_be_mixed_into_final_audio": true,
+    "silent_omission_is_forbidden": true
+  },
+  "style_reference": {
+    "enabled": true,
+    "filename": "style_reference.png",
+    "role": "Primary visual style anchor only; do not copy its exact scene composition.",
+    "requirements": [
+      "cinematic high-end CGI / 3D film still",
+      "physically plausible lighting and materials",
+      "volumetric atmosphere and strong depth",
+      "rich hard-surface and organic microdetail",
+      "no flat geometric 2D composition",
+      "no collage, panel, text, UI, logo or watermark"
+    ]
+  },
+  "visual_quality": {
+    "target": "cinematic final-rendered sci-fi film stills",
+    "use_previous_scenes_as_references": true,
+    "semantic_cleanup_of_story_text_for_images": true,
+    "negative_style_rules": [
+      "flat 2D look",
+      "vector art",
+      "cutout composition",
+      "low-poly look",
+      "simple geometric primitives",
+      "storyboard sketch",
+      "infographic",
+      "poster layout",
+      "collage or multiple panels",
+      "visible text or interface elements"
+    ]
+  },
+  "result_package": {
+    "video_always_included": true,
+    "include_images": true,
+    "include_audio": true,
+    "include_clips": false,
+    "include_project_files": true,
+    "note": "These switches control only the final returned ZIP. Images and audio still have to be produced to build the video."
+  },
+  "delivery_contract": {
+    "images_only_is_incomplete": true,
+    "required_video": "scifi_story.mp4",
+    "required_final_audio_for_production": "audio/final_mix.wav",
+    "required_zip": "scifi_story_package.zip",
+    "require_non_silent_audio_stream": true,
+    "require_background_mix_when_enabled": true,
+    "require_style_reference_usage": true
+  },
+  "outputs": {
+    "video": "scifi_story.mp4",
+    "final_audio": "audio/final_mix.wav",
+    "zip": "scifi_story_package.zip"
+  },
+  "scenes": [
+    {
+      "index": 1,
+      "title": "Warp-Austritt und Systemname / Systemanalyse",
+      "image": "scene_01.png",
+      "audio": "scene_01.wav",
+      "clip": "scene_01.mp4",
+      "narration_text": "Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen bereich liegen. Ein dichter Nebel aus geladenen Partikeln beeinträchtigt Kommunikation und Langstreckensensoren.",
+      "image_prompt": "Szene 1: Warp-Austritt und Systemname / Systemanalyse. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen …. Bildkomposition: Weite Totale des Schiffes beim Austritt aus dem Warp, Blick auf das fremde Sternensystem. Panoramablick auf das Sternensystem mit Sonnen, Planeten und begleitender Sensorscan-Ästhetik. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen.",
+      "start_step": 1,
+      "end_step": 20
+    },
+    {
+      "index": 2,
+      "title": "Zielplanet im Visier",
+      "image": "scene_02.png",
+      "audio": "scene_02.wav",
+      "clip": "scene_02.mp4",
+      "narration_text": "im aktüllen Kursfenster befindet sich der Planet baraili Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus..",
+      "image_prompt": "Szene 2: Zielplanet im Visier. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: im aktüllen Kursfenster befindet sich der Planet baraili Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus... Bildkomposition: Orbitalansicht des Zielplaneten und seines Umfelds, als würde die Crew den Anflug vorbereiten. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen.",
+      "start_step": 21,
+      "end_step": 24
+    },
+    {
+      "index": 3,
+      "title": "Oberflächenscan des Planeten",
+      "image": "scene_03.png",
+      "audio": "scene_03.wav",
+      "clip": "scene_03.mp4",
+      "narration_text": "Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort gibt es moderate Wolkenverteilung in hell weiss unterbrochen durch tief gelb verlaufen.. Die Aussicht auf eine belebte Umgebung ist unwarscheinlich wenn auch nicht null.",
+      "image_prompt": "Szene 3: Oberflächenscan des Planeten. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort …. Bildkomposition: Detailreicher Überblick über Landschaft, Material, Flüssigkeiten, Temperatur und Wolken des Planeten. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen.",
+      "start_step": 25,
+      "end_step": 45
+    },
+    {
+      "index": 4,
+      "title": "Landeanflug und Anomalie",
+      "image": "scene_04.png",
+      "audio": "scene_04.wav",
+      "clip": "scene_04.mp4",
+      "narration_text": "Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden..",
+      "image_prompt": "Szene 4: Landeanflug und Anomalie. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden... Bildkomposition: Dramatische Landesequenz mit Sensorwarnung und erster unnatürlicher Anomalie auf der Oberfläche. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen.",
+      "start_step": 46,
+      "end_step": 52
+    },
+    {
+      "index": 5,
+      "title": "Erste Alien-Sichtung / Alien-Anatomie",
+      "image": "scene_05.png",
+      "audio": "scene_05.wav",
+      "clip": "scene_05.mp4",
+      "narration_text": "Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht man Pranken an starr anmutenden Armen.",
+      "image_prompt": "Szene 5: Erste Alien-Sichtung / Alien-Anatomie. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht …. Bildkomposition: Erster klarer Blick auf die fremde Lebensform mit Farbe, Transparenz und Größe im Kontext der Umgebung. Ganzkörperdarstellung des Wesens mit Torso, Gliedmaßen oder Implantaten, wie in einem Sci-Fi-Bestiarium. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen.",
+      "start_step": 53,
+      "end_step": 66
+    },
+    {
+      "index": 6,
+      "title": "Alien-Gesicht und Augen",
+      "image": "scene_06.png",
+      "audio": "scene_06.wav",
+      "clip": "scene_06.mp4",
+      "narration_text": "An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen",
+      "image_prompt": "Szene 6: Alien-Gesicht und Augen. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen. Bildkomposition: Nahe, verstörende Detailansicht von Gesicht, Mundpartie und Augen des Wesens. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen.",
+      "start_step": 67,
+      "end_step": 73
+    },
+    {
+      "index": 7,
+      "title": "Kontakt, Irritation und Rückzug",
+      "image": "scene_07.png",
+      "audio": "scene_07.wav",
+      "clip": "scene_07.mp4",
+      "narration_text": "Das Wesen hat die Bewegung unserer Sensoren bemerkt, es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab. wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich bin auf seine Reaktion gespannt.. Das Alien antwortet mit Lichtimpulsen und scheint unser Vorgehen als einen Annährungsversuch zu interpretieren.. Ich glaube langsam ist es an der Zeit zum das Weite suchen.. Das Etwas rudert aktu ell mit den Armen, ich bin der Meinung das dies kein gutes Zeichen ist..",
+      "image_prompt": "Szene 7: Kontakt, Irritation und Rückzug. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Das Wesen hat die Bewegung unserer Sensoren bemerkt, es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab. wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich …. Bildkomposition: Spannungsgeladene Szene des missglückten Kontakts und des hektischen Rückzugs zum Schiff. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen.",
+      "start_step": 74,
+      "end_step": 85
+    },
+    {
+      "index": 8,
+      "title": "Flucht und Sprungvorbereitung",
+      "image": "scene_08.png",
+      "audio": "scene_08.wav",
+      "clip": "scene_08.mp4",
+      "narration_text": "Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen..",
+      "image_prompt": "Szene 8: Flucht und Sprungvorbereitung. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen... Bildkomposition: Dynamischer Abflug zurück ins All mit Umlaufbahn, Warnboje und vorbereitetem Warp-Sprung. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem Verwende style_reference.png ausschließlich als visuellen Stilanker und frühere Szenenbilder als Kontinuitätsreferenz. Das Ergebnis muss wie ein hochwertiger final gerenderter CGI-/3D-Science-Fiction-Filmstill wirken: glaubwürdige Materialien, physikalisch plausible Beleuchtung, volumetrische Atmosphäre, räumliche Tiefenstaffelung und komplexe Mikrodetails. Vermeide ausdrücklich flache 2D-Flächen, simple geometrische Formen, Vektor-/Cutout-/Low-Poly-Look, Storyboard- oder Posterästhetik, Collagen, Text, UI, Logos und Wasserzeichen.",
+      "start_step": 86,
+      "end_step": 90
+    }
+  ]
+}
+
+VOLLSTÄNDIGE STORY — NUR ALS KONTEXT, NICHT ZUSÄTZLICH VORLESEN
+========================================================================
+Sternzeit  noll eins acht eff zwo deh strich  beh. unsere sensoren bestätigen die ankunft im system baraili  NI mira  caldris. Der Systemscan bestätigt  sechs sonnen. dazu gibt es kostenlos  mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen bereich liegen. Ein dichter Nebel aus geladenen Partikeln beeinträchtigt Kommunikation und Langstreckensensoren.
+im aktüllen Kursfenster befindet sich der Planet baraili  Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus.. Der Planet ist  löchrig, er hat vielen Höhlen stellenweise ist er  geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort  Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort gibt es moderate Wolkenverteilung in hell weiss unterbrochen durch tief gelb verlaufen.. Die Aussicht auf eine belebte Umgebung ist  unwarscheinlich wenn auch nicht null. Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden.. Mögliche Lebensform gesichtet
+Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist  mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern
+Unterhalb des Körpers befinden sich sieben gewöhnliche Beine
+An der Seite sieht man Pranken an starr anmutenden Armen. An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen
+Das Wesen hat die Bewegung unserer Sensoren bemerkt,
+es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab.
+wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich bin auf seine Reaktion gespannt.. Das Alien antwortet mit Lichtimpulsen und scheint unser Vorgehen  als einen Annährungsversuch zu interpretieren.. Ich glaube langsam ist es an der Zeit zum das Weite suchen.. Das Etwas rudert aktu ell mit den Armen, ich bin der Meinung das dies kein gutes Zeichen ist.. Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen..
+
+ABSCHLUSSANWEISUNG
+========================================================================
+Beginne mit Szene 01 und arbeite chronologisch bis Szene 08. Stoppe nach den Bildern nicht, sondern fahre automatisch mit TTS, Audiomischung, Timing, Video und ZIP fort. Liefere am Ende scifi_story.mp4 und scifi_story_package.zip. Eine reine Bild-ZIP ist ausdrücklich unvollständig. Falls direkte Audio- oder Videoerzeugung nicht möglich ist, nutze die bereits beigefügten Build-Skripte; analysiere das Paket nicht nur und behaupte nicht, die Skripte fehlten.

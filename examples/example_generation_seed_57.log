@@ -1,0 +1,574 @@
+﻿SCIFI-GENERATOR — GENERATION LOG
+App-Version: 60.14
+Erzeugt: 2026-07-29T13:10:04+00:00
+Seed: 57
+Auswahlschritte: 90
+
+AUSGEWÄHLTE SATZTEILE
+========================================================================
+[001] Sternzeit
+Quelle: data/vars/sternzeit_name.ini
+Zeile: 1
+Text: Sternzeit 
+Ausgabe: Sternzeit  
+
+[002] Sternzeit-Ziffer 1/6
+Quelle: data/vars/sternzeit_digits.ini
+Zeile: 12
+Text: noll
+Ausgabe: noll 
+
+[003] Sternzeit-Ziffer 2/6
+Quelle: data/vars/sternzeit_digits.ini
+Zeile: 1
+Text: eins
+Ausgabe: eins 
+
+[004] Sternzeit-Ziffer 3/6
+Quelle: data/vars/sternzeit_digits.ini
+Zeile: 8
+Text: acht
+Ausgabe: acht 
+
+[005] Sternzeit-Ziffer 4/6
+Quelle: data/vars/sternzeit_digits.ini
+Zeile: 17
+Text: eff
+Ausgabe: eff 
+
+[006] Sternzeit-Ziffer 5/6
+Quelle: data/vars/sternzeit_digits.ini
+Zeile: 11
+Text: zwo
+Ausgabe: zwo 
+
+[007] Sternzeit-Ziffer 6/6
+Quelle: data/vars/sternzeit_digits.ini
+Zeile: 16
+Text: deh
+Ausgabe: deh 
+
+[008] Sternzeit-Trenner
+Quelle: data/vars/sternzeit_digits_adder.ini
+Zeile: 5
+Text: strich 
+Ausgabe: strich  
+
+[009] Sternzeit-Nachkommastelle
+Quelle: data/vars/sternzeit_digits.ini
+Zeile: 14
+Text: beh
+Ausgabe: beh. 
+
+[010] Systemankunft
+Quelle: data/vars/system_desc.ini
+Zeile: 13
+Text: unsere sensoren bestaetigen die ankunft im system
+Ausgabe: unsere sensoren bestätigen die ankunft im system 
+
+[011] Systemname-Stamm
+Quelle: data/vars/hyphenation.ini
+Zeile: 2
+Text: baraili 
+Ausgabe: baraili  
+
+[012] Systemname-Mittelteil
+Quelle: data/vars/hyphenation_pre.ini
+Zeile: 22
+Text: NI 
+
+[013] Systemname-Endteil
+Quelle: data/vars/hyphenation.ini
+Zeile: 34
+Text: mira 
+Ausgabe: mira  
+
+[014] Systembezeichnung
+Quelle: data/vars/system_parts.ini
+Zeile: 30
+Text: caldris
+Ausgabe: caldris. 
+
+[015] system_desc_solcount_intro.ini
+Quelle: data/vars/system_desc_solcount_intro.ini
+Zeile: 10
+Text: Der Systemscan bestaetigt 
+Ausgabe: Der Systemscan bestätigt  
+
+[016] system_desc_solcount.ini
+Quelle: data/vars/system_desc_solcount.ini
+Zeile: 6
+Text: sechs sonnen
+Ausgabe: sechs sonnen. 
+
+[017] system_desc_solcount_adder.ini
+Quelle: data/vars/system_desc_solcount_adder.ini
+Zeile: 7
+Text: dazu gibt es kostenlos 
+Ausgabe: dazu gibt es kostenlos  
+
+[018] system_desc_planetcount.ini
+Quelle: data/vars/system_desc_planetcount.ini
+Zeile: 13
+Text: mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann
+Ausgabe: mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, 
+
+[019] system_desc_planets.ini
+Quelle: data/vars/system_desc_planets.ini
+Zeile: 7
+Text: von denen zwei im lebens freundlichen bereich liegen
+Ausgabe: von denen zwei im lebens freundlichen bereich liegen. 
+
+[020] system_infos.ini
+Quelle: data/vars/system_infos.ini
+Zeile: 16
+Text: Ein dichter Nebel aus geladenen Partikeln beeintraechtigt Kommunikation und Langstreckensensoren.
+Ausgabe: Ein dichter Nebel aus geladenen Partikeln beeinträchtigt Kommunikation und Langstreckensensoren.
+
+
+[021] planet_target_desc.ini
+Quelle: data/vars/planet_target_desc.ini
+Zeile: 9
+Text: im aktuellen Kursfenster befindet sich der Planet
+Ausgabe: im aktüllen Kursfenster befindet sich der Planet 
+
+[022] Abgeleiteter Planetenname
+Quelle: <gespeichert:system_root>
+Text: baraili 
+Ausgabe: baraili  
+
+[023] planet_name_part.ini
+Quelle: data/vars/planet_name_part.ini
+Zeile: 33
+Text: Picon
+Ausgabe: Picon. 
+
+[024] planet_target_info.ini
+Quelle: data/vars/planet_target_info.ini
+Zeile: 5
+Text: Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus.
+Ausgabe: Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus.. 
+
+[025] planet_surface_structure_desc.ini
+Quelle: data/vars/planet_surface_structure_desc.ini
+Zeile: 5
+Text: Der Planet ist 
+Ausgabe: Der Planet ist  
+
+[026] planet_surface_structure.ini
+Quelle: data/vars/planet_surface_structure.ini
+Zeile: 5
+Text: loechrig, er hat vielen Hoehlen
+Ausgabe: löchrig, er hat vielen Höhlen 
+
+[027] planet_surface_structure_adder.ini
+Quelle: data/vars/planet_surface_structure_adder.ini
+Zeile: 7
+Text: stellenweise ist er 
+Ausgabe: stellenweise ist er  
+
+[028] planet_surface_structure2.ini
+Quelle: data/vars/planet_surface_structure2.ini
+Zeile: 5
+Text: geroellhaltig.
+Ausgabe: geröllhaltig.. 
+
+[029] planet_surface_scan_liquid.ini
+Quelle: data/vars/planet_surface_scan_liquid.ini
+Zeile: 10
+Text: In den Seen wurde
+Ausgabe: In den Seen wurde 
+
+[030] planet_surface_liquid.ini
+Quelle: data/vars/planet_surface_liquid.ini
+Zeile: 14
+Text: fluessiges Ammoniak
+Ausgabe: flüssiges Ammoniak 
+
+[031] planet_surface_scan_liquid2.ini
+Quelle: data/vars/planet_surface_scan_liquid2.ini
+Zeile: 9
+Text: als wahrscheinlich eingestuft.
+Ausgabe: als wahrscheinlich eingestuft.. 
+
+[032] planet_surface_scan_material.ini
+Quelle: data/vars/planet_surface_scan_material.ini
+Zeile: 3
+Text: Fest ist dort 
+Ausgabe: Fest ist dort  
+
+[033] planet_surface_material.ini
+Quelle: data/vars/planet_surface_material.ini
+Zeile: 76
+Text: Ton schiefer
+Ausgabe: Ton schiefer. 
+
+[034] planet_surface_temperature_desc.ini
+Quelle: data/vars/planet_surface_temperature_desc.ini
+Zeile: 7
+Text: Je nach Region liegen die Temperaturen zwischen minus
+Ausgabe: Je nach Region liegen die Temperaturen zwischen minus 
+
+[035] digits.ini
+Quelle: data/vars/digits.ini
+Zeile: 24
+Text: sechzig
+Ausgabe: sechzig 
+
+[036] planet_surface_temperature_adder.ini
+Quelle: data/vars/planet_surface_temperature_adder.ini
+Zeile: 10
+Text: sowie in warmen Regionen plus
+Ausgabe: sowie in warmen Regionen plus 
+
+[037] digits.ini
+Quelle: data/vars/digits.ini
+Zeile: 34
+Text: vierhundert
+Ausgabe: vierhundert 
+
+[038] planet_surface_temperature_adder_end.ini
+Quelle: data/vars/planet_surface_temperature_adder_end.ini
+Zeile: 9
+Text: Standard Temperatur Einheiten
+Ausgabe: Standard Temperatur Einheiten. 
+
+[039] cloud_desc.ini
+Quelle: data/vars/cloud_desc.ini
+Zeile: 4
+Text: Dort gibt es moderate Wolkenverteilung in
+Ausgabe: Dort gibt es moderate Wolkenverteilung in 
+
+[040] cloud_color.ini
+Quelle: data/vars/cloud_color.ini
+Zeile: 8
+Text: hell weiss
+Ausgabe: hell weiss 
+
+[041] cloud_adder.ini
+Quelle: data/vars/cloud_adder.ini
+Zeile: 15
+Text: unterbrochen durch
+Ausgabe: unterbrochen durch 
+
+[042] cloud_color2.ini
+Quelle: data/vars/cloud_color2.ini
+Zeile: 9
+Text: tief gelb
+Ausgabe: tief gelb 
+
+[043] cloud_adder_end.ini
+Quelle: data/vars/cloud_adder_end.ini
+Zeile: 7
+Text: verlaufen.
+Ausgabe: verlaufen.. 
+
+[044] life_possibility_desc.ini
+Quelle: data/vars/life_possibility_desc.ini
+Zeile: 11
+Text: Die Aussicht auf eine belebte Umgebung ist 
+Ausgabe: Die Aussicht auf eine belebte Umgebung ist  
+
+[045] life_possibility.ini
+Quelle: data/vars/life_possibility.ini
+Zeile: 7
+Text: unwarscheinlich wenn auch nicht null
+Ausgabe: unwarscheinlich wenn auch nicht null. 
+
+[046] planet_surface_touchdown_scan.ini
+Quelle: data/vars/planet_surface_touchdown_scan.ini
+Zeile: 7
+Text: Analysiere moegliche Landezonen. Geeigneter Bereich markiert.
+Ausgabe: Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. 
+
+[047] planet_surface_landing_desc.ini
+Quelle: data/vars/planet_surface_landing_desc.ini
+Zeile: 8
+Text: Leite kontrollierten Sinkflug ein.
+Ausgabe: Leite kontrollierten Sinkflug ein.. 
+
+[048] planet_surface_landing_desc2.ini
+Quelle: data/vars/planet_surface_landing_desc2.ini
+Zeile: 1
+Text: Manoevriertriebwerke aktiviert.
+Ausgabe: Manövriertriebwerke aktiviert.. 
+
+[049] planet_surface_landing_desc3.ini
+Quelle: data/vars/planet_surface_landing_desc3.ini
+Zeile: 11
+Text: Bodenkontakt bestaetigt.
+Ausgabe: Bodenkontakt bestätigt.. 
+
+[050] planet_surface_scan_env.ini
+Quelle: data/vars/planet_surface_scan_env.ini
+Zeile: 15
+Text: Fuehre einen vollstaendigen Nahbereichs Scan durch.
+Ausgabe: Führe einen vollständigen Nahbereichs Scan durch.. 
+
+[051] planet_surface_scan_anti.ini
+Quelle: data/vars/planet_surface_scan_anti.ini
+Zeile: 29
+Text: Ein passiver Bio signatur Scan laeuft im Hintergrund.
+Ausgabe: Ein passiver Bio signatur Scan läuft im Hintergrund.. 
+
+[052] planet_surface_scan_anti_found.ini
+Quelle: data/vars/planet_surface_scan_anti_found.ini
+Zeile: 1
+Text: Anomalie gefunden.
+Ausgabe: Anomalie gefunden.. 
+
+[053] life_alien_found.ini
+Quelle: data/vars/life_alien_found.ini
+Zeile: 13
+Text: Moegliche Lebensform gesichtet
+Ausgabe: Mögliche Lebensform gesichtet
+
+
+[054] life_alien_color_desc.ini
+Quelle: data/vars/life_alien_color_desc.ini
+Zeile: 2
+Text: Es ist weitestgehend
+Ausgabe: Es ist weitestgehend 
+
+[055] life_alien_color.ini
+Quelle: data/vars/life_alien_color.ini
+Zeile: 40
+Text: durchscheinend orange
+Ausgabe: durchscheinend orange 
+
+[056] life_alien_color_adder.ini
+Quelle: data/vars/life_alien_color_adder.ini
+Zeile: 10
+Text: marmoriert.
+Ausgabe: marmoriert.. 
+
+[057] life_alien_size_desc.ini
+Quelle: data/vars/life_alien_size_desc.ini
+Zeile: 8
+Text: Der Organismus ist 
+Ausgabe: Der Organismus ist  
+
+[058] life_alien_size.ini
+Quelle: data/vars/life_alien_size.ini
+Zeile: 17
+Text: mehr als dreissig meter hoch und aus grosser Entfernung sichtbar
+Ausgabe: mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. 
+
+[059] life_alien_desc.ini
+Quelle: data/vars/life_alien_desc.ini
+Zeile: 1
+Text: , und hat
+Ausgabe: , und hat 
+
+[060] life_alien_breast.ini
+Quelle: data/vars/life_alien_breast.ini
+Zeile: 23
+Text: einen in mehrere Segmente geteilten Oberkoerper mit
+Ausgabe: einen in mehrere Segmente geteilten Oberkörper mit 
+
+[061] life_alien_parts.ini
+Quelle: data/vars/life_alien_parts.ini
+Zeile: 15
+Text: Eutern
+Ausgabe: Eutern
+
+
+[062] life_alien_legs_desc.ini
+Quelle: data/vars/life_alien_legs_desc.ini
+Zeile: 9
+Text: Unterhalb des Koerpers befinden sich
+Ausgabe: Unterhalb des Körpers befinden sich 
+
+[063] life_alien_legs_count.ini
+Quelle: data/vars/life_alien_legs_count.ini
+Zeile: 12
+Text: sieben
+Ausgabe: sieben 
+
+[064] life_alien_legs.ini
+Quelle: data/vars/life_alien_legs.ini
+Zeile: 1
+Text: gewoehnliche Beine
+Ausgabe: gewöhnliche Beine
+
+
+[065] life_alien_arms_desc.ini
+Quelle: data/vars/life_alien_arms_desc.ini
+Zeile: 5
+Text: An der Seite sieht man
+Ausgabe: An der Seite sieht man 
+
+[066] life_alien_arms.ini
+Quelle: data/vars/life_alien_arms.ini
+Zeile: 1
+Text: Pranken an starr anmutenden Armen
+Ausgabe: Pranken an starr anmutenden Armen. 
+
+[067] life_alien_face_desc.ini
+Quelle: data/vars/life_alien_face_desc.ini
+Zeile: 5
+Text: An der Vorderseite des Kopfes befindet sich ein
+Ausgabe: An der Vorderseite des Kopfes befindet sich ein 
+
+[068] life_alien_face.ini
+Quelle: data/vars/life_alien_face.ini
+Zeile: 12
+Text: starres Gesicht
+Ausgabe: starres Gesicht 
+
+[069] life_alien_face_desc2.ini
+Quelle: data/vars/life_alien_face_desc2.ini
+Zeile: 12
+Text: , seitlich davon erkennt man
+Ausgabe: , seitlich davon erkennt man 
+
+[070] life_alien_mouth.ini
+Quelle: data/vars/life_alien_mouth.ini
+Zeile: 12
+Text: eine blutig triefende Wunde
+Ausgabe: eine blutig triefende Wunde 
+
+[071] life_alien_face_desc3.ini
+Quelle: data/vars/life_alien_face_desc3.ini
+Zeile: 11
+Text: , direkt darunter befinden sich
+Ausgabe: , direkt darunter befinden sich 
+
+[072] life_alien_eyes_digits.ini
+Quelle: data/vars/life_alien_eyes_digits.ini
+Zeile: 17
+Text: achtzehn
+Ausgabe: achtzehn 
+
+[073] life_alien_eyes.ini
+Quelle: data/vars/life_alien_eyes.ini
+Zeile: 2
+Text: boesartig starrende Augen
+Ausgabe: bösartig starrende Augen
+
+
+[074] alien_behavior_desc.ini
+Quelle: data/vars/alien_behavior_desc.ini
+Zeile: 16
+Text: Das Wesen hat die Bewegung unserer Sensoren bemerkt,
+Ausgabe: Das Wesen hat die Bewegung unserer Sensoren bemerkt,
+
+
+[075] alien_behavior.ini
+Quelle: data/vars/alien_behavior.ini
+Zeile: 22
+Text: es tastet die schiffs huelle vorsichtig mit mehreren seiner fortsaetze ab.
+Ausgabe: es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab.
+
+
+[076] alien_sidekick.ini
+Quelle: data/vars/alien_sidekick.ini
+Zeile: 11
+Text: wer denkt sich solche kacke aus.
+Ausgabe: wer denkt sich solche kacke aus. 
+
+[077] alien_behavior_desc_add.ini
+Quelle: data/vars/alien_behavior_desc_add.ini
+Zeile: 3
+Text: ziemlich sicher
+Ausgabe: ziemlich sicher 
+
+[078] alien_behavior2.ini
+Quelle: data/vars/alien_behavior2.ini
+Zeile: 1
+Text: scheint es uns nicht unmittelbar begatten zu wollen.
+Ausgabe: scheint es uns nicht unmittelbar begatten zu wollen.. 
+
+[079] we_alien_handling.ini
+Quelle: data/vars/we_alien_handling.ini
+Zeile: 14
+Text: Unser Analysemodul wird testweise
+Ausgabe: Unser Analysemodul wird testweise 
+
+[080] we_alien_handling2.ini
+Quelle: data/vars/we_alien_handling2.ini
+Zeile: 9
+Text: das Mistvieh mit dem Plasma laser zu be ball ern. Ich bin auf seine Reaktion gespannt.
+Ausgabe: das Mistvieh mit dem Plasma laser zu be ball ern. Ich bin auf seine Reaktion gespannt.. 
+
+[081] we_alien_handling3.ini
+Quelle: data/vars/we_alien_handling3.ini
+Zeile: 12
+Text: Das Alien antwortet mit Lichtimpulsen und scheint unser Vorgehen 
+Ausgabe: Das Alien antwortet mit Lichtimpulsen und scheint unser Vorgehen  
+
+[082] we_alien_handling4.ini
+Quelle: data/vars/we_alien_handling4.ini
+Zeile: 6
+Text: als einen Annaehrungsversuch zu interpretieren.
+Ausgabe: als einen Annährungsversuch zu interpretieren.. 
+
+[083] we_alien_handling5.ini
+Quelle: data/vars/we_alien_handling5.ini
+Zeile: 1
+Text: Ich glaube langsam ist es an der Zeit zum
+Ausgabe: Ich glaube langsam ist es an der Zeit zum 
+
+[084] we_alien_handling6.ini
+Quelle: data/vars/we_alien_handling6.ini
+Zeile: 9
+Text: das Weite suchen.
+Ausgabe: das Weite suchen.. 
+
+[085] we_leaf_desc.ini
+Quelle: data/vars/we_leaf_desc.ini
+Zeile: 14
+Text: Das Etwas rudert aktu ell mit den Armen, ich bin der Meinung das dies kein gutes Zeichen ist.
+Ausgabe: Das Etwas rudert aktu ell mit den Armen, ich bin der Meinung das dies kein gutes Zeichen ist.. 
+
+[086] ship_liftoff_desc.ini
+Quelle: data/vars/ship_liftoff_desc.ini
+Zeile: 8
+Text: Die Triebwerke zuenden mit ein ein halb fach er leistung.
+Ausgabe: Die Triebwerke zünden mit ein ein halb fach er leistung.. 
+
+[087] ship_liftoff_orbiting.ini
+Quelle: data/vars/ship_liftoff_orbiting.ini
+Zeile: 5
+Text: Wir haben nun eine sichere Umlaufbahn erreicht.
+Ausgabe: Wir haben nun eine sichere Umlaufbahn erreicht.. 
+
+[088] ship_liftoff_doku.ini
+Quelle: data/vars/ship_liftoff_doku.ini
+Zeile: 10
+Text: Markiere den Planeten fuer spaetere Untersuchungen.
+Ausgabe: Markiere den Planeten für spätere Untersuchungen.. 
+
+[089] ship_liftoff_jumpready.ini
+Quelle: data/vars/ship_liftoff_jumpready.ini
+Zeile: 12
+Text: Der interstellare Antrieb meldet volle Einsatzbereitschaft.
+Ausgabe: Der interstellare Antrieb meldet volle Einsatzbereitschaft.. 
+
+[090] start_jumpdrive.ini
+Quelle: data/vars/start_jumpdrive.ini
+Zeile: 2
+Text: Sie koennen nun den naechsten Sektor Sprung berechnen.
+Ausgabe: Sie können nun den nächsten Sektor Sprung berechnen.. 
+
+RAW STORY (Originalschreibweise)
+========================================================================
+Sternzeit  noll eins acht eff zwo deh strich  beh. unsere sensoren bestaetigen die ankunft im system baraili  NI mira  caldris. Der Systemscan bestaetigt  sechs sonnen. dazu gibt es kostenlos  mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen bereich liegen. Ein dichter Nebel aus geladenen Partikeln beeintraechtigt Kommunikation und Langstreckensensoren.
+im aktuellen Kursfenster befindet sich der Planet baraili  Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus.. Der Planet ist  loechrig, er hat vielen Hoehlen stellenweise ist er  geroellhaltig.. In den Seen wurde fluessiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort  Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort gibt es moderate Wolkenverteilung in hell weiss unterbrochen durch tief gelb verlaufen.. Die Aussicht auf eine belebte Umgebung ist  unwarscheinlich wenn auch nicht null. Analysiere moegliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manoevriertriebwerke aktiviert.. Bodenkontakt bestaetigt.. Fuehre einen vollstaendigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan laeuft im Hintergrund.. Anomalie gefunden.. Moegliche Lebensform gesichtet
+Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist  mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkoerper mit Eutern
+Unterhalb des Koerpers befinden sich sieben gewoehnliche Beine
+An der Seite sieht man Pranken an starr anmutenden Armen. An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn boesartig starrende Augen
+Das Wesen hat die Bewegung unserer Sensoren bemerkt,
+es tastet die schiffs huelle vorsichtig mit mehreren seiner fortsaetze ab.
+wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich bin auf seine Reaktion gespannt.. Das Alien antwortet mit Lichtimpulsen und scheint unser Vorgehen  als einen Annaehrungsversuch zu interpretieren.. Ich glaube langsam ist es an der Zeit zum das Weite suchen.. Das Etwas rudert aktu ell mit den Armen, ich bin der Meinung das dies kein gutes Zeichen ist.. Die Triebwerke zuenden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten fuer spaetere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie koennen nun den naechsten Sektor Sprung berechnen..
+
+DISPLAY/TTS STORY (Legacy-Umlautkonvertierung)
+========================================================================
+Sternzeit  noll eins acht eff zwo deh strich  beh. unsere sensoren bestätigen die ankunft im system baraili  NI mira  caldris. Der Systemscan bestätigt  sechs sonnen. dazu gibt es kostenlos  mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen bereich liegen. Ein dichter Nebel aus geladenen Partikeln beeinträchtigt Kommunikation und Langstreckensensoren.
+im aktüllen Kursfenster befindet sich der Planet baraili  Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus.. Der Planet ist  löchrig, er hat vielen Höhlen stellenweise ist er  geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort  Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort gibt es moderate Wolkenverteilung in hell weiss unterbrochen durch tief gelb verlaufen.. Die Aussicht auf eine belebte Umgebung ist  unwarscheinlich wenn auch nicht null. Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden.. Mögliche Lebensform gesichtet
+Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist  mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern
+Unterhalb des Körpers befinden sich sieben gewöhnliche Beine
+An der Seite sieht man Pranken an starr anmutenden Armen. An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen
+Das Wesen hat die Bewegung unserer Sensoren bemerkt,
+es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab.
+wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich bin auf seine Reaktion gespannt.. Das Alien antwortet mit Lichtimpulsen und scheint unser Vorgehen  als einen Annährungsversuch zu interpretieren.. Ich glaube langsam ist es an der Zeit zum das Weite suchen.. Das Etwas rudert aktu ell mit den Armen, ich bin der Meinung das dies kein gutes Zeichen ist.. Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen..

@@ -1,0 +1,113 @@
+﻿SCIFI-GENERATOR — AUSFÜHRBARER BILDSERIEN-AUFTRAG
+Ziel-KI: Stable Diffusion
+Prompt-Erzeugung: Lokal
+Anzahl Szenen: 8
+Seitenverhältnis: 16:9
+
+STEUERANWEISUNG FÜR STABLE-DIFFUSION-WORKFLOW
+========================================================================
+Stable-Diffusion-Oberflächen erzeugen üblicherweise ein Bild pro Prompt. Übergib deshalb jeden nummerierten POSITIVE PROMPT separat an das Bildmodell oder lass eine externe Automation die Szenen nacheinander ausführen. Der Steuerblock selbst ist für die bedienende Person bzw. den Workflow-Runner bestimmt und nicht als einzelner Bildprompt gedacht.
+
+VERBINDLICHE REGELN
+1. Erzeuge 8 einzelne Dateien scene_01 bis scene_08; niemals alle Szenen in einem einzigen Prompt oder als Collage.
+2. Verwende für alle Szenen dasselbe Modell, denselben Stil-Preset und das Seitenverhältnis 16:9.
+3. Nutze nach Möglichkeit denselben Grund-Seed sowie Referenzbild-, IP-Adapter-, ControlNet- oder Character-Reference-Funktionen für wiederkehrende Elemente.
+4. Speichere Szene 1 als Schiffs-/Systemreferenz und die erste Alien-Szene zusätzlich als Kreaturenreferenz.
+5. Übernimm den GLOBAL NEGATIVE PROMPT bei jeder Szene.
+6. Phonetische Schreibweisen im deutschen Storytext sind sinngemäß zu interpretieren; sichtbarer Text ist zu vermeiden.
+7. Falls das verwendete Modell mit englischen Prompts zuverlässiger arbeitet, kann eine Promptübersetzung oder Ollama-Verfeinerung aktiviert werden.
+
+GLOBALE VISUELLE SERIENBIBEL
+========================================================================
+Bildstil: Authentisch wirkende, realistische und cineastische Retro-Science-Fiction mit glaubwürdigen Materialien, dramatischer Beleuchtung, klarer Tiefenstaffelung und einem subtil satirisch-ernsten Ton.
+Kameraformat: Breitbild 16:9; jede Szene als eigenständiger Filmstill, keine Collage und kein Mehrfachpanel.
+Raumschiff: Dasselbe robuste retro-futuristische Forschungs- und Landeschiff in jeder Szene: industrielle Konstruktion, sichtbare Nutzungsspuren, glaubwürdige Triebwerke und wiedererkennbare Silhouette.
+Sternensystem: Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen …
+Planet und Oberfläche: Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort … Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan …
+Wiederkehrendes Alien: Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht … An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen
+Kontinuitätsregel: Ein einmal etabliertes Design für Schiff, Welt, Alien, Raumanzüge und Technik darf in späteren Szenen nicht grundlos verändert werden. Frühere Bilder sind, soweit möglich, als Referenz weiterzuverwenden.
+Ausschlüsse: Keine sichtbare Schrift, Untertitel, Logos, Wasserzeichen oder Benutzeroberflächen. Phonetische Schreibweisen aus der Story sind sinngemäß zu interpretieren und nicht als Text abzubilden.
+
+GLOBAL NEGATIVE PROMPT
+========================================================================
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+
+ZIELSYSTEM-HINWEISE
+========================================================================
+- Jeder POSITIVE PROMPT ist einzeln zu generieren.
+- Ein gleicher Seed allein garantiert keine Serienkontinuität; Referenz- und Konsistenzwerkzeuge sind vorzuziehen, sofern die verwendete Oberfläche sie anbietet.
+
+STORYBOARD-SZENEN
+========================================================================
+
+[01] Warp-Austritt und Systemname / Systemanalyse
+Dateiname: scene_01.png
+Schritte: 1-20
+Zusammenfassung: Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen …
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 1: Warp-Austritt und Systemname / Systemanalyse. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Sternzeit noll eins acht eff zwo deh strich beh. unsere sensoren bestätigen die ankunft im system baraili NI mira caldris. Der Systemscan bestätigt sechs sonnen. dazu gibt es kostenlos mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen …. Bildkomposition: Weite Totale des Schiffes beim Austritt aus dem Warp, Blick auf das fremde Sternensystem. Panoramablick auf das Sternensystem mit Sonnen, Planeten und begleitender Sensorscan-Ästhetik. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+
+[02] Zielplanet im Visier
+Dateiname: scene_02.png
+Schritte: 21-24
+Zusammenfassung: im aktüllen Kursfenster befindet sich der Planet baraili Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus..
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 2: Zielplanet im Visier. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: im aktüllen Kursfenster befindet sich der Planet baraili Picon. Patt roli en Drohnen befinden sich auf Abfangkurs. Aktiviere Tarnmodus... Bildkomposition: Orbitalansicht des Zielplaneten und seines Umfelds, als würde die Crew den Anflug vorbereiten. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+
+[03] Oberflächenscan des Planeten
+Dateiname: scene_03.png
+Schritte: 25-45
+Zusammenfassung: Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort …
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 3: Oberflächenscan des Planeten. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Der Planet ist löchrig, er hat vielen Höhlen stellenweise ist er geröllhaltig.. In den Seen wurde flüssiges Ammoniak als wahrscheinlich eingestuft.. Fest ist dort Ton schiefer. Je nach Region liegen die Temperaturen zwischen minus sechzig sowie in warmen Regionen plus vierhundert Standard Temperatur Einheiten. Dort …. Bildkomposition: Detailreicher Überblick über Landschaft, Material, Flüssigkeiten, Temperatur und Wolken des Planeten. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+
+[04] Landeanflug und Anomalie
+Dateiname: scene_04.png
+Schritte: 46-52
+Zusammenfassung: Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden..
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 4: Landeanflug und Anomalie. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Analysiere mögliche Landezonen. Geeigneter Bereich markiert.. Leite kontrollierten Sinkflug ein.. Manövriertriebwerke aktiviert.. Bodenkontakt bestätigt.. Führe einen vollständigen Nahbereichs Scan durch.. Ein passiver Bio signatur Scan läuft im Hintergrund.. Anomalie gefunden... Bildkomposition: Dramatische Landesequenz mit Sensorwarnung und erster unnatürlicher Anomalie auf der Oberfläche. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+
+[05] Erste Alien-Sichtung / Alien-Anatomie
+Dateiname: scene_05.png
+Schritte: 53-66
+Zusammenfassung: Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht …
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 5: Erste Alien-Sichtung / Alien-Anatomie. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Mögliche Lebensform gesichtet Es ist weitestgehend durchscheinend orange marmoriert.. Der Organismus ist mehr als dreissig meter hoch und aus grosser Entfernung sichtbar. , und hat einen in mehrere Segmente geteilten Oberkörper mit Eutern Unterhalb des Körpers befinden sich sieben gewöhnliche Beine An der Seite sieht …. Bildkomposition: Erster klarer Blick auf die fremde Lebensform mit Farbe, Transparenz und Größe im Kontext der Umgebung. Ganzkörperdarstellung des Wesens mit Torso, Gliedmaßen oder Implantaten, wie in einem Sci-Fi-Bestiarium. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+
+[06] Alien-Gesicht und Augen
+Dateiname: scene_06.png
+Schritte: 67-73
+Zusammenfassung: An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 6: Alien-Gesicht und Augen. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: An der Vorderseite des Kopfes befindet sich ein starres Gesicht , seitlich davon erkennt man eine blutig triefende Wunde , direkt darunter befinden sich achtzehn bösartig starrende Augen. Bildkomposition: Nahe, verstörende Detailansicht von Gesicht, Mundpartie und Augen des Wesens. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+
+[07] Kontakt, Irritation und Rückzug
+Dateiname: scene_07.png
+Schritte: 74-85
+Zusammenfassung: Das Wesen hat die Bewegung unserer Sensoren bemerkt, es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab. wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich …
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 7: Kontakt, Irritation und Rückzug. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Das Wesen hat die Bewegung unserer Sensoren bemerkt, es tastet die schiffs hülle vorsichtig mit mehreren seiner fortsätze ab. wer denkt sich solche kacke aus. ziemlich sicher scheint es uns nicht unmittelbar begatten zu wollen.. Unser Analysemodul wird testweise das Mistvieh mit dem Plasma laser zu be ball ern. Ich …. Bildkomposition: Spannungsgeladene Szene des missglückten Kontakts und des hektischen Rückzugs zum Schiff. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting
+
+[08] Flucht und Sprungvorbereitung
+Dateiname: scene_08.png
+Schritte: 86-90
+Zusammenfassung: Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen..
+POSITIVE PROMPT:
+photorealistic cinematic science fiction film still, retro-futuristic exploration mission, believable industrial technology, dramatic lighting, high detail, clear depth layering, Szene 8: Flucht und Sprungvorbereitung. Authentisch wirkende Science-Fiction-Szene, realistisch, cineastisch, detailreich, glaubwürdige Materialien, dramatische Beleuchtung, hochwertige Atmosphäre, klare Tiefenstaffelung, kein eingeblendeter Text, keine Wasserzeichen. Zeige folgende Handlung und Details: Die Triebwerke zünden mit ein ein halb fach er leistung.. Wir haben nun eine sichere Umlaufbahn erreicht.. Markiere den Planeten für spätere Untersuchungen.. Der interstellare Antrieb meldet volle Einsatzbereitschaft.. Sie können nun den nächsten Sektor Sprung berechnen... Bildkomposition: Dynamischer Abflug zurück ins All mit Umlaufbahn, Warnboje und vorbereitetem Warp-Sprung. Kontinuität über alle Bilder hinweg: ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem, same recurring spacecraft and world design, visual continuity with previous scene, cinematic film still matching the requested target aspect ratio
+NEGATIVE PROMPT:
+text, subtitles, captions, watermark, logo, user interface, HUD, collage, split screen, comic panels, duplicate spacecraft, inconsistent vehicle design, inconsistent creature anatomy, deformed geometry, low detail, blurry, oversaturated, flat lighting

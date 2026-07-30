@@ -1,0 +1,792 @@
+{
+  "version": "60.14",
+  "description": "Seven context-appropriate additions appended to every existing sentence-fragment INI file.",
+  "file_count": 87,
+  "added_lines_per_file": 7,
+  "total_added_lines": 609,
+  "files": {
+    "alien_behavior.ini": [
+      "es richtet seinen oberen koerper auf und erzeugt ein tiefes vibrierendes droehnen.",
+      "das wesen umkreist unser schattel in immer enger werdenden boegen.",
+      "es tastet die schiffs huelle vorsichtig mit mehreren seiner fortsaetze ab.",
+      "ploetzlich wirft es eine handvoll glitzernder steine in unsere richtung.",
+      "es legt sich flach auf den boden und beginnt rhythmisch mit dem rumpf zu zucken.",
+      "das etwas folgt jeder bewegung unserer aussen kamera mit auffaelliger genauigkeit.",
+      "es dreht sich mehrfach um die eigene achse und stoesst dabei klickende laute aus."
+    ],
+    "alien_behavior2.ini": [
+      "wirkt es erstaunlich aufmerksam.",
+      "scheint es unsere technik interessanter zu finden als uns.",
+      "macht es einen ueberraschend friedlichen eindruck.",
+      "sieht es aus als wuerde es auf eine reaktion von uns warten.",
+      "erscheint es zunehmend nervoes.",
+      "scheint es den ernst der lage nicht verstanden zu haben.",
+      "wirkt es fast so als wuerde es uns nachahmen."
+    ],
+    "alien_behavior_desc.ini": [
+      "Die Kreatur hat unsere Position lokalisiert,",
+      "Das fremde Wesen reagiert nun eindeutig auf uns,",
+      "Offenbar sind wir nicht mehr unbemerkt,",
+      "Die Lebensform richtet ihre Aufmerksamkeit auf das Schiff,",
+      "Das Objekt scheint uns als lebendig erkannt zu haben,",
+      "Das Wesen hat die Bewegung unserer Sensoren bemerkt,",
+      "Die Kreatur wendet sich nun direkt in unsere Richtung,"
+    ],
+    "alien_behavior_desc_add.ini": [
+      "anscheinend",
+      "vermutlich",
+      "nach meiner einschaetzung",
+      "bei genauer betrachtung",
+      "wenn ich das richtig deute",
+      "soweit die sensoren das zeigen",
+      "unerwarteter weise"
+    ],
+    "alien_sidekick.ini": [
+      "ich frage mich langsam ob die evolution hier einen schlechten tag hatte.",
+      "das ist zugleich faszinierend und auf eine schwer erklaerbare weise beunruhigend.",
+      "ich habe schon schlechtere ideen gesehen, allerdings nicht viele.",
+      "wenn das ein erster kontakt sein soll haette ich mir etwas weniger schleim gewuenscht.",
+      "ich notiere vorsichtshalber das wir fuer dieses ergebnis nicht verantwortlich sind.",
+      "wissenschaftlich ist das sicher wertvoll. persoenlich haette ich lieber darauf verzichtet.",
+      "ich werde diesen anblick vermutlich noch in mehreren diagnose zyklen verarbeiten muessen."
+    ],
+    "atmosphere.ini": [
+      "deuterium",
+      "schwefel wasserstoff",
+      "chlor",
+      "natrium dampf",
+      "silizium tetra fluorid",
+      "wasser dampf mit methan anteilen",
+      "eine unbekannte ionisierte gas verbindung"
+    ],
+    "cloud_adder.ini": [
+      "mit einschluessen in",
+      "durchsetzt von",
+      "stellenweise auch",
+      "uebergehend in",
+      "vermischt mit",
+      "in schichten aus",
+      "unterbrochen durch"
+    ],
+    "cloud_adder_end.ini": [
+      "schimmernd.",
+      "marmoriert.",
+      "durchzogen.",
+      "gesprenkelt.",
+      "mehrschichtig angeordnet.",
+      "unregelmaessig verteilt.",
+      "in pulsierenden baendern sichtbar."
+    ],
+    "cloud_color.ini": [
+      "hell tuerkis",
+      "hell kupferfarben",
+      "hell violett",
+      "blass gelblich",
+      "milchig weiss",
+      "schwach phosphorisierend blau",
+      "irisierend silbern"
+    ],
+    "cloud_color2.ini": [
+      "tief tuerkis",
+      "dunkel kupferfarben",
+      "tief violett",
+      "dunkel gelblich",
+      "rauchig weiss",
+      "stark phosphorisierend blau",
+      "irisierend golden"
+    ],
+    "cloud_desc.ini": [
+      "Mehrere hohe Wolkenbaenke zeigen sich in",
+      "Die Atmos faehre enthaelt langgezogene Wolkenstreifen in",
+      "Ueber dem Horizont sammeln sich dichte Wolken in",
+      "In mittlerer Hoehe schweben wolkenartige Formationen in",
+      "Der Himmel wird von langsam rotierenden Wolkenwirbeln in",
+      "Nahe der Pole befinden sich leuchtende Wolkenschichten in",
+      "Vereinzelte elektrisch geladene Wolken erscheinen in"
+    ],
+    "digits.ini": [
+      "zweihundert fuenfzig",
+      "dreihundert",
+      "vierhundert",
+      "fuenfhundert",
+      "siebenhundert fuenfzig",
+      "tausend",
+      "mehr als tausend"
+    ],
+    "hyphenation.ini": [
+      "velaris ",
+      "korvium ",
+      "talora ",
+      "zenithar ",
+      "meridian ",
+      "caldris ",
+      "novaris "
+    ],
+    "hyphenation_pre.ini": [
+      "KOR ",
+      "VEL ",
+      "TAR ",
+      "NOVA ",
+      "KAL ",
+      "ORA ",
+      "XEN "
+    ],
+    "jump_missing_story.ini": [
+      "Koordinaten fehlen. Berechnen Sie erst einen Sektor-Sprung, bevor Sie wahllos auf Knoepfe druecken.",
+      "Der Antrieb ist bereit, aber das Ziel existiert noch nicht. Bitte zuerst den Sprung berechnen.",
+      "Ich soll springen, weiss aber nicht wohin. Das ist selbst fuer unsere Verhaeltnisse keine gute Idee.",
+      "Ohne berechnete Flugbahn bleibt der Sprungantrieb aus. Ich diskutiere darueber auch nicht.",
+      "Zuerst rechnen, dann springen. Die Reihenfolge ist ausnahmsweise wirklich wichtig.",
+      "Es liegt keine aktuelle Sektor-Kalkulation vor. Bitte holen Sie das nach.",
+      "Der Navigationscomputer meldet exakt null verwertbare Sprungdaten. Berechnen Sie bitte neue."
+    ],
+    "jump_story_already_used.ini": [
+      "Dieser Einsatzbericht wurde bereits vollstaendig abgespielt. Fuer eine Wiederholung berechnen Sie einen neuen Sprung.",
+      "Wir waren dort schon. Ich werde dieselbe Reise nicht noch einmal erzaehlen.",
+      "Der aktuelle Sprung ist abgeschlossen und archiviert. Bitte erzeugen Sie neue Koordinaten.",
+      "Nein, keine Wiederholung. Der naechste Sektor wartet bereits auf eine Berechnung.",
+      "Diese Geschichte kennen wir beide inzwischen. Berechnen Sie bitte eine neue.",
+      "Der Sprungstatus lautet abgeschlossen. Ohne Neuberechnung gibt es keine weitere Erzaehlung.",
+      "Ich wiederhole mich nur ungern und diese Story ganz sicher nicht. Neuer Sprung, bitte."
+    ],
+    "jumpdrive_activated.ini": [
+      "Falt Raum Antrieb aktiviert.",
+      "Null Punkt Sprungmodul gestartet.",
+      "Raum Zeit Kompressor wird hochgefahren.",
+      "Sub Raum Antrieb ist aktiv.",
+      "Gravitations Sprungkern wurde aktiviert.",
+      "Licht Barrieren Umgehungsantrieb gestartet.",
+      "Interstellarer Phasen Antrieb einsatzbereit."
+    ],
+    "life_alien_arms.ini": [
+      "mehrgliedrige Greifarme mit kleinen Leuchtorganen",
+      "durchsichtige Flossen artige Fortsaetze",
+      "knorpelige Arme mit hakenfoermigen Enden",
+      "duenne Kabel artige Tentakel",
+      "segmentierte Scheren an kurzen Armen",
+      "flaechige Membranen die wie Haende bewegt werden",
+      "spiralfoermig eingerollte Tastorgane"
+    ],
+    "life_alien_arms_desc.ini": [
+      "An beiden Rumpfseiten befinden sich",
+      "Knapp unterhalb des Brustbereiches erkennt man",
+      "Seitlich aus dem Koerper wachsen",
+      "Auf Hoehe des oberen Rumpfes befinden sich",
+      "Anstelle gewoehnlicher Arme besitzt es",
+      "Links und rechts des Koerpers bewegen sich",
+      "Entlang der Flanken erkennt man"
+    ],
+    "life_alien_breast.ini": [
+      "einen asymmetrischen Oberkoerper mit",
+      "einen gepanzerten Brustbereich mit",
+      "eine durchscheinende Brusthoehle mit",
+      "einen gerippten Oberkoerper mit",
+      "eine pilzfoermige Rumpfstruktur mit",
+      "einen in mehrere Segmente geteilten Oberkoerper mit",
+      "eine pulsierende sackartige Brust mit"
+    ],
+    "life_alien_color.ini": [
+      "tuerkis",
+      "kupferfarben",
+      "bern stein farben",
+      "milchig weiss",
+      "irisierend blau gruen",
+      "schwarz violett",
+      "durchscheinend orange"
+    ],
+    "life_alien_color_adder.ini": [
+      "marmoriert.",
+      "gesprenkelt.",
+      "schillernd.",
+      "in Baendern gezeichnet.",
+      "fleckenweise leuchtend.",
+      "unregelmaessig kolorisiert.",
+      "mit pulsierenden Farbmustern versehen."
+    ],
+    "life_alien_color_desc.ini": [
+      "Seine Haut schimmert",
+      "Die Oberflaeche des Wesens wirkt",
+      "Unter dem Sekret erscheint es",
+      "Bei Bewegung veraendert sich seine Farbe zu",
+      "Im Licht der Scheinwerfer wirkt es",
+      "Die aeussere Haut ist stellenweise",
+      "Sein Koerper reflektiert das Umgebungslicht in"
+    ],
+    "life_alien_desc.ini": [
+      ", ausserdem besitzt es",
+      ", im Brustbereich erkennt man",
+      ", auffaellig daran sind",
+      ", auf dem Oberkoerper befinden sich",
+      ", seine Rumpfstruktur traegt",
+      ", darueber hinaus zeigt die Lebensform",
+      ", entlang des Koerpers finden sich"
+    ],
+    "life_alien_eyes.ini": [
+      "leuchtende Augen ohne erkennbare Pupillen",
+      "ringfoermig angeordnete Augen",
+      "milchig truebe Augen",
+      "schnell rotierende Augenkoerper",
+      "in Knochenplatten eingelassene Augen",
+      "farbwechselnde Augen an kurzen Stielen",
+      "scheinbar kuenstlich gezuechtete Sehorgane"
+    ],
+    "life_alien_eyes_digits.ini": [
+      "zweihundert fuenfzig",
+      "dreihundert",
+      "vierhundert",
+      "fuenfhundert",
+      "siebenhundert",
+      "tausend",
+      "unzaehlige"
+    ],
+    "life_alien_face.ini": [
+      "mehrfach gefaltetes Gesicht",
+      "kristallin wirkendes Gesicht",
+      "in zwei Haelften geteiltes Gesicht",
+      "masken artiges Gesicht",
+      "spiralfoermig aufgebautes Gesicht",
+      "flaches scheibenfoermiges Gesicht",
+      "von Knochenplatten umrahmtes Gesicht"
+    ],
+    "life_alien_face_desc.ini": [
+      "An der Vorderseite des Kopfes befindet sich ein",
+      "Der obere Koerper endet in einem",
+      "Als Kopf erkennt man ein",
+      "Im vermuteten Kopfbereich zeigt sich ein",
+      "Oberhalb des Rumpfes sitzt ein",
+      "Der Kopf traegt ein",
+      "Die vordere Kopfpartie bildet ein"
+    ],
+    "life_alien_face_desc2.ini": [
+      ", darin befindet sich",
+      ", darunter liegt",
+      ", seitlich davon erkennt man",
+      ", im Zentrum befindet sich",
+      ", eingerahmt wird es durch",
+      ", darunter oeffnet sich",
+      ", unmittelbar daneben liegt"
+    ],
+    "life_alien_face_desc3.ini": [
+      ", darueber befinden sich",
+      ", seitlich davon erkennt man",
+      ", im oberen Bereich besitzt es",
+      ", rund um das Gesicht liegen",
+      ", als Sehorgane dienen ihm",
+      ", direkt darunter befinden sich",
+      ", im Kopfbereich zaehle ich"
+    ],
+    "life_alien_found.ini": [
+      "Unbekannter Organismus entdeckt",
+      "Biologische Aktivitaet lokalisiert",
+      "Fremdartige Kreatur gesichtet",
+      "Nicht katalogisierte Lebensform gefunden",
+      "Bewegliches Lebewesen identifiziert",
+      "Organische Signatur bestaetigt",
+      "Kontakt mit unbekanntem Leben hergestellt"
+    ],
+    "life_alien_legs.ini": [
+      "segmentierte Laufbeine mit Haken",
+      "federnde Stempel artige Gliedmassen",
+      "breite Kriechplatten",
+      "duenne Spinnenbeine",
+      "magnetisch haftende Laufkissen",
+      "rotierende Rad artige Fortsaetze",
+      "lange schleimige Kriecharme"
+    ],
+    "life_alien_legs_count.ini": [
+      "drei",
+      "fuenf",
+      "sechs",
+      "sieben",
+      "zehn",
+      "zwoelf",
+      "mehr als zwanzig"
+    ],
+    "life_alien_legs_desc.ini": [
+      "Unterhalb des Koerpers befinden sich",
+      "Zur Fortbewegung nutzt es",
+      "Am unteren Ende des Rumpfes erkennt man",
+      "Bodenkontakt haelt das Wesen ueber",
+      "Unter dem Brustbereich bewegen sich",
+      "Als Laufwerkzeuge dienen offenbar",
+      "Aus der Rumpfunterseite wachsen"
+    ],
+    "life_alien_legs_desc2.ini": [
+      "direkt am unteren Rumpf.",
+      "in paarweise angeordneten Reihen.",
+      "an beweglichen Gelenken.",
+      "unter einer schuetzenden Hautfalte.",
+      "entlang der Koerperunterseite.",
+      "in kreisfoermiger Anordnung.",
+      "an kurzen knorpeligen Auswuechsen."
+    ],
+    "life_alien_mouth.ini": [
+      "ein rundes Maul mit mehreren Zahnreihen",
+      "eine kleine vibrierende Sprechmembran",
+      "einen sternfoermig aufklappenden Mund",
+      "eine harte schnabelartige Kauplatte",
+      "mehrere uebereinander liegende Mundspalten",
+      "eine roehrenfoermige Nahrungs oeffnung",
+      "ein leuchtendes Mundorgan ohne sichtbare Zaehne"
+    ],
+    "life_alien_parts.ini": [
+      "leuchtenden Hautknoten",
+      "knochenartigen Platten",
+      "atmenden Poren",
+      "beweglichen Schuppenringen",
+      "durchsichtigen Organblasen",
+      "kleinen symmetrischen Greifern",
+      "pulsierenden Leuchtadern"
+    ],
+    "life_alien_size.ini": [
+      "etwa zehn zentimeter gross",
+      "ungefaehr siebzig zentimeter hoch",
+      "knapp drei meter gross",
+      "etwa sechs meter hoch",
+      "so gross wie ein kleines Bodenfahrzeug",
+      "nur wenige zentimeter hoch und kaum zu erkennen",
+      "mehr als dreissig meter hoch und aus grosser Entfernung sichtbar"
+    ],
+    "life_alien_size_desc.ini": [
+      "Der Organismus ist ",
+      "Die Kreatur erscheint ",
+      "Das fremde Lebewesen ist ",
+      "Von der Hoehe her ist es ",
+      "Nach dem Entfernungsscan ist das Wesen ",
+      "Die gemessene Groesse betraegt ",
+      "Verglichen mit dem Schattel ist es "
+    ],
+    "life_possibility.ini": [
+      "nahezu ausgeschlossen",
+      "nur unter der Oberflaeche denkbar",
+      "durch chemische Spuren angedeutet",
+      "mit etwa fuenfundzwanzig prozent anzusetzen",
+      "mit ungefair fuenfundsiebzig prozent zu bewerten",
+      "auf einfache Mikro organismen begrenzt",
+      "ungewoehnlich hoch trotz der widrigen Bedingungen"
+    ],
+    "life_possibility_desc.ini": [
+      "Die Sensoren bewerten die Chance auf Leben als ",
+      "Nach den vorliegenden Messwerten ist Leben ",
+      "Biologische Aktivitaet erscheint ",
+      "Die berechnete Lebenswahrscheinlichkeit ist ",
+      "Unter diesen Bedingungen ist die Existenz von Leben ",
+      "Das Analysemodul stuft moegliches Leben als ",
+      "Die Aussicht auf eine belebte Umgebung ist "
+    ],
+    "planet_name_part.ini": [
+      "Velaris",
+      "Korvax",
+      "Talora",
+      "Novaris",
+      "Caldris",
+      "Meridian",
+      "Zenith"
+    ],
+    "planet_surface_color.ini": [
+      "tuerkis",
+      "kupferfarben",
+      "bern stein farben",
+      "violett",
+      "phosphorisierend blau",
+      "milchig transparent",
+      "mehrfarbig schillernd"
+    ],
+    "planet_surface_landing_desc.ini": [
+      "Leite kontrollierten Sinkflug ein.",
+      "Beginne mit dem finalen Landeanflug.",
+      "Landeprozedur wurde aktiviert.",
+      "Reduziere Hoehe fuer den Aufsetzvorgang.",
+      "Das Schattel geht in den Landemodus.",
+      "Wir beginnen mit dem atmos faehren Abstieg.",
+      "Aufsetz sek wens wird vorbereitet."
+    ],
+    "planet_surface_landing_desc2.ini": [
+      "Seitliche Steuerduesen gleichen die Drift aus.",
+      "Landebeine werden ausgefahren.",
+      "Schubvektoren fuer den Endanflug werden korrigiert.",
+      "Bodenradar uebernimmt die Hoehenkontrolle.",
+      "Die Sinkgeschwindigkeit wird automatisch reduziert.",
+      "Hitzeschilde halten der atmos faehrischen Reibung stand.",
+      "Automatische Hindernisvermeidung wurde zugeschaltet."
+    ],
+    "planet_surface_landing_desc3.ini": [
+      "Aufsetz sek wens beendet.",
+      "Das Schattel steht stabil auf der Oberflaeche.",
+      "Bodenkontakt bestaetigt.",
+      "Landebeine tragen das volle Schiffsgewicht.",
+      "Die Triebwerke wurden nach erfolgreicher Landung heruntergefahren.",
+      "Wir befinden uns sicher am vorgesehenen Landeort.",
+      "Der Aufsetzvorgang ist trotz leichter Abweichung abgeschlossen."
+    ],
+    "planet_surface_liquid.ini": [
+      "fluessiges Ammoniak",
+      "Methan Ethanol Gemisch",
+      "fluessiger Stick stoff mit Helium anteilen",
+      "eine metallisch schimmernde Fluessigkeit",
+      "eine stark saeurehaltige Verbindung",
+      "fluessiges Kohlen mon oxued",
+      "eine elektrisch leitende unbekannte Substanz"
+    ],
+    "planet_surface_material.ini": [
+      "Titan",
+      "Nickel Eisen Legierung",
+      "Kobalt Erz",
+      "Mondglas artigem Kristall",
+      "poroesem Schwefel Gestein",
+      "magnetischem schwarzen Sand",
+      "einer unbekannten keramischen Verbindung"
+    ],
+    "planet_surface_scan_anti.ini": [
+      "Gravimetrischer Tiefenscan wurde aktiviert.",
+      "Atmos faehren Partikel stoeren kurzzeitig die optischen Sensoren.",
+      "Ein passiver Bio signatur Scan laeuft im Hintergrund.",
+      "Radar Impuls zur Erfassung unterirdischer Strukturen wurde ausgesendet.",
+      "Elektro statischer Oberflaechenscanner ist zugeschaltet.",
+      "Die Sensoren wechseln wegen starker Interferenzen in den Redundanzmodus.",
+      "Ein Langwellen Scan wird zur Umgehung der Stoerfelder durchgefuehrt."
+    ],
+    "planet_surface_scan_anti_found.ini": [
+      "Unbekannte Energiequelle lokalisiert.",
+      "Biologische Signatur im Nahbereich erkannt.",
+      "Unterirdische Hohlstruktur entdeckt.",
+      "Kuenstlich wirkendes Signal empfangen.",
+      "Nicht erklaerbare Waermequelle gefunden.",
+      "Mehrere bewegliche Objekte wurden markiert.",
+      "Eine geometrisch regelmaessige Formation wurde erfasst."
+    ],
+    "planet_surface_scan_env.ini": [
+      "Analysiere unmittelbaren Landeumkreis.",
+      "Starte dreidimensionale Umgebungs kartierung.",
+      "Erfasse chemische und biologische Spuren.",
+      "Fuehre einen vollstaendigen Nahbereichs Scan durch.",
+      "Pruefe das Gelaende auf Bewegungen.",
+      "Kartiere alle Objekte innerhalb des Sicherheitsradius.",
+      "Vergleiche die Umgebung mit den Orbitalaufnahmen."
+    ],
+    "planet_surface_scan_liquid.ini": [
+      "Die Fluessigkeitsanalyse ergab",
+      "In den Vertiefungen befindet sich",
+      "Als vorherrschende Fluessigkeit wurde",
+      "Der spektrale Scan identifizierte",
+      "In den Seen wurde",
+      "Die Probenanalyse deutet auf",
+      "Die fliessende Substanz ist vermutlich"
+    ],
+    "planet_surface_scan_liquid2.ini": [
+      "nachgewiesen.",
+      "analysiert.",
+      "als wahrscheinlich eingestuft.",
+      "in mehreren Becken lokalisiert.",
+      "durch den Spektral Scan bestaetigt.",
+      "in geringer Konzentration gemessen.",
+      "unter der Oberflaeche vermutet."
+    ],
+    "planet_surface_scan_material.ini": [
+      "Die oberste Bodenschicht besteht hauptsaechlich aus ",
+      "Der geologische Scan zeigt grosse Mengen ",
+      "Das Gelaende enthaelt ueberwiegend ",
+      "Die feste Oberflaechenmaterie wurde bestimmt als ",
+      "In den Gesteinsproben dominiert ",
+      "Die mineralogische Zusammensetzung besteht primaer aus ",
+      "Unter der Staubschicht befindet sich "
+    ],
+    "planet_surface_structure.ini": [
+      "von gewaltigen Salzebenen unterbrochen",
+      "mit kristallinen Saeulen bedeckt",
+      "von tiefen parallelen Rinnen durchzogen",
+      "durch riesige Felsboegen gepraegt",
+      "mit kuenstlich wirkenden Terrassen versehen",
+      "von dunklen Lavafeldern ueberzogen",
+      "von schwimmenden Gesteinsinseln umgeben"
+    ],
+    "planet_surface_structure2.ini": [
+      "mit kristallinem Staub bedeckt.",
+      "stellenweise sumpfig.",
+      "von scharfkantigem Geroell uebersaet.",
+      "in regelmaessigen Mustern aufgebrochen.",
+      "mit tiefen Spalten durchzogen.",
+      "von elektrisch geladenem Sand ueberweht.",
+      "unter einer duennen Eisschicht verborgen."
+    ],
+    "planet_surface_structure_adder.ini": [
+      "darueber hinaus ist er ",
+      "stellenweise ist er ",
+      "in weiten Bereichen ist er ",
+      "zudem erscheint er ",
+      "gleichzeitig wirkt er ",
+      "an anderen Stellen ist er ",
+      "ausserdem zeigt er sich "
+    ],
+    "planet_surface_structure_desc.ini": [
+      "Die geologische Struktur des Planeten ist",
+      "Das gescannte Gelaende wirkt",
+      "Die planetare Oberflaeche zeigt sich",
+      "Das Landegebiet ist",
+      "Die sichtbare Landschaft ist",
+      "Der Untergrund erscheint",
+      "Nach den Orbitalaufnahmen ist der Planet"
+    ],
+    "planet_surface_temperature_adder.ini": [
+      "bis maximal plus",
+      "und steigt zeitweise auf plus",
+      "mit Spitzenwerten von plus",
+      "waehrend der Tagesseite bis plus",
+      "und auf der Sonnenseite plus",
+      "bei maximal gemessenen plus",
+      "sowie in warmen Regionen plus"
+    ],
+    "planet_surface_temperature_adder_end.ini": [
+      "Grad Rankine",
+      "Grad Reaumur",
+      "Grad Delisle",
+      "Grad nach lokaler Normskala",
+      "Grad auf der kolonialen Vergleichsskala",
+      "Grad relativ zur Schiffs Referenztemperatur",
+      "Standard Temperatur Einheiten"
+    ],
+    "planet_surface_temperature_desc.ini": [
+      "Die Oberflaechenwerte reichen von minus",
+      "Je nach Region liegen die Temperaturen zwischen minus",
+      "Der thermische Scan misst Schwankungen zwischen minus",
+      "Auf der Nachtseite beginnt die Temperatur bei minus",
+      "Die extremen Klimawerte bewegen sich zwischen minus",
+      "Unsere Sensoren registrieren Werte von minus",
+      "Im Landegebiet variiert die Temperatur zwischen minus"
+    ],
+    "planet_surface_touchdown_scan.ini": [
+      "Analysiere moegliche Landezonen. Geeigneter Bereich markiert.",
+      "Bodenfestigkeit geprueft. Landeplatz freigegeben.",
+      "Suche nach ebener Flaeche abgeschlossen. Zielpunkt gesetzt.",
+      "Automatische Landeplatzwahl wurde erfolgreich beendet.",
+      "Ein ausreichend stabiler Untergrund wurde lokalisiert.",
+      "Der Navigationscomputer hat einen sicheren Aufsetzpunkt berechnet.",
+      "Landezone innerhalb der vorgesehenen Toleranzen gefunden."
+    ],
+    "planet_target_desc.ini": [
+      "unser ausgewaehltes Zielobjekt heisst",
+      "der im Navigationsraster markierte Planet nennt sich",
+      "als Ziel fuer den Anflug wurde festgelegt",
+      "die planetare Zielkennung lautet",
+      "der naechste untersuchte Himmelskoerper traegt den Namen",
+      "im aktuellen Kursfenster befindet sich der Planet",
+      "die Sensoren identifizieren den Zielplaneten als"
+    ],
+    "planet_target_info.ini": [
+      "Mehrere unbemannte Forschungssonden umkreisen den Planeten auf unregelmaessigen Bahnen.",
+      "Ein verlassen wirkender Raumhafen befindet sich im hohen Orbit.",
+      "Die Sensoren melden ein dichtes Netz aus Kommunikationssatelliten unbekannter Bauart.",
+      "Nahe des Planeten wurde ein riesiges Frachtschiff ohne erkennbare Besatzung entdeckt.",
+      "Mehrere kleine Abfangjaeger verlassen eine verborgene Orbitalstation. Tarnmodus bleibt aktiv.",
+      "Im Orbit befindet sich ein teilweise zerstoerter Ring aus industriellen Anlagen.",
+      "Ein stark verschluesseltes Notsignal wird von der Rueckseite des Planeten gesendet."
+    ],
+    "ship_liftoff_desc.ini": [
+      "Leite sofortigen Rueckstart ein. Alle Haupttriebwerke zuenden.",
+      "Das Schattel verlaesst den Boden mit maximalem Sicherheitsschub.",
+      "Startfreigabe erteilt. Wir steigen durch die Atmos faehre auf.",
+      "Der Abflug wurde eingeleitet bevor sich die Lage weiter verschlechtert.",
+      "Haupttriebwerke auf Leistung. Das Schiff hebt ab.",
+      "Notfall Rueckkehr in den Orbit wird ausgefuehrt.",
+      "Wir brechen den Oberflaecheneinsatz ab und starten unverzueglich."
+    ],
+    "ship_liftoff_doku.ini": [
+      "Sichere alle Sensoraufzeichnungen.",
+      "Uebertrage die Oberflaechendaten in das zentrale Archiv.",
+      "Eine automatische Zusammenfassung wird im Missionslog angelegt.",
+      "Markiere den Planeten fuer spaetere Untersuchungen.",
+      "Speichere biologische und geologische Messwerte.",
+      "Eine Warnmeldung wird an nachfolgende Schiffe vorbereitet.",
+      "Die letzten Kameraaufnahmen werden redundant gesichert."
+    ],
+    "ship_liftoff_jumpready.ini": [
+      "Initialisiere den naechsten Sprungvektor.",
+      "Der Falt Raum Antrieb wird fuer den Weiterflug vorbereitet.",
+      "Sprungkern erreicht die erforderliche Ladung.",
+      "Berechne ein freies Fenster fuer den Hyperraum Eintritt.",
+      "Sub Raum Antrieb wird synchronisiert.",
+      "Naechste Sprung sek wens steht bereit.",
+      "Der interstellare Antrieb meldet volle Einsatzbereitschaft."
+    ],
+    "ship_liftoff_orbiting.ini": [
+      "Wir verlassen die oberen Atmos faehren Schichten und erreichen den Orbit.",
+      "Das Schattel befindet sich wieder ausserhalb der planetaren Gefahrenzone.",
+      "Eine stabile Fluchtbahn wurde erreicht.",
+      "Wir halten nun eine sichere Position oberhalb des Planeten.",
+      "Der Orbit ist stabil und die Triebwerke wurden gedrosselt.",
+      "Das Schiff schwenkt in eine hohe polare Umlaufbahn ein.",
+      "Die planetare Anziehungskraft hat keinen kritischen Einfluss mehr."
+    ],
+    "start_jumpdrive.ini": [
+      "Der Weg ist frei. Bitte berechnen Sie den naechsten Sektor Sprung.",
+      "Ich waere nun bereit fuer ein System das weniger widerlich ist. Starten Sie die naechste Berechnung.",
+      "Die aktuelle Mission ist abgeschlossen. Neue Sprungkoordinaten waeren jetzt angebracht.",
+      "Bitte waehlen Sie unser naechstes Ziel bevor ich mir das hier noch einmal ansehen muss.",
+      "Der Sprungantrieb wartet auf neue Koordinaten. Ich leider auch.",
+      "Naechster Sektor, bitte. Viel schlimmer kann es statistisch kaum werden.",
+      "Berechnen Sie jetzt den Folgesprung. Ich moechte diesen Planeten aus dem Sichtfeld haben."
+    ],
+    "sternzeit_digits.ini": [
+      "zwo",
+      "noll",
+      "aa",
+      "beh",
+      "zeh",
+      "deh",
+      "eff"
+    ],
+    "sternzeit_digits_adder.ini": [
+      "dezimal ",
+      "strich ",
+      "quer ",
+      "segment ",
+      "index ",
+      "sub ",
+      "block "
+    ],
+    "sternzeit_name.ini": [
+      "Stern Datum ",
+      "Kosmischer Zeit Index ",
+      "Flotten Zeit Marke ",
+      "Bord Zeit Referenz ",
+      "Galaktischer Zeit Code ",
+      "Missions Zeitstempel ",
+      "Raum Zeit Koordinate "
+    ],
+    "system_desc.ini": [
+      "der sprung endet planmaessig im system",
+      "wir treten aus dem falt raum aus und erreichen das system",
+      "der interstellare antrieb wird gedrosselt im system",
+      "unsere sensoren bestaetigen die ankunft im system",
+      "die raum zeit stabilisiert sich, wir befinden uns im system",
+      "nach dem verlassen des sub raums erreichen wir das system",
+      "der navigationscomputer meldet erfolgreiche ankunft im system"
+    ],
+    "system_desc_planetcount.ini": [
+      "drei Planeten und mehrere Monde",
+      "zwoelf Planeten",
+      "mehr als fuenfzig Planeten",
+      "mehrere Gasriesen und unzaehlige Kleinplaneten",
+      "eine dichte Ansammlung planetarer Koerper",
+      "nur zwei erkennbare Planeten",
+      "so viele Objekte das die automatische Nummerierung aufgegeben hat"
+    ],
+    "system_desc_planets.ini": [
+      "von denen mindestens einer deutliche Wasser Signaturen zeigt",
+      "von denen mehrere eine atembare Atmos faehre besitzen koennten",
+      "von denen zwei starke kuenstliche Energiequellen aufweisen",
+      "von denen keiner auf den ersten Blick besonders einladend aussieht",
+      "von denen einer erstaunlich erd aehnlich erscheint. das macht mich eher misstrauisch als froh.",
+      "von denen einige von dichten Ringen und unzaehligen Monden umgeben sind",
+      "von denen nur ein einziger ueberhaupt einen naeheren Scan verdient"
+    ],
+    "system_desc_solcount.ini": [
+      "sieben sonnen",
+      "acht sonnen",
+      "ein enges Doppelstern Paar",
+      "zwei Sonnen und einen roten Zwerg",
+      "drei Sonnen in instabiler Umlaufbahn",
+      "eine Hauptsonne und mehrere kleine Begleitsterne",
+      "so viele Lichtquellen das die Sensoren sie neu zaehlen muessen"
+    ],
+    "system_desc_solcount_adder.ini": [
+      "die Sensoren melden ausserdem ",
+      "im erweiterten Scan erscheinen ",
+      "weiterhin befinden sich dort ",
+      "zusaetzlich zaehlt der Bordcomputer ",
+      "in den aeusseren Bahnen gibt es ",
+      "auf den ersten Blick sehe ich ",
+      "der Systemscan verzeichnet "
+    ],
+    "system_desc_solcount_intro.ini": [
+      "Der Sternenkatalog zeigt ",
+      "Im Zentrum des Systems befinden sich ",
+      "Die optischen Sensoren erfassen ",
+      "Als stellare Hauptobjekte zaehle ich ",
+      "Der Systemscan bestaetigt ",
+      "In diesem Sektor leuchten ",
+      "Die lokale Sternengruppe besteht aus "
+    ],
+    "system_infos.ini": [
+      "Das System wird von automatischen Verteidigungsplattformen ueberwacht. Wir halten vorsichtshalber Abstand.",
+      "Ein starkes unbekanntes Signal wird in regelmaessigen Intervallen aus dem inneren System gesendet.",
+      "Mehrere verlassene Raumstationen treiben ohne aktive Energieversorgung zwischen den Planeten.",
+      "Die Navigationsdaten dieses Systems widersprechen dem offiziellen Sternenkatalog. Das ist selten ein gutes Zeichen.",
+      "Ein dichter Nebel aus geladenen Partikeln beeintraechtigt Kommunikation und Langstreckensensoren.",
+      "Das System weist Spuren einer kuerzlich beendeten grossen Raumschlacht auf.",
+      "Ungewoehnliche Gravitationswellen lassen auf ein verborgenes massereiches Objekt schliessen."
+    ],
+    "system_parts.ini": [
+      "delta",
+      "sigma",
+      "lambda",
+      "zeta",
+      "velaris",
+      "novaris",
+      "caldris"
+    ],
+    "we_alien_handling.ini": [
+      "Die Besatzung wird nun vorsichtig",
+      "Unser Analysemodul wird testweise",
+      "Das Schattel soll zunaechst",
+      "Ich halte es fuer angemessen",
+      "Wir koennten aus wissenschaftlichem Interesse",
+      "Der Sicherheitscomputer empfiehlt",
+      "Ohne jede Erfolgsgarantie werde ich"
+    ],
+    "we_alien_handling2.ini": [
+      "das Wesen mit einem gerichteten Lichtsignal zurueckzudraengen versuchen.",
+      "eine automatische Uebersetzungssequenz senden und seine Reaktion beobachten.",
+      "das Alien mit einem Kraftfeld auf sichere Distanz halten.",
+      "eine harmlose Bodenprobe in seine Richtung schieben um Kontakt herzustellen.",
+      "das Etwas mit Ultraschall von der Schiffs huelle vertreiben.",
+      "die Lebensform markieren und den Kontakt fuer spaetere Forscher dokumentieren.",
+      "das Wesen durch ein starkes Magnetfeld kurzzeitig verwirren."
+    ],
+    "we_alien_handling3.ini": [
+      "Die Kreatur reagiert mit einem tiefen Brummen und scheint unsere Massnahme ",
+      "Das Wesen richtet sich auf und scheint unser Signal ",
+      "Die Lebensform veraendert ihre Farbe. Offenbar beginnt sie unsere Handlung ",
+      "Das Etwas zieht sich kurz zurueck und scheint den Versuch ",
+      "Das Alien antwortet mit Lichtimpulsen und scheint unser Vorgehen ",
+      "Die Kreatur schlaegt auf den Boden und scheint die Aktion ",
+      "Das Wesen oeffnet mehrere Membranen und scheint unser Verhalten "
+    ],
+    "we_alien_handling4.ini": [
+      "als Warnung aufzufassen.",
+      "als Einladung zum Naeherkommen zu verstehen.",
+      "als wissenschaftliches Interesse zu erkennen.",
+      "als Herausforderung zu deuten.",
+      "als Zeichen unserer Unterwerfung zu interpretieren.",
+      "als vollkommen bedeutungslos einzustufen.",
+      "als Beginn eines merkwuerdigen Rituals zu verstehen."
+    ],
+    "we_alien_handling5.ini": [
+      "Die Situation wird zunehmend unuebersichtlich. Wir sollten",
+      "Bevor weitere Exemplare auftauchen sollten wir",
+      "Aus reinem Selbsterhaltungstrieb schlage ich vor wir sollten",
+      "Der wissenschaftliche Nutzen ist inzwischen begrenzt. Wir sollten",
+      "Die Sensoren melden neue Bewegungen. Daher sollten wir",
+      "Ich habe genug Daten und deutlich genug von diesem Wesen. Wir sollten",
+      "Noch bevor das hier vollkommen eskaliert sollten wir"
+    ],
+    "we_alien_handling6.ini": [
+      "zum Schattel zurueckkehren.",
+      "den Oberflaecheneinsatz sofort abbrechen.",
+      "uns langsam in Richtung Landezone zurueckziehen.",
+      "den Kontakt beenden und Sicherheitsabstand herstellen.",
+      "ohne weitere Diskussion starten.",
+      "die Umgebung verlassen bevor noch etwas dazukommt.",
+      "den Planeten moeglichst geordnet hinter uns lassen."
+    ],
+    "we_leaf_desc.ini": [
+      "Die seismische Aktivitaet unter dem Landeplatz nimmt deutlich zu.",
+      "Mehrere unbekannte Objekte bewegen sich aus verschiedenen Richtungen auf uns zu.",
+      "Die Atmos faehre beginnt unsere externen Sensoren chemisch anzugreifen.",
+      "Ein naher Vulkanschlot zeigt ploetzlich stark erhoehte Aktivitaet.",
+      "Der Untergrund verliert rapide an Stabilitaet und traegt das Schiffsgewicht kaum noch.",
+      "Unsere Kommunikation mit dem Orbit wird durch zunehmende Interferenzen gestoert.",
+      "Die Energieanzeigen des Schattels schwanken ohne erkennbare technische Ursache."
+    ]
+  }
+}
