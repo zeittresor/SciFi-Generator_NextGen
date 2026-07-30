@@ -11,6 +11,11 @@ Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 
 Die Story, das detaillierte Auswahlprotokoll und optionale Bild-Prompts bleiben standardmäßig ausgeblendet und werden nur bei Bedarf über **Story / Log / Prompts einblenden** geöffnet.
 
+Interface (Standardausgabe benötigt keinerlei KI):
+
+<img width="423" height="673" alt="interface" src="https://github.com/user-attachments/assets/bb153fc1-dbab-4449-8449-5427a413f786" />
+
+
 Story Beispielausgaben (nachdem man ein Gesamt-Paket an eine LLM geschickt hat - in diesem Fall nur Bildausgaben):
 
 <img width="1672" height="941" alt="alien1" src="https://github.com/user-attachments/assets/27ae8bcb-5de7-45af-8e02-48f7cc98eba6" />
