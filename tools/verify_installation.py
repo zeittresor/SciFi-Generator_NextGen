@@ -65,6 +65,17 @@ def main() -> int:
         ROOT / "prompt_profile_manager.py",
         ROOT / "ollama_client.py",
         ROOT / "media_package_generator.py",
+        ROOT / "handoff_package.py",
+        ROOT / "handoff_assets" / "build_story_video.py",
+        ROOT / "handoff_assets" / "build_video.bat",
+        ROOT / "handoff_assets" / "requirements.txt",
+        ROOT / "handoff_assets" / "audio_mixer.py",
+        ROOT / "handoff_assets" / "style_reference.png",
+        ROOT / "handoff_assets" / "validate_handoff.py",
+        ROOT / "handoff_assets" / "tools" / "list_winrt_voices.ps1",
+        ROOT / "handoff_assets" / "tools" / "list_sapi_voices.ps1",
+        ROOT / "handoff_assets" / "tools" / "synthesize_winrt.ps1",
+        ROOT / "handoff_assets" / "tools" / "synthesize_sapi.ps1",
         ROOT / "data" / "vars" / "jump_missing_story.ini",
         ROOT / "data" / "vars" / "jump_story_already_used.ini",
     )
@@ -117,8 +128,12 @@ def main() -> int:
                 "Stimmcharakter: Menschlich / natürlich",
                 "Stimmliche Wirkung: Weiblich",
                 "TTS-Qualitätsziel: Beste verfügbare Qualität",
-                "Video: 1024x1024, 1:1",
+                "Video: 1024x1024, 1:1, 8 fps",
                 "Videofläche: 1024 × 1024 Pixel; Seitenverhältnis 1:1",
+                "Stilreferenz: style_reference.png",
+                "LIEFERUMFANG DES FINALEN ERGEBNIS-ZIP",
+                "SOFORT AUSFÜHREN, NICHT NUR DAS ARCHIV PRÜFEN",
+                "build_story_video.py",
             )
             if not all(marker in package_document for marker in required_package_markers):
                 errors.append(f"Media package render failed: {profile_name}")

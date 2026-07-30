@@ -88,6 +88,53 @@ QPushButton:pressed {{
     background-color: {p['button_pressed']};
     color: {p['button_text']};
 }}
+QPushButton#collapsibleHeader {{
+    text-align: left;
+    font-weight: 600;
+    padding: {px(7)}px {px(10)}px;
+    border-radius: {px(3)}px;
+}}
+QLabel#collapsibleSummary {{
+    background-color: {p['panel_bg']};
+    color: {p['window_text']};
+    border-left: 1px solid {p['border']};
+    border-right: 1px solid {p['border']};
+}}
+QWidget#collapsibleContent {{
+    background-color: {p['panel_bg']};
+    border-left: 1px solid {p['border']};
+    border-right: 1px solid {p['border']};
+    border-bottom: 1px solid {p['border']};
+}}
+QLabel#workflowIntro {{
+    background-color: {p['panel_bg']};
+    color: {p['window_text']};
+    border: 1px solid {p['border']};
+    padding: {px(8)}px;
+}}
+QLabel#workflowStatus {{
+    background-color: {p['input_bg']};
+    color: {p['input_text']};
+    border: 1px solid {p['border']};
+    padding: {px(7)}px;
+}}
+QLabel#fieldHeading {{
+    font-weight: 600;
+}}
+QPushButton#primaryAction {{
+    background-color: {p['accent']};
+    color: {p['progress_text']};
+    font-weight: 700;
+    min-height: {px(36)}px;
+}}
+QPushButton#primaryAction:hover {{
+    background-color: {p['button_hover']};
+    color: {p['button_text']};
+}}
+QPushButton#secondaryAction {{
+    font-weight: 600;
+    min-height: {px(34)}px;
+}}
 QPushButton:disabled, QComboBox:disabled, QSpinBox:disabled {{
     background-color: {p['disabled_bg']};
     color: {p['disabled_text']};

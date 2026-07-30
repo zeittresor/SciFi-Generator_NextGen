@@ -93,7 +93,7 @@ class PackageTests(unittest.TestCase):
 
     def test_target_ai_prompt_profiles_are_packaged(self):
         app_source = (ROOT / "app.py").read_text(encoding="utf-8")
-        self.assertIn("Zielsystem / LLM:", app_source)
+        self.assertIn("Zielsystem / LLM", app_source)
         self.assertIn("PromptProfileManager", app_source)
         self.assertIn("storyboard_target_ai", app_source)
         self.assertTrue((ROOT / "prompt_profile_manager.py").is_file())
@@ -107,13 +107,30 @@ class PackageTests(unittest.TestCase):
             self.assertTrue((ROOT / "prompt_profiles" / filename).is_file())
 
 
+    def test_optional_settings_are_collapsible_and_closed_by_default(self):
+        app_source = (ROOT / "app.py").read_text(encoding="utf-8")
+        self.assertIn("class CollapsibleSection", app_source)
+        self.assertIn("Video, Stimme und Übergänge (optional)", app_source)
+        self.assertIn("Lieferumfang des Ergebnis-ZIP (optional)", app_source)
+        self.assertIn("Prompt-Verfeinerung mit Ollama (optional)", app_source)
+        self.assertIn("Sprachausgabe, Stimme und Audioexport (optional)", app_source)
+        self.assertIn("Generierungsdetails (optional)", app_source)
+        self.assertIn("Weitere Einstellungen (optional)", app_source)
+        self.assertGreaterEqual(app_source.count("expanded=False"), 6)
+        self.assertIn("section_media_expanded", app_source)
+        self.assertIn("_update_collapsible_summaries", app_source)
+
     def test_total_media_package_prompt_is_packaged(self):
         self.assertTrue((ROOT / "media_package_generator.py").is_file())
         app_source = (ROOT / "app.py").read_text(encoding="utf-8")
-        self.assertIn("Gesamtpaket (Bilder + Audio + Video)", app_source)
-        self.assertIn("Gesamtpaket-Prompt erzeugen", app_source)
+        self.assertIn("Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP", app_source)
+        self.assertIn("Gesamtpaket-Auftrag erzeugen", app_source)
         self.assertIn("render_media_package_text", app_source)
         self.assertIn("storyboard_transition_seconds", app_source)
+        self.assertTrue((ROOT / "handoff_assets" / "build_story_video.py").is_file())
+        self.assertTrue((ROOT / "handoff_assets" / "build_video.bat").is_file())
+        self.assertTrue((ROOT / "handoff_assets" / "style_reference.png").is_file())
+        self.assertTrue((ROOT / "handoff_assets" / "audio_mixer.py").is_file())
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn("## Gesamtpaket-Prompt: Bilder, Audio und Video", readme)
         self.assertIn("build_story_video.py", readme)
@@ -127,9 +144,19 @@ class PackageTests(unittest.TestCase):
         self.assertIn("1024 × 1024 (1:1, Standard)", app_source)
         self.assertIn("3840 × 2160 (4K UHD, 16:9)", app_source)
         self.assertIn("package_video_resolution_preset", app_source)
+        self.assertIn("package_video_fps", app_source)
+        self.assertIn("empfohlen für Standbilder", app_source)
+        self.assertIn("result_zip_include_images", app_source)
+        self.assertIn("result_zip_include_audio", app_source)
+        self.assertIn("Szenenbilder im Ergebnis-ZIP", app_source)
         self.assertIn("Benutzerdefiniert", app_source)
         self.assertIn("1024 × 1024", readme)
         self.assertIn("4K UHD", readme)
+        self.assertTrue((ROOT / "handoff_package.py").is_file())
+        self.assertIn("Gesamtpaket-Übergabe-ZIP speichern", app_source)
+        self.assertIn("Nur Bildserie — keine Audio- oder Videodatei", app_source)
+        self.assertIn("background_asset_included", app_source)
+        self.assertIn('"Bildserie": "Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP"', app_source)
 
 if __name__ == "__main__":
     unittest.main()

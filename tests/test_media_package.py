@@ -58,6 +58,7 @@ class MediaPackageTests(unittest.TestCase):
         self.assertEqual("1:1", defaults.aspect_ratio)
         self.assertEqual(1024, defaults.width)
         self.assertEqual(1024, defaults.height)
+        self.assertEqual(8, defaults.fps)
 
     def test_manifest_contains_exact_video_dimensions(self):
         settings = MediaPackageSettings(
@@ -93,6 +94,45 @@ class MediaPackageTests(unittest.TestCase):
         self.assertIn("1280x768", text)
         self.assertIn("Seitenverhältnis 5:3", text)
         self.assertIn("Strecke Bilder niemals disproportional", text)
+
+    def test_prompt_contains_style_reference_and_cgi_quality_rules(self):
+        text = render_media_package_text(
+            self.scenes,
+            full_story="Teststory",
+            profile=self.profile,
+            settings=self.settings,
+        )
+        self.assertIn("Stilreferenz: style_reference.png", text)
+        self.assertIn("VERBINDLICHER VISUELLER QUALITÄTS- UND STILANKER", text)
+        self.assertIn("final gerenderte cinematische CGI-/3D", text)
+        self.assertIn("flacher 2D-Look", text)
+
+    def test_result_zip_selection_is_in_manifest_and_prompt(self):
+        settings = MediaPackageSettings(
+            include_images_in_result_zip=False,
+            include_audio_in_result_zip=True,
+            include_clips_in_result_zip=False,
+            include_project_files_in_result_zip=False,
+        )
+        manifest = build_media_manifest(
+            self.scenes,
+            target_name="ChatGPT",
+            profile=self.profile,
+            settings=settings,
+        )
+        result = manifest["result_package"]
+        self.assertFalse(result["include_images"])
+        self.assertTrue(result["include_audio"])
+        text = render_media_package_text(
+            self.scenes,
+            full_story="Teststory",
+            profile=self.profile,
+            settings=settings,
+        )
+        self.assertIn("Szenenbilder im Ergebnis-ZIP: NEIN", text)
+        self.assertIn("Szenenaudios und final_mix.wav im Ergebnis-ZIP: JA", text)
+        self.assertNotIn("images/scene_01.png …", text.split("ERWARTETE PAKETSTRUKTUR", 1)[1].split("ZIELSYSTEM-HINWEISE", 1)[0])
+
 
 
 if __name__ == "__main__":

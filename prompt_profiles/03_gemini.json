@@ -22,14 +22,14 @@
     "Bei vielen Szenen kann die Serie nacheinander innerhalb derselben Unterhaltung erzeugt werden."
   ],
   "package_header_title": "GESAMTAUFTRAG FÜR GEMINI — ILLUSTRIERTE AUDIOGESCHICHTE",
-  "package_instruction_intro": "Erstelle aus den nummerierten Szenen eine vollständige audiovisuelle Erzählung. Halte wiederkehrende Motive über die Bildserie konsistent, vertone jede Szene separat, passe den visuellen Abschnitt an die tatsächliche Audiodauer an, setze sanfte Übergänge und liefere das fertige Video sowie möglichst ein ZIP mit allen Assets.",
+  "package_instruction_intro": "Erstelle aus den nummerierten Szenen eine vollständige audiovisuelle Erzählung. Halte wiederkehrende Motive über die Bildserie konsistent, vertone jede Szene separat, passe den visuellen Abschnitt an die tatsächliche Audiodauer an und setze sanfte Übergänge. Liefere das fertige Video und packe nur die ausdrücklich ausgewählten Bestandteile in das Ergebnis-ZIP.",
   "package_instruction_rules": [
     "Nutze konversationelle Bildgenerierung und behalte den visuellen Kontext vorheriger Szenen bei, sofern verfügbar.",
     "Erzeuge pro Szene ein separates Bild und eine separate Audiodatei mit identischer Stimme.",
     "Nutze für die Vertonung bevorzugt die eigene native Sprachausgabe des Zielsystems, sofern sie Audiodateien exportieren kann; andernfalls verwende die im Produktionsauftrag angegebene Windows-SAPI-/WinRT-Stimme als Fallback.",
     "Verwende exakt den jeweiligen NARRATIONSTEXT und sprich keine Metadaten oder Promptanweisungen mit.",
     "Wenn direkte Medienerzeugung oder Dateibündelung nicht möglich ist, erstelle ein vollständiges offline ausführbares Python-/FFmpeg-Produktionspaket.",
-    "Liefere am Ende {output_video} und möglichst {output_zip}, nicht nur eine Beschreibung der Arbeitsschritte."
+    "Liefere am Ende {output_video} und {output_zip} exakt gemäß dem ausgewählten Lieferumfang, nicht nur eine Beschreibung der Arbeitsschritte und keine zusätzlichen, abgewählten Zwischenprodukte."
   ],
   "package_output_notes": [
     "Die Szenen sollen innerhalb derselben Unterhaltung nacheinander produziert werden, damit die Bildkontinuität erhalten bleibt.",

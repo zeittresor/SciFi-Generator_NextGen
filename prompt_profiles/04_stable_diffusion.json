@@ -21,13 +21,13 @@
     "Ein gleicher Seed allein garantiert keine Serienkontinuität; Referenz- und Konsistenzwerkzeuge sind vorzuziehen, sofern die verwendete Oberfläche sie anbietet."
   ],
   "package_header_title": "GESAMTAUFTRAG FÜR EINEN STABLE-DIFFUSION-VIDEO-WORKFLOW",
-  "package_instruction_intro": "Behandle dieses Dokument als Produktionsmanifest für einen lokalen Workflow. Stable Diffusion erzeugt die einzelnen Szenenbilder; eine Orchestrierung oder ein lokal erzeugtes Python-/FFmpeg-Skript erstellt daraus zusammen mit TTS-Audiodateien die illustrierte Audiogeschichte, synchronisiert die Szenendauer und exportiert das fertige Video und ZIP-Paket.",
+  "package_instruction_intro": "Behandle dieses Dokument als Produktionsmanifest für einen lokalen Workflow. Stable Diffusion erzeugt die einzelnen Szenenbilder; eine Orchestrierung oder ein lokal erzeugtes Python-/FFmpeg-Skript erstellt daraus zusammen mit TTS-Audiodateien die illustrierte Audiogeschichte, synchronisiert die Szenendauer und exportiert das fertige Video. Das Ergebnis-ZIP enthält ausschließlich die im Lieferumfang aktivierten Bestandteile.",
   "package_instruction_rules": [
     "Übergib jeden BILDGENERIERUNGS-AUFTRAG einzeln an Stable Diffusion und verwende GLOBAL NEGATIVE PROMPT sowie Referenz-/Konsistenzfunktionen.",
     "Erzeuge die Audiodateien außerhalb des Bildmodells über die ausgewählte Windows-SAPI-/WinRT-Stimme oder eine ausdrücklich gewählte Alternative.",
     "Erstelle aus jedem Bild und seiner Audiodatei einen eigenen Clip; die Clipdauer entspricht der Audiodauer.",
     "Verbinde die Clips über FFmpeg mit Crossfades von ungefähr {transition_seconds} Sekunden und exportiere {output_video}.",
-    "Da Stable Diffusion selbst üblicherweise keine komplette Audio-/Video-Orchestrierung übernimmt, liefere ein vollständiges lokales Build-Skript und {output_zip} mit allen Prompts, Assets und Manifestdaten."
+    "Da Stable Diffusion selbst üblicherweise keine komplette Audio-/Video-Orchestrierung übernimmt, nutze ein vollständiges lokales Build-Skript und erzeuge {output_zip} exakt nach dem ausgewählten Lieferumfang; nicht ausgewählte Prompts, Assets oder Zwischenclips dürfen nicht zusätzlich ausgeliefert werden."
   ],
   "package_output_notes": [
     "Dieser Gesamtauftrag ist für einen Workflow-Runner, eine Bedienperson oder ein Orchestrierungs-LLM gedacht, nicht als einzelner Stable-Diffusion-Bildprompt.",

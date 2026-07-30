@@ -1,5 +1,65 @@
 # Changelog
 
+## 60.14 — 2026-07-29
+
+- Expanded every one of the 87 existing sentence-fragment INI files by exactly seven context-appropriate alternatives.
+- Added 609 new selectable fragment lines, increasing the non-empty fragment library from 1,254 to 1,863 lines.
+- Preserved all existing lines and intentional phonetic spellings used for legacy Windows TTS pronunciation.
+- Added `data/fragment_expansion_v60.14.json` as a machine-readable record of every new line.
+- Added `docs/SENTENCE_FRAGMENT_EXPANSION_v60.14.md` with per-file before/after counts.
+- Added regression tests that verify all 87 files contain their seven documented additions.
+
+## 60.13 — 2026-07-19
+
+- Reworked the total-package handoff to follow the improved package style with `00_START_HERE.txt`, `README_HANDOFF.txt`, a root-level `style_reference.png`, verification files and a complete `offline_fallback/` tree.
+- Added the cinematic CGI/3D style reference as a mandatory visual quality anchor and strengthened prompts against flat 2D, vector, cutout, low-poly, poster, collage and storyboard output.
+- Kept executable build, audio and TTS files both at the ZIP root and under `offline_fallback/` so target LLMs cannot incorrectly report that the required scripts are missing.
+- Added configurable final result-ZIP contents: always include the finished video, optionally include scene images, scene audio/final mix, individual clips and project/build files.
+- Updated the offline build script so the final result ZIP follows the selected delivery contents while still generating all intermediates required to build the video.
+- Added selectable video frame rates with 8 fps as the default for mostly static illustrated stories.
+- Strengthened natural/neural voice quality rules, style-reference validation, manifest metadata, delivery checklists and handoff archive verification.
+- Updated German-first documentation, installer verification and automated tests.
+
+## 60.12 — 2026-07-19
+
+- Rebuilt the total-package handoff ZIP as an executable production handoff rather than a prompt-only archive.
+- Added the root-level files `00_EXECUTE_THIS_TASK.txt`, `01_PRODUCTION_PROMPT.txt`, `TASK.json`, `build_story_video.py`, `build_video.bat` and `requirements.txt`.
+- Added complete WinRT and SAPI voice-list and synthesis helpers to every handoff ZIP.
+- Added a real offline builder that accepts generated scene images, creates or reuses per-scene narration, mixes the embedded bridge ambience into `final_mix.wav`, builds scene clips, applies crossfades, verifies the MP4 audio stream and creates the final ZIP.
+- Added hard post-write archive validation; the app deletes and rejects a handoff ZIP if any required file, scene declaration or background asset is missing.
+- Added machine-readable `TASK.json` with `mode=execute_now` and an explicit contract that missing output media are expected production results, not archive defects.
+- Strengthened the ChatGPT production instruction to prohibit analysis-only responses and false reports that the bundled build scripts are missing.
+- Added the selected Windows voice ID and backend key to the media manifest for reliable offline TTS selection.
+- Reworked the compact interface with a wider default window, vertically arranged primary choices, readable status cards, shorter collapsible headers and separate wrapping summaries.
+- Added visual emphasis for the primary package-generation action and clearer hierarchy for optional controls.
+- Expanded regression tests and installer verification for the executable handoff assets.
+
+## 60.11 — 2026-07-19
+
+- Reorganized the control panel around the primary workflow: calculate story, create complete media-package instruction, then save the handoff ZIP.
+- Moved the media-package workflow above secondary playback and configuration controls.
+- Added reusable collapsible sections for optional settings.
+- Video resolution, voice preferences and transitions are now grouped under a closed-by-default optional media section.
+- Ollama prompt refinement is now a separate closed-by-default optional section.
+- Local voice selection, playback controls, audio export and bridge ambience are grouped into a closed-by-default audio section.
+- Generation details and general settings/themes are also collapsible and closed by default.
+- Collapsed headers display concise summaries of active values such as resolution, voice character, Ollama mode, selected voice, ambience and theme.
+- Expansion states are persisted in `settings.json`.
+- Kept vertical and horizontal scrolling for small windows and display scaling.
+- Added regression coverage for the collapsible interface.
+
+## 60.10 — 2026-07-19
+
+- Changed the default storyboard output to the complete video/TTS/background/ZIP package instead of the image-only mode.
+- Renamed the image-only option to make it explicit that it produces no narration, background mix or video.
+- Added a recommended total-package handoff ZIP containing the production prompt, full story, manifest, delivery checklist and the actual configured `background.wav`.
+- Added internal total-package prompt validation to prevent an image-series document from being saved as a complete media-production request.
+- Added a hard completion gate: an archive containing only scene images is explicitly incomplete.
+- Strengthened prompts to continue automatically after image generation with TTS, audio mixing, scene timing, video assembly and ZIP creation.
+- Added mandatory final-audio verification, including a non-silent MP4 audio stream and audible background ambience when enabled.
+- Warned users that a plain TXT prompt cannot embed the background audio and recommends the handoff ZIP instead.
+- Added handoff-package regression tests and updated the German-first public documentation.
+
 ## 60.9 — 2026-07-19
 
 - Added configurable final-video resolutions for total media-package prompts.

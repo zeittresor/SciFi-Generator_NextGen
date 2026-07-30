@@ -1,0 +1,2 @@
+numpy>=1.26,<3
+# Externe Laufzeitvoraussetzungen: Python 3.10+, FFmpeg/FFprobe und unter Windows PowerShell.

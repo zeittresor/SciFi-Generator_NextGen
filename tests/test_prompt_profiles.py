@@ -87,5 +87,12 @@ class PromptProfileTests(unittest.TestCase):
         self.assertIn("FFmpeg", text)
         self.assertIn("Workflow-Runner", text)
 
+
+    def test_package_profiles_respect_selected_result_zip_scope(self):
+        for profile in self.manager.profiles.values():
+            combined = " ".join((profile.package_instruction_intro, *profile.package_instruction_rules))
+            self.assertIn("Lieferumfang", combined, profile.name)
+            self.assertNotIn("alle relevanten Quelldateien", combined, profile.name)
+
 if __name__ == "__main__":
     unittest.main()
