@@ -1293,7 +1293,9 @@ class MainWindow(QMainWindow):
         self.log_edit.setPlainText(self.current_log)
         self.progress.setValue(100)
         hidden_note = " Mit ‚Story / Log einblenden‘ kann der Text angezeigt werden." if not self.tabs.isVisible() else ""
-        self.status_label.setText(f"Sektor-Sprung berechnet. Seed: {self.result.seed}.{hidden_note}")
+        route = self.result.branches[0].choice_label if self.result.branches else "Legacy-Story"
+        self.status_label.setText(f"Sektor-Sprung berechnet — {route}. Seed: {self.result.seed}.{hidden_note}")
+        self.status_label.setToolTip(self.result.branch_path or route)
         self.generate_button.setEnabled(True)
         self.execute_button.setEnabled(self.voice_combo.count() > 0)
         self.audio_export_button.setEnabled(self.voice_combo.count() > 0)

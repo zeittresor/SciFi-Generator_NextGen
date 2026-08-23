@@ -78,6 +78,9 @@ def main() -> int:
         ROOT / "handoff_assets" / "tools" / "synthesize_sapi.ps1",
         ROOT / "data" / "vars" / "jump_missing_story.ini",
         ROOT / "data" / "vars" / "jump_story_already_used.ini",
+        ROOT / "data" / "branch_fragments_v60.15.json",
+        ROOT / "data" / "vars" / "mission_end_status.ini",
+        ROOT / "data" / "vars" / "mission_jump_prompt.ini",
     )
     for path in required_files:
         if not path.is_file():
@@ -94,8 +97,8 @@ def main() -> int:
 
     try:
         sample = engine.generate(seed=60_001)
-        if not sample.display_story or len(sample.selections) < 80:
-            errors.append("Deterministic test generation returned incomplete output")
+        if not sample.display_story or len(sample.selections) < 25 or not sample.branches:
+            errors.append("Deterministic branched test generation returned incomplete output")
         scenes = generate_storyboard(sample, 8)
         for profile_name in expected_prompt_profiles:
             profile = prompt_manager.get(profile_name)

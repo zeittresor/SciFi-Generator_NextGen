@@ -8,7 +8,7 @@
     "Erzeuge insgesamt {scene_count} einzelne Bilder in der Reihenfolge scene_01 bis scene_{scene_count_padded}.",
     "Nutze das Seitenverhältnis {aspect_ratio} für jedes Bild.",
     "Falls Stapel-/Batch-Erzeugung verfügbar ist, behandle jede Szene als eigenen Prompt innerhalb derselben Serie.",
-    "Nutze vorherige Bilder als Referenz oder Bildinput, sobald Raumschiff, Welt oder Alien bereits etabliert wurden und die Oberfläche dies unterstützt.",
+    "Nutze vorherige Bilder als Referenz oder Bildinput, sobald Raumschiff oder andere im aktuellen Story-Zweig tatsächlich vorkommende wiederkehrende Orte, Welten, Kreaturen, Vegetation oder Stationen etabliert wurden. Erfinde keine Motive hinzu, die in der Story nicht vorkommen.",
     "Keine Collage, keine Panels, keine eingeblendeten Beschriftungen, Logos oder Wasserzeichen.",
     "Erhalte denselben realistischen, cineastischen Retro-Sci-Fi-Look und dieselben Objekt- und Kreaturendesigns.",
     "Phonetische Schreibweisen im Storytext sind sinngemäß zu interpretieren und nicht sichtbar darzustellen.",

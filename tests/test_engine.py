@@ -21,7 +21,9 @@ class StoryEngineTests(unittest.TestCase):
 
     def test_generation_has_full_trace(self):
         result = self.engine.generate(57)
-        self.assertGreater(len(result.selections), 80)
+        self.assertGreater(len(result.selections), 25)
+        self.assertTrue(result.branches)
+        self.assertTrue(result.branch_path)
         self.assertIn("App-Version: " + APP_VERSION, result.build_log())
         self.assertTrue(result.display_story)
 

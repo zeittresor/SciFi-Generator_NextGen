@@ -1,0 +1,443 @@
+{
+  "name": "Legacy VB.NET sequence",
+  "version": 1,
+  "steps": [
+    {
+      "kind": "pick",
+      "file": "sternzeit_name.ini",
+      "suffix": " ",
+      "label": "Sternzeit"
+    },
+    {
+      "kind": "pick",
+      "file": "sternzeit_digits.ini",
+      "suffix": " ",
+      "repeat": 6,
+      "label": "Sternzeit-Ziffer"
+    },
+    {
+      "kind": "pick",
+      "file": "sternzeit_digits_adder.ini",
+      "suffix": " ",
+      "label": "Sternzeit-Trenner"
+    },
+    {
+      "kind": "pick",
+      "file": "sternzeit_digits.ini",
+      "suffix": ". ",
+      "label": "Sternzeit-Nachkommastelle"
+    },
+    {
+      "kind": "pick",
+      "file": "system_desc.ini",
+      "suffix": " ",
+      "label": "Systemankunft"
+    },
+    {
+      "kind": "pick",
+      "file": "hyphenation.ini",
+      "suffix": " ",
+      "save_as": "system_root",
+      "label": "Systemname-Stamm"
+    },
+    {
+      "kind": "pick",
+      "file": "hyphenation_pre.ini",
+      "suffix": "",
+      "label": "Systemname-Mittelteil"
+    },
+    {
+      "kind": "pick",
+      "file": "hyphenation.ini",
+      "suffix": " ",
+      "label": "Systemname-Endteil"
+    },
+    {
+      "kind": "pick",
+      "file": "system_parts.ini",
+      "suffix": ". ",
+      "label": "Systembezeichnung"
+    },
+    {
+      "kind": "pick",
+      "file": "system_desc_solcount_intro.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "system_desc_solcount.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "system_desc_solcount_adder.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "system_desc_planetcount.ini",
+      "suffix": ", "
+    },
+    {
+      "kind": "pick",
+      "file": "system_desc_planets.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "system_infos.ini",
+      "suffix": "\n"
+    },
+    {
+      "kind": "pick",
+      "file": "planet_target_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "value",
+      "name": "system_root",
+      "suffix": " ",
+      "label": "Abgeleiteter Planetenname"
+    },
+    {
+      "kind": "pick",
+      "file": "planet_name_part.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_target_info.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_structure_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_structure.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_structure_adder.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_structure2.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_scan_liquid.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_liquid.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_scan_liquid2.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_scan_material.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_material.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_temperature_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "digits.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_temperature_adder.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "digits.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_temperature_adder_end.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "cloud_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "cloud_color.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "cloud_adder.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "cloud_color2.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "cloud_adder_end.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "life_possibility_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_possibility.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_touchdown_scan.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_landing_desc.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_landing_desc2.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_landing_desc3.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_scan_env.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_scan_anti.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "planet_surface_scan_anti_found.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_found.ini",
+      "suffix": "\n"
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_color_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_color.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_color_adder.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_size_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_size.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_breast.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_parts.ini",
+      "suffix": "\n"
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_legs_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_legs_count.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_legs.ini",
+      "suffix": "\n"
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_arms_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_arms.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_face_desc.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_face.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_face_desc2.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_mouth.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_face_desc3.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_eyes_digits.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "life_alien_eyes.ini",
+      "suffix": "\n"
+    },
+    {
+      "kind": "pick",
+      "file": "alien_behavior_desc.ini",
+      "suffix": "\n"
+    },
+    {
+      "kind": "pick",
+      "file": "alien_behavior.ini",
+      "suffix": "\n"
+    },
+    {
+      "kind": "pick",
+      "file": "alien_sidekick.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "alien_behavior_desc_add.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "alien_behavior2.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "we_alien_handling.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "we_alien_handling2.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "we_alien_handling3.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "we_alien_handling4.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "we_alien_handling5.ini",
+      "suffix": " "
+    },
+    {
+      "kind": "pick",
+      "file": "we_alien_handling6.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "we_leaf_desc.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "ship_liftoff_desc.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "ship_liftoff_orbiting.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "ship_liftoff_doku.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "ship_liftoff_jumpready.ini",
+      "suffix": ". "
+    },
+    {
+      "kind": "pick",
+      "file": "start_jumpdrive.ini",
+      "suffix": ". "
+    }
+  ]
+}

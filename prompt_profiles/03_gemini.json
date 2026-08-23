@@ -8,7 +8,7 @@
     "Erzeuge genau {scene_count} getrennte Bilder im Seitenverhältnis {aspect_ratio}.",
     "Verarbeite die Szenen in der Nummernfolge und verwende bereits erzeugte Bilder als Kontext oder Referenz, sofern möglich.",
     "Erzeuge keine Collage und keine Seite mit mehreren Panels.",
-    "Behalte Raumschiff, Planet, Alien, Raumanzüge, Farbwelt und Materialästhetik über alle Szenen bei.",
+    "Behalte Raumschiff sowie alle im aktuellen Story-Zweig tatsächlich vorkommenden Orte, Landschaften, Kreaturen, Flora, Fauna, Stationen, Raumanzüge, Farbwelt und Materialästhetik über alle Szenen bei. Nicht vorkommende Motive dürfen nicht ergänzt werden.",
     "Jede Szene soll wie ein Filmstill aus derselben Produktion wirken.",
     "Keine sichtbare Schrift, Benutzeroberflächen, Logos oder Wasserzeichen.",
     "Absichtlich phonetische Schreibweisen sind semantisch zu deuten, nicht wörtlich ins Bild zu übertragen.",

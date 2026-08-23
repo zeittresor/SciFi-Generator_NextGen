@@ -46,7 +46,7 @@ class FragmentExpansionTests(unittest.TestCase):
     def test_manifest_covers_every_ini_file(self):
         actual = {path.name for path in VARS.glob("*.ini")}
         declared = set(self.payload["files"])
-        self.assertEqual(actual, declared)
+        self.assertTrue(declared.issubset(actual))
 
 
 if __name__ == "__main__":

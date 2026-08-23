@@ -8,7 +8,7 @@
     "Erzeuge genau {scene_count} einzelne Bilder, eines pro nummerierter Szene, in der vorgegebenen Reihenfolge.",
     "Verwende für alle Bilder das Seitenverhältnis {aspect_ratio}.",
     "Erzeuge keine Collage und kein Mehrfachpanel; jede Szene ist eine eigene Bilddatei.",
-    "Bewahre dieselben Designs für Raumschiff, Planet, Besatzung, Alien und wiederkehrende Technik über die gesamte Serie.",
+    "Bewahre dieselben Designs für Raumschiff und alle im aktuellen Story-Zweig tatsächlich vorkommenden wiederkehrenden Orte, Landschaften, Besatzung, Kreaturen, Flora, Fauna, Stationen und Technik über die gesamte Serie. Erfinde keine Aliens, Planeten oder anderen Motive hinzu, die in der Story nicht vorkommen.",
     "Verwende frühere erzeugte Bilder als visuelle Referenz für spätere Szenen, soweit das System dies unterstützt.",
     "Keine Schrift, Untertitel, Logos, Benutzeroberflächen oder Wasserzeichen im Bild.",
     "Interpretiere absichtlich phonetische oder fehlerhafte Schreibweisen sinngemäß und bilde sie nicht als Text ab.",

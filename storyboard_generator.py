@@ -121,7 +121,7 @@ def _scene_prompt(index: int, title: str, summary: str, visual_hint: str, contin
     )
 
 
-def _build_canonical_groups(result: GenerationResult) -> list[tuple[str, str, list[Selection]]]:
+def _build_legacy_canonical_groups(result: GenerationResult) -> list[tuple[str, str, list[Selection]]]:
     groups: list[tuple[str, str, list[Selection]]] = []
     current_index = 0
     selections = list(result.selections)
@@ -141,17 +141,68 @@ def _build_canonical_groups(result: GenerationResult) -> list[tuple[str, str, li
     return groups
 
 
+def _build_canonical_groups(result: GenerationResult) -> list[tuple[str, str, list[Selection]]]:
+    """Use scene markers from sequence v2; preserve the old linear fallback."""
+    selections = list(result.selections)
+    if not any(item.scene_id for item in selections):
+        return _build_legacy_canonical_groups(result)
+
+    groups: list[tuple[str, str, list[Selection]]] = []
+    current_id = ""
+    current_title = ""
+    current_hint = ""
+    bucket: list[Selection] = []
+
+    for item in selections:
+        item_id = item.scene_id or current_id or "scene"
+        if bucket and item_id != current_id:
+            groups.append((current_title or current_id, current_hint, bucket))
+            bucket = []
+        if not bucket:
+            current_id = item_id
+            current_title = item.scene_title or item_id
+            current_hint = item.visual_hint
+        bucket.append(item)
+    if bucket:
+        groups.append((current_title or current_id, current_hint, bucket))
+    return groups
+
+
+def _balanced_merge_map(group_count: int, scene_count: int) -> list[list[int]]:
+    if group_count == 10 and scene_count in _MERGE_MAP:
+        return _MERGE_MAP[scene_count]
+    scene_count = max(1, min(scene_count, group_count))
+    merged: list[list[int]] = []
+    previous_end = 0
+    for i in range(scene_count):
+        start = max(previous_end, (i * group_count) // scene_count)
+        end = max(start + 1, ((i + 1) * group_count) // scene_count)
+        end = min(group_count, end)
+        indexes = list(range(start, end))
+        if indexes:
+            merged.append(indexes)
+            previous_end = end
+    if merged and merged[-1][-1] < group_count - 1:
+        merged[-1].extend(range(merged[-1][-1] + 1, group_count))
+    return merged
+
+
 def generate_storyboard(result: GenerationResult, scene_count: int = 8) -> list[StoryboardScene]:
     scene_count = min(10, max(6, int(scene_count)))
     canonical = _build_canonical_groups(result)
-    merge_map = _MERGE_MAP[scene_count]
+    if not canonical:
+        return []
+    merge_map = _balanced_merge_map(len(canonical), scene_count)
 
-    ship_context = "ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive und dasselbe Sternensystem"
+    ship_context = (
+        "ein satirisch-ernster Retro-Sci-Fi-Ton, glaubwürdige Technik, dieselbe Crew-Perspektive, "
+        "dasselbe Forschungsschiff und dasselbe Sternensystem; nur Motive verwenden, die im aktuellen Story-Zweig wirklich vorkommen"
+    )
     scenes: list[StoryboardScene] = []
 
     for new_index, group_indexes in enumerate(merge_map, start=1):
         merged_title = " / ".join(canonical[idx][0] for idx in group_indexes)
-        merged_visual = " ".join(canonical[idx][1] for idx in group_indexes)
+        merged_visual = " ".join(canonical[idx][1] for idx in group_indexes if canonical[idx][1])
         merged_items: list[Selection] = []
         for idx in group_indexes:
             merged_items.extend(canonical[idx][2])
@@ -183,11 +234,15 @@ def _find_scene_summary(scenes: list[StoryboardScene], *keywords: str) -> str:
 
 
 def build_visual_bible(scenes: list[StoryboardScene], aspect_ratio: str = "16:9") -> list[tuple[str, str]]:
-    system = _find_scene_summary(scenes, "warp-austritt", "systemanalyse")
-    world = _find_scene_summary(scenes, "oberflächenscan")
-    landing = _find_scene_summary(scenes, "landeanflug")
-    alien_body = _find_scene_summary(scenes, "erste alien", "alien-anatomie")
-    alien_face = _find_scene_summary(scenes, "alien-gesicht")
+    system = _find_scene_summary(scenes, "warp-austritt", "systemanalyse", "systemanalyse und")
+    planet = _find_scene_summary(scenes, "planet", "oberfläche", "wildnis", "ruinen aus dem orbit")
+    alien = _find_scene_summary(scenes, "alien")
+    flora = _find_scene_summary(scenes, "flora", "vegetation")
+    fauna = _find_scene_summary(scenes, "fauna", "tiere", "tierabwehr", "tierwelt")
+    abandoned = _find_scene_summary(scenes, "verlassen", "ruinen", "leere innenräume")
+    space_object = _find_scene_summary(
+        scenes, "trümmer", "raumstation", "sperr", "weltraumphänomen", "raumphaenomen", "systemobjekt"
+    )
 
     if aspect_ratio == "1:1":
         format_text = "Quadratisches Format 1:1"
@@ -214,15 +269,24 @@ def build_visual_bible(scenes: list[StoryboardScene], aspect_ratio: str = "16:9"
     ]
     if system:
         entries.append(("Sternensystem", system))
-    if world or landing:
-        entries.append(("Planet und Oberfläche", _shorten(" ".join(part for part in (world, landing) if part), 520)))
-    if alien_body or alien_face:
-        entries.append(("Wiederkehrendes Alien", _shorten(" ".join(part for part in (alien_body, alien_face) if part), 520)))
+    if planet:
+        entries.append(("Planet / Oberfläche", _shorten(planet, 520)))
+    if alien:
+        entries.append(("Fremdlebensform", _shorten(alien, 520)))
+    if flora:
+        entries.append(("Lokale Flora", _shorten(flora, 520)))
+    if fauna:
+        entries.append(("Lokale Fauna", _shorten(fauna, 520)))
+    if abandoned:
+        entries.append(("Verlassener Ort", _shorten(abandoned, 520)))
+    if space_object:
+        entries.append(("Weltraumobjekt / Phänomen", _shorten(space_object, 520)))
     entries.extend([
         (
             "Kontinuitätsregel",
-            "Ein einmal etabliertes Design für Schiff, Welt, Alien, Raumanzüge und Technik darf in späteren Szenen nicht "
-            "grundlos verändert werden. Frühere Bilder sind, soweit möglich, als Referenz weiterzuverwenden.",
+            "Ein einmal etabliertes Design für Schiff, Orte, Landschaft, Kreaturen, Vegetation, Stationen, Raumanzüge "
+            "und Technik darf in späteren Szenen nicht grundlos verändert werden. Elemente, die im aktuellen Story-Zweig "
+            "nicht vorkommen, dürfen nicht hinzuerfunden werden. Frühere Bilder sind, soweit möglich, als Referenz weiterzuverwenden.",
         ),
         (
             "Ausschlüsse",

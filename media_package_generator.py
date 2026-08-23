@@ -329,7 +329,7 @@ def render_media_package_text(
         "Die Referenz bestimmt Qualitätsniveau, Materialtiefe, Lichtdramaturgie, Detaildichte und filmische Wirkung; ihre konkrete Szene darf nicht blind kopiert werden.",
         "Verbindlich: physikalisch plausible Beleuchtung, komplexe Hard-Surface- und organische Mikrodetails, volumetrischer Dunst oder atmosphärische Streuung, klare Vordergrund-/Mittelgrund-/Hintergrund-Staffelung und konsistenter Farbraum.",
         "Ausdrücklich verboten: flacher 2D-Look, einfache geometrische Flächen, Vektor-/Cutout-/Papier-/Icon-Look, Low-Poly, Storyboard/Skizze, Poster, Collage, Panels, sichtbare Schrift, UI, Logos und Wasserzeichen.",
-        "Kontinuität: Frühere Szenenbilder aktiv als Referenz für Schiff, Planet, Alien, Ausrüstung, Materialien, Maßstab und Lichtstimmung weiterverwenden.",
+        "Kontinuität: Frühere Szenenbilder aktiv als Referenz für Schiff und alle im aktuellen Story-Zweig tatsächlich vorkommenden wiederkehrenden Orte, Landschaften, Kreaturen, Pflanzen, Stationen, Ausrüstung, Materialien, Maßstäbe und Lichtstimmungen weiterverwenden. Nicht vorkommende Motive nicht hinzuerfinden.",
         "Semantische Übersetzung: Phonetisch oder grammatikalisch ungewöhnliche Storytexte für die Bildgenerierung sinngemäß bereinigen; niemals als sichtbaren Text übernehmen.",
         "",
         "AUDIO- UND TTS-QUALITÄTSREGELN",

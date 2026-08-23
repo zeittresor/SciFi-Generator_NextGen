@@ -1,5 +1,17 @@
 # Changelog
 
+## 60.15 — 2026-08-22
+
+- Replaced the formerly linear mission sequence with a deterministic weighted branching engine while preserving the original alien route as one complete branch.
+- Added four equal-weight main mission families and ten currently reachable concrete paths: alien encounter; natural forces, destructive flora or fauna; debris field, unknown station, restricted zone or space phenomenon; abandoned surface or orbital location.
+- Added sequence-format-v2 `branch` and `scene` steps. Nested branch choices are data-driven in `sequence_legacy.json` and can be extended or reweighted without changing the Python engine.
+- Added an independent seed-derived branch RNG, so a route stays reproducible even when sentence files later gain or lose alternatives.
+- Added branch decisions and the complete branch path to the generation log.
+- Added branch-aware storyboard boundaries and visual-bible generation so total-package prompts only describe planets, aliens, flora, fauna, stations, ruins or phenomena that actually occur in the selected story.
+- Added 72 new sentence-fragment INI files, each with exactly seven alternatives: 504 new lines. The complete library now contains 159 INI files and 2,367 non-empty selectable fragments.
+- Added `data/branch_fragments_v60.15.json` and `docs/STORY_BRANCHES_v60.15.md`; preserved the previous linear sequence as `sequence_legacy_v60.14.json`.
+- Expanded regression coverage for all ten routes, deterministic branch selection, branch-specific source isolation and ten storyboard boundaries per route.
+
 ## 60.14 — 2026-07-29
 
 - Expanded every one of the 87 existing sentence-fragment INI files by exactly seven context-appropriate alternatives.

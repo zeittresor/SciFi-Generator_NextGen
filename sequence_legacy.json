@@ -1,7 +1,15 @@
 {
-  "name": "Legacy VB.NET sequence",
-  "version": 1,
+  "name": "SciFi-Generator branched mission sequence",
+  "version": 2,
+  "description": "Jede Story beginnt mit der Ankunft in einem neuen Sternensystem, verzweigt danach in unterschiedliche Missionsarten und endet wieder sprungbereit.",
+  "branch_weights_note": "Gewichte koennen frei angepasst werden; sie muessen nicht 100 ergeben.",
   "steps": [
+    {
+      "kind": "scene",
+      "id": "arrival",
+      "title": "Warp-Austritt und Systemname",
+      "visual_hint": "Weite Totale des Forschungsschiffes beim Austritt aus dem Hyperraum; das neue Sternensystem wird erstmals sichtbar."
+    },
     {
       "kind": "pick",
       "file": "sternzeit_name.ini",
@@ -59,6 +67,12 @@
       "label": "Systembezeichnung"
     },
     {
+      "kind": "scene",
+      "id": "system_analysis",
+      "title": "Systemanalyse und erste Orientierung",
+      "visual_hint": "Panoramablick auf Sonnen, Planeten, Asteroiden und auffaellige Systemobjekte; glaubwuerdige Sensor- und Navigationsatmosphaere ohne eingeblendeten Text."
+    },
+    {
       "kind": "pick",
       "file": "system_desc_solcount_intro.ini",
       "suffix": " "
@@ -84,349 +98,1372 @@
       "suffix": ". "
     },
     {
-      "kind": "pick",
-      "file": "system_infos.ini",
-      "suffix": "\n"
-    },
-    {
-      "kind": "pick",
-      "file": "planet_target_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "value",
-      "name": "system_root",
-      "suffix": " ",
-      "label": "Abgeleiteter Planetenname"
-    },
-    {
-      "kind": "pick",
-      "file": "planet_name_part.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_target_info.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_structure_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_structure.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_structure_adder.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_structure2.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_scan_liquid.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_liquid.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_scan_liquid2.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_scan_material.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_material.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_temperature_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "digits.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_temperature_adder.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "digits.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_temperature_adder_end.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "cloud_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "cloud_color.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "cloud_adder.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "cloud_color2.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "cloud_adder_end.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "life_possibility_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_possibility.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_touchdown_scan.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_landing_desc.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_landing_desc2.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_landing_desc3.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_scan_env.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_scan_anti.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "planet_surface_scan_anti_found.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_found.ini",
-      "suffix": "\n"
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_color_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_color.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_color_adder.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_size_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_size.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_breast.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_parts.ini",
-      "suffix": "\n"
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_legs_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_legs_count.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_legs.ini",
-      "suffix": "\n"
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_arms_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_arms.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_face_desc.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_face.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_face_desc2.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_mouth.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_face_desc3.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_eyes_digits.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "life_alien_eyes.ini",
-      "suffix": "\n"
-    },
-    {
-      "kind": "pick",
-      "file": "alien_behavior_desc.ini",
-      "suffix": "\n"
-    },
-    {
-      "kind": "pick",
-      "file": "alien_behavior.ini",
-      "suffix": "\n"
-    },
-    {
-      "kind": "pick",
-      "file": "alien_sidekick.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "alien_behavior_desc_add.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "alien_behavior2.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "we_alien_handling.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "we_alien_handling2.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "we_alien_handling3.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "we_alien_handling4.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "we_alien_handling5.ini",
-      "suffix": " "
-    },
-    {
-      "kind": "pick",
-      "file": "we_alien_handling6.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "we_leaf_desc.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "ship_liftoff_desc.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "ship_liftoff_orbiting.ini",
-      "suffix": ". "
-    },
-    {
-      "kind": "pick",
-      "file": "ship_liftoff_doku.ini",
+      "kind": "branch",
+      "id": "mission_route",
+      "label": "Hauptverlauf der Systemerkundung",
+      "choices": [
+        {
+          "id": "alien_encounter",
+          "label": "Planetare Begegnung mit intelligenter Fremdlebensform",
+          "weight": 25,
+          "steps": [
+            {
+              "kind": "pick",
+              "file": "system_infos.ini",
+              "suffix": "\n"
+            },
+            {
+              "kind": "scene",
+              "id": "target",
+              "title": "Zielplanet im Visier",
+              "visual_hint": "Orbitalansicht eines ausgewaehlten Planeten und seiner Umgebung waehrend der Anflug vorbereitet wird."
+            },
+            {
+              "kind": "pick",
+              "file": "planet_target_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "value",
+              "name": "system_root",
+              "suffix": " ",
+              "label": "Abgeleiteter Planetenname"
+            },
+            {
+              "kind": "pick",
+              "file": "planet_name_part.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_target_info.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "surface_scan",
+              "title": "Oberflaechenscan des Planeten",
+              "visual_hint": "Detailreicher planetarer Ueberblick mit Landschaft, Fluessigkeiten, Material, Temperatur, Wolken und Lebenswahrscheinlichkeit."
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_structure_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_structure.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_structure_adder.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_structure2.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_liquid.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_liquid.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_liquid2.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_material.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_material.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_temperature_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "digits.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_temperature_adder.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "digits.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_temperature_adder_end.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_color.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_adder.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_color2.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_adder_end.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "life_possibility_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_possibility.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "landing",
+              "title": "Landung und erste Anomalie",
+              "visual_hint": "Dramatische Landesequenz mit Bodenscan, Umgebungsmessung und einer ersten kuenstlichen oder unnatuerlichen Auffaelligkeit."
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_touchdown_scan.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_landing_desc.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_landing_desc2.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_landing_desc3.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_env.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_anti.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_anti_found.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "discovery",
+              "title": "Erste Alien-Sichtung",
+              "visual_hint": "Erster klarer Blick auf die fremde intelligente Lebensform in Relation zum Schiff und zur Landschaft."
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_found.ini",
+              "suffix": "\n"
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_color_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_color.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_color_adder.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_size_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_size.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "investigation",
+              "title": "Alien-Anatomie und Detailbeobachtung",
+              "visual_hint": "Nahe Ganzkoerper- und Gesichtsbeobachtung des Wesens mit seinen ungewoehnlichen anatomischen Merkmalen."
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_breast.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_parts.ini",
+              "suffix": "\n"
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_legs_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_legs_count.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_legs.ini",
+              "suffix": "\n"
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_arms_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_arms.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_face_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_face.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_face_desc2.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_mouth.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_face_desc3.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_eyes_digits.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "life_alien_eyes.ini",
+              "suffix": "\n"
+            },
+            {
+              "kind": "scene",
+              "id": "escalation",
+              "title": "Kontakt, Verhalten und Rueckzug",
+              "visual_hint": "Das Wesen interagiert mit Schiff oder Crew; die Situation wird zunehmend unberechenbar und fuehrt zum Abbruch."
+            },
+            {
+              "kind": "pick",
+              "file": "alien_behavior_desc.ini",
+              "suffix": "\n"
+            },
+            {
+              "kind": "pick",
+              "file": "alien_behavior.ini",
+              "suffix": "\n"
+            },
+            {
+              "kind": "pick",
+              "file": "alien_sidekick.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "alien_behavior_desc_add.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "alien_behavior2.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "we_alien_handling.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "we_alien_handling2.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "we_alien_handling3.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "we_alien_handling4.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "we_alien_handling5.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "we_alien_handling6.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "we_leaf_desc.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "departure",
+              "title": "Abflug vom Planeten und Dokumentation",
+              "visual_hint": "Das Schiff startet von der Oberflaeche, erreicht sicheren Orbit und dokumentiert die Begegnung."
+            },
+            {
+              "kind": "pick",
+              "file": "ship_liftoff_desc.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "ship_liftoff_orbiting.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "ship_liftoff_doku.ini",
+              "suffix": ". "
+            }
+          ]
+        },
+        {
+          "id": "planet_nature",
+          "label": "Planet ohne intelligente Aliens — Natur, Flora oder Fauna",
+          "weight": 25,
+          "steps": [
+            {
+              "kind": "pick",
+              "file": "system_context_natural.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "target",
+              "title": "Zielplanet ohne intelligente Lebenszeichen",
+              "visual_hint": "Orbitalansicht eines fuer eine Landung geeigneten Planeten ohne erkennbare intelligente Zivilisation."
+            },
+            {
+              "kind": "pick",
+              "file": "planet_target_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "value",
+              "name": "system_root",
+              "suffix": " ",
+              "label": "Abgeleiteter Planetenname"
+            },
+            {
+              "kind": "pick",
+              "file": "planet_name_part.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "nature_planet_target_info.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "surface_scan",
+              "title": "Planetarer Natur- und Oberflaechenscan",
+              "visual_hint": "Landschaft, Atmos phaere, Fluessigkeiten, Materialien, Temperatur und Wolken werden detailliert untersucht."
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_structure_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_structure.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_structure_adder.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_structure2.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_liquid.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_liquid.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_liquid2.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_material.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_material.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_temperature_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "digits.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_temperature_adder.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "digits.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_temperature_adder_end.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_desc.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_color.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_adder.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_color2.ini",
+              "suffix": " "
+            },
+            {
+              "kind": "pick",
+              "file": "cloud_adder_end.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "landing",
+              "title": "Landung in unbesiedelter Wildnis",
+              "visual_hint": "Das Schiff landet in einer unbesiedelten Landschaft; keine kuenstlichen Strukturen oder intelligente Wesen sind sichtbar."
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_touchdown_scan.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_landing_desc.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_landing_desc2.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_landing_desc3.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "planet_surface_scan_env.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "branch",
+              "id": "planetary_hazard",
+              "label": "Planetarer Ereignistyp",
+              "choices": [
+                {
+                  "id": "natural_forces",
+                  "label": "Naturgewalten ohne Lebensformkontakt",
+                  "weight": 34,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Planetare Naturgewalt erkannt",
+                      "visual_hint": "Geologische oder atmos phaerische Naturgewalt baut sich rund um den Landeplatz sichtbar auf."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "nature_force_detect.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "nature_force_type.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "nature_force_scale.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Naturgewalt eskaliert",
+                      "visual_hint": "Sturm, Bodenbewegung, Eruption oder extreme Temperatur greift auf das Schiff ueber."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "nature_force_escalation.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "nature_force_ship_effect.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "escalation",
+                      "title": "Gegenmassnahmen und Rueckzug",
+                      "visual_hint": "Das Schiff reagiert technisch auf die Naturgewalt und bereitet einen kontrollierten Notabflug vor."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "nature_force_response.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "nature_force_retreat.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "destructive_flora",
+                  "label": "Destruktive nicht intelligente Flora",
+                  "weight": 33,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Destruktive Flora entdeckt",
+                      "visual_hint": "Nicht intelligente fremde Vegetation wird in ihrer Form und Verteilung rund um den Landeplatz sichtbar."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "flora_detect.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "flora_appearance.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "flora_behavior.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Flora greift in Schiffssysteme ein",
+                      "visual_hint": "Wurzeln, Sporen, Sekrete oder bewegliche Pflanzenteile beschaedigen oder blockieren das gelandete Schiff."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "flora_attack.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "flora_ship_effect.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "escalation",
+                      "title": "Abwehr gegen die Vegetation und Start",
+                      "visual_hint": "Technische Gegenmassnahmen loesen die Vegetation vom Schiff; der Oberflaechenaufenthalt wird beendet."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "flora_response.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "flora_retreat.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "destructive_fauna",
+                  "label": "Destruktive oder territoriale Fauna",
+                  "weight": 33,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Nicht intelligente Fauna entdeckt",
+                      "visual_hint": "Lokale Tiere unterschiedlicher Gestalt naehern sich dem Schiff; keine technische oder sprachliche Intelligenz erkennbar."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "fauna_detect.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "fauna_appearance.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "fauna_behavior.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Fauna bedrängt das Schiff",
+                      "visual_hint": "Territoriale oder neugierige Tiere rammen, beissen oder blockieren Teile des gelandeten Schiffes."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "fauna_attack.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "fauna_ship_effect.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "escalation",
+                      "title": "Tierabwehr und Rueckzug",
+                      "visual_hint": "Nicht-toedliche technische Gegenmassnahmen schaffen einen Sicherheitsradius fuer den Rueckstart."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "fauna_response.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "fauna_retreat.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "scene",
+              "id": "departure",
+              "title": "Rueckstart in sicheren Orbit",
+              "visual_hint": "Das Schiff hebt von der gefaehrlichen Oberflaeche ab, erreicht sicheren Orbit und sichert die Natur- oder Biosphaerendaten."
+            },
+            {
+              "kind": "pick",
+              "file": "ship_liftoff_desc.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "ship_liftoff_orbiting.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "ship_liftoff_doku.ini",
+              "suffix": ". "
+            }
+          ]
+        },
+        {
+          "id": "space_only",
+          "label": "Kein besuchbarer Planet — Ereignis im Weltraum",
+          "weight": 25,
+          "steps": [
+            {
+              "kind": "pick",
+              "file": "system_context_space.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "target",
+              "title": "Kein besuchbarer Planet — Kurs auf Systemobjekt",
+              "visual_hint": "Das Schiff bleibt im Weltraum; unbesuchbare Planeten liegen im Hintergrund waehrend ein interessantes Systemobjekt oder eine Zone angeflogen wird."
+            },
+            {
+              "kind": "pick",
+              "file": "space_route_intro.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "space_route_target.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "space_route_approach.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "branch",
+              "id": "space_event",
+              "label": "Weltraum-Ereignistyp",
+              "choices": [
+                {
+                  "id": "debris_field",
+                  "label": "Truemmer- und Wrackfeld",
+                  "weight": 25,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "surface_scan",
+                      "title": "Truemmerfeld kartiert",
+                      "visual_hint": "Weites kuenstlich-natuerliches Truemmerfeld mit Wrackteilen, Gestein und alten technischen Fragmenten."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_debris_origin.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_debris_composition.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "landing",
+                      "title": "Detailanalyse der Truemmer",
+                      "visual_hint": "Sensorische Naherkundung des Truemmerfeldes; komplexe Bahnen und alte Energiesignaturen werden sichtbar."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_debris_scan.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Kettenreaktion im Truemmerfeld",
+                      "visual_hint": "Ein Zusammenstoss oder aktives Wrackteil setzt eine gefaehrliche Kettenbewegung in Gang."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_debris_incident.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Truemmerlage eskaliert",
+                      "visual_hint": "Dichte Fragmente umgeben das Schiff und zwingen die Kollisionsautomatik zu extremen Manoevern."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_debris_escalation.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "escalation",
+                      "title": "Flucht aus dem Truemmerfeld",
+                      "visual_hint": "Das Schiff nutzt Schutzfelder und Manoevrierdusen um den instabilen Truemmerkorridor zu verlassen."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_debris_response.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "unknown_station",
+                  "label": "Unbekannte Raumstation",
+                  "weight": 25,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "surface_scan",
+                      "title": "Unbekannte Raumstation",
+                      "visual_hint": "Grosse aktive oder teilaktive Raumstation unbekannter Bauart im freien Systemraum."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_station_desc.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_station_power.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "landing",
+                      "title": "Signale und Stationsscan",
+                      "visual_hint": "Das Schiff beobachtet die Station aus sicherer Distanz; automatische Signale und externe Systeme werden analysiert."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_station_signal.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_station_scan.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Station reagiert auf das Schiff",
+                      "visual_hint": "Automatische Systeme der Station richten Aufmerksamkeit, Drohnen oder Sensoren auf das Forschungsschiff."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_station_hazard.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Unsicherer Stationskontakt",
+                      "visual_hint": "Der Kontakt bleibt uneindeutig und potenziell gefaehrlich; das Schiff verzichtet auf ein direktes Andocken."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_station_signal.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "escalation",
+                      "title": "Rueckzug von der Raumstation",
+                      "visual_hint": "Das Schiff bricht die Annaeherung ab und vergroessert kontrolliert den Abstand zur unbekannten Station."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_station_exit.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "restricted_zone",
+                  "label": "Gesperrter Bereich",
+                  "weight": 25,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "surface_scan",
+                      "title": "Gesperrter Raumsektor",
+                      "visual_hint": "Warnbojen, Sensorgrenzen und Verteidigungsplattformen markieren eine ausdruecklich gesperrte Zone."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_restricted_warning.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_restricted_source.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "landing",
+                      "title": "Grenze der Sperrzone",
+                      "visual_hint": "Das Schiff tastet die unsichtbare Grenze ab; hinter ihr versagen oder verzerren mehrere Sensoren."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_restricted_boundary.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Automatische Abfangsysteme",
+                      "visual_hint": "Drohnen oder Energiesysteme reagieren auf das weitere Annaehern des Schiffes."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_restricted_intercept.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Sperrzone eskaliert",
+                      "visual_hint": "Stoersignale, Zielerfassung oder Warnschuesse machen klar dass die Grenze aktiv verteidigt wird."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_restricted_escalation.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "escalation",
+                      "title": "Abbruch an der Sperrgrenze",
+                      "visual_hint": "Das Schiff akzeptiert die Warnung und verlaesst die Zone ohne ihren verborgenen Inhalt aufzudecken."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_restricted_exit.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "space_phenomenon",
+                  "label": "Weltraumphaenomen",
+                  "weight": 25,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "surface_scan",
+                      "title": "Weltraumphaenomen entdeckt",
+                      "visual_hint": "Grossraeumiges leuchtendes oder dunkles Raumphaenomen verzerrt Licht, Plasma oder Sternenhintergrund."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_phenomenon_desc.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "landing",
+                      "title": "Physikalische Detailmessung",
+                      "visual_hint": "Sensoren untersuchen das Phaenomen; Messwerte widersprechen sich und Signale werden seltsam reflektiert."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_phenomenon_scan.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Phaenomen beeinflusst das Schiff",
+                      "visual_hint": "Position, Uhren, Funk oder Sternnavigation beginnen sich unter dem Einfluss der Raumstoerung zu veraendern."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_phenomenon_effect.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Raumstoerung breitet sich aus",
+                      "visual_hint": "Die Verzerrung wird staerker und greift direkt in Navigation und Flugbahn des Schiffes ein."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_phenomenon_escalation.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "escalation",
+                      "title": "Rueckzug aus der Raumstoerung",
+                      "visual_hint": "Das Schiff synchronisiert seine Systeme, setzt eine Sonde aus und verlaesst den instabilen Bereich."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_phenomenon_response.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_phenomenon_outcome.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "scene",
+              "id": "departure",
+              "title": "Freier Kurs und Dokumentation",
+              "visual_hint": "Das Schiff hat die untersuchte Zone verlassen; Sensordaten, Koordinaten und Warnhinweise werden archiviert."
+            },
+            {
+              "kind": "pick",
+              "file": "space_departure_status.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "space_departure_doku.ini",
+              "suffix": ". "
+            }
+          ]
+        },
+        {
+          "id": "abandoned_site",
+          "label": "Verlassener Ort ohne aktive Bewohner",
+          "weight": 25,
+          "steps": [
+            {
+              "kind": "pick",
+              "file": "system_context_abandoned.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "branch",
+              "id": "abandoned_location",
+              "label": "Art des verlassenen Ortes",
+              "choices": [
+                {
+                  "id": "surface_ruins",
+                  "label": "Verlassene Oberflaechenanlage",
+                  "weight": 50,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "target",
+                      "title": "Verlassener Ort auf einer Planetenoberflaeche",
+                      "visual_hint": "Orbitalansicht eines stillen Planeten mit klar erkennbarer verlassener Siedlung, Anlage oder altem Raumhafen."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_target_desc.ini",
+                      "suffix": " "
+                    },
+                    {
+                      "kind": "value",
+                      "name": "system_root",
+                      "suffix": " ",
+                      "label": "Abgeleiteter Planetenname"
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_name_part.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_planet_info.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "surface_scan",
+                      "title": "Ruinen aus dem Orbit",
+                      "visual_hint": "Geometrische verlassene Strukturen werden aus der Luft kartiert; keine aktiven Lebenszeichen."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_surface_scan.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_surface_structure_desc.ini",
+                      "suffix": " "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_surface_structure.ini",
+                      "suffix": " "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_surface_structure_adder.ini",
+                      "suffix": " "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_surface_structure2.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "landing",
+                      "title": "Landung am verlassenen Komplex",
+                      "visual_hint": "Das Schiff setzt nahe einer toten Siedlung oder alten Anlage auf; Aufklaerungssonden werden vorausgeschickt."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_surface_approach.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Erkundung der verlassenen Anlage",
+                      "visual_hint": "Leere Gebaeude, alte Fahrzeuge, Hallen und zurueckgelassene technische Infrastruktur werden untersucht."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_surface_detail.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Spuren der frueheren Bewohner",
+                      "visual_hint": "Geordnete Demontage, alte Datenspuren und merkwuerdig leere Bereiche deuten auf eine geplante Aufgabe des Ortes."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_surface_trace.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_surface_mystery.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "escalation",
+                      "title": "Offene Fragen und Rueckzug aus den Ruinen",
+                      "visual_hint": "Eine letzte seltsame Spur bleibt unerklaert; die Expedition zieht sich respektvoll zum Schiff zurueck."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_surface_withdraw.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "departure",
+                      "title": "Abflug vom verlassenen Fundort",
+                      "visual_hint": "Das Schiff hebt von der Ruinenlandschaft ab, erreicht Orbit und archiviert den Fund fuer spaetere Expeditionen."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "ship_liftoff_desc.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "ship_liftoff_orbiting.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "ship_liftoff_doku.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "orbital_ruins",
+                  "label": "Verlassene Raumstruktur",
+                  "weight": 50,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "target",
+                      "title": "Verlassene Struktur im Weltraum",
+                      "visual_hint": "Grosses stillgelegtes Schiff, verlassene Raumstation oder Industrieanlage treibt ohne aktive Besatzung im System."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_orbital_target.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "surface_scan",
+                      "title": "Aussenscan des verlassenen Ortes",
+                      "visual_hint": "Alterung, drucklose Sektionen, minimale Restenergie und ein moeglicher Andockbereich werden sichtbar."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_orbital_scan.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "landing",
+                      "title": "Vorsichtige Annaeherung und Andocksonde",
+                      "visual_hint": "Das Forschungsschiff bleibt auf Abstand oder koppelt vorsichtig eine unbemannte Erkundungseinheit an."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_orbital_approach.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Leere Innenraeume",
+                      "visual_hint": "Dunkle Korridore, leere Kontrollraeume und geraeumte Hangars zeigen den verlassenen Innenraum."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_orbital_interior.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Spuren einer geordneten Aufgabe",
+                      "visual_hint": "Logs, Rettungskapseln und demontierte Systeme deuten darauf dass die Bewohner den Ort bewusst verlassen haben."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_orbital_trace.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_orbital_mystery.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "escalation",
+                      "title": "Letzte Anomalie und Rueckzug",
+                      "visual_hint": "Eine schwache Restfunktion oder ein unerwarteter Impuls bleibt ungeklaert; die Sonden werden zurueckgerufen."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_orbital_withdraw.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "departure",
+                      "title": "Abkoppeln und Dokumentation",
+                      "visual_hint": "Das Schiff verlaesst die historische Struktur, sichert Aufnahmen und markiert ihre Position."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_orbital_departure.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "abandoned_orbital_doku.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "scene",
+      "id": "jump_ready",
+      "title": "Missionsabschluss und naechster Sektorsprung",
+      "visual_hint": "Das Schiff befindet sich wieder in sicherer Lage; Logbuch und Navigation sind bereit fuer den naechsten Hyperraum-Sprung."
+    },
+    {
+      "kind": "pick",
+      "file": "mission_end_status.ini",
       "suffix": ". "
     },
     {
@@ -436,7 +1473,7 @@
     },
     {
       "kind": "pick",
-      "file": "start_jumpdrive.ini",
+      "file": "mission_jump_prompt.ini",
       "suffix": ". "
     }
   ]

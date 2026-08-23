@@ -8,7 +8,7 @@
     "Erzeuge {scene_count} einzelne Dateien scene_01 bis scene_{scene_count_padded}; niemals alle Szenen in einem einzigen Prompt oder als Collage.",
     "Verwende für alle Szenen dasselbe Modell, denselben Stil-Preset und das Seitenverhältnis {aspect_ratio}.",
     "Nutze nach Möglichkeit denselben Grund-Seed sowie Referenzbild-, IP-Adapter-, ControlNet- oder Character-Reference-Funktionen für wiederkehrende Elemente.",
-    "Speichere Szene 1 als Schiffs-/Systemreferenz und die erste Alien-Szene zusätzlich als Kreaturenreferenz.",
+    "Speichere Szene 1 als Schiffs-/Systemreferenz und verwende für jedes später tatsächlich auftretende wiederkehrende Hauptmotiv – etwa Planet, Ruinen, Station, Flora, Fauna oder Kreatur – dessen erste Szene als zusätzliche Referenz. Erzeuge keine Alien- oder Planetenreferenz, wenn dieses Motiv im Story-Zweig nicht vorkommt.",
     "Übernimm den GLOBAL NEGATIVE PROMPT bei jeder Szene.",
     "Phonetische Schreibweisen im deutschen Storytext sind sinngemäß zu interpretieren; sichtbarer Text ist zu vermeiden.",
     "Falls das verwendete Modell mit englischen Prompts zuverlässiger arbeitet, kann eine Promptübersetzung oder Ollama-Verfeinerung aktiviert werden."

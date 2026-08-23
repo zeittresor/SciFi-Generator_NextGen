@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Callable, Iterable
+from typing import Callable
 import json
 import random
 
@@ -25,6 +25,19 @@ class Selection:
     line_number: int | None
     raw_text: str
     rendered_text: str = ""
+    scene_id: str = ""
+    scene_title: str = ""
+    visual_hint: str = ""
+
+
+@dataclass(frozen=True)
+class BranchDecision:
+    index: int
+    branch_id: str
+    label: str
+    choice_id: str
+    choice_label: str
+    weight: float
 
 
 @dataclass(frozen=True)
@@ -34,6 +47,11 @@ class GenerationResult:
     raw_story: str
     display_story: str
     selections: tuple[Selection, ...]
+    branches: tuple[BranchDecision, ...] = ()
+
+    @property
+    def branch_path(self) -> str:
+        return " > ".join(item.choice_label for item in self.branches)
 
     def build_log(self, app_version: str = APP_VERSION) -> str:
         lines = [
@@ -42,13 +60,23 @@ class GenerationResult:
             f"Erzeugt: {self.created_at.astimezone().isoformat(timespec='seconds')}",
             f"Seed: {self.seed}",
             f"Auswahlschritte: {len(self.selections)}",
+            f"Story-Zweig: {self.branch_path or 'linear / legacy'}",
             "",
-            "AUSGEWÄHLTE SATZTEILE",
-            "=" * 72,
         ]
+        if self.branches:
+            lines.extend(["STORY-ZWEIGE", "=" * 72])
+            for item in self.branches:
+                lines.append(
+                    f"[{item.index:02d}] {item.label}: {item.choice_label} "
+                    f"(ID={item.choice_id}, Gewicht={item.weight:g})"
+                )
+            lines.append("")
+        lines.extend(["AUSGEWÄHLTE SATZTEILE", "=" * 72])
         for item in self.selections:
             lines.append(f"[{item.index:03d}] {item.label}")
             lines.append(f"Quelle: {item.source}")
+            if item.scene_title:
+                lines.append(f"Szene: {item.scene_title} ({item.scene_id})")
             if item.line_number is not None:
                 lines.append(f"Zeile: {item.line_number}")
             lines.append(f"Text: {item.raw_text}")
@@ -73,6 +101,19 @@ class StoryEngineError(RuntimeError):
 
 
 class StoryEngine:
+    """Sentence-fragment story generator with optional weighted story branches.
+
+    Sequence format v2 adds two non-narrated step types:
+      * scene: changes storyboard metadata for following picks/values.
+      * branch: chooses one weighted choice and recursively executes its steps.
+
+    Branch choices use a RNG stream derived from the story seed but independent
+    from sentence selection. This keeps branch routing deterministic without
+    coupling it to the number of lines inside any particular .ini file.
+    """
+
+    BRANCH_RNG_XOR = 0x5C1F1C0DE
+
     def __init__(self, vars_dir: Path, sequence_file: Path):
         self.vars_dir = Path(vars_dir)
         self.sequence_file = Path(sequence_file)
@@ -86,7 +127,24 @@ class StoryEngine:
             raise StoryEngineError(f"Reihenfolge konnte nicht geladen werden: {exc}") from exc
         if not isinstance(steps, list) or not steps:
             raise StoryEngineError("Die Reihenfolge enthält keine Schritte.")
+        self._validate_step_structure(steps)
         return steps
+
+    def _validate_step_structure(self, steps: list[dict]) -> None:
+        for step in steps:
+            if not isinstance(step, dict):
+                raise StoryEngineError("Ein Sequenzschritt ist kein Objekt.")
+            kind = str(step.get("kind", "pick"))
+            if kind == "branch":
+                choices = step.get("choices")
+                if not isinstance(choices, list) or not choices:
+                    raise StoryEngineError("Ein Story-Zweig enthält keine choices.")
+                for choice in choices:
+                    if not isinstance(choice, dict) or not isinstance(choice.get("steps"), list):
+                        raise StoryEngineError("Ein Story-Zweig enthält eine ungültige choice.")
+                    self._validate_step_structure(choice["steps"])
+            elif kind not in {"pick", "value", "scene"}:
+                raise StoryEngineError(f"Unbekannter Schritttyp in Sequenz: {kind}")
 
     @staticmethod
     def legacy_umlaut_conversion(text: str) -> str:
@@ -118,16 +176,96 @@ class StoryEngine:
             raise StoryEngineError(f"Keine auswählbaren Zeilen in {path.name}")
         return lines
 
+    @staticmethod
+    def _weighted_choice(rng: random.Random, choices: list[dict]) -> dict:
+        weighted: list[tuple[dict, float]] = []
+        total = 0.0
+        for choice in choices:
+            try:
+                weight = float(choice.get("weight", 1.0))
+            except (TypeError, ValueError):
+                weight = 1.0
+            if weight <= 0:
+                continue
+            total += weight
+            weighted.append((choice, weight))
+        if not weighted or total <= 0:
+            raise StoryEngineError("Ein Story-Zweig besitzt keine positive Gewichtung.")
+        needle = rng.random() * total
+        cursor = 0.0
+        for choice, weight in weighted:
+            cursor += weight
+            if needle < cursor:
+                return choice
+        return weighted[-1][0]
+
+    def _expand_plan(
+        self,
+        steps: list[dict],
+        branch_rng: random.Random,
+        decisions: list[BranchDecision],
+    ) -> list[dict]:
+        flattened: list[dict] = []
+        for step in steps:
+            if str(step.get("kind", "pick")) != "branch":
+                flattened.append(step)
+                continue
+            choices = step.get("choices", [])
+            choice = self._weighted_choice(branch_rng, choices)
+            try:
+                weight = float(choice.get("weight", 1.0))
+            except (TypeError, ValueError):
+                weight = 1.0
+            decisions.append(
+                BranchDecision(
+                    index=len(decisions) + 1,
+                    branch_id=str(step.get("id") or step.get("save_as") or f"branch_{len(decisions)+1}"),
+                    label=str(step.get("label") or "Story-Zweig"),
+                    choice_id=str(choice.get("id") or f"choice_{len(decisions)+1}"),
+                    choice_label=str(choice.get("label") or choice.get("id") or "Unbenannt"),
+                    weight=weight,
+                )
+            )
+            flattened.extend(self._expand_plan(choice["steps"], branch_rng, decisions))
+        return flattened
+
+    @staticmethod
+    def _count_narrative_steps(steps: list[dict]) -> int:
+        total = 0
+        for step in steps:
+            if str(step.get("kind", "pick")) in {"pick", "value"}:
+                total += max(1, int(step.get("repeat", 1)))
+        return total
+
     def expanded_step_count(self) -> int:
-        return sum(max(1, int(step.get("repeat", 1))) for step in self.sequence)
+        """Return the longest possible narrative path for diagnostics/progress estimates."""
+        def count(steps: list[dict]) -> int:
+            total = 0
+            for step in steps:
+                kind = str(step.get("kind", "pick"))
+                if kind in {"pick", "value"}:
+                    total += max(1, int(step.get("repeat", 1)))
+                elif kind == "branch":
+                    choices = step.get("choices", [])
+                    total += max((count(choice.get("steps", [])) for choice in choices), default=0)
+            return total
+        return count(self.sequence)
 
     def validate_sources(self) -> list[str]:
         missing: list[str] = []
-        for step in self.sequence:
-            if step.get("kind") == "pick":
-                filename = str(step.get("file", ""))
-                if not filename or not (self.vars_dir / filename).is_file():
-                    missing.append(filename or "<Dateiname fehlt>")
+
+        def visit(steps: list[dict]) -> None:
+            for step in steps:
+                kind = str(step.get("kind", "pick"))
+                if kind == "pick":
+                    filename = str(step.get("file", ""))
+                    if not filename or not (self.vars_dir / filename).is_file():
+                        missing.append(filename or "<Dateiname fehlt>")
+                elif kind == "branch":
+                    for choice in step.get("choices", []):
+                        visit(choice.get("steps", []))
+
+        visit(self.sequence)
         return sorted(set(missing))
 
     def generate(
@@ -140,18 +278,30 @@ class StoryEngine:
     ) -> GenerationResult:
         if seed is None:
             seed = random.SystemRandom().randrange(0, 2**63)
-        rng = random.Random(seed)
+        text_rng = random.Random(seed)
+        branch_rng = random.Random(seed ^ self.BRANCH_RNG_XOR)
         saved: dict[str, str] = {}
         selections: list[Selection] = []
         fragments: list[str] = []
-        total = self.expanded_step_count()
+        decisions: list[BranchDecision] = []
+        plan = self._expand_plan(self.sequence, branch_rng, decisions)
+        total = self._count_narrative_steps(plan)
         current = 0
+        scene_id = ""
+        scene_title = ""
+        visual_hint = ""
 
-        for step in self.sequence:
+        for step in plan:
+            kind = str(step.get("kind", "pick"))
+            if kind == "scene":
+                scene_id = str(step.get("id") or "")
+                scene_title = str(step.get("title") or scene_id or "Szene")
+                visual_hint = str(step.get("visual_hint") or "")
+                continue
+
             repeat = max(1, int(step.get("repeat", 1)))
             for repeat_index in range(repeat):
                 current += 1
-                kind = str(step.get("kind", "pick"))
                 suffix = str(step.get("suffix", ""))
                 label = str(step.get("label") or step.get("file") or step.get("name") or kind)
                 if repeat > 1:
@@ -163,7 +313,7 @@ class StoryEngine:
                     if not source_path.is_file():
                         raise StoryEngineError(f"Satzteil-Datei fehlt: {source_path}")
                     choices = self._read_lines(source_path, ignore_blank_lines)
-                    line_number, raw = rng.choice(choices)
+                    line_number, raw = text_rng.choice(choices)
                     save_as = step.get("save_as")
                     if save_as:
                         saved[str(save_as)] = raw
@@ -172,7 +322,8 @@ class StoryEngine:
                     rendered_fragment = self.legacy_umlaut_conversion(fragment) if legacy_umlauts else fragment
                     selections.append(
                         Selection(
-                            current, kind, label, f"data/vars/{filename}", line_number, raw, rendered_fragment
+                            current, kind, label, f"data/vars/{filename}", line_number, raw, rendered_fragment,
+                            scene_id, scene_title, visual_hint,
                         )
                     )
                     progress_name = filename
@@ -185,7 +336,10 @@ class StoryEngine:
                     fragments.append(fragment)
                     rendered_fragment = self.legacy_umlaut_conversion(fragment) if legacy_umlauts else fragment
                     selections.append(
-                        Selection(current, kind, label, f"<gespeichert:{name}>", None, raw, rendered_fragment)
+                        Selection(
+                            current, kind, label, f"<gespeichert:{name}>", None, raw, rendered_fragment,
+                            scene_id, scene_title, visual_hint,
+                        )
                     )
                     progress_name = name
                 else:
@@ -202,6 +356,7 @@ class StoryEngine:
             raw_story=raw_story,
             display_story=display_story,
             selections=tuple(selections),
+            branches=tuple(decisions),
         )
 
     def random_line(self, filename: str, seed: int | None = None, *, ignore_blank_lines: bool = True) -> str:
