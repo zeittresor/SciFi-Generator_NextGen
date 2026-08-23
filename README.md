@@ -18,6 +18,12 @@ Interface (Standardausgabe benötigt keinerlei KI):
 
 Story Beispielausgaben (nachdem man ein Gesamt-Paket an eine LLM geschickt hat - in diesem Fall nur Bildausgaben):
 
+v60.15 (latest):
+
+<img width="1672" height="941" alt="v60 15" src="https://github.com/user-attachments/assets/d1c22a36-40a6-422b-b1af-7893472bc4be" />
+
+Older:
+
 <img width="1672" height="941" alt="alien1" src="https://github.com/user-attachments/assets/27ae8bcb-5de7-45af-8e02-48f7cc98eba6" />
 
 <img width="1672" height="941" alt="story1" src="https://github.com/user-attachments/assets/355c055d-2db4-4af0-b340-b4707ecd789d" />
