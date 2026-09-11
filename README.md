@@ -1,6 +1,6 @@
 # SciFi-Generator
 
-**Aktuelle Version: 60.15** (2026-08-23)
+**Aktuelle Version: 60.17**
 
 Der **SciFi-Generator** ist eine lokale Windows-Desktopanwendung, die zufällige Science-Fiction-Missionsberichte aus frei bearbeitbaren Textbausteinen zusammensetzt und anschließend mit einer installierten Text-to-Speech-Stimme vorliest.
 
@@ -9,29 +9,22 @@ Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 1. **Sektor-Sprung berechnen** erzeugt eine neue Geschichte.
 2. **Sprung durchführen** liest die bereits berechnete Geschichte vor.
 
-Die Story, das detaillierte Auswahlprotokoll und optionale Bild-Prompts bleiben standardmäßig ausgeblendet und werden nur bei Bedarf über **Story / Log / Prompts einblenden** geöffnet.
-
-Interface (Standardausgabe benötigt keinerlei KI):
-
-<img width="423" height="673" alt="interface" src="https://github.com/user-attachments/assets/bb153fc1-dbab-4449-8449-5427a413f786" />
-
-
-Story Beispielausgaben (nachdem man ein Gesamt-Paket an eine LLM geschickt hat - in diesem Fall nur Bildausgaben):
-
-v60.15 (latest):
+v60.15 (Bilder aus der vorherigen Version - nach der Output Verarbeitung):
 
 <img width="1672" height="941" alt="v60 15" src="https://github.com/user-attachments/assets/d1c22a36-40a6-422b-b1af-7893472bc4be" />
-
-Older:
 
 <img width="1672" height="941" alt="alien1" src="https://github.com/user-attachments/assets/27ae8bcb-5de7-45af-8e02-48f7cc98eba6" />
 
 <img width="1672" height="941" alt="story1" src="https://github.com/user-attachments/assets/355c055d-2db4-4af0-b340-b4707ecd789d" />
 
+Die grafische Oberfläche wurde in v60.17 auf **PyQt6** umgestellt und in klare Kategorien gegliedert: **Mission**, **Medienpaket**, **Sprache & Audio**, **Story & Trace** und **Einstellungen**. Story, Herkunftsprotokoll und Produktionsprompt liegen damit nicht mehr in einem seitlich ein- und ausblendbaren Zusatzfenster, sondern in einem eigenen Arbeitsbereich.
+
 ## Funktionen
 
 - Zufällige Science-Fiction-Geschichten aus externen Satzteil-Dateien
-- 87 vorhandene Satzteil-Dateien mit insgesamt 1.863 auswählbaren Zeilen; in v60.14 wurde jede Datei um sieben passende Varianten erweitert
+- 218 Satzteil-Dateien mit insgesamt 4.306 auswählbaren Zeilen; v60.16 ergänzt neue Missionszweige und erweitert jede vorhandene Satzteil-Datei erneut um sieben passende Alternativen
+- Plattformunabhängige Konsolenversion für Windows, Linux und macOS ohne PyQt6-, TTS-, NumPy- oder FFmpeg-Pflicht
+- Optionaler Trace-Modus mit Story-Zweig, Quelldatei, Zeilennummer und gewähltem Satzteil in exakter Ausgabereihenfolge
 - Windows-Sprachausgabe über OneCore/WinRT, SAPI und Qt TextToSpeech
 - Auswahl der Stimme sowie Regelung von Geschwindigkeit und Lautstärke
 - Pause, Fortsetzen und Stoppen der Sprachausgabe
@@ -40,16 +33,21 @@ Older:
 - Audioexport als WAV einschließlich der aktuell eingestellten Stimme und Brückenatmosphäre
 - Optionaler MP3-Export, wenn FFmpeg verfügbar ist
 - Optionale, in einer Schleife abgespielte Brückenatmosphäre mit eigener Lautstärke
-- Kompakte Oberfläche mit ausblendbarer Story- und Protokollansicht
-- Aufgeräumter Hauptworkflow mit Gesamtpaket-Ausgabe direkt im Fokus
-- Breiteres Standardfenster ohne horizontale Scrollleiste im normalen Startlayout
-- Formularfelder mit Beschriftungen oberhalb beziehungsweise in klaren Spalten statt abgeschnittener Langtexte
-- Primäre Produktionsaktion optisch hervorgehoben; Übergabe- und optionale Aktionen visuell nachgeordnet
-- Standardmäßig geschlossene, einklappbare Bereiche für optionale Audio-, Video-, Ollama-, Generierungs- und Theme-Einstellungen
-- Kurze, umbruchfähige Zusammenfassungen unter den einklappbaren Bereichsüberschriften, damit aktive Werte lesbar bleiben
-- Scrollbarer Bedienbereich mit vertikaler und bei Bedarf horizontaler Scrollleiste
-- Automatische, responsive UI-Skalierung für Schrift, Schaltflächen, Eingabefelder, Abstände und Scrollleisten
+- PyQt6-GUI mit fünf klar getrennten Kategorien: Mission, Medienpaket, Sprache & Audio, Story & Trace und Einstellungen
+- Breites, ruhiges Hauptfenster mit dauerhaft sichtbarer Statusleiste statt seitlich aufklappendem Bedienformular
+- Eigener Mission-Tab für Storyerzeugung und Sprungausführung; Medien- und TTS-Funktionen liegen außerhalb des primären Arbeitswegs
+- Story, vollständiger Trace und Produktionsprompt in einem eigenen Analyse-Tab mit drei Unterreitern
+- Optionale Video-, Ergebnis-ZIP- und Ollama-Einstellungen bleiben im Medien-Tab standardmäßig einklappbar
+- Moderne Karten-, Akzent- und Tabdarstellung über die bestehenden externen JSON-Themes; Aurora ist bei einer frischen Installation das Standardtheme
+- Kategorieinhalte sind vertikal scrollbar; horizontales Scrollen wird im normalen Layout vermieden
+- Responsive UI-Skalierung für Schrift, Schaltflächen, Eingabefelder, Abstände und Statusanzeige
 - Reproduzierbare Geschichten durch einen frei wählbaren Seed
+- Verzweigte Missionslogik: nach der Systemankunft kann die Geschichte in völlig unterschiedliche Richtungen abbiegen
+- Sechs Hauptfamilien: Alien-Kontakt, Natur/Flora/Fauna, Weltraumereignisse, verlassene Orte, Notrufe/Rettungssituationen und technische Zwischenfälle am eigenen Schiff
+- Zusätzliche Wendepunkte innerhalb laufender Missionen sowie eine optionale späte Wendung auf dem Weg zur Sprungposition; insgesamt 200 strukturell erreichbare Story-Routen
+- Gemeinsame End-Invariante: jeder Storypfad kehrt explizit in freien Raum zurück und endet in einem sicheren, navigations- und sprungbereiten Zustand
+- Gewichtete, deterministische Story-Zweige in `sequence_legacy.json`; die Gewichte können ohne Codeänderung angepasst werden
+- Branch-aware Storyboards: Bild- und Gesamtpaket-Szenen folgen automatisch dem tatsächlich gewählten Story-Zweig und erfinden keine Aliens oder Planeten hinzu
 - Ausführliche Generierungsprotokolle mit App-Version, Quelldatei, Zeilennummer und ausgewähltem Text
 - Externe JSON-Themes mit automatischer Kontrastprüfung
 - Frei bearbeitbare Generierungsreihenfolge in `sequence_legacy.json`
@@ -75,34 +73,57 @@ Older:
 
 Der Installer erzeugt eine lokale `.venv`, installiert die benötigten Pakete und prüft anschließend die Programmdateien. Eine bereits vorhandene virtuelle Umgebung wird wiederverwendet.
 
+## Konsolenversion unter Windows und Linux
+
+Die reine Story-Engine kann ohne grafische Oberfläche und ohne Drittanbieterpakete verwendet werden. Dafür genügt **Python 3.10 oder neuer**. PyQt6, Windows-TTS, NumPy und FFmpeg werden für die Konsolengenerierung nicht benötigt.
+
+Unter Windows:
+
+```text
+start_console.bat --seed 57
+start_console.bat --seed 57 --trace
+```
+
+Unter Linux/macOS:
+
+```text
+./run_console.sh --seed 57
+./run_console.sh --seed 57 --trace
+```
+
+Direkt mit Python funktioniert es plattformunabhängig:
+
+```text
+python scifi_console.py
+python scifi_console.py --seed 57
+python scifi_console.py --seed 57 --trace
+python scifi_console.py --seed 57 --trace --json
+python scifi_console.py --count 10
+python scifi_console.py --list-routes
+python scifi_console.py --validate
+```
+
+Ohne weitere Parameter wird genau eine Story ausgegeben. `--trace` hängt anschließend den tatsächlich gewählten Story-Zweig und jeden verwendeten Satzteil in Ausgabereihenfolge an. Dabei werden Quelldatei und ursprüngliche Zeilennummer genannt, sodass unpassende Übergänge direkt in `data/vars/` zurückverfolgt werden können. `--json` liefert dieselben Informationen maschinenlesbar. Bei `--count N` werden mehrere Geschichten erzeugt; wurde zusätzlich `--seed S` angegeben, verwendet die CLI die Seeds `S` bis `S+N-1`.
+
+`--validate` prüft fehlende Satzteil-Dateien und die gemeinsame End-Invariante aller Storypfade. `tools/audit_stories.py` führt zusätzlich einen deterministischen Massentest über viele Seeds durch und prüft unter anderem Satzzeichenartefakte, versehentliche Wortdopplungen, wiederholte Standardklauseln, Routendeckung und das gemeinsame Sprungbereitschafts-Ende.
+
 ## Bedienung
 
-Die Oberfläche stellt den üblichen Arbeitsweg zuerst dar:
+Die PyQt6-Oberfläche ist ab v60.17 nach Aufgaben statt nach einzelnen Optionen gegliedert:
 
-1. **Sektor-Sprung berechnen**
-2. **Gesamtpaket-Auftrag erzeugen**
-3. **Gesamtpaket-Übergabe-ZIP speichern** und in den gewünschten neuen KI-Chat hochladen
+1. **Mission** enthält nur den eigentlichen Story-Ablauf: **Sektor-Sprung berechnen**, **Sprung durchführen**, direkter Wechsel zu Story/Trace oder Medienausgabe sowie eine kurze Ablaufübersicht.
+2. **Medienpaket** enthält Ziel-LLM, Ausgabeart und Szenenzahl. Die seltener benötigten Bereiche **Video, Stimme und Übergänge**, **Lieferumfang des Ergebnis-ZIP** und **Ollama** bleiben standardmäßig eingeklappt. Hier werden anschließend Bildserien- oder Gesamtpaket-Auftrag und Übergabe-ZIP erzeugt.
+3. **Sprache & Audio** bündelt lokale Stimme, Geschwindigkeit, Sprachlautstärke, Pause/Stop, Vorlesen, Audioexport und Brückenatmosphäre.
+4. **Story & Trace** zeigt die erzeugte Story, das vollständige Auswahlprotokoll mit Branches, Quelldateien und Zeilennummern sowie den erzeugten Produktionsprompt in drei Unterreitern.
+5. **Einstellungen** enthält Seed, Legacy-Umlautbehandlung, Leerzeilen-/Logging-Optionen, Theme-Auswahl und Dateiwerkzeuge.
 
-Selten benötigte Einstellungen sind standardmäßig eingeklappt. Dazu gehören Video- und Stimmendetails, Ollama-Verfeinerung, lokale Wiedergabe- und Audiooptionen, Generierungsdetails und weitere Einstellungen. Ein Klick auf die jeweilige Überschrift öffnet oder schließt den Bereich. Unter **Ansicht** lassen sich außerdem alle optionalen Bereiche gemeinsam ein- oder ausklappen. Die Überschrift zeigt auch im geschlossenen Zustand eine Kurzfassung der aktiven Werte, beispielsweise Auflösung, Stimmwirkung, Ollama-Modus, verwendete Stimme oder Theme. Der Aufklappzustand wird gespeichert.
+Der Status und der Fortschrittsbalken bleiben unabhängig vom gewählten Tab am unteren Fensterrand sichtbar. Ein frischer Start verwendet das Theme **Aurora**; alle bisherigen externen Themes können weiterhin ausgewählt und editiert werden.
 
-Für die normale Story-Wiedergabe gilt weiterhin:
+Für die normale Story-Wiedergabe genügt der Tab **Mission**: zuerst **Sektor-Sprung berechnen**, danach **Sprung durchführen**. Ein vollständig erzählter Sprung kann nicht versehentlich erneut abgespielt werden; für eine weitere Mission wird ein neuer Sektor-Sprung berechnet.
 
-1. Unter **Stimme** eine verfügbare TTS-Stimme auswählen, sofern nicht die voreingestellte Stimme verwendet werden soll.
-2. Geschwindigkeit sowie Sprach- und Hintergrundlautstärke einstellen.
-3. **Sektor-Sprung berechnen** anklicken.
-4. **Sprung durchführen** anklicken, um die Story vorzulesen.
-5. Über **Story als Audiodatei speichern …** kann dieselbe Erzählung mit den aktuellen Lautstärkeeinstellungen exportiert werden.
-6. Im Bereich **Medienausgabe / Übergabe** unter **Gewünschtes Ergebnis** zwischen **Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP** und **Nur Bildserie — keine Audio- oder Videodatei** wählen. Das Gesamtpaket ist nun die Standardauswahl.
-7. Das gewünschte **Zielsystem / LLM** auswählen: ChatGPT, Grok, Gemini, Stable Diffusion oder Andere.
-8. Bei einem Gesamtpaket die gewünschte Videoauflösung wählen und optional die Dauer der sanften Überblendung einstellen. Die aktuell ausgewählte TTS-Stimme, Sprechgeschwindigkeit, Sprachlautstärke und Brückenatmosphäre werden in den Produktionsauftrag übernommen.
-9. Über **Nur Bildserien-Prompt erzeugen** beziehungsweise **Gesamtpaket-Auftrag erzeugen** wird das entsprechende Anweisungsdokument erstellt.
-10. Über **Story / Log / Prompts einblenden** kann die Story, das Auswahlprotokoll und der vollständige Produktionsauftrag angezeigt werden.
+Für einen Medienauftrag wird anschließend in **Medienpaket** zwischen **Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP** und **Nur Bildserie — keine Audio- oder Videodatei** gewählt. Das Gesamtpaket bleibt die Standardauswahl. Videoauflösung, Bildrate, Stimmcharakter, gewünschte Stimmwirkung, TTS-Qualität und ZIP-Lieferumfang können optional aufgeklappt und angepasst werden.
 
-Ein berechneter Sektor-Sprung wird nach einer vollständig abgeschlossenen Wiedergabe als durchgeführt markiert. Ein weiterer Klick auf **Sprung durchführen** startet daher nicht dieselbe Story erneut, sondern lässt die ausgewählte Stimme leicht irritiert darauf hinweisen, dass zuerst ein neuer Sprung berechnet werden muss. Wird die Wiedergabe manuell gestoppt oder schlägt sie fehl, darf der aktuelle Sprung erneut gestartet werden.
-
-Der Bedienbereich wird nicht auf eine zu geringe Fensterhöhe zusammengestaucht. Reicht der verfügbare Platz nicht aus, erscheinen automatisch vertikale beziehungsweise horizontale Scrollleisten. Das gilt insbesondere für kleinere Displays, hohe Windows-Skalierungswerte und umfangreiche Stimmennamen.
-
-Wird das Fenster vergrößert, skaliert die Oberfläche automatisch mit: Schrift, Schaltflächen, Eingabefelder, Regler, Abstände, Kontrollkästchen und Scrollleisten werden bis zu einer sinnvollen Obergrenze gemeinsam vergrößert. Beim Verkleinern bleiben die Elemente lesbar und werden nicht unter ihre normale Größe geschrumpft; stattdessen übernimmt der Scrollbereich.
+Die Kategorieansichten verwenden vertikale Scrollbereiche, falls die verfügbare Fensterhöhe nicht ausreicht. Das Hauptfenster startet mit 1180 × 820 Pixeln, kann kleiner oder größer gezogen werden und skaliert die Bedienelemente bei zusätzlichem Platz moderat mit.
 
 
 ## Storyboard / Bild-Prompts
@@ -246,6 +267,31 @@ Einige Wörter sind absichtlich phonetisch oder ungewöhnlich geschrieben, damit
 
 Alle 87 vorhandenen Satzteil-Dateien wurden jeweils um genau sieben neue Varianten erweitert. Dadurch kamen **609 neue Zeilen** hinzu; die Bibliothek umfasst nun **1.863 nicht leere Satzteile**. Die bisherigen Zeilen und absichtlich phonetischen Schreibweisen wurden nicht verändert. Eine vollständige Übersicht befindet sich unter `docs/SENTENCE_FRAGMENT_EXPANSION_v60.14.md`; die hinzugefügten Zeilen sind zusätzlich maschinenlesbar in `data/fragment_expansion_v60.14.json` dokumentiert.
 
+### Verzweigte Story-Struktur in v60.15
+
+Die Geschichte ist nicht mehr auf den bisherigen linearen Ablauf **Planet → Alien → Flucht** festgelegt. Die ersten Schritte bleiben bewusst gemeinsam: Das Schiff beendet den Sektor-Sprung, benennt und analysiert das neue Sternensystem. Danach wählt die Engine deterministisch aus dem Seed einen gewichteten Story-Zweig. Jeder Zweig endet wieder in einer sicheren Missionslage mit freigegebener Berechnung des nächsten Sektor-Sprungs.
+
+Aktuell existieren vier gleich gewichtete Hauptzweige:
+
+- **Planetare Alien-Begegnung:** der bisherige klassische Ablauf bleibt vollständig erhalten.
+- **Planet ohne intelligente Aliens:** Landung und anschließend wahlweise Naturgewalt, aggressive/destruktive Flora oder territoriale Fauna.
+- **Kein besuchbarer Planet:** das Schiff bleibt im Weltraum und trifft wahlweise auf ein Trümmerfeld, eine unbekannte Raumstation, einen gesperrten Bereich oder ein physikalisches Weltraumphänomen.
+- **Verlassener Ort:** Untersuchung einer verlassenen Oberflächenanlage oder einer verlassenen orbitalen Struktur ohne aktive Bewohner.
+
+Damit bestehen derzeit **zehn konkret erreichbare Pfade**. Die Verzweigung ist in `sequence_legacy.json` als Sequenzformat v2 beschrieben. Neue Schritttypen `scene` und `branch` erlauben weitere Unterzweige, ohne die Python-Engine für jeden neuen Handlungsweg ändern zu müssen. Die Branch-Auswahl verwendet einen eigenen, vom Seed abgeleiteten Zufallsstrom; dadurch bleibt die Route reproduzierbar und ändert sich nicht nur deshalb, weil später einzelne `.ini`-Dateien mehr oder weniger Zeilen erhalten.
+
+Für v60.15 wurden **72 neue Satzteil-Dateien mit jeweils sieben Alternativen** angelegt, also **504 neue Satzteile**. Zusammen mit v60.14 enthält `data/vars/` nun **159 `.ini`-Dateien und 2.367 nicht leere Satzteile**. Die neuen Dateien sind in `data/branch_fragments_v60.15.json` dokumentiert. Eine Übersicht der Verzweigungen befindet sich unter `docs/STORY_BRANCHES_v60.15.md`. Die alte lineare Sequenz wurde als `sequence_legacy_v60.14.json` beibehalten.
+
+### Erweiterte Story-Struktur und Qualitätsprüfung in v60.16
+
+v60.16 erweitert die verzweigte Missionslogik um **Notrufe/Rettungssituationen** und **technische Zwischenfälle am eigenen Schiff**. Bestehende Hauptpfade besitzen zusätzliche Wendepunkte: Alien-Kontakte, planetare Erkundungen, reine Weltraumereignisse und verlassene Orte können vor dem Rückzug noch in Nebenereignisse abbiegen. Auf dem Weg zur endgültigen Sprungposition kann außerdem eine späte Wendung auftreten. Die Sequenz besitzt dadurch **200 strukturell erreichbare Branch-Routen**.
+
+Unabhängig von der Route gelten am Ende vier gemeinsame Satzteilquellen in fester Reihenfolge: `mission_free_space.ini`, `mission_end_status.ini`, `ship_liftoff_jumpready.ini` und `mission_jump_prompt.ini`. Damit muss jede Geschichte ausdrücklich wieder freien Raum, einen stabilen Abschlusszustand und die Bereitschaft für den nächsten Sektorsprung erreichen. Diese Eigenschaft wird sowohl von `scifi_console.py --validate` als auch von den automatisierten Tests geprüft.
+
+Für die neuen Ereignisse wurden **59 zusätzliche Satzteil-Dateien mit jeweils sieben Grundvarianten** angelegt. Anschließend wurden **alle 218 vorhandenen Satzteil-Dateien erneut um jeweils sieben zusätzliche passende Varianten erweitert**. Diese zweite Erweiterungsrunde umfasst 1.526 dokumentierte Ergänzungen. Nach sprachlichen Reparaturen und der Entfernung von Dopplungen enthält die Bibliothek nun **4.306 nicht leere, innerhalb ihrer Datei eindeutige Auswahlzeilen**. Die Ergänzungen und vorgenommenen Reparaturen sind in `data/branch_fragments_v60.16.json`, `data/fragment_expansion_v60.16.json` und `data/fragment_repairs_v60.16.json` nachvollziehbar.
+
+Zur Qualitätskontrolle kann `python tools/audit_stories.py --count 10000 --require-all-routes` ausgeführt werden. Der Release-Test von v60.16 deckt dabei alle 200 strukturellen Routen ab.
+
 ## Themes
 
 Alle Themes liegen als eigenständige JSON-Dateien im Ordner `themes/` und können unabhängig vom Programmcode bearbeitet oder ergänzt werden.
@@ -292,10 +338,18 @@ Mit `build_wheelhouse.bat` können die benötigten Python-Pakete einmalig bei be
 
 ## Systemanforderungen
 
-- Windows 10 oder Windows 11
+**Grafische Windows-Version:**
+
+- Windows 10 Version 1809 oder neuer bzw. Windows 11, 64 Bit
 - Python 3.10 oder neuer
-- PySide6 6.x
-- mindestens eine nutzbare Windows- oder Qt-TTS-Stimme
+- PyQt6 6.x
+- mindestens eine nutzbare Windows- oder Qt-TTS-Stimme für die Sprachausgabe
+
+**Konsolenversion:**
+
+- Windows, Linux oder macOS
+- Python 3.10 oder neuer
+- keine Drittanbieter-Pythonpakete für reine Storygenerierung und Trace-Ausgabe
 
 ## Fehlerdiagnose
 
@@ -313,14 +367,14 @@ Die Story-Generierung und Sprachausgabe erfolgen lokal. Geschichten, Satzbaustei
 ## Projektinformationen
 
 Originalautor und ursprüngliche Textbestände: **zeittresor**  
-Originalquelle und Updates: [github.com/zeittresor](https://github.com/zeittresor)
+Originalquelle und Updates: [github.com/zeittresor/SciFi-Generator_NextGen](https://github.com/zeittresor/SciFi-Generator_NextGen)
 
-Für das Gesamtpaket wurde noch keine endgültige Weiterverteilungslizenz festgelegt. Vor einer Weitergabe veränderter Builds oder der enthaltenen Textbestände bitte `LICENSE_NOT_SET.txt` beachten.
+GPL-3.0 license
 
 ---
 
 ## English summary
 
-**SciFi-Generator v60.14** is a local Windows application that assembles randomized science-fiction mission reports from editable text fragments and narrates them with installed TTS voices. The original two-step workflow is preserved: generate a sector jump, then narrate it.
+**SciFi-Generator v60.17** is a PyQt6-based local Windows application that builds randomized science-fiction mission reports from editable text fragments and narrates them with installed TTS voices. Stories branch after arrival in a new star system into alien encounters, natural hazards, hostile flora/fauna, space-only events, abandoned locations, distress/rescue situations or ship malfunctions. Additional turning points create 200 structurally reachable routes, all ending explicitly in free space and a stable jump-ready state.
 
-The application supports OneCore/WinRT, SAPI and Qt voices, WAV/optional MP3 export, reproducible seeds, logs, external themes, storyboards and complete media-production handoffs for ChatGPT, Grok, Gemini, Stable Diffusion or custom systems. Total-package handoffs include a strict execute-now instruction, a cinematic CGI/3D style-reference image, background audio, manifests, validation files and real Python/FFmpeg fallback scripts. Video resolution and frame rate are configurable; 1024×1024 and 8 fps are the defaults. The returned result ZIP can contain only the final video or additionally scene images, scene audio/final mix, clips and project files. Install Python 3.10 or newer, extract the archive and run `install_windows.bat`.
+A dependency-free Python 3.10+ console frontend also runs on Windows, Linux and macOS. It can output only the story or a complete trace with branch choices, source files and line numbers. The reorganized GUI uses category tabs for Mission, Media Package, Speech & Audio, Story & Trace and Settings. It additionally supports Windows/Qt TTS, audio export, themes, storyboards and configurable media-production handoffs for external AI systems. GPL-3.0 license
