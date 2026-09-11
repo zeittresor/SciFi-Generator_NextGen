@@ -1,0 +1,539 @@
+{
+  "version": "60.16",
+  "file_count": 59,
+  "lines_per_file": 7,
+  "total_lines": 413,
+  "files": {
+    "distress_context.ini": [
+      "Zwischen den normalen Navigationssignalen taucht ein schwacher Notruf auf der keiner bekannten Kennung zugeordnet werden kann",
+      "Die Kommunikationsanlage registriert einen wiederkehrenden Hilferuf aus dem aeusseren Systembereich",
+      "Ein sehr altes Notsignal wird zwischen statischem Rauschen und stellaren Stoerungen sichtbar",
+      "Der automatische Funkfilter meldet eine codierte Prioritaetskennung die eindeutig als Hilferuf gedacht ist",
+      "Abseits der geplanten Route sendet ein unbekanntes Objekt in grossen Abstaenden ein Notsignal",
+      "Ein schmalbandiges Signal wiederholt eine Folge die unsere Systeme als moeglichen Notruf einstufen",
+      "Die Langstreckenantenne empfaengt einen Hilferuf der offenbar seit geraumer Zeit ohne Antwort bleibt"
+    ],
+    "distress_signal_detect.ini": [
+      "Das Signal liegt deutlich ausserhalb der ueblichen Kommunikationsbaender und wird nur waehrend kurzer Intervalle stark genug",
+      "Die Quelle sendet in regelmaessigen Abstaenden eine kurze Kennung gefolgt von unvollstaendigen Telemetriedaten",
+      "Die Notrufsignatur ist schwach aber eindeutig kuenstlichen Ursprungs",
+      "Mehrere Frequenzen tragen denselben Hilferuf mit leicht verschobener Laufzeit",
+      "Das Signal verwendet eine einfache Wiederholung die auch ohne gemeinsame Sprache als Notfallmeldung erkennbar ist",
+      "Die Quelle antwortet nicht auf direkte Anfragen und sendet weiterhin nur ihren alten Notruf",
+      "Die Peilung wird stabiler sobald das Schattel die Hauptstoerzone des Systems verlaesst"
+    ],
+    "distress_signal_origin.ini": [
+      "Die Quelle befindet sich auf einer langsamen Driftbahn zwischen zwei Planeten",
+      "Der Ursprung liegt nahe der Grenze des Systems in einem nahezu leeren Raumsektor",
+      "Die Peilung fuehrt zu einem kleinen Objekt knapp ausserhalb einer stark geneigten Umlaufbahn",
+      "Das Signal kommt aus dem Schatten eines unbewohnten Mondes",
+      "Die Quelle bewegt sich nur minimal und scheint keinen aktiven Antrieb zu verwenden",
+      "Der Notruf stammt aus einem Bereich in dem keine regulaeren Verkehrswege verzeichnet sind",
+      "Die Laufzeitmessung legt nahe dass der Sender seit vielen Stunden unveraendert an derselben Position arbeitet"
+    ],
+    "distress_approach.ini": [
+      "Wir reduzieren die Geschwindigkeit und naehern uns mit passiven Sensoren und maximalem Sicherheitsabstand",
+      "Das Schattel geht auf einen seitlichen Abfangkurs damit wir die Quelle zuerst aus der Distanz untersuchen koennen",
+      "Ich lasse die Waffen deaktiviert und alle Rettungs- sowie Schleusensysteme vorbereiten",
+      "Die Annaeherung erfolgt langsam waehrend mehrere Scanner nach Truemmern und versteckten Energiequellen suchen",
+      "Wir halten genug Abstand fuer einen sofortigen Kurswechsel und beginnen mit einer vollstaendigen Zielanalyse",
+      "Das Schattel passt seine Bahn an die Driftgeschwindigkeit der Signalquelle an",
+      "Bevor wir weiter herangehen wird der gesamte Nahbereich auf weitere Kontakte und moegliche Gefahren geprueft"
+    ],
+    "distress_vessel_desc.ini": [
+      "Die Quelle ist ein schwer beschaedigtes kleines Raumschiff mit ausgefallenen Haupttriebwerken",
+      "Vor uns treibt ein Frachter dessen Aussenhuelle an mehreren Stellen aufgerissen ist",
+      "Der Notruf kommt von einem Forschungsschiff mit stark verbrannten Triebwerkssektionen",
+      "Das Objekt ist ein unbekanntes Schiff das langsam um seine eigene Achse taumelt",
+      "Die Sensoren zeigen ein Transportfahrzeug mit ausgefallener Energieversorgung und nur wenigen aktiven Notsystemen",
+      "Das Signal stammt von einem Schiff dessen Bugsektion fehlt waehrend der hintere Bereich weitgehend intakt ist",
+      "Ein stark beschaedigtes Schiff treibt ohne Kurskorrektur durch den Systemraum und sendet weiterhin automatisch"
+    ],
+    "distress_vessel_state.ini": [
+      "Im Inneren sind schwache Waermequellen messbar aber keine eindeutigen Lebenszeichen",
+      "Mehrere versiegelte Sektionen besitzen noch Restdruck waehrend der Rest des Schiffes offen zum Raum ist",
+      "Die Notenergie reicht nur noch fuer Funk, minimale Heizung und einige interne Sensoren",
+      "Ein einzelnes Modul ist noch mit Energie versorgt und sendet unvollstaendige Statusdaten",
+      "Die Bordcomputer des fremden Schiffes reagieren nicht auf standardisierte Diagnoseanfragen",
+      "Zwischen den Truemmern im Inneren bewegt sich etwas das auch eine lose Wartungsdrohne sein koennte",
+      "Die Huelle verliert langsam weitere Teile und eine dauerhafte Kopplung waere riskant"
+    ],
+    "distress_vessel_event.ini": [
+      "Als unsere Rettungssonde anlegt beginnt das Schiff unerwartet schneller zu rotieren",
+      "Kurz vor dem Andocken bricht eine weitere Huelleplatte ab und zwingt uns zu einem Ausweichmanoever",
+      "Die Restenergie des Schiffes steigt ploetzlich an und aktiviert mehrere Systeme gleichzeitig",
+      "Unsere Sonde empfaengt aus dem Inneren eine neue kurze Nachricht die nicht zum automatischen Notruf gehoert",
+      "Ein instabiler Treibstofftank beginnt sich aufzublaehen und veraendert die Driftrichtung des Wracks",
+      "Beim Versuch Daten auszulesen startet ein altes automatisches Abwehrprogramm",
+      "Die Bahn des beschaedigten Schiffes fuehrt schneller als erwartet in einen gefaehrlichen Truemmerkorridor"
+    ],
+    "distress_vessel_response.ini": [
+      "Wir sichern die erreichbaren Daten und ziehen die Rettungssonde zurueck bevor die Lage weiter instabil wird",
+      "Das Schattel stabilisiert die Rotation des Wracks kurz mit einem schwachen Zugstrahl und geht danach wieder auf Abstand",
+      "Ich lasse eine Rettungsboje mit Energie, Funkrelais und genauer Positionsmarkierung zurueck",
+      "Die Kopplung wird sofort geloest und wir uebermitteln auf allen bekannten Kanaelen die Position des havarierten Schiffes",
+      "Wir vermeiden jede weitere Belastung der Huelle und beschraenken uns auf Fernmessungen",
+      "Die aktiven Abwehrsysteme werden nicht provoziert; unsere Sonde trennt sich und verlaesst den Nahbereich",
+      "Nach einer letzten stabilisierenden Kurskorrektur entfernen wir uns kontrolliert von dem Wrack"
+    ],
+    "distress_pod_desc.ini": [
+      "Die Signalquelle ist eine einzelne Rettungskapsel mit stark gealterter Aussenhuelle",
+      "Vor uns treibt eine kleine Notkapsel deren Positionsleuchten nur noch sporadisch arbeiten",
+      "Der Notruf stammt von einem kompakten Rettungsmodul unbekannter Bauart",
+      "Die Sensoren erfassen eine Rettungskapsel die an einem groesseren Truemmerteil festhaengt",
+      "Ein kleines versiegeltes Modul sendet die Notkennung und besitzt offenbar keine eigenen Triebwerke mehr",
+      "Die Quelle ist eine alte Evakuierungskapsel mit mehreren nachtraeglichen Reparaturen an der Huelle",
+      "Ein einzelnes Rettungsfahrzeug treibt auf einer Bahn die es langsam aus dem System hinausfuehren wuerde"
+    ],
+    "distress_pod_scan.ini": [
+      "Der Innenraum ist versiegelt aber die Sensoren koennen nicht sicher feststellen ob sich darin noch jemand befindet",
+      "Die Energieversorgung ist fast leer und nur die Notsendeanlage arbeitet noch zuverlaessig",
+      "Mehrere interne Anzeigen reagieren auf unsere Anfrage ohne lesbare Daten zu liefern",
+      "Die Kapsel besitzt eine Atmosphaere aber ihre Zusammensetzung ist fuer unsere Sensoren ungewoehnlich",
+      "Ein schwaches periodisches Waermesignal kommt aus dem hinteren Bereich der Kapsel",
+      "Der Bordcomputer ist aktiv aber durch ein unbekanntes Verschluesselungsverfahren gesperrt",
+      "Die Huelle ist dicht und zeigt keine frischen Einschlaege oder sichtbaren Kampfspuren"
+    ],
+    "distress_pod_event.ini": [
+      "Beim Einfangen der Kapsel aktiviert sich ploetzlich ein unbekannter Lagekorrekturimpuls",
+      "Sobald unsere Schleppsonde Kontakt herstellt wird eine zweite versteckte Funkkennung ausgesendet",
+      "Die Kapsel oeffnet automatisch eine kleine Serviceklappe obwohl wir keinen Befehl gesendet haben",
+      "Ein interner Energiespeicher faellt aus und der Notruf wird deutlich schwacher",
+      "Die Kapsel beginnt aufgrund einer nahen Gravitationsstoerung langsam aus unserem Fangvektor zu driften",
+      "Kurz vor der Bergung registrieren wir ein neues Objekt das sich der Position mit hoher Geschwindigkeit naehert",
+      "Die Notkapsel sendet unvermittelt eine Abbruchkennung und schaltet danach alle externen Sender aus"
+    ],
+    "distress_pod_response.ini": [
+      "Wir bringen die Kapsel nur in eine stabile sichere Bahn und vermeiden es die unbekannte Schleuse zu oeffnen",
+      "Das Rettungsmodul wird mit einer Energieboje verbunden und fuer spaetere Bergung eindeutig markiert",
+      "Ich lasse die Kapsel vorsichtig aus dem Gefahrenbereich ziehen und danach wieder freigeben",
+      "Wegen der unbekannten Innenbedingungen verzichten wir auf eine direkte Aufnahme in den Hangar",
+      "Unsere Sonde stabilisiert die Kapsel und uebertraegt ihre Position als priorisierte Rettungsmeldung",
+      "Der Kontakt wird geloest sobald die Energieversorgung wieder stabil ist und die Kapsel bleibt auf sicherem Kurs",
+      "Wir dokumentieren alle Signale und ziehen uns zurueck bevor der neue Kontakt den Nahbereich erreicht"
+    ],
+    "distress_beacon_desc.ini": [
+      "Die Quelle ist keine Rettungskapsel sondern eine autonome Notfallboje",
+      "Der Hilferuf kommt von einem kleinen Sender der an einem zerbrochenen Navigationsmast befestigt ist",
+      "Die Signalquelle entpuppt sich als alte automatische Relaisboje ohne Besatzung",
+      "Vor uns treibt ein kugelfoermiger Notsender mit mehreren entfalteten Antennen",
+      "Die Quelle ist ein robustes Notfallrelais das offenbar fuer jahrzehntelangen Betrieb ausgelegt wurde",
+      "Der Hilferuf stammt von einer autonomen Boje mit unbekannter Herstellerkennung",
+      "Ein kleiner Senderkomplex wiederholt den Notruf obwohl in seiner Umgebung kein Schiff mehr vorhanden ist"
+    ],
+    "distress_beacon_payload.ini": [
+      "Der Speicher enthaelt Positionsdaten zu einem Ereignis das viele Jahre zurueckliegen muss",
+      "Die Boje uebermittelt nur einen Kursvektor und eine unvollstaendige Warnsequenz",
+      "Im Datenblock befinden sich komprimierte Sensormessungen eines nicht mehr vorhandenen Schiffes",
+      "Die gespeicherten Informationen beschreiben einen ploetzlichen Energieanstieg kurz vor Abbruch der Aufzeichnung",
+      "Der Sender besitzt mehrere alte Nachrichtenpakete die alle auf denselben entfernten Punkt verweisen",
+      "Die Nutzdaten bestehen aus Zeitstempeln, Notfalltelemetrie und einem unbekannten Identifikationsblock",
+      "Ein grosser Teil des Speichers ist beschaedigt; erhalten blieb nur die letzte Navigationsroute der ehemaligen Quelle"
+    ],
+    "distress_beacon_event.ini": [
+      "Beim Auslesen aktiviert die Boje einen zweiten Sender der bisher vollkommen still war",
+      "Eine verschluesselte Antwort aus grosser Entfernung erreicht die Boje unmittelbar nach unserem Zugriff",
+      "Der Energiespeicher der Boje ueberhitzt und zwingt unsere Sonde den Datenkontakt abzubrechen",
+      "Die Positionsdaten veraendern sich ploetzlich als wuerde die Boje einen neuen Zielpunkt berechnen",
+      "Ein starker Funkimpuls loescht mehrere bereits gelesene Speicherbereiche",
+      "Die Boje beginnt nach unserer Anfrage ein bislang verborgenes Warnsignal auszusenden",
+      "Der Sender richtet seine Hauptantenne auf einen leeren Raumsektor und erhoeht die Leistung deutlich"
+    ],
+    "distress_beacon_response.ini": [
+      "Wir kopieren nur die bereits erreichbaren Daten und lassen die Boje anschliessend unveraendert zurueck",
+      "Die Sonde trennt sich bevor der Energiespeicher weiter aufheizt und wir gehen auf sicheren Abstand",
+      "Ich markiere den angegebenen Zielvektor fuer spaetere Auswertung ohne ihm in diesem Sprung weiter zu folgen",
+      "Der Sender wird nicht deaktiviert damit weitere Schiffe den Notruf weiterhin empfangen koennen",
+      "Wir bestaetigen den Empfang mit einer neutralen Kennung und ziehen uns danach aus dem Nahbereich zurueck",
+      "Die Daten werden archiviert und die unbekannte Warnsequenz als moegliches Risiko vermerkt",
+      "Nach Abschluss der Fernmessungen lassen wir die Boje auf ihrer bisherigen Bahn weiterarbeiten"
+    ],
+    "distress_resolution.ini": [
+      "Der unmittelbare Notfall ist soweit moeglich stabilisiert und weitere Eingriffe wuerden mehr Risiko als Nutzen bringen",
+      "Alle erreichbaren Rettungsinformationen wurden gesichert und die Position ist eindeutig markiert",
+      "Wir haben getan was mit den vorhandenen Mitteln vertretbar ist und beenden den Rettungsversuch",
+      "Die Gefahrenlage ist unter Kontrolle; fuer eine vollstaendige Bergung waere spezialisierte Hilfe erforderlich",
+      "Der Notruf bleibt dokumentiert und wurde mit unseren Messdaten an das automatische Relaisnetz weitergegeben",
+      "Es gibt keine weiteren unmittelbar erreichbaren Ziele im Nahbereich der Signalquelle",
+      "Die Situation ist stabil genug dass wir den Ort verlassen koennen ohne eine akute Verschlechterung zu verursachen"
+    ],
+    "distress_departure.ini": [
+      "Das Schattel geht wieder auf freien Kurs und verlaesst den Bereich der Notrufquelle",
+      "Wir vergroessern den Abstand und kehren in einen sicheren Navigationskorridor zurueck",
+      "Die Rettungssonden sind wieder an Bord und das Schiff nimmt Kurs in den freien Systemraum",
+      "Nach Abschluss der Dokumentation loesen wir uns aus der lokalen Driftbahn und beschleunigen auf Sicherheitsabstand",
+      "Die Quelle bleibt hinter uns waehrend das Schattel eine freie Position fuer den naechsten Sprung anfliegt",
+      "Wir verlassen den Nahbereich kontrolliert und stellen die normale Navigation wieder her",
+      "Das Schiff befindet sich wieder ausserhalb aller Truemmer-, Andock- und Gefahrenzonen"
+    ],
+    "ship_fault_detect.ini": [
+      "Noch waehrend der ersten Systemanalyse meldet die Borddiagnose einen unerwarteten technischen Fehler",
+      "Kurz nach dem Austritt aus dem Hyperraum faellt ein wichtiger Schiffskreis aus dem normalen Toleranzbereich",
+      "Bevor wir ein Ziel waehlen koennen erscheint eine dringende Wartungswarnung auf mehreren internen Systemen",
+      "Die automatische Diagnose meldet eine Stoerung die mit dem letzten Sprung zusammenhaengen koennte",
+      "Ein technischer Alarm unterbricht die Systemkartierung und zwingt uns die eigene Lage zuerst zu stabilisieren",
+      "Mehrere Sensordaten deuten auf einen internen Fehler hin der nicht ignoriert werden sollte",
+      "Der Bordcomputer meldet unmittelbar nach der Ankunft eine Abweichung in einem kritischen Schiffssystem"
+    ],
+    "ship_fault_navigation.ini": [
+      "Die Navigationsplattform verliert wiederholt ihre genaue Sternreferenz",
+      "Drei Lagekreisel liefern voneinander abweichende Werte und verursachen kleine Kursfehler",
+      "Der Hauptnavigator springt zwischen zwei unvereinbaren Positionsloesungen hin und her",
+      "Die Sternsensoren erkennen das neue System korrekt aber die interne Lageberechnung driftet langsam",
+      "Ein Teil der Navigationsdaten ist nach dem Sprung mit falschen Zeitmarken versehen",
+      "Die automatische Kursregelung reagiert verzoegert und korrigiert staerker als notwendig",
+      "Das Traegheitsnavigationssystem meldet eine wachsende Abweichung zur optischen Sternmessung"
+    ],
+    "ship_fault_propulsion.ini": [
+      "Der Unterlichtantrieb erreicht nur einen Teil der vorgesehenen Schubleistung",
+      "Eine Triebwerkssektion zeigt unregelmaessige Temperaturspitzen und wird vorsorglich abgeschaltet",
+      "Die Schubvektorsteuerung eines Haupttriebwerks reagiert verzoegert auf kleine Korrekturen",
+      "Mehrere Treibstoffventile melden widerspruechliche Druckwerte",
+      "Der rechte Manuevertriebwerksblock faellt nach kurzen Zuendungen immer wieder in den Sicherheitsmodus",
+      "Die Antriebsdiagnose erkennt starke Vibrationen in einer Leitung nahe der Hauptduesen",
+      "Ein Teil des Antriebssystems laesst sich nur noch mit reduzierter Leistung stabil betreiben"
+    ],
+    "ship_fault_power.ini": [
+      "Die Bordenergie schwankt zwischen mehreren Verteilern obwohl der Reaktor stabil arbeitet",
+      "Ein Hauptenergiebus trennt sich wiederholt automatisch vom restlichen Netz",
+      "Mehrere Kondensatorbaenke verlieren Ladung deutlich schneller als vorgesehen",
+      "Die Notstromregelung aktiviert sich ohne sichtbaren Grund und nimmt Teile des Bordnetzes vom Hauptkreis",
+      "Ein Stromverteiler zeigt starke Lastspitzen in eigentlich abgeschalteten Sektionen",
+      "Die Reaktorleistung ist stabil aber ein Teil der Energie erreicht die angeschlossenen Systeme nicht",
+      "Zwischen zwei Bordnetzen entsteht eine periodische Spannungsschwankung die mehrere Computer neu starten laesst"
+    ],
+    "ship_fault_effect.ini": [
+      "Dadurch muessen wir Geschwindigkeit und Sensorleistung voruebergehend deutlich reduzieren",
+      "Die Stoerung beeinflusst mehrere Nebensysteme und macht eine sofortige Diagnose notwendig",
+      "Bis zur Reparatur bleibt nur ein eingeschraenkter aber kontrollierbarer Betriebsmodus",
+      "Der Fehler ist nicht unmittelbar katastrophal kann aber bei einem weiteren Sprung problematisch werden",
+      "Mehrere automatische Funktionen werden deaktiviert damit der Fehler nicht auf andere Systeme uebergreift",
+      "Die Besatzung schaltet auf manuelle Reserveverfahren um waehrend die Diagnose weiterlaeuft",
+      "Wir muessen den laufenden Erkundungsplan unterbrechen bis die Ursache eingegrenzt ist"
+    ],
+    "ship_fault_response.ini": [
+      "Ich lasse die betroffenen Systeme isolieren und auf redundante Reservekreise umschalten",
+      "Die automatische Reparaturdiagnose vergleicht alle Werte mit den Messungen vor dem letzten Sprung",
+      "Wir reduzieren die Bordlast und fahren nur die fuer Navigation und Sicherheit notwendigen Systeme weiter",
+      "Mehrere Wartungsdrohnen beginnen im abgeschalteten Bereich mit einer kontaktlosen Inspektion",
+      "Die fehlerhafte Baugruppe wird aus dem Hauptnetz getrennt und durch eine Reserveeinheit ueberbrueckt",
+      "Der Bordcomputer erstellt eine sichere Minimalkonfiguration und testet danach jedes betroffene System einzeln",
+      "Wir halten das Schiff auf freiem Kurs waehrend die internen Selbsttests laufen"
+    ],
+    "ship_fault_secondary.ini": [
+      "Waehren der Reparatur taucht zusaetzlich eine schwache externe Stoerung in denselben Messkanaelen auf",
+      "Ein zweiter Sensorfehler erscheint kurzzeitig und erschwert die eindeutige Ursachenanalyse",
+      "Die Reparatur loest eine automatische Sicherheitsabschaltung in einem benachbarten System aus",
+      "Ein veralteter Diagnoseeintrag widerspricht den aktuellen Messwerten und muss manuell verworfen werden",
+      "Kurzzeitig faellt die interne Kommunikation zu mehreren Wartungsmodulen aus",
+      "Ein Reservekreis uebernimmt korrekt verliert dabei aber fuer wenige Sekunden seine Telemetrie",
+      "Die Stoerung verschiebt sich waehrend des Tests in einen anderen Messbereich und zwingt uns die Diagnose zu wiederholen"
+    ],
+    "ship_fault_secondary_response.ini": [
+      "Der zweite Effekt wird getrennt behandelt und erweist sich als Folge der ersten Stoerung",
+      "Nach einem vollstaendigen Neustart der Diagnosebusse verschwinden die widerspruechlichen Messwerte",
+      "Die Reserveversorgung bleibt stabil und die ausgefallene Telemetrie wird ueber einen anderen Bus umgeleitet",
+      "Wir warten einen kompletten Systemzyklus ab bevor weitere Funktionen wieder zugeschaltet werden",
+      "Die Wartungsdrohnen bestaetigen dass keine zusaetzlichen mechanischen Schaeden entstanden sind",
+      "Der Bordcomputer isoliert die fehlerhafte Rueckmeldung und setzt die Reparatur mit plausiblen Messwerten fort",
+      "Die zusaetzliche Warnung wird als Sekundaerfehler markiert und verliert nach der Stabilisierung ihre Wirkung"
+    ],
+    "ship_fault_external.ini": [
+      "Gleichzeitig trifft eine ungewoehnlich starke Teilchenfront aus dem Sternwind auf das Schiff",
+      "Waehren der Reparatur durchquert das Schattel eine unerwartete Zone mit starkem magnetischem Rauschen",
+      "Ein naher Sonnenausbruch erhoeht kurzfristig die Strahlungsbelastung der bereits geschwaechten Systeme",
+      "Feine geladene Staubteilchen verursachen zusaetzliche Stoerimpulse an der Aussenhuelle",
+      "Die lokale Magnetfeldstruktur veraendert sich und verfremdet mehrere Diagnosemessungen",
+      "Eine kurze Gravitationswelle aus unbekannter Richtung erschwert fuer Sekunden die Lagekontrolle",
+      "Der Sternwind steigt schneller an als prognostiziert und zwingt uns die exponierten Sensoren einzufahren"
+    ],
+    "ship_fault_external_response.ini": [
+      "Wir drehen die gepanzerte Seite des Schiffs in die Stoerung und setzen die Reparatur im Schutzmodus fort",
+      "Die empfindlichen Sensoren werden eingefahren bis die externe Belastung wieder abnimmt",
+      "Ich verlege das Schiff auf einen ruhigeren Kurs und trenne externe Stoerungen von der internen Diagnose",
+      "Die Bordelektronik wechselt voruebergehend auf strahlungsfesten Minimalbetrieb",
+      "Nach wenigen Minuten sinken die externen Messwerte wieder und die Reparatur kann normal weiterlaufen",
+      "Die Stoerquelle wird umflogen damit sie die bereits geschwaechten Systeme nicht weiter belastet",
+      "Wir warten auf eine ruhigere Phase und fuehren erst dann den abschliessenden Funktionstest durch"
+    ],
+    "ship_fault_resolution.ini": [
+      "Die betroffenen Systeme arbeiten wieder stabil und alle fuer einen Sektorsprung notwendigen Reserven sind verfuegbar",
+      "Die Reparatur ist abgeschlossen; nur ein nicht kritischer Wartungshinweis bleibt fuer den naechsten Hafen gespeichert",
+      "Alle wichtigen Navigations-, Energie- und Antriebswerte liegen wieder innerhalb ihrer Toleranzen",
+      "Der Bordcomputer gibt das Schiff nach mehreren erfolgreichen Selbsttests wieder fuer den normalen Betrieb frei",
+      "Die Stoerung wurde eingegrenzt und durch redundante Systeme dauerhaft umgangen",
+      "Nach einem letzten Belastungstest sind keine weiteren Fehler in den kritischen Kreisen messbar",
+      "Das Schattel ist wieder voll manovrierfaehig und die Sprungsysteme melden Bereitschaft"
+    ],
+    "ship_fault_departure.ini": [
+      "Wir verlassen die Diagnoseposition und gehen auf einen freien Kurs fern von allen groesseren Himmelskoerpern",
+      "Das Schattel beschleunigt vorsichtig in einen ungestoerten Bereich des Systems",
+      "Nach Abschluss der Reparatur wird eine sichere freie Position fuer den naechsten Sprung angeflogen",
+      "Die normale Navigation uebernimmt wieder und fuehrt das Schiff aus dem Nahbereich lokaler Gefahren",
+      "Wir stellen den regulaeren Flugzustand her und halten Abstand zu allen bekannten Objekten",
+      "Das Schiff befindet sich wieder im freien Raum und alle Reparaturdaten werden im Logbuch gesichert",
+      "Die Wartung ist beendet und das Schattel nimmt eine stabile sprunggeeignete Position ein"
+    ],
+    "post_signal_detect.ini": [
+      "Gerade als wir den eigentlichen Einsatz abschliessen erreicht uns noch ein verzoegertes schwaches Signal vom zurueckliegenden Gebiet",
+      "Kurz vor dem Sprungfenster erscheint eine spaete Antwort auf eine unserer frueheren passiven Anfragen",
+      "Beim Verlassen des Einsatzbereichs registriert die Funkanlage ein einzelnes neues Datenpaket",
+      "Ein zuvor stiller Sender meldet sich erst nachdem wir bereits deutlichen Abstand gewonnen haben",
+      "Waehren der Abschlussdiagnose trifft eine kurze schmalbandige Nachricht aus Richtung des Einsatzortes ein",
+      "Ein Relais im System wiederholt unerwartet eine Kennung die zu unserem gerade beendeten Einsatz passt",
+      "Noch bevor wir die Sprungberechnung starten kann ein letzter schwacher Funkimpuls dem alten Ziel zugeordnet werden"
+    ],
+    "post_signal_response.ini": [
+      "Wir speichern die Nachricht fuer spaetere Auswertung und setzen den freien Kurs fort ohne erneut umzukehren",
+      "Der Inhalt wird dokumentiert aber die sichere Sprungposition wird nicht verlassen",
+      "Ich bestaetige nur den Empfang und unternehme in diesem System keine weitere Annaeherung",
+      "Die Daten werden mit dem Missionslog verknuepft und fuer den naechsten geeigneten Untersuchungszeitpunkt markiert",
+      "Wir antworten nicht aktiv und behalten den gewonnenen Sicherheitsabstand bei",
+      "Das Signal wird archiviert; fuer eine erneute Untersuchung reicht die aktuelle Informationslage nicht aus",
+      "Die spaete Meldung aendert nichts an unserer Entscheidung das System von einer sicheren Position aus zu verlassen"
+    ],
+    "post_pursuit_detect.ini": [
+      "Beim Rueckzug erscheint hinter uns eine kleine unbekannte Signatur die unseren Kurs fuer einige Minuten nachbildet",
+      "Ein entferntes Objekt veraendert seine Bahn kurz nachdem wir auf freien Kurs gegangen sind",
+      "Die Heckscanner melden einen schwachen Kontakt der wiederholt denselben Kursvektor wie das Schattel waehlt",
+      "Eine unbekannte Signatur bleibt ausserhalb visueller Reichweite aber verkuerzt langsam den Abstand",
+      "Kurz vor der Sprungvorbereitung taucht ein kleiner schneller Kontakt in unserem Rueckraum auf",
+      "Die passive Ortung zeigt einen Begleiter der sich bisher im Sensorrauschen verborgen gehalten hat",
+      "Ein nicht identifiziertes Objekt scheint unsere Abflugbahn fuer kurze Zeit zu verfolgen"
+    ],
+    "post_pursuit_response.ini": [
+      "Wir fuehren zwei harmlose Kurswechsel durch; die Signatur bricht daraufhin ab und verschwindet aus der Ortung",
+      "Das Schattel beschleunigt auf einen freien Vektor bis der Kontakt den Abstand nicht mehr verkuerzen kann",
+      "Ich halte die Sprungposition bei und lasse nur passive Sensoren auf den unbekannten Kontakt gerichtet",
+      "Nach einem breiten Ausweichbogen verliert die Signatur unsere Bahn und bleibt zurueck",
+      "Der Kontakt wird als ungeklaert dokumentiert und unterschreitet zu keinem Zeitpunkt den Sicherheitsabstand",
+      "Wir veraendern die Ebene unserer Flugbahn; das Objekt folgt nicht und verschwindet hinter dem lokalen Sensorhorizont",
+      "Die Signatur loest sich nach kurzer Beobachtung auf ohne eine weitere Reaktion zu zeigen"
+    ],
+    "post_anomaly_detect.ini": [
+      "Im freien Raum zeigt die Navigationsloesung fuer wenige Sekunden einen unmoeglichen zweiten Positionswert",
+      "Kurz vor der Sprungberechnung misst der Gravitationssensor eine kleine lokale Abweichung ohne sichtbare Quelle",
+      "Die Sternreferenzen verschieben sich fuer einen Moment gegeneinander obwohl das Schiff stabil liegt",
+      "Ein extrem kurzer Zeitversatz erscheint gleichzeitig in mehreren voneinander getrennten Borduhren",
+      "Die Heckkameras zeigen einen Lichtimpuls den kein anderer Sensor eindeutig bestaetigen kann",
+      "Der freie Raum vor uns erzeugt einen einzelnen Messwert als befände sich dort fuer einen Augenblick Masse",
+      "Mehrere Sensoren melden gleichzeitig eine Abweichung die bereits beim naechsten Messzyklus verschwunden ist"
+    ],
+    "post_anomaly_response.ini": [
+      "Die Messung laesst sich nicht reproduzieren und wir behalten deshalb den sicheren freien Kurs bei",
+      "Nach mehreren Kontrollzyklen bleiben alle Werte stabil und die Anomalie wird nur im Logbuch vermerkt",
+      "Ich lasse die Sprungberechnung erst nach einer vollstaendigen Referenzmessung wieder freigeben",
+      "Das Schiff entfernt sich einige tausend Kilometer von der Position ohne dass der Effekt erneut auftritt",
+      "Die Navigationsplattform wird neu kalibriert und bestaetigt danach eine normale freie Raumlage",
+      "Der kurze Effekt bleibt ungeklaert aber beeinflusst keine der fuer den Sprung notwendigen Systeme",
+      "Wir markieren die Koordinaten und setzen den Missionsabschluss fort nachdem alle Sensoren wieder normale Werte zeigen"
+    ],
+    "alien_detour_signal.ini": [
+      "Noch waehrend wir den Kontakt beenden empfaengt das Schiff ein kurzes technisches Signal aus einer anderen Richtung",
+      "Zwischen den Lauten der Lebensform erscheint ploetzlich eine schmale kuenstliche Funkkennung",
+      "Ein bisher unauffaelliger Bereich der Oberflaeche sendet fuer wenige Sekunden ein gerichtetes Signal",
+      "Die Bordantenne registriert waehrend des Rueckzugs einen einzelnen verschluesselten Impuls",
+      "Nahe des Horizonts wird ein technisches Signal sichtbar das nicht vom beobachteten Wesen zu stammen scheint",
+      "Kurz vor dem Start erreicht uns eine automatische Kennung unbekannter Herkunft",
+      "Ein zweiter kuenstlicher Sender meldet sich einmalig und verstummt sofort wieder"
+    ],
+    "alien_detour_signal_result.ini": [
+      "Wir speichern die Kennung ohne die ohnehin angespannte Begegnung durch eine weitere Expedition zu verlaengern",
+      "Der neue Kontakt wird fuer spaetere Untersuchungen markiert und der Rueckzug nicht unterbrochen",
+      "Die Signalrichtung wird dokumentiert; ein sofortiger Abstecher waere unter den aktuellen Bedingungen unklug",
+      "Ich lasse nur passive Messungen laufen und halte am geplanten Start fest",
+      "Der Ursprung bleibt unbekannt und wird nicht weiter verfolgt solange sich die Lebensform in Schiffsnaehe befindet",
+      "Die Daten werden gesichert waehrend alle Systeme auf Abflug bleiben",
+      "Das Signal wird als separates Ereignis archiviert und wir setzen die laufende Evakuierung fort"
+    ],
+    "alien_detour_environment.ini": [
+      "Gleichzeitig verschlechtert sich das lokale Wetter schneller als die erste Prognose erwarten liess",
+      "Waehren des Kontakts steigt die atmosphaerische elektrische Aktivitaet ploetzlich stark an",
+      "Eine dichte Front aus Staub und geladenen Partikeln bewegt sich auf den Landeplatz zu",
+      "Der Boden unter dem Schattel beginnt durch eine schnelle Temperaturveraenderung instabil zu werden",
+      "Eine heftige Windzone erreicht den Landeplatz und erschwert jede weitere Beobachtung",
+      "Die Sicht sinkt innerhalb weniger Minuten und mehrere Aussensensoren melden zunehmende Belastung",
+      "Ein lokales Unwetter bildet sich ueber dem Gebiet und veraendert die Bedingungen deutlich schneller als berechnet"
+    ],
+    "alien_detour_environment_result.ini": [
+      "Damit ist die Entscheidung zum Abflug endgueltig und wir verkuerzen den Aufenthalt auf das notwendige Minimum",
+      "Die Aussensensoren werden eingefahren und der Startablauf beginnt sofort",
+      "Wir geben den Landeplatz frei bevor die Wetterfront das Schiff voll erreicht",
+      "Die weitere Kontaktbeobachtung wird beendet und alle Systeme gehen auf Startkonfiguration",
+      "Der zunehmende Umweltdruck macht jede weitere Annaeherung unvertretbar und beschleunigt unseren Rueckzug",
+      "Ich lasse die Triebwerke vorwaermen und breche alle nicht notwendigen Messungen ab",
+      "Der Start wird vorgezogen damit wir die instabile Zone verlassen bevor sie den Landeplatz einschliesst"
+    ],
+    "alien_detour_group.ini": [
+      "Am Rand der Sensorreichweite erscheinen mehrere weitere Signaturen die dem beobachteten Wesen aehneln",
+      "Waehren wir zurueckweichen kommen aus der Umgebung weitere gleichartige Lebensformen hervor",
+      "Mehrere neue Bewegungsmuster tauchen zwischen den Gelaendestrukturen rund um den Landeplatz auf",
+      "Die Sensoren zaehlen ploetzlich deutlich mehr Lebensformen als noch vor wenigen Minuten",
+      "Hinter dem ersten Wesen werden mehrere aehnliche Koerper sichtbar die sich langsam in unsere Richtung bewegen",
+      "Weitere gleichartige Signaturen sammeln sich ausserhalb der unmittelbaren Schiffsnaehe",
+      "Der einzelne Kontakt scheint nicht allein zu sein; mehrere kleinere Gruppen werden gleichzeitig sichtbar"
+    ],
+    "alien_detour_group_result.ini": [
+      "Wir vermeiden jede weitere Provokation und beschleunigen den bereits geplanten Rueckzug",
+      "Die wachsende Zahl der Lebensformen ist ein guter Grund jetzt nicht noch neugieriger zu werden",
+      "Alle Aussenteams werden zurueckgerufen und der Startbereich wird ohne weitere Kontaktversuche geraeumt",
+      "Ich lasse nur passive Aufnahmen weiterlaufen waehrend das Schattel auf Startbereitschaft geht",
+      "Der Kontakt wird nicht ausgeweitet; die Beobachtung endet bevor wir von allen Seiten umringt sind",
+      "Wir halten Abstand und lassen den Planeten mit wesentlich mehr offenen Fragen zurueck als zuvor",
+      "Die neuen Signaturen werden dokumentiert und die Triebwerke fuer einen sofortigen Start freigegeben"
+    ],
+    "planet_detour_subsurface.ini": [
+      "Kurz vor dem Start entdeckt der Bodenscanner einen grossen Hohlraum direkt unter einer entfernten Gelaendeformation",
+      "Eine tiefe Radarmessung zeigt eine ungewoehnlich regelmaessige Schicht weit unter der Oberflaeche",
+      "Der Seismiksensor registriert einen lokalen Hohlraum dessen Form nicht zu den uebrigen Gesteinsschichten passt",
+      "Unter dem Landegebiet erscheint eine Zone mit deutlich geringerer Dichte als erwartet",
+      "Eine letzte Tiefenmessung findet eine lange unterirdische Struktur unbekannten Ursprungs",
+      "Der Untergrundscanner markiert einen abgeschlossenen Hohlraum mehrere hundert Meter unter der Oberflaeche",
+      "Nahe des Rueckflugkorridors wird eine tiefe geologische Anomalie entdeckt die zuvor im Oberflaechenrauschen verborgen war"
+    ],
+    "planet_detour_subsurface_result.ini": [
+      "Die Messung wird archiviert aber wegen der aktuellen Gefahr nicht durch eine Bohrung oder Expedition verfolgt",
+      "Wir markieren die Position und ueberlassen die Tiefenanalyse einer spaeteren Mission",
+      "Fuer eine sichere Untersuchung fehlt uns nach dem bisherigen Zwischenfall die Zeit und der passende Abstand",
+      "Der Fund aendert nichts am Rueckzug; die Daten sind fuer eine spaetere geologische Mission ausreichend",
+      "Ich lasse nur eine passive Tiefenkarte erstellen und halte am Startplan fest",
+      "Die Anomalie bleibt unangetastet und wird als separates Forschungsziel gespeichert",
+      "Wir verzichten auf weitere Eingriffe in den Untergrund und setzen den Abflug fort"
+    ],
+    "planet_detour_weather.ini": [
+      "Waehren der Rueckzugsvorbereitung bildet sich am Horizont eine neue starke Wetterfront",
+      "Die Atmosphaere wird innerhalb kurzer Zeit elektrisch deutlich aktiver",
+      "Ein schneller Druckabfall kuendigt eine heftige lokale Sturmzone an",
+      "Die Wolkendecke verdichtet sich und die Windgeschwindigkeit steigt schneller als vorhergesagt",
+      "Ein breites Niederschlagsband zieht auf den Landeplatz zu und enthaelt stark korrosive Partikel",
+      "Die Temperatur faellt abrupt waehrend gleichzeitig starke Bodenwinde einsetzen",
+      "Mehrere Wetterzellen verbinden sich zu einer groesseren Front direkt auf unserem geplanten Abflugkorridor"
+    ],
+    "planet_detour_weather_result.ini": [
+      "Wir verschieben den Startvektor seitlich und verlassen die Wetterzone auf dem kuerzesten sicheren Weg",
+      "Der Abflug wird vorgezogen bevor die Front den Landeplatz vollstaendig erreicht",
+      "Alle empfindlichen Aussensysteme werden eingefahren und die Triebwerke gehen sofort auf Startleistung",
+      "Ich waehle einen steileren Aufstieg damit wir die gefaehrliche Atmosphaerenschicht schneller verlassen",
+      "Die neue Wetterlage bestaetigt dass ein weiterer Aufenthalt keinen wissenschaftlichen Nutzen mehr bringt",
+      "Das Schattel hebt noch vor dem staerksten Teil der Front ab und gewinnt schnell Hoehe",
+      "Wir geben die urspruengliche Flugroute auf und weichen dem Kern der Wetterzone waehrend des Starts aus"
+    ],
+    "planet_detour_sensor.ini": [
+      "Ein letzter Sensordurchlauf zeigt fuer Sekunden eine bewegte Signatur obwohl im Gebiet nichts sichtbar ist",
+      "Die Radaranlage meldet kurzzeitig ein grosses Objekt oberhalb der Wolkendecke und verliert es sofort wieder",
+      "Mehrere Magnetometer registrieren denselben kurzen Impuls an voneinander entfernten Punkten",
+      "Der Bodenscanner zeichnet eine scheinbare Bewegung auf die sich mit keinem anderen Sensor bestaetigen laesst",
+      "Eine Waermequelle erscheint fuer genau einen Messzyklus am Rand des kartierten Gebietes",
+      "Die Atmosphaerensensoren melden einen strukturierten Impuls der nicht zum aktuellen Wetter passt",
+      "Kurz vor dem Start springt die Zielerfassung auf eine leere Stelle und loest sich beim naechsten Scan wieder"
+    ],
+    "planet_detour_sensor_result.ini": [
+      "Der Effekt laesst sich nicht reproduzieren und wird deshalb nur als ungeklaerte Messung gespeichert",
+      "Wir halten den Abflugplan ein und markieren die Koordinaten fuer eine spaetere Kontrolle aus dem Orbit",
+      "Die Sensoren werden neu kalibriert ohne dass die Signatur erneut erscheint",
+      "Der einzelne Messwert rechtfertigt keinen weiteren Aufenthalt in der bereits problematischen Umgebung",
+      "Ich archiviere alle Rohdaten und lasse die Auswertung spaeter unter ruhigeren Bedingungen wiederholen",
+      "Das Ereignis bleibt unerklaert; fuer den sicheren Rueckstart ist es jedoch ohne unmittelbare Bedeutung",
+      "Wir verzichten auf eine Suche nach einer Quelle und setzen den Rueckzug wie geplant fort"
+    ],
+    "space_detour_probe.ini": [
+      "Beim Verlassen des eigentlichen Ereignisortes aktiviert sich eine kleine autonome Sonde in unserer Naehe",
+      "Ein bislang inaktives Objekt entfaltet eine Antenne und beginnt unseren Kurs zu beobachten",
+      "Aus dem Sensorrauschen loest sich eine winzige kuenstliche Sonde die offenbar auf unsere Anwesenheit reagiert",
+      "Kurz nach dem Rueckzug startet ein kleines unbemanntes Objekt aus einer verborgenen Position",
+      "Eine kompakte automatische Einheit folgt fuer kurze Zeit parallel zu unserer Flugbahn",
+      "Die Scanner entdecken eine alte Sonde deren Systeme erst nach unserem Vorbeiflug aufwachen",
+      "Ein kleiner kuenstlicher Koerper richtet seine Sensoren auf das Schattel und sendet eine kurze Kennung"
+    ],
+    "space_detour_probe_result.ini": [
+      "Wir antworten nur passiv und behalten den Sicherheitskurs bei bis die Sonde wieder zurueckbleibt",
+      "Das Objekt unterschreitet keinen kritischen Abstand und wird lediglich fuer spaetere Analyse aufgezeichnet",
+      "Ich lasse keinen Andock- oder Zugriffversuch zu; nach einigen Minuten beendet die Sonde die Verfolgung",
+      "Die Sonde wird nicht provoziert und verliert uns nach einem breiten Kurswechsel aus ihrer Reichweite",
+      "Wir senden eine neutrale Identifikationsfolge und setzen den Abflug ohne weitere Annaeherung fort",
+      "Die Messdaten werden gespeichert waehrend das kleine Objekt auf seiner urspruenglichen Bahn zurueckbleibt",
+      "Der Kontakt bleibt harmlos und endet sobald wir den Nahbereich des Ereignisortes verlassen"
+    ],
+    "space_detour_echo.ini": [
+      "Kurz nach dem Rueckzug erscheint unsere eigene Funkkennung mit deutlicher Zeitverzoegerung aus einer falschen Richtung",
+      "Die Navigationsanlage empfaengt ein Echo unseres letzten Scans obwohl kein reflektierendes Objekt dort liegt",
+      "Ein Teil unserer Telemetrie kommt Sekunden spaeter auf einer Frequenz zurueck die wir nicht verwendet haben",
+      "Die passive Ortung zeigt einen zweiten identischen Kursvektor ohne dazu passendes Objekt",
+      "Ein schwaches Echo des Bordradars scheint aus einem leeren Bereich vor dem Schiff zu stammen",
+      "Mehrere Sensorimpulse wiederholen sich zeitversetzt obwohl die Scanner bereits abgeschaltet sind",
+      "Unsere letzte Navigationskennung wird aus grosser Entfernung erneut ausgesendet ohne erkennbare Quelle"
+    ],
+    "space_detour_echo_result.ini": [
+      "Nach einem Frequenzwechsel tritt das Echo nicht erneut auf und wir behalten den freien Kurs bei",
+      "Die Messwerte werden gespeichert; eine unmittelbare Quelle laesst sich nicht bestimmen",
+      "Ich lasse die Sender fuer kurze Zeit schweigen und das Echo verschwindet vollstaendig",
+      "Der Bordcomputer markiert die Wiederholung als ungeklaerte Raumstoerung ohne aktuelle Gefahrenwirkung",
+      "Wir vergroessern den Abstand zum Ereignisort bis keine weiteren Zeitversatzsignale auftreten",
+      "Die Navigationsreferenzen bleiben stabil und der Effekt wird nur fuer spaetere Analyse dokumentiert",
+      "Nach mehreren stillen Messzyklen ist keine Wiederholung mehr feststellbar und wir setzen den Missionsabschluss fort"
+    ],
+    "space_detour_solar.ini": [
+      "Ein ploetzlicher Sonnenausbruch schickt eine schnelle geladene Teilchenfront durch unseren Abflugkorridor",
+      "Der lokale Stern zeigt einen unerwarteten Aktivitaetsanstieg und die Strahlungswarnung springt auf Gelb",
+      "Eine starke Magnetfeldfront erreicht das Schiff waehrend wir den Nahbereich verlassen",
+      "Die Sternwindmessung steigt abrupt an und mehrere empfindliche Sensoren beginnen zu saettigen",
+      "Ein kurzer koronaler Auswurf kreuzt unsere geplante Flugbahn frueher als die Modelle berechnet haben",
+      "Die externe Strahlungsbelastung nimmt innerhalb weniger Sekunden deutlich zu",
+      "Eine schnelle Plasmafront aus Richtung des Zentralsterns zwingt uns zu einer sofortigen Kursanpassung"
+    ],
+    "space_detour_solar_result.ini": [
+      "Wir drehen den gepanzerten Rumpf in die Front und fliegen einen geschuetzten Umweg in den freien Raum",
+      "Die empfindlichen Sensoren werden eingefahren bis die Teilchenbelastung wieder auf Normalwerte sinkt",
+      "Ich verlege den Kurs hinter einen ausreichend grossen Himmelskoerper und warte die staerkste Phase ab",
+      "Das Schattel verlaesst die Front seitlich und erreicht kurz darauf wieder einen ruhigen Raumsektor",
+      "Die Strahlung bleibt unter den Sicherheitsgrenzen und nimmt nach dem Ausweichmanoever schnell ab",
+      "Wir umgehen den Kern der Plasmafront und setzen danach den freien Abflugkurs fort",
+      "Der Zwischenfall endet ohne Schaeden; alle Systeme werden vor der Sprungberechnung erneut geprueft"
+    ],
+    "abandoned_detour_signal.ini": [
+      "Kurz vor dem Ende der Untersuchung aktiviert sich in der verlassenen Struktur noch einmal ein alter Datensender",
+      "Ein bislang stiller Speicherblock beginnt ploetzlich ein schwaches Archivsignal auszugeben",
+      "Waehren die letzten Sonden zurueckkehren erscheint eine alte automatische Datenkennung",
+      "Ein tief im Komplex verborgenes Modul sendet fuer wenige Sekunden einen komprimierten Datenstrom",
+      "Kurz vor dem Rueckzug wird ein letzter aktiver Speicherbereich in der verlassenen Anlage sichtbar",
+      "Eine automatische Archivfunktion startet offenbar durch unsere Anwesenheit und sendet eine kurze Folge",
+      "Ein altes Relais erwacht fuer einen Moment und bietet einen kleinen unverschluesselten Datenblock an"
+    ],
+    "abandoned_detour_signal_response.ini": [
+      "Wir kopieren nur den frei angebotenen Datenblock und veraendern den alten Speicher ansonsten nicht",
+      "Die Informationen werden gesichert ohne weitere Systeme der verlassenen Anlage zu aktivieren",
+      "Ich lasse die Sonden den Datenstrom passiv empfangen und setze danach den Rueckzug fort",
+      "Der Archivblock wird dokumentiert; auf einen tieferen Zugriff verzichten wir bewusst",
+      "Nach dem Ende der kurzen Uebertragung bleibt das System wieder still und wir verlassen den Fundort",
+      "Die empfangenen Daten werden mit den bisherigen Aufzeichnungen verknuepft und spaeter ausgewertet",
+      "Wir vermeiden jede weitere Interaktion und nehmen nur die bereits gesendeten Informationen mit"
+    ],
+    "abandoned_detour_collapse.ini": [
+      "Waehren des Rueckzugs veraendert sich die Statik eines alten Abschnitts und mehrere Strukturen beginnen nachzugeben",
+      "Ein langes mechanisches Knacken kuendigt an dass ein Teil der verlassenen Anlage instabil wird",
+      "Mehrere alte Halterungen brechen fast gleichzeitig und setzen lose Bauteile in Bewegung",
+      "Die Erschuetterungen unserer letzten Sondenbewegung reichen offenbar aus um einen geschwaechten Abschnitt zu destabilisieren",
+      "Ein Teil der alten Struktur beginnt ohne Vorwarnung langsam einzustuerzen",
+      "Die Sensoren melden zunehmende Materialspannungen in einem Bereich nahe unserer Erkundungsroute",
+      "Ein alter Verbindungskorridor verliert seine strukturelle Stabilitaet und zwingt zu einem schnelleren Rueckzug"
+    ],
+    "abandoned_detour_collapse_response.ini": [
+      "Alle Sonden verlassen den gefaehrdeten Bereich sofort und nehmen einen bereits kartierten sicheren Rueckweg",
+      "Wir brechen die Untersuchung endgueltig ab bevor weitere alte Strukturen belastet werden",
+      "Die Erkundungseinheiten werden beschleunigt zurueckgerufen und der instabile Abschnitt nicht weiter betreten",
+      "Ich lasse alle verbleibenden Messungen aus sicherer Entfernung abschliessen",
+      "Der Fundort wird als strukturell gefaehrlich markiert und ohne weitere Eingriffe verlassen",
+      "Wir vergroessern den Abstand und beobachten nur noch passiv ob weitere Teile nachgeben",
+      "Nach Rueckkehr aller Sonden setzen wir den geplanten Abflug ohne weitere Verzoegerung fort"
+    ],
+    "mission_free_space.ini": [
+      "Das Schiff hat alle lokalen Gefahrenzonen verlassen und befindet sich wieder frei im interplanetaren Raum",
+      "Wir sind auf einen freien Kurs ausserhalb aller unmittelbaren Objekte und Gefahrenbereiche zurueckgekehrt",
+      "Die letzte lokale Struktur liegt weit hinter uns und um das Schiff befindet sich wieder freier Raum fuer ein Sprungmanoever",
+      "Der Sicherheitsabstand zum Einsatzgebiet ist erreicht und vor dem Schiff liegt ein freier interstellarer Sprungkorridor",
+      "Keine Oberflaeche, Station oder Truemmerzone befindet sich mehr in unmittelbarer Naehe. Wir sind wieder frei im Raum",
+      "Das Schiff hat den lokalen Ereignisbereich vollstaendig verlassen und haelt nun eine freie Position fuer den Weiterflug",
+      "Alle Nahbereichswarnungen sind erloschen. Unser Schiff befindet sich wieder in freiem Raum mit ausreichendem Abstand fuer den naechsten Sprung"
+    ]
+  }
+}

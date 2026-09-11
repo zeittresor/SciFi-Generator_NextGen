@@ -1,0 +1,1970 @@
+{
+  "version": "60.16",
+  "file_count": 218,
+  "added_lines_per_file": 7,
+  "total_added_lines": 1526,
+  "files": {
+    "abandoned_detour_collapse.ini": [
+      "Waehren des Rueckzugs veraendert sich die Statik eines alten Abschnitts und zahlreiche Strukturen beginnen nachzugeben",
+      "Zahlreiche alte Halterungen brechen fast gleichzeitig und setzen lose Bauteile in Bewegung",
+      "Die Erschuetterungen unserer letzten Sondenbewegung reichen anscheinend aus um einen geschwaechten Abschnitt zu destabilisieren",
+      "Ein Teil der alten Struktur beginnt ohne Vorwarnung allmaehlich einzustuerzen",
+      "Waehren des Rueckzugs veraendert sich die Statik eines alten Abschnitts und mehrere Strukturen beginnen nachzugeben, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein langes mechanisches Knacken kuendigt an dass ein Teil der verlassenen Anlage instabil wird, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere alte Halterungen brechen fast gleichzeitig und setzen lose Bauteile in Bewegung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "abandoned_detour_collapse_response.ini": [
+      "Alle Sonden verlassen den gefaehrdeten Bereich unmittelbar und nehmen einen bereits kartierten sicheren Rueckweg",
+      "Alle Sonden verlassen den gefaehrdeten Bereich sofort und nehmen einen bereits kartierten sicheren Rueckweg, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir brechen die Untersuchung endgueltig ab bevor weitere alte Strukturen belastet werden, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Erkundungseinheiten werden beschleunigt zurueckgerufen und der instabile Abschnitt nicht weiter betreten, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich lasse alle verbleibenden Messungen aus sicherer Entfernung abschliessen, der Rueckweg bleibt dabei jederzeit offen",
+      "Der Fundort wird als strukturell gefaehrlich markiert und ohne weitere Eingriffe verlassen, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir vergroessern den Abstand und beobachten nur noch passiv ob weitere Teile nachgeben, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "abandoned_detour_signal.ini": [
+      "Ein bislang stiller Speicherblock beginnt unvermittelt ein schwaches Archivsignal auszugeben",
+      "Eine automatische Archivfunktion startet anscheinend durch unsere Anwesenheit und sendet eine kurze Folge",
+      "Ein altes Relais erwacht fuer einen Moment und bietet einen kompakten unverschluesselten Datenblock an",
+      "Kurz vor dem Ende der Untersuchung aktiviert sich in der verlassenen Struktur noch einmal ein alter Datensender, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein bislang stiller Speicherblock beginnt ploetzlich ein schwaches Archivsignal auszugeben, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Waehren die letzten Sonden zurueckkehren erscheint eine alte automatische Datenkennung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein tief im Komplex verborgenes Modul sendet fuer wenige Sekunden einen komprimierten Datenstrom, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "abandoned_detour_signal_response.ini": [
+      "Wir kopieren nur den frei angebotenen Datenblock und veraendern den alten Speicher ansonsten nicht, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Informationen werden gesichert ohne weitere Systeme der verlassenen Anlage zu aktivieren, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich lasse die Sonden den Datenstrom passiv empfangen und setze danach den Rueckzug fort, der Rueckweg bleibt dabei jederzeit offen",
+      "Der Archivblock wird dokumentiert; auf einen tieferen Zugriff verzichten wir bewusst, der Rueckweg bleibt dabei jederzeit offen",
+      "Nach dem Ende der kurzen Uebertragung bleibt das System wieder still und wir verlassen den Fundort, der Rueckweg bleibt dabei jederzeit offen",
+      "Die empfangenen Daten werden mit den bisherigen Aufzeichnungen verknuepft und spaeter ausgewertet, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir vermeiden jede weitere Interaktion und nehmen nur die bereits gesendeten Informationen mit, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "abandoned_orbital_approach.ini": [
+      "Eine kompakte Inspektionsdrohne wird durch den offenen Andockport geschickt",
+      "Wir koppeln eine unbemannte Sonde am aeusseren Andockring an, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Das Schattel geht auf Parallelkurs und verbindet sich ueber einen flexiblen Wartungstunnel mit der Struktur, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Eine kleine Inspektionsdrohne wird durch den offenen Andockport geschickt, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Wir halten das Hauptschiff auf Abstand und schicken nur ferngesteuerte Erkundungseinheiten hinein, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Der Andockmechanismus reagiert nach mehreren Versuchen noch auf ein altes Standardsignal, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Eine magnetische Klammer fixiert unsere Sonde an der stillgelegten Aussenstruktur, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt"
+    ],
+    "abandoned_orbital_departure.ini": [
+      "Das Schattel loest sich komplett von der verlassenen Struktur und geht auf freien Kurs",
+      "Wir verlassen die Umlaufbahn des Fundortes und vergroessern allmaehlich den Abstand",
+      "Die Struktur verschwindet allmaehlich aus der Nahbereichskamera waehrend wir den Kurs nach aussen fortsetzen",
+      "Das Schattel loest sich vollstaendig von der verlassenen Struktur und geht auf freien Kurs, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Wir verlassen die Umlaufbahn des Fundortes und vergroessern langsam den Abstand, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Der alte Komplex bleibt unveraendert auf seiner bisherigen Bahn zurueck, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Alle Erkundungssonden sind wieder an Bord und der Andockbereich wird verlassen, anschliessend liegt wieder freier Raum vor dem Schiff"
+    ],
+    "abandoned_orbital_doku.ini": [
+      "Der Fundort wird als unbewohnte historische Struktur im Logbuch vermerkt, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Alle Innenaufnahmen und frei zugaenglichen Datensaetze werden gesichert, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Die Position wird fuer spaetere archaeologische Untersuchungen markiert, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Eine Zusammenfassung der erhaltenen Systeme und der erkannten Aufgabe wird archiviert, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Die restliche Energieverteilung der Anlage wird fuer einen spaeteren Vergleich gespeichert, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Alle Hinweise auf die geordnete Aufgabe des Ortes werden im Missionsbericht zusammengefasst, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Ich vermerke ausdruecklich das wir nichts kaputt gemacht haben. Das sollte gelegentlich dokumentiert werden, die Rohdaten werden zusammen mit dem Missionslog archiviert"
+    ],
+    "abandoned_orbital_interior.ini": [
+      "Zahlreiche Kontrollraeume enthalten leere Sitze, abgeschaltete Anzeigen und offene Wartungsschraenke",
+      "Die inneren Korridore sind dunkel, drucklos und mit lose schwebenden Gegenstaenden gefuellt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere Kontrollraeume enthalten leere Sitze, abgeschaltete Anzeigen und offene Wartungsschraenke, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein grosser Hangar ist bis auf fest montierte Halterungen vollkommen leer, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Innenwaende tragen Reparaturspuren aus vielen unterschiedlichen Zeitepochen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein zentraler Korridor endet an einem verriegelten Bereich dessen Beschriftungen nicht mehr lesbar sind, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Station enthaelt zahlreiche persoenliche Kabinen, aber fast keine zurueckgelassenen persoenlichen Gegenstaende, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "abandoned_orbital_mystery.ini": [
+      "Ein isolierter Speicherblock aktiviert sich kurz als unsere Sonde vorbeifliegt und schaltet unmittelbar wieder ab",
+      "Zahlreiche interne Lampen leuchten nacheinander entlang eines Korridors auf obwohl das Hauptnetz abgeschaltet ist",
+      "Die Station sendet unvermittelt einen extrem kurzen Impuls in Richtung eines entfernten Sterns",
+      "Anscheinend war noch genau genug Energie uebrig um uns eine neue Frage zu hinterlassen",
+      "Ein isolierter Speicherblock aktiviert sich kurz als unsere Sonde vorbeifliegt und schaltet sofort wieder ab, eine eindeutige Ursache laesst sich daraus nicht ableiten",
+      "Aus einem versiegelten Modul kommt ein einzelner mechanischer Schlag ohne weitere Wiederholung, eine eindeutige Ursache laesst sich daraus nicht ableiten",
+      "Eine alte Antenne richtet sich fuer wenige Sekunden auf unser Schiff und faellt danach wieder in ihre Ausgangslage, eine eindeutige Ursache laesst sich daraus nicht ableiten"
+    ],
+    "abandoned_orbital_scan.ini": [
+      "Die Aussenhuelle zeigt Alterung und viele kompakte Einschlaege aber keine frischen Kampfschaeden",
+      "Zahlreiche Sektionen sind drucklos waehrend ein innerer Bereich noch versiegelt erscheint",
+      "Das Objekt ist nicht komplett tot, aber alles was noch arbeitet tut es offenbar aus Gewohnheit",
+      "Keine Lebenszeichen, keine aktive Kommunikation und nur minimale Restspannung in einigen Speichern, die Kontrollmessung liefert vergleichbare Werte",
+      "Die Aussenhuelle zeigt Alterung und viele kleine Einschlaege aber keine frischen Kampfschaeden, die Kontrollmessung liefert vergleichbare Werte",
+      "Mehrere Sektionen sind drucklos waehrend ein innerer Bereich noch versiegelt erscheint, die Kontrollmessung liefert vergleichbare Werte",
+      "Die Anlage haelt ihre Bahn nur noch durch alte mechanische Kreisel und minimale Automatik, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "abandoned_orbital_target.ini": [
+      "Zwischen den Planeten treibt eine alte Raumstation deren Energieversorgung fast komplett erloschen ist",
+      "Eine kompakte Station mit mehreren Andockarmen sendet keinerlei Kennung und zeigt keine Waermesignaturen",
+      "Die Sensoren entdecken ein grosses verlassenes Schiff ohne aktive Triebwerke oder Lebenszeichen, die Zielkoordinaten werden dabei laufend aktualisiert",
+      "Zwischen den Planeten treibt eine alte Raumstation deren Energieversorgung fast vollstaendig erloschen ist, die Zielkoordinaten werden dabei laufend aktualisiert",
+      "Ein massiver kuenstlicher Ring befindet sich auf einer stabilen Bahn ohne erkennbare aktive Systeme, die Zielkoordinaten werden dabei laufend aktualisiert",
+      "Nahe eines Mondes liegt ein stillgelegter orbitaler Industriekomplex, die Zielkoordinaten werden dabei laufend aktualisiert",
+      "Die Langstreckensensoren erfassen ein altes Forschungsschiff das seit sehr langer Zeit auf derselben Bahn driftet, die Zielkoordinaten werden dabei laufend aktualisiert"
+    ],
+    "abandoned_orbital_trace.ini": [
+      "Zahlreiche Rettungskapselhalterungen sind leer und ihre Startmechanismen wurden ordnungsgemaess benutzt",
+      "Die Luftschleusenstatistik zeigt eine ausgedehnte Zahl von Ausgaengen innerhalb eines sehr kurzen Zeitraums",
+      "Die Logspeicher wurden groesstenteils geloescht, nur technische Wartungsdaten sind erhalten, weitere Spuren passen zu diesem Befund",
+      "Mehrere Rettungskapselhalterungen sind leer und ihre Startmechanismen wurden ordnungsgemaess benutzt, weitere Spuren passen zu diesem Befund",
+      "Ein Navigationscomputer enthaelt als letzten Eintrag nur einen weit entfernten Zielvektor, weitere Spuren passen zu diesem Befund",
+      "Die Luftschleusenstatistik zeigt eine grosse Zahl von Ausgaengen innerhalb eines sehr kurzen Zeitraums, weitere Spuren passen zu diesem Befund",
+      "Einige Maschinen wurden sauber demontiert waehrend andere funktionsfaehig zurueckblieben, weitere Spuren passen zu diesem Befund"
+    ],
+    "abandoned_orbital_withdraw.ini": [
+      "Alle Drohnen verlassen die Station und das Schattel vergroessert allmaehlich den Abstand",
+      "Die Erkundungssonden werden zurueckgerufen und der Andockkontakt geloest, danach wird der Sicherheitsabstand weiter vergroessert",
+      "Wir kopieren nur frei zugaengliche Daten und veraendern die Struktur nicht weiter, danach wird der Sicherheitsabstand weiter vergroessert",
+      "Der alte Komplex wird als historischer Fund markiert und wieder sich selbst ueberlassen, danach wird der Sicherheitsabstand weiter vergroessert",
+      "Alle Drohnen verlassen die Station und das Schattel vergroessert langsam den Abstand, danach wird der Sicherheitsabstand weiter vergroessert",
+      "Wir verzichten darauf den versiegelten Bereich gewaltsam zu oeffnen und beenden die Untersuchung, danach wird der Sicherheitsabstand weiter vergroessert",
+      "Die letzten Kamerabilder werden gespeichert bevor die verlassene Struktur wieder in der Dunkelheit verschwindet, danach wird der Sicherheitsabstand weiter vergroessert"
+    ],
+    "abandoned_planet_info.ini": [
+      "Die Sensoren entdecken in einer trockenen Ebene zahlreiche geometrische Strukturen die eindeutig nicht natuerlich sind",
+      "Eine verlassene Siedlung liegt am Rand eines ausgedehnten Kraters und zeigt keinerlei aktive Lebenszeichen",
+      "Die Oberflaeche traegt die Reste einer ausgedehnten technischen Anlage die seit sehr langer Zeit unbenutzt erscheint",
+      "Zahlreiche Gebaeudekomplexe bilden eine tote Stadt ohne erkennbare Waerme oder Funkaktivitaet",
+      "Auf der Oberflaeche befindet sich eine ausgedehnte kuenstliche Anlage ohne aktive Energiequellen, der Befund bleibt auch nach einer Kontrollmessung bestehen",
+      "Die Sensoren entdecken in einer trockenen Ebene mehrere geometrische Strukturen die eindeutig nicht natuerlich sind, der Befund bleibt auch nach einer Kontrollmessung bestehen",
+      "Eine verlassene Siedlung liegt am Rand eines grossen Kraters und zeigt keinerlei aktive Lebenszeichen, der Befund bleibt auch nach einer Kontrollmessung bestehen"
+    ],
+    "abandoned_surface_approach.ini": [
+      "Der Landeanflug erfolgt allmaehlich ueber die verlassenen Strukturen und endet auf festem Untergrund",
+      "Wir landen ausserhalb der ehemaligen Siedlung und schicken zuerst kompakte Aufklaerungssonden voraus",
+      "Wir waehlen einen freien Landeplatz am Rand der Anlage und halten Abstand zu den instabilen Gebaeuden, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Das Schattel setzt auf einer alten markierten Flaeche neben dem Komplex auf, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Der Landeanflug erfolgt langsam ueber die verlassenen Strukturen und endet auf festem Untergrund, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Wir landen ausserhalb der ehemaligen Siedlung und schicken zuerst kleine Aufklaerungssonden voraus, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Eine ebene Flaeche neben dem alten Raumhafen wird als sicherster Landeort ausgewaehlt, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt"
+    ],
+    "abandoned_surface_detail.ini": [
+      "Die naechsten Gebaeude besitzen breite Eingangsbereiche, leere Halterungen und erheblich verwitterte Innenwaende",
+      "Ein zentraler Platz ist von umgestuerzten Masten und komplett leeren Versorgungseinheiten umgeben",
+      "Zahlreiche Raeume enthalten fest eingebaute Konsolen, aber alle mobilen Gegenstaende fehlen",
+      "Die naechsten Gebaeude besitzen breite Eingangsbereiche, leere Halterungen und stark verwitterte Innenwaende, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Zwischen den Ruinen stehen noch Fahrzeuge deren offene Tueren mit feinem Staub gefuellt sind, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein zentraler Platz ist von umgestuerzten Masten und vollstaendig leeren Versorgungseinheiten umgeben, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere Raeume enthalten fest eingebaute Konsolen, aber alle mobilen Gegenstaende fehlen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "abandoned_surface_mystery.ini": [
+      "Zahlreiche Tueren im selben Gebaeude stehen in exakt derselben halb offenen Position",
+      "Ein alter Empfaenger beginnt ohne externe Energie voruebergehend ein nicht dekodierbares Rauschen auszugeben",
+      "Eine ausgedehnte Halle ist vollkommen leer obwohl ihre Bodenverankerungen auf eine ehemals massive Maschine hinweisen",
+      "Ein einzelnes schwaches Energiesignal erscheint fuer wenige Sekunden tief unter der Anlage und verschwindet wieder, eine eindeutige Ursache laesst sich daraus nicht ableiten",
+      "Mehrere Tueren im selben Gebaeude stehen in exakt derselben halb offenen Position, eine eindeutige Ursache laesst sich daraus nicht ableiten",
+      "Ein alter Empfaenger beginnt ohne externe Energie kurzzeitig ein nicht dekodierbares Rauschen auszugeben, eine eindeutige Ursache laesst sich daraus nicht ableiten",
+      "Die lokalen Uhren in zwei getrennten Gebaeuden sind auf denselben Zeitpunkt stehen geblieben, eine eindeutige Ursache laesst sich daraus nicht ableiten"
+    ],
+    "abandoned_surface_scan.ini": [
+      "Es werden keine aktiven Lebenszeichen und keine laufenden Maschinen registriert",
+      "Die Strukturen sind teilweise eingestuerzt aber zahlreiche Innenbereiche scheinen noch zugaenglich",
+      "Zahlreiche Energieverteiler sind noch vorhanden aber vollstaendig entladen",
+      "Einige Tore stehen offen waehrend andere anscheinend von innen verriegelt wurden",
+      "Es werden keine aktiven Lebenszeichen und keine laufenden Maschinen erkannt, die Kontrollmessung liefert vergleichbare Werte",
+      "Die Strukturen sind teilweise eingestuerzt aber mehrere Innenbereiche scheinen noch zugaenglich, die Kontrollmessung liefert vergleichbare Werte",
+      "Materialalterung deutet auf eine sehr lange Aufgabe des Standortes hin, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "abandoned_surface_trace.ini": [
+      "An mehreren Waenden sind helle Bereiche sichtbar an denen frueher ausgedehnte Gegenstaende befestigt waren",
+      "Zahlreiche Versorgungssysteme wurden sauber demontiert statt durch Alterung auszufallen",
+      "An mehreren Waenden sind helle Bereiche sichtbar an denen frueher grosse Gegenstaende befestigt waren, weitere Spuren passen zu diesem Befund",
+      "Der Boden zeigt alte parallele Schleifspuren die zu einem verschlossenen Hangar fuehren, weitere Spuren passen zu diesem Befund",
+      "Ein Datenspeicher enthaelt nur unvollstaendige technische Tabellen ohne erkennbare persoenliche Aufzeichnungen, weitere Spuren passen zu diesem Befund",
+      "Mehrere Versorgungssysteme wurden sauber demontiert statt durch Alterung auszufallen, weitere Spuren passen zu diesem Befund",
+      "Im Staub finden sich keine aktuellen Spuren, nur tiefe alte Abdruecke unbekannter Fahrzeuge, weitere Spuren passen zu diesem Befund"
+    ],
+    "abandoned_surface_withdraw.ini": [
+      "Wir nehmen nur passive Messdaten und kompakte lose Proben mit und lassen die Anlage ansonsten unangetastet",
+      "Alle Sonden kehren zum Schiff zurueck und der Fundort wird komplett kartiert",
+      "Manchmal ist ein verlassener Ort interessanter wenn man akzeptiert das er nicht unmittelbar erklaert werden will",
+      "Wir nehmen nur passive Messdaten und kleine lose Proben mit und lassen die Anlage ansonsten unangetastet, danach wird der Sicherheitsabstand weiter vergroessert",
+      "Die Erkundung wird beendet bevor wir aus Neugier einen jahrtausendealten Sicherheitsmechanismus testen, danach wird der Sicherheitsabstand weiter vergroessert",
+      "Alle Sonden kehren zum Schiff zurueck und der Fundort wird vollstaendig kartiert, danach wird der Sicherheitsabstand weiter vergroessert",
+      "Die Ruinen werden als archaeologisch empfindlich markiert und nicht weiter geoeffnet, danach wird der Sicherheitsabstand weiter vergroessert"
+    ],
+    "alien_behavior.ini": [
+      "es bleibt ploetzlich stehen und neigt den oberen Koerper mehrfach in unsere Richtung",
+      "das Wesen zieht einen weiten Kreis um das Schattel und haelt dabei konstanten Abstand",
+      "es klopft mit einem harten Fortsatz dreimal gegen einen Stein und wartet anschliessend regungslos",
+      "das etwas richtet mehrere seiner Sinnesorgane gleichzeitig auf unsere Triebwerkssektion",
+      "es bewegt sich rueckwaerts ohne den Blick von unserem Schiff abzuwenden",
+      "das Wesen erzeugt eine Reihe tiefer klickender Laute und wechselt danach abrupt die Richtung",
+      "es sammelt mehrere kleine Gegenstaende vom Boden auf und legt sie in einer Reihe vor dem Schattel ab"
+    ],
+    "alien_behavior2.ini": [
+      "wirkt es eher neugierig als feindselig",
+      "scheint es den Abstand ganz bewusst zu kontrollieren",
+      "macht es einen abwartenden Eindruck",
+      "wirkt es durch unsere Triebwerksgeraeusche irritiert",
+      "scheint es unsere Bewegungen genau zu vergleichen",
+      "erscheint es unerwartet gelassen",
+      "macht es den Eindruck als wolle es eine Reaktion provozieren"
+    ],
+    "alien_behavior_desc.ini": [
+      "Es hat uns lokalisiert",
+      "Das Etwas hat uns anscheinend gesehen",
+      "Scheinbar hat es registriert das wir es gesehen haben",
+      "Das Etwas hat wohl registriert das wir es beobachten",
+      "Anscheinend sind wir nicht mehr unbemerkt",
+      "Das Objekt scheint uns als lebendig registriert zu haben",
+      "Es hat uns entdeckt, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "alien_behavior_desc_add.ini": [
+      "offen gesagt",
+      "nach erneuter Beobachtung",
+      "soweit ich das beurteilen kann",
+      "nach aktuellem Sensorbild",
+      "jedenfalls im Moment",
+      "wenn mich die Messwerte nicht taeuschen",
+      "unter Vorbehalt"
+    ],
+    "alien_detour_environment.ini": [
+      "Waehren des Kontakts steigt die atmosphaerische elektrische Aktivitaet unvermittelt stark an",
+      "Die Sicht sinkt innerhalb weniger Minuten und zahlreiche Aussensensoren melden zunehmende Belastung",
+      "Ein lokales Unwetter bildet sich ueber dem Gebiet und veraendert die Bedingungen merklich schneller als berechnet",
+      "Gleichzeitig verschlechtert sich das lokale Wetter schneller als die erste Prognose erwarten liess, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Waehren des Kontakts steigt die atmosphaerische elektrische Aktivitaet ploetzlich stark an, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Eine dichte Front aus Staub und geladenen Partikeln bewegt sich auf den Landeplatz zu, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der Boden unter dem Schattel beginnt durch eine schnelle Temperaturveraenderung instabil zu werden, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "alien_detour_environment_result.ini": [
+      "Die Aussensensoren werden eingefahren und der Startablauf beginnt unmittelbar",
+      "Damit ist die Entscheidung zum Abflug endgueltig und wir verkuerzen den Aufenthalt auf das notwendige Minimum, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Aussensensoren werden eingefahren und der Startablauf beginnt sofort, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Wir geben den Landeplatz frei bevor die Wetterfront das Schiff voll erreicht, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die weitere Kontaktbeobachtung wird beendet und alle Systeme gehen auf Startkonfiguration, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der zunehmende Umweltdruck macht jede weitere Annaeherung unvertretbar und beschleunigt unseren Rueckzug, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ich lasse die Triebwerke vorwaermen und breche alle nicht notwendigen Messungen ab, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "alien_detour_group.ini": [
+      "Am Rand der Sensorreichweite erscheinen zahlreiche weitere Signaturen die dem beobachteten Wesen aehneln",
+      "Zahlreiche neue Bewegungsmuster tauchen zwischen den Gelaendestrukturen rund um den Landeplatz auf",
+      "Die Sensoren zaehlen unvermittelt deutlich mehr Lebensformen als noch vor wenigen Minuten",
+      "Hinter dem ersten Wesen werden zahlreiche aehnliche Koerper sichtbar die sich langsam in unsere Richtung bewegen",
+      "Der einzelne Kontakt scheint nicht allein zu sein; zahlreiche kleinere Gruppen werden gleichzeitig sichtbar",
+      "Am Rand der Sensorreichweite erscheinen mehrere weitere Signaturen die dem beobachteten Wesen aehneln, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Waehren wir zurueckweichen kommen aus der Umgebung weitere gleichartige Lebensformen hervor, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "alien_detour_group_result.ini": [
+      "Wir vermeiden jede weitere Provokation und beschleunigen den bereits geplanten Rueckzug, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die wachsende Zahl der Lebensformen ist ein guter Grund jetzt nicht noch neugieriger zu werden, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Alle Aussenteams werden zurueckgerufen und der Startbereich wird ohne weitere Kontaktversuche geraeumt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ich lasse nur passive Aufnahmen weiterlaufen waehrend das Schattel auf Startbereitschaft geht, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der Kontakt wird nicht ausgeweitet; die Beobachtung endet bevor wir von allen Seiten umringt sind, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Wir halten Abstand und lassen den Planeten mit wesentlich mehr offenen Fragen zurueck als zuvor, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die neuen Signaturen werden dokumentiert und die Triebwerke fuer einen sofortigen Start freigegeben, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "alien_detour_signal.ini": [
+      "Zwischen den Lauten der Lebensform erscheint unvermittelt eine schmale kuenstliche Funkkennung",
+      "Ein zweiter kuenstlicher Sender meldet sich einmalig und verstummt unmittelbar wieder",
+      "Noch waehrend wir den Kontakt beenden empfaengt das Schiff ein kurzes technisches Signal aus einer anderen Richtung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Zwischen den Lauten der Lebensform erscheint ploetzlich eine schmale kuenstliche Funkkennung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein bisher unauffaelliger Bereich der Oberflaeche sendet fuer wenige Sekunden ein gerichtetes Signal, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Bordantenne registriert waehrend des Rueckzugs einen einzelnen verschluesselten Impuls, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Nahe des Horizonts wird ein technisches Signal sichtbar das nicht vom beobachteten Wesen zu stammen scheint, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "alien_detour_signal_result.ini": [
+      "Der Ursprung bleibt nicht identifiziert und wird nicht weiter verfolgt solange sich die Lebensform in Schiffsnaehe befindet",
+      "Wir speichern die Kennung ohne die ohnehin angespannte Begegnung durch eine weitere Expedition zu verlaengern, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der neue Kontakt wird fuer spaetere Untersuchungen markiert und der Rueckzug nicht unterbrochen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Signalrichtung wird dokumentiert; ein sofortiger Abstecher waere unter den aktuellen Bedingungen unklug, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ich lasse nur passive Messungen laufen und halte am geplanten Start fest, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der Ursprung bleibt unbekannt und wird nicht weiter verfolgt solange sich die Lebensform in Schiffsnaehe befindet, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Daten werden gesichert waehrend alle Systeme auf Abflug bleiben, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "alien_sidekick.ini": [
+      "das wird im Abschlussbericht bestimmt wieder viel serioeser klingen als es gerade aussieht.",
+      "ich bin mir ziemlich sicher das im Handbuch fuer erste Kontakte genau hiervon nichts steht.",
+      "wissenschaftlich bemerkenswert. fuer meinen persoenlichen Geschmack trotzdem ein wenig zu bemerkenswert.",
+      "ich notiere einfach mal neutral das die Situation zunehmend bizarr wird.",
+      "manchmal beneide ich wirklich Computer die nur die Klimaanlage steuern muessen.",
+      "ich haette nicht gedacht das ein normaler Arbeitstag im Weltraum so aussehen kann.",
+      "das ist einer dieser Momente in denen ich mir eine sehr lange Kaffeepause wuensche."
+    ],
+    "atmosphere.ini": [
+      "radon",
+      "stickstoff trifluorid",
+      "schwefel hexafluorid",
+      "argon mit neon anteilen",
+      "methan mit ammoniak spuren",
+      "ionisierter wasserstoff",
+      "eine unbekannte schwere edelgas mischung"
+    ],
+    "cloud_adder.ini": [
+      "durchzogen von",
+      "stellenweise vermischt mit",
+      "ueberlagert von",
+      "an den Raendern uebergehend in",
+      "in einzelnen Feldern kombiniert mit",
+      "in breiten Baendern neben",
+      "mit vereinzelten Zonen aus"
+    ],
+    "cloud_adder_end.ini": [
+      "in feinen Wirbeln verteilt",
+      "in breiten Fronten angeordnet",
+      "wolkenartig verwischt",
+      "ringfoermig geschichtet",
+      "in unregelmaessigen Feldern sichtbar",
+      "von feinen Schlieren durchsetzt",
+      "in grossen Wirbelzonen konzentriert"
+    ],
+    "cloud_color.ini": [
+      "blass cyan",
+      "hell bernsteinfarben",
+      "perlmutt weiss",
+      "blass magenta",
+      "hell rostfarben",
+      "kaltes silberblau",
+      "schwach leuchtend violett"
+    ],
+    "cloud_color2.ini": [
+      "dunkel cyan",
+      "tief bernsteinfarben",
+      "rauchig perlmuttfarben",
+      "dunkel magenta",
+      "tief rostfarben",
+      "kaltes stahlblau",
+      "kraeftig leuchtend violett"
+    ],
+    "cloud_desc.ini": [
+      "Dichte Wolkenfelder zeigen sich in",
+      "Mehrschichtige Wolkenbaenke erscheinen in",
+      "Die obere Atmosphaere traegt Wolken in",
+      "Der Himmel ist grossflaechig bedeckt von Wolken in",
+      "Vereinzelte Sturmzellen sind sichtbar in",
+      "Breite atmosphaerische Wirbel zeigen Wolken in",
+      "In mehreren Hoehenschichten liegen Wolken in"
+    ],
+    "digits.ini": [
+      "eintausend fuenfhundert",
+      "zweitausend",
+      "dreitausend",
+      "fuenftausend",
+      "zehntausend",
+      "fuenfundzwanzigtausend",
+      "mehr als hunderttausend"
+    ],
+    "distress_approach.ini": [
+      "Die Annaeherung erfolgt langsam waehrend zahlreiche Scanner nach Truemmern und versteckten Energiequellen suchen",
+      "Wir reduzieren die Geschwindigkeit und naehern uns mit passiven Sensoren und maximalem Sicherheitsabstand, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Das Schattel geht auf einen seitlichen Abfangkurs damit wir die Quelle zuerst aus der Distanz untersuchen koennen, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Ich lasse die Waffen deaktiviert und alle Rettungs- sowie Schleusensysteme vorbereiten, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Die Annaeherung erfolgt langsam waehrend mehrere Scanner nach Truemmern und versteckten Energiequellen suchen, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Wir halten genug Abstand fuer einen sofortigen Kurswechsel und beginnen mit einer vollstaendigen Zielanalyse, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Das Schattel passt seine Bahn an die Driftgeschwindigkeit der Signalquelle an, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt"
+    ],
+    "distress_beacon_desc.ini": [
+      "Der Hilferuf kommt von einem kompakten Sender der an einem zerbrochenen Navigationsmast befestigt ist",
+      "Die Quelle ist ein robustes Notfallrelais das anscheinend fuer jahrzehntelangen Betrieb ausgelegt wurde",
+      "Die Quelle ist keine Rettungskapsel sondern eine autonome Notfallboje, die Sensoren bestaetigen diese Einordnung",
+      "Der Hilferuf kommt von einem kleinen Sender der an einem zerbrochenen Navigationsmast befestigt ist, die Sensoren bestaetigen diese Einordnung",
+      "Die Signalquelle entpuppt sich als alte automatische Relaisboje ohne Besatzung, die Sensoren bestaetigen diese Einordnung",
+      "Vor uns treibt ein kugelfoermiger Notsender mit mehreren entfalteten Antennen, die Sensoren bestaetigen diese Einordnung",
+      "Die Quelle ist ein robustes Notfallrelais das offenbar fuer jahrzehntelangen Betrieb ausgelegt wurde, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "distress_beacon_event.ini": [
+      "Die Positionsdaten veraendern sich unvermittelt als wuerde die Boje einen neuen Zielpunkt berechnen",
+      "Ein starker Funkimpuls loescht zahlreiche bereits gelesene Speicherbereiche",
+      "Der Sender richtet seine Hauptantenne auf einen leeren Raumsektor und erhoeht die Leistung merklich",
+      "Beim Auslesen aktiviert die Boje einen zweiten Sender der bisher vollkommen still war, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Eine verschluesselte Antwort aus grosser Entfernung erreicht die Boje unmittelbar nach unserem Zugriff, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Der Energiespeicher der Boje ueberhitzt und zwingt unsere Sonde den Datenkontakt abzubrechen, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Die Positionsdaten veraendern sich ploetzlich als wuerde die Boje einen neuen Zielpunkt berechnen, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird"
+    ],
+    "distress_beacon_payload.ini": [
+      "Der Sender besitzt zahlreiche alte Nachrichtenpakete die alle auf denselben entfernten Punkt verweisen",
+      "Der Speicher enthaelt Positionsdaten zu einem Ereignis das viele Jahre zurueckliegen muss, die Rohdaten werden parallel im Log gesichert",
+      "Die Boje uebermittelt nur einen Kursvektor und eine unvollstaendige Warnsequenz, die Rohdaten werden parallel im Log gesichert",
+      "Im Datenblock befinden sich komprimierte Sensormessungen eines nicht mehr vorhandenen Schiffes, die Rohdaten werden parallel im Log gesichert",
+      "Die gespeicherten Informationen beschreiben einen ploetzlichen Energieanstieg kurz vor Abbruch der Aufzeichnung, die Rohdaten werden parallel im Log gesichert",
+      "Der Sender besitzt mehrere alte Nachrichtenpakete die alle auf denselben entfernten Punkt verweisen, die Rohdaten werden parallel im Log gesichert",
+      "Die Nutzdaten bestehen aus Zeitstempeln, Notfalltelemetrie und einem unbekannten Identifikationsblock, die Rohdaten werden parallel im Log gesichert"
+    ],
+    "distress_beacon_response.ini": [
+      "Wir kopieren nur die bereits erreichbaren Daten und lassen die Boje anschliessend unveraendert zurueck, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Sonde trennt sich bevor der Energiespeicher weiter aufheizt und wir gehen auf sicheren Abstand, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich markiere den angegebenen Zielvektor fuer spaetere Auswertung ohne ihm in diesem Sprung weiter zu folgen, der Rueckweg bleibt dabei jederzeit offen",
+      "Der Sender wird nicht deaktiviert damit weitere Schiffe den Notruf weiterhin empfangen koennen, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir bestaetigen den Empfang mit einer neutralen Kennung und ziehen uns danach aus dem Nahbereich zurueck, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Daten werden archiviert und die unbekannte Warnsequenz als moegliches Risiko vermerkt, der Rueckweg bleibt dabei jederzeit offen",
+      "Nach Abschluss der Fernmessungen lassen wir die Boje auf ihrer bisherigen Bahn weiterarbeiten, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "distress_context.ini": [
+      "Abseits der geplanten Route sendet ein unbekanntes Objekt in ausgedehnten Abstaenden ein Notsignal",
+      "Die Langstreckenantenne empfaengt einen Hilferuf der anscheinend seit geraumer Zeit ohne Antwort bleibt",
+      "Zwischen den normalen Navigationssignalen taucht ein schwacher Notruf auf der keiner bekannten Kennung zugeordnet werden kann, weitere passive Messungen widersprechen dem nicht",
+      "Die Kommunikationsanlage registriert einen wiederkehrenden Hilferuf aus dem aeusseren Systembereich, weitere passive Messungen widersprechen dem nicht",
+      "Ein sehr altes Notsignal wird zwischen statischem Rauschen und stellaren Stoerungen sichtbar, weitere passive Messungen widersprechen dem nicht",
+      "Der automatische Funkfilter meldet eine codierte Prioritaetskennung die eindeutig als Hilferuf gedacht ist, weitere passive Messungen widersprechen dem nicht",
+      "Abseits der geplanten Route sendet ein unbekanntes Objekt in grossen Abstaenden ein Notsignal, weitere passive Messungen widersprechen dem nicht"
+    ],
+    "distress_departure.ini": [
+      "Das Schattel geht wieder auf freien Kurs und verlaesst den Bereich der Notrufquelle, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Wir vergroessern den Abstand und kehren in einen sicheren Navigationskorridor zurueck, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Die Rettungssonden sind wieder an Bord und das Schiff nimmt Kurs in den freien Systemraum, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Nach Abschluss der Dokumentation loesen wir uns aus der lokalen Driftbahn und beschleunigen auf Sicherheitsabstand, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Die Quelle bleibt hinter uns waehrend das Schattel eine freie Position fuer den naechsten Sprung anfliegt, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Wir verlassen den Nahbereich kontrolliert und stellen die normale Navigation wieder her, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Das Schiff befindet sich wieder ausserhalb aller Truemmer-, Andock- und Gefahrenzonen, anschliessend liegt wieder freier Raum vor dem Schiff"
+    ],
+    "distress_pod_desc.ini": [
+      "Die Signalquelle ist eine einzelne Rettungskapsel mit erheblich gealterter Aussenhuelle",
+      "Vor uns treibt eine kompakte Notkapsel deren Positionsleuchten nur noch sporadisch arbeiten",
+      "Ein kleines versiegeltes Modul sendet die Notkennung und besitzt anscheinend keine eigenen Triebwerke mehr",
+      "Ein einzelnes Rettungsfahrzeug treibt auf einer Bahn die es allmaehlich aus dem System hinausfuehren wuerde",
+      "Die Signalquelle ist eine einzelne Rettungskapsel mit stark gealterter Aussenhuelle, die Sensoren bestaetigen diese Einordnung",
+      "Vor uns treibt eine kleine Notkapsel deren Positionsleuchten nur noch sporadisch arbeiten, die Sensoren bestaetigen diese Einordnung",
+      "Der Notruf stammt von einem kompakten Rettungsmodul unbekannter Bauart, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "distress_pod_event.ini": [
+      "Beim Einfangen der Kapsel aktiviert sich unvermittelt ein unbekannter Lagekorrekturimpuls",
+      "Die Kapsel oeffnet automatisch eine kompakte Serviceklappe obwohl wir keinen Befehl gesendet haben",
+      "Ein interner Energiespeicher faellt aus und der Notruf wird merklich schwacher",
+      "Die Kapsel beginnt aufgrund einer nahen Gravitationsstoerung allmaehlich aus unserem Fangvektor zu driften",
+      "Beim Einfangen der Kapsel aktiviert sich ploetzlich ein unbekannter Lagekorrekturimpuls, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Sobald unsere Schleppsonde Kontakt herstellt wird eine zweite versteckte Funkkennung ausgesendet, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Die Kapsel oeffnet automatisch eine kleine Serviceklappe obwohl wir keinen Befehl gesendet haben, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird"
+    ],
+    "distress_pod_response.ini": [
+      "Wir bringen die Kapsel nur in eine stabile sichere Bahn und vermeiden es die unbekannte Schleuse zu oeffnen, der Rueckweg bleibt dabei jederzeit offen",
+      "Das Rettungsmodul wird mit einer Energieboje verbunden und fuer spaetere Bergung eindeutig markiert, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich lasse die Kapsel vorsichtig aus dem Gefahrenbereich ziehen und danach wieder freigeben, der Rueckweg bleibt dabei jederzeit offen",
+      "Wegen der unbekannten Innenbedingungen verzichten wir auf eine direkte Aufnahme in den Hangar, der Rueckweg bleibt dabei jederzeit offen",
+      "Unsere Sonde stabilisiert die Kapsel und uebertraegt ihre Position als priorisierte Rettungsmeldung, der Rueckweg bleibt dabei jederzeit offen",
+      "Der Kontakt wird geloest sobald die Energieversorgung wieder stabil ist und die Kapsel bleibt auf sicherem Kurs, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir dokumentieren alle Signale und ziehen uns zurueck bevor der neue Kontakt den Nahbereich erreicht, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "distress_pod_scan.ini": [
+      "Der Innenraum ist versiegelt aber die Sensoren koennen nicht stabil feststellen ob sich darin noch jemand befindet",
+      "Zahlreiche interne Anzeigen reagieren auf unsere Anfrage ohne lesbare Daten zu liefern",
+      "Die Kapsel besitzt eine Atmosphaere aber ihre Zusammensetzung ist fuer unsere Sensoren auffaellig",
+      "Der Innenraum ist versiegelt aber die Sensoren koennen nicht sicher feststellen ob sich darin noch jemand befindet, die Kontrollmessung liefert vergleichbare Werte",
+      "Die Energieversorgung ist fast leer und nur die Notsendeanlage arbeitet noch zuverlaessig, die Kontrollmessung liefert vergleichbare Werte",
+      "Mehrere interne Anzeigen reagieren auf unsere Anfrage ohne lesbare Daten zu liefern, die Kontrollmessung liefert vergleichbare Werte",
+      "Die Kapsel besitzt eine Atmosphaere aber ihre Zusammensetzung ist fuer unsere Sensoren ungewoehnlich, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "distress_resolution.ini": [
+      "Der unmittelbare Notfall ist soweit moeglich stabilisiert und weitere Eingriffe wuerden mehr Risiko als Nutzen bringen, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Alle erreichbaren Rettungsinformationen wurden gesichert und die Position ist eindeutig markiert, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Wir haben getan was mit den vorhandenen Mitteln vertretbar ist und beenden den Rettungsversuch, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Die Gefahrenlage ist unter Kontrolle; fuer eine vollstaendige Bergung waere spezialisierte Hilfe erforderlich, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Der Notruf bleibt dokumentiert und wurde mit unseren Messdaten an das automatische Relaisnetz weitergegeben, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Es gibt keine weiteren unmittelbar erreichbaren Ziele im Nahbereich der Signalquelle, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Die Situation ist stabil genug dass wir den Ort verlassen koennen ohne eine akute Verschlechterung zu verursachen, danach sind die kritischen Systeme wieder unter Kontrolle"
+    ],
+    "distress_signal_detect.ini": [
+      "Das Signal liegt merklich ausserhalb der ueblichen Kommunikationsbaender und wird nur waehrend kurzer Intervalle stark genug",
+      "Zahlreiche Frequenzen tragen denselben Hilferuf mit leicht verschobener Laufzeit",
+      "Das Signal liegt deutlich ausserhalb der ueblichen Kommunikationsbaender und wird nur waehrend kurzer Intervalle stark genug, eine zweite Messung bestaetigt den Befund",
+      "Die Quelle sendet in regelmaessigen Abstaenden eine kurze Kennung gefolgt von unvollstaendigen Telemetriedaten, eine zweite Messung bestaetigt den Befund",
+      "Die Notrufsignatur ist schwach aber eindeutig kuenstlichen Ursprungs, eine zweite Messung bestaetigt den Befund",
+      "Mehrere Frequenzen tragen denselben Hilferuf mit leicht verschobener Laufzeit, eine zweite Messung bestaetigt den Befund",
+      "Das Signal verwendet eine einfache Wiederholung die auch ohne gemeinsame Sprache als Notfallmeldung erkennbar ist, eine zweite Messung bestaetigt den Befund"
+    ],
+    "distress_signal_origin.ini": [
+      "Die Peilung fuehrt zu einem kleinen Objekt knapp ausserhalb einer erheblich geneigten Umlaufbahn",
+      "Die Quelle befindet sich auf einer langsamen Driftbahn zwischen zwei Planeten, die Peilung bleibt dabei stabil",
+      "Der Ursprung liegt nahe der Grenze des Systems in einem nahezu leeren Raumsektor, die Peilung bleibt dabei stabil",
+      "Die Peilung fuehrt zu einem kleinen Objekt knapp ausserhalb einer stark geneigten Umlaufbahn, die Peilung bleibt dabei stabil",
+      "Das Signal kommt aus dem Schatten eines unbewohnten Mondes, die Peilung bleibt dabei stabil",
+      "Die Quelle bewegt sich nur minimal und scheint keinen aktiven Antrieb zu verwenden, die Peilung bleibt dabei stabil",
+      "Der Notruf stammt aus einem Bereich in dem keine regulaeren Verkehrswege verzeichnet sind, die Peilung bleibt dabei stabil"
+    ],
+    "distress_vessel_desc.ini": [
+      "Der Notruf kommt von einem Forschungsschiff mit erheblich verbrannten Triebwerkssektionen",
+      "Das Objekt ist ein unbekanntes Schiff das allmaehlich um seine eigene Achse taumelt",
+      "Ein erheblich beschaedigtes Schiff treibt ohne Kurskorrektur durch den Systemraum und sendet weiterhin automatisch",
+      "Die Quelle ist ein schwer beschaedigtes kleines Raumschiff mit ausgefallenen Haupttriebwerken, die Sensoren bestaetigen diese Einordnung",
+      "Vor uns treibt ein Frachter dessen Aussenhuelle an mehreren Stellen aufgerissen ist, die Sensoren bestaetigen diese Einordnung",
+      "Der Notruf kommt von einem Forschungsschiff mit stark verbrannten Triebwerkssektionen, die Sensoren bestaetigen diese Einordnung",
+      "Das Objekt ist ein unbekanntes Schiff das langsam um seine eigene Achse taumelt, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "distress_vessel_event.ini": [
+      "Die Restenergie des Schiffes steigt ploetzlich an und aktiviert zahlreiche Systeme gleichzeitig",
+      "Als unsere Rettungssonde anlegt beginnt das Schiff unerwartet schneller zu rotieren, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Kurz vor dem Andocken bricht eine weitere Huelleplatte ab und zwingt uns zu einem Ausweichmanoever, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Die Restenergie des Schiffes steigt ploetzlich an und aktiviert mehrere Systeme gleichzeitig, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Unsere Sonde empfaengt aus dem Inneren eine neue kurze Nachricht die nicht zum automatischen Notruf gehoert, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Ein instabiler Treibstofftank beginnt sich aufzublaehen und veraendert die Driftrichtung des Wracks, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird",
+      "Beim Versuch Daten auszulesen startet ein altes automatisches Abwehrprogramm, wodurch die Lage fuer kurze Zeit unuebersichtlicher wird"
+    ],
+    "distress_vessel_response.ini": [
+      "Die Kopplung wird unmittelbar geloest und wir uebermitteln auf allen bekannten Kanaelen die Position des havarierten Schiffes",
+      "Wir sichern die erreichbaren Daten und ziehen die Rettungssonde zurueck bevor die Lage weiter instabil wird, der Rueckweg bleibt dabei jederzeit offen",
+      "Das Schattel stabilisiert die Rotation des Wracks kurz mit einem schwachen Zugstrahl und geht danach wieder auf Abstand, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich lasse eine Rettungsboje mit Energie, Funkrelais und genauer Positionsmarkierung zurueck, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Kopplung wird sofort geloest und wir uebermitteln auf allen bekannten Kanaelen die Position des havarierten Schiffes, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir vermeiden jede weitere Belastung der Huelle und beschraenken uns auf Fernmessungen, der Rueckweg bleibt dabei jederzeit offen",
+      "Die aktiven Abwehrsysteme werden nicht provoziert; unsere Sonde trennt sich und verlaesst den Nahbereich, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "distress_vessel_state.ini": [
+      "Zahlreiche versiegelte Sektionen besitzen noch Restdruck waehrend der Rest des Schiffes offen zum Raum ist",
+      "Die Huelle verliert allmaehlich weitere Teile und eine dauerhafte Kopplung waere riskant",
+      "Im Inneren sind schwache Waermequellen messbar aber keine eindeutigen Lebenszeichen, der Zustand veraendert sich waehrend der Beobachtung kaum",
+      "Mehrere versiegelte Sektionen besitzen noch Restdruck waehrend der Rest des Schiffes offen zum Raum ist, der Zustand veraendert sich waehrend der Beobachtung kaum",
+      "Die Notenergie reicht nur noch fuer Funk, minimale Heizung und einige interne Sensoren, der Zustand veraendert sich waehrend der Beobachtung kaum",
+      "Ein einzelnes Modul ist noch mit Energie versorgt und sendet unvollstaendige Statusdaten, der Zustand veraendert sich waehrend der Beobachtung kaum",
+      "Die Bordcomputer des fremden Schiffes reagieren nicht auf standardisierte Diagnoseanfragen, der Zustand veraendert sich waehrend der Beobachtung kaum"
+    ],
+    "fauna_appearance.ini": [
+      "Es handelt sich um flache vierbeinige Organismen mit leuchtenden Seitenstreifen und sehr ausgedehnten Kieferplatten",
+      "Zahlreiche kugelfoermige Tiere rollen ueber den Boden und entfalten bei Stillstand drei duenne Laufbeine",
+      "Die Tiere besitzen sechs kurze Beine, breite Panzerplatten und lange tastende Fuehler, auch aus einem zweiten Blickwinkel bleibt dieser Eindruck bestehen",
+      "Es handelt sich um flache vierbeinige Organismen mit leuchtenden Seitenstreifen und sehr grossen Kieferplatten, auch aus einem zweiten Blickwinkel bleibt dieser Eindruck bestehen",
+      "Mehrere kugelfoermige Tiere rollen ueber den Boden und entfalten bei Stillstand drei duenne Laufbeine, auch aus einem zweiten Blickwinkel bleibt dieser Eindruck bestehen",
+      "Die groessten Exemplare sind etwa zwei meter lang und tragen harte segmentierte Rueckenplatten, auch aus einem zweiten Blickwinkel bleibt dieser Eindruck bestehen",
+      "Die Wesen erinnern entfernt an eine Mischung aus Reptil und Krabbe, was biologisch vermutlich unfair gegenueber beiden ist, auch aus einem zweiten Blickwinkel bleibt dieser Eindruck bestehen"
+    ],
+    "fauna_attack.ini": [
+      "Zahlreiche Exemplare beginnen an einer aeusseren Kabelabdeckung zu beissen",
+      "Zahlreiche kleine Organismen kriechen in einen offenen Wartungsspalt bevor die Klappe geschlossen werden kann",
+      "Ein groesseres Tier rammt ein Landebein und bringt das gesamte Schattel kurz ins Schwanken, die Sicherheitsautomatik reagiert unmittelbar darauf",
+      "Mehrere Exemplare beginnen an einer aeusseren Kabelabdeckung zu beissen, die Sicherheitsautomatik reagiert unmittelbar darauf",
+      "Die Herde draengt gegen die unteren Schiffssektionen und belastet zwei Landebeine gleichzeitig, die Sicherheitsautomatik reagiert unmittelbar darauf",
+      "Ein Tier springt auf eine Sensoreinheit und versucht die Abdeckung mit seinen Kieferplatten zu entfernen, die Sicherheitsautomatik reagiert unmittelbar darauf",
+      "Mehrere kleine Organismen kriechen in einen offenen Wartungsspalt bevor die Klappe geschlossen werden kann, die Sicherheitsautomatik reagiert unmittelbar darauf"
+    ],
+    "fauna_behavior.ini": [
+      "Die Tiere umkreisen das Schiff und reagieren besonders erheblich auf die warmen Triebwerkssektionen",
+      "Zahlreiche Exemplare schlagen mit ihren Vordergliedmassen gegen den Boden und erzeugen tiefe Vibrationen",
+      "Die Tiere umkreisen das Schiff und reagieren besonders stark auf die warmen Triebwerkssektionen, waehrend wir den Abstand unveraendert halten",
+      "Mehrere Exemplare schlagen mit ihren Vordergliedmassen gegen den Boden und erzeugen tiefe Vibrationen, waehrend wir den Abstand unveraendert halten",
+      "Die Herde teilt sich und versucht gleichzeitig von mehreren Seiten unter das Schattel zu gelangen, waehrend wir den Abstand unveraendert halten",
+      "Einzelne Tiere untersuchen die Landebeine mit erstaunlich kraeftigen Kieferplatten, waehrend wir den Abstand unveraendert halten",
+      "Die kleineren Organismen folgen den groesseren und sammeln sich zunehmend dicht an der Aussenhuelle, waehrend wir den Abstand unveraendert halten"
+    ],
+    "fauna_detect.ini": [
+      "Die Bewegungssensoren melden zahlreiche nicht intelligente Tierformen in der Umgebung des Landeplatzes",
+      "Die Kameras zeigen eine Herde einfacher Lebensformen die sich allmaehlich dem Schattel naehert",
+      "Zahlreiche bodennahe Organismen verlassen ihre Verstecke und untersuchen den Landeplatz",
+      "Keine intelligente Spezies registriert. Dafuer scheint die lokale Fauna unsere Ankunft fuer ein gesellschaftliches Ereignis zu halten",
+      "Thermische Signaturen bestaetigen zahlreiche Dutzend Tiere unterschiedlicher Groesse im direkten Umfeld",
+      "Die Bewegungssensoren melden mehrere nicht intelligente Tierformen in der Umgebung des Landeplatzes, eine zweite Messung bestaetigt den Befund",
+      "Biologische Scanner erfassen eine groessere Anzahl mobiler Organismen ohne Hinweise auf technische oder sprachliche Aktivitaet, eine zweite Messung bestaetigt den Befund"
+    ],
+    "fauna_response.ini": [
+      "Wir setzen eine kompakte unbemannte Sonde als bewegte Ablenkung ausserhalb des Landeplatzes ein",
+      "Ich aktiviere niederfrequente Aussensender um die Tiere vom Schiff wegzudraengen, der Rueckweg bleibt dabei jederzeit offen",
+      "Kurze kalte Gasstoesse aus den Manoevrierdusen sollen den Bereich unter dem Schattel freimachen, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Aussenbeleuchtung wird gepulst. Ein Teil der Herde zieht sich daraufhin einige meter zurueck, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir setzen eine kleine unbemannte Sonde als bewegte Ablenkung ausserhalb des Landeplatzes ein, der Rueckweg bleibt dabei jederzeit offen",
+      "Die unteren Wartungsklappen werden verriegelt und alle erreichbaren Tiere vorsichtig aus den Mechaniken entfernt, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich starte die Triebwerke mit minimalem Schub. Das Geraeusch erzeugt endlich einen halbwegs brauchbaren Sicherheitsradius, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "fauna_retreat.ini": [
+      "Eine dauerhafte friedliche Koexistenz mit unseren Landebeinen ist anscheinend nicht vorgesehen",
+      "Die Tiere kehren bereits wieder um. Wir nutzen den freien Moment fuer den Start, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Eine dauerhafte friedliche Koexistenz mit unseren Landebeinen ist offenbar nicht vorgesehen, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Die lokale Fauna bleibt zurueck und wird aus sicherer Hoehe weiter beobachtet, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Wir beenden den Oberflaechenaufenthalt bevor aus neugieriger Tierwelt ein Ersatzteillager wird, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Alle Organismen sind ausserhalb der Triebwerkszone. Rueckstart ist jetzt die vernuenftigste Option, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Der Planet besitzt interessantes Leben, aber keinen erkennbaren Sinn fuer persoenlichen Abstand. Wir starten, ohne den sicheren Rueckzug weiter zu verzoegern"
+    ],
+    "fauna_ship_effect.ini": [
+      "Die Belastung des rechten Landebeins liegt merklich ueber dem normalen Standwert",
+      "Zahlreiche Kratz und Bissspuren sind in der aeusseren Schutzschicht messbar",
+      "Eine Wartungsklappe kann nicht mehr komplett schliessen weil sich ein Tier darunter verkeilt hat",
+      "Zwei Temperatursensoren wurden beschaedigt. Anscheinend schmecken sie ausgezeichnet",
+      "Ein Aussensensor wurde aus seiner Halterung gedrueckt und liefert nur noch ein sehr persoenliches Bild vom Boden, die betroffenen Systeme bleiben unter Beobachtung",
+      "Die Belastung des rechten Landebeins liegt deutlich ueber dem normalen Standwert, die betroffenen Systeme bleiben unter Beobachtung",
+      "Mehrere Kratz und Bissspuren sind in der aeusseren Schutzschicht messbar, die betroffenen Systeme bleiben unter Beobachtung"
+    ],
+    "flora_appearance.ini": [
+      "Zahlreiche meter hohe spiralenfoermige Staengel tragen harte glasartige Blaetter",
+      "Schwarze knollenartige Koerper sitzen direkt im Schlamm und oeffnen bei Waermeeinwirkung kompakte Poren",
+      "Die Pflanzen besitzen silbrig glaenzende Oberflaechen und bewegen ihre Blattflaechen allmaehlich zur Waermequelle",
+      "Die Gewaechse bestehen aus dunklen faserigen Staemmen und halbtransparenten blattartigen Membranen, auch aus einem zweiten Blickwinkel bleibt dieser Eindruck bestehen",
+      "Ueber dem Boden liegen flache tellerartige Pflanzen deren Raender im Wind pulsieren, auch aus einem zweiten Blickwinkel bleibt dieser Eindruck bestehen",
+      "Mehrere meter hohe spiralenfoermige Staengel tragen harte glasartige Blaetter, auch aus einem zweiten Blickwinkel bleibt dieser Eindruck bestehen",
+      "Die Vegetation bildet dichte rote Polster aus denen lange empfindliche Fadenstrukturen wachsen, auch aus einem zweiten Blickwinkel bleibt dieser Eindruck bestehen"
+    ],
+    "flora_attack.ini": [
+      "Zahlreiche Wurzelstraenge wickeln sich um ein Landebein und beginnen sich zusammenzuziehen",
+      "Die Pflanzen setzen eine erheblich korrosive Fluessigkeit frei die auf der Aussenhuelle reagiert",
+      "Zahlreiche Staengel schnellen gegen die warme Aussenhuelle und haften dort mit saugnapfaehnlichen Enden fest",
+      "Mehrere Wurzelstraenge wickeln sich um ein Landebein und beginnen sich zusammenzuziehen, die Sicherheitsautomatik reagiert unmittelbar darauf",
+      "Die Pflanzen setzen eine stark korrosive Fluessigkeit frei die auf der Aussenhuelle reagiert, die Sicherheitsautomatik reagiert unmittelbar darauf",
+      "Ein dichter Schwarm harter Sporen trifft die Sensorsektion wie feiner Schrot, die Sicherheitsautomatik reagiert unmittelbar darauf",
+      "Die kelchfoermigen Organismen schleudern klebrige Faserbuendel gegen Triebwerksabdeckungen, die Sicherheitsautomatik reagiert unmittelbar darauf"
+    ],
+    "flora_behavior.ini": [
+      "Zahlreiche Pflanzen schliessen ihre Blaetter und stossen dabei feinen Staub in die Atmos phaere",
+      "Das Wurzelgeflecht zieht sich zuerst zurueck und breitet sich anschliessend merklich schneller wieder aus",
+      "Die gesamte Vegetation richtet sich innerhalb weniger Minuten auf das Schattel aus, waehrend wir den Abstand unveraendert halten",
+      "Die Wurzelnetze beginnen sichtbar in Richtung unserer warmen Landebeine zu wachsen, waehrend wir den Abstand unveraendert halten",
+      "Mehrere Pflanzen schliessen ihre Blaetter und stossen dabei feinen Staub in die Atmos phaere, waehrend wir den Abstand unveraendert halten",
+      "Die Gewaechse reagieren auf Vibrationen und bewegen ihre Fadenstrukturen synchron zum Triebwerksgeraeusch, waehrend wir den Abstand unveraendert halten",
+      "Das Wurzelgeflecht zieht sich zuerst zurueck und breitet sich anschliessend deutlich schneller wieder aus, waehrend wir den Abstand unveraendert halten"
+    ],
+    "flora_detect.ini": [
+      "Zwischen den Gesteinsformationen werden dichte Kolonien stationaerer Organismen registriert die eindeutig photosynthetische Prozesse zeigen",
+      "Zahlreiche unbewegliche Lebensformen reagieren chemisch auf die Waerme unserer Triebwerke",
+      "Biologische Messwerte bestaetigen eine ausgedehnte Vegetationszone mit auffaellig schneller Stoffwechselreaktion",
+      "Die biologischen Sensoren melden grossflaechige pflanzenaehnliche Strukturen ohne Anzeichen intelligenter Aktivitaet, eine zweite Messung bestaetigt den Befund",
+      "Zwischen den Gesteinsformationen werden dichte Kolonien stationaerer Organismen erkannt die eindeutig photosynthetische Prozesse zeigen, eine zweite Messung bestaetigt den Befund",
+      "Der Boden rund um den Landeplatz ist von einem zusammenhaengenden Geflecht einfacher pflanzlicher Lebensformen durchzogen, eine zweite Messung bestaetigt den Befund",
+      "Mehrere unbewegliche Lebensformen reagieren chemisch auf die Waerme unserer Triebwerke, eine zweite Messung bestaetigt den Befund"
+    ],
+    "flora_response.ini": [
+      "Ich aktiviere die thermische Aussenreinigung und erhitze die betroffenen Landebeine voruebergehend",
+      "Ich aktiviere die thermische Aussenreinigung und erhitze die betroffenen Landebeine kurzzeitig, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Reinigungsduesen werden auf maximale Leistung gesetzt und spuelen organisches Material von den Sensoren, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir fahren alle empfindlichen Aussenteile ein und versiegeln die unteren Wartungsklappen, der Rueckweg bleibt dabei jederzeit offen",
+      "Kurze Triebwerksimpulse sollen das Wurzelgeflecht vom Schiff loesen ohne den gesamten Landeplatz zu verbrennen, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Bordchemie neutralisiert das korrosive Sekret soweit unsere Filter das schaffen, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich erhoehe die Aussenhuellenspannung geringfuegig. Die Pflanzen reagieren darauf erfreulich beleidigt, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "flora_retreat.ini": [
+      "Die Vegetation passt sich schneller an unsere Gegenmassnahmen an als mir lieb ist. Rueckstart wird vorbereitet, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Wir haben ausreichend Proben ohne das gesamte Schiff zu einem Blumentopf umzubauen, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Der biologische Kontakt wird beendet. Intelligenz war nicht erforderlich um uns hier loswerden zu wollen, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Ich erklaere diese Flora fuer wissenschaftlich wertvoll und parktechnisch ungeeignet, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Die Pflanzen beginnen bereits erneut auf das Schiff zuzuwachsen. Wir sollten den Vorsprung nutzen, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Alle biologischen Proben sind versiegelt. Der Landeplatz darf sich jetzt wieder selbst gehoeren, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Bevor die Vegetation einen dauerhaften Eigentumsanspruch auf unsere Landebeine erhebt starten wir, ohne den sicheren Rueckzug weiter zu verzoegern"
+    ],
+    "flora_ship_effect.ini": [
+      "Zahlreiche optische Sensoren sind von klebrigen Sporen bedeckt und liefern kaum noch verwertbare Bilder",
+      "Zahlreiche elektrische Leitungen in der Aussenhaut zeigen kleine Ableitstroeme durch leitfaehige Pflanzensekrete",
+      "Die Korrosionssensoren melden erste Schaeden an zwei aeusseren Schutzschichten, die betroffenen Systeme bleiben unter Beobachtung",
+      "Ein Landebein kann nur noch eingeschraenkt bewegt werden weil Pflanzenfasern die Gelenke blockieren, die betroffenen Systeme bleiben unter Beobachtung",
+      "Mehrere optische Sensoren sind von klebrigen Sporen bedeckt und liefern kaum noch verwertbare Bilder, die betroffenen Systeme bleiben unter Beobachtung",
+      "Die Temperatur eines Triebwerkseinlasses steigt weil organisches Material den Luftstrom behindert, die betroffenen Systeme bleiben unter Beobachtung",
+      "Das Wurzelgeflecht uebt bereits messbaren Zug auf die Unterseite des Schattels aus, die betroffenen Systeme bleiben unter Beobachtung"
+    ],
+    "hyphenation.ini": [
+      "dravium",
+      "solkara",
+      "ventaris",
+      "orbelum",
+      "tyrannis",
+      "kelvoria",
+      "zendar"
+    ],
+    "hyphenation_pre.ini": [
+      "TRA",
+      "SOL",
+      "VEN",
+      "QUA",
+      "TYR",
+      "KEL",
+      "ZEN"
+    ],
+    "jump_missing_story.ini": [
+      "Ernsthaft? Sie müssen zuerst einen Sektor-Sprung berechnen, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Der Sprungantrieb hat noch keine Koordinaten. Bitte berechnen Sie zunächst einen Sektor-Sprung, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Ich kann keinen Sprung durchführen, solange Sie noch keinen berechnet haben. Das sollte eigentlich einleuchten, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Koordinaten fehlen. Berechnen Sie erst einen Sektor-Sprung, bevor Sie wahllos auf Knoepfe druecken, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Der Antrieb ist bereit, aber das Ziel existiert noch nicht. Bitte zuerst den Sprung berechnen, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Ich soll springen, weiss aber nicht wohin. Das ist selbst fuer unsere Verhaeltnisse keine gute Idee, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Ohne berechnete Flugbahn bleibt der Sprungantrieb aus. Ich diskutiere darueber auch nicht, die Navigationsfreigabe bleibt davon unberuehrt"
+    ],
+    "jump_story_already_used.ini": [
+      "Dieser Einsatzbericht wurde bereits komplett abgespielt. Fuer eine Wiederholung berechnen Sie einen neuen Sprung",
+      "Ich wiederhole mich nur ungern und diese Story ganz stabil nicht. Neuer Sprung, bitte",
+      "Nein. Diesen Sektor-Sprung haben wir bereits durchgeführt. Berechnen Sie bitte einen neuen, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Die Geschichte ist abgeschlossen. Für eine weitere Reise müssen Sie schon einen neuen Sprung berechnen, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Schon wieder derselbe Sprung? Nein. Bitte berechnen Sie zunächst einen neuen, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Dieser Einsatzbericht wurde bereits vollstaendig abgespielt. Fuer eine Wiederholung berechnen Sie einen neuen Sprung, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Wir waren dort schon. Ich werde dieselbe Reise nicht noch einmal erzaehlen, die Navigationsfreigabe bleibt davon unberuehrt"
+    ],
+    "jumpdrive_activated.ini": [
+      "Sprungantrieb aktiviert, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Massen beschleuniger Triebwerk aktiviert, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Worp Triebwerk gestartet, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Quanten Sprung Antrieb gestartet, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Hyper Licht Triebwerk gestartet, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Transworp Antrieb aktiviert, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Falt Raum Antrieb aktiviert, die Navigationsfreigabe bleibt davon unberuehrt"
+    ],
+    "life_alien_arms.ini": [
+      "fadenartige Greiffortsaetze mit kleinen Gelenken",
+      "breite paddelfoermige Arme mit rauer Oberflaeche",
+      "mehrere kurze Greifarme mit jeweils zwei hakenartigen Enden",
+      "durchscheinende Tentakel mit dunklen Knotenpunkten",
+      "duenne gefiederte Fortsaetze die wie Tastorgane bewegt werden",
+      "massive knorpelige Arme mit stumpfen Endplatten",
+      "paarige spiralige Greiforgane entlang des Oberkoerpers"
+    ],
+    "life_alien_arms_desc.ini": [
+      "An beiden Seiten des Rumpfes erkennt man",
+      "Direkt unterhalb des oberen Koerpers befinden sich",
+      "Seitlich aus dem Rumpf wachsen",
+      "Als vordere Greiforgane besitzt es",
+      "Links und rechts am Koerper sitzen",
+      "Entlang der oberen Flanken bewegen sich",
+      "Anstelle normaler Arme erkennt man"
+    ],
+    "life_alien_breast.ini": [
+      "einen schmalen sechseckig gegliederten Oberkoerper mit",
+      "eine breite elastische Rumpfmembran mit",
+      "einen kegelfoermigen Oberkoerper mit",
+      "eine fast transparente Rumpfkammer mit",
+      "einen gedrungenen gepanzerten Oberkoerper mit",
+      "eine langgestreckte mehrfach gefaltete Bruststruktur mit",
+      "einen weichen ringfoermig segmentierten Oberkoerper mit"
+    ],
+    "life_alien_color.ini": [
+      "perlmuttfarben",
+      "bernsteinfarben",
+      "rost rot",
+      "tief cyan",
+      "blass mag enta",
+      "transparent gruenlich",
+      "metallisch violett"
+    ],
+    "life_alien_color_adder.ini": [
+      "netzartig gemustert",
+      "in feinen Wellen gefaerbt",
+      "mit wandernden Flecken versehen",
+      "radial gestreift",
+      "unregelmaessig schattiert",
+      "in kleinen Punkten gemustert",
+      "mit langsam wechselnden Farbsaeumen versehen"
+    ],
+    "life_alien_color_desc.ini": [
+      "Bei direktem Licht ist das Wesen",
+      "Bei direktem Licht wirkt die Haut",
+      "Bei direktem Licht erscheint die Koerperoberflaeche",
+      "Bei direktem Licht bleibt die aeussere Schicht",
+      "Bei direktem Licht wirkt das Wesen",
+      "Optisch ist die Lebensform",
+      "Im Schatten wirkt die Lebensform"
+    ],
+    "life_alien_desc.ini": [
+      ", zusaetzlich besitzt die Lebensform",
+      ", gleichzeitig sieht man",
+      ", auffaellig erkennt man auch",
+      ", im Rumpfbereich erkennt man",
+      ", seitlich am Oberkoerper besitzt es",
+      ", zusaetzlich traegt es",
+      ", direkt darunter erkennt man"
+    ],
+    "life_alien_eyes.ini": [
+      "kleine tief liegende Augen",
+      "kreisfoermig gruppierte Augen",
+      "grosse milchig transparente Augen",
+      "schmale senkrechte Sehschlitze",
+      "facettenartige dunkle Augenfelder",
+      "leuchtende punktfoermige Sehorgane",
+      "bewegliche Augen auf kurzen Stielen"
+    ],
+    "life_alien_eyes_digits.ini": [
+      "vierundzwanzig",
+      "sechsunddreissig",
+      "achtundvierzig",
+      "zweiundsiebzig",
+      "sechsundneunzig",
+      "hundertachtundzwanzig",
+      "mehr als tausend"
+    ],
+    "life_alien_face.ini": [
+      "dreieckiges flaches Gesicht",
+      "langgezogenes schmales Gesicht",
+      "breites maskenartiges Gesicht",
+      "asymmetrisches Gesicht mit harter Aussenkante",
+      "transparent wirkendes ovales Gesicht",
+      "mehrteilig gegliedertes Gesicht",
+      "kleines rundes Gesicht in einer grossen Kopfstruktur"
+    ],
+    "life_alien_face_desc.ini": [
+      "Als Gesichtsform erkennt man ein",
+      "Vorne am Kopf befindet sich ein",
+      "Im oberen Rumpfbereich sitzt ein",
+      "Der sichtbare Kopf besitzt ein",
+      "Die vordere Kopfstruktur bildet ein",
+      "An der Kopfspitze liegt ein",
+      "Der Sensor markiert als Gesicht ein"
+    ],
+    "life_alien_face_desc2.ini": [
+      ", darunter findet man",
+      ", im Gesicht traegt es",
+      ", weiterhin besitzt es",
+      ", nahe der Mitte erkennt man",
+      ", als weitere Struktur hat es",
+      ", dort erkennt man ausserdem",
+      ", auf der Vorderseite besitzt es"
+    ],
+    "life_alien_face_desc3.ini": [
+      ", direkt daneben befinden sich",
+      ", ueber die Kopfpartie verteilt besitzt es",
+      ", zusaetzlich sieht man",
+      ", darueber erkennt man",
+      ", entlang des Gesichts befinden sich",
+      ", im restlichen Gesichtsbereich besitzt es",
+      ", als weitere Sinnesorgane hat es"
+    ],
+    "life_alien_found.ini": [
+      "Eine unbekannte Lebensform wurde lokalisiert",
+      "Bewegte biologische Signaturen direkt vor dem Schiff",
+      "Ein eindeutig lebender Organismus erscheint im Nahscan",
+      "Lokale Lebensform in unmittelbarer Umgebung entdeckt",
+      "Biologische Aktivitaet nahe des Landeplatzes bestaetigt",
+      "Ein fremder Organismus bewegt sich in Sensorreichweite",
+      "Erster direkter Kontakt mit einer unbekannten Lebensform"
+    ],
+    "life_alien_legs.ini": [
+      "mehrgliedrige duenne Laufbeine",
+      "kurze breite Stelzenbeine",
+      "elastische ringfoermige Laufglieder",
+      "spinnenartige Laufstrukturen",
+      "paddelfoermige Stuetzglieder",
+      "lange federnde Beine mit stumpfen Enden",
+      "kleine Beine entlang der gesamten Unterseite"
+    ],
+    "life_alien_legs_count.ini": [
+      "vierzehn",
+      "sechzehn",
+      "achtzehn",
+      "vierundzwanzig",
+      "dreissig",
+      "mehr als fuenfzig",
+      "kaum zaehlbare"
+    ],
+    "life_alien_legs_desc.ini": [
+      "Unterhalb des Rumpfes erkennt man",
+      "Als Laufglieder zaehlen wir",
+      "Direkt am unteren Koerper sitzen",
+      "Fuer die Fortbewegung besitzt es",
+      "Rund um die Unterseite befinden sich",
+      "Im Bereich unter dem Torso liegen",
+      "An der Koerperbasis zaehlen die Sensoren"
+    ],
+    "life_alien_legs_desc2.ini": [
+      "zu erkennen",
+      "sichtbar",
+      "ausgebildet",
+      "angeordnet",
+      "vorhanden",
+      "in Bewegung",
+      "klar voneinander abgrenzbar"
+    ],
+    "life_alien_mouth.ini": [
+      "eine schmale Mundspalte ohne erkennbare Zaehne",
+      "ein runder elastischer Mund mit mehreren Lippenringen",
+      "eine kleine schnabelartige Mundoeffnung",
+      "ein breites Maul mit flachen Zahnplatten",
+      "mehrere kleine Mundoeffnungen nebeneinander",
+      "eine roehrenartige Mundpartie mit beweglichem Rand",
+      "einen fast menschlich wirkenden Mund ohne sichtbare Zaehne"
+    ],
+    "life_alien_parts.ini": [
+      "kleinen Leuchtknoten",
+      "harten Schuppenplatten",
+      "ringfoermigen Atemoeffnungen",
+      "beweglichen Hautlappen",
+      "feinen Sinneshaaren",
+      "durchsichtigen Blasenorganen",
+      "kleinen magnetisch wirkenden Metallplatten"
+    ],
+    "life_alien_size.ini": [
+      "ungefaehr vierzig zentimeter hoch",
+      "etwa siebzig zentimeter gross",
+      "knapp eins komma zwei meter hoch",
+      "ungefaehr zwei komma fuenf meter gross",
+      "fast vier meter hoch",
+      "nur etwa zwanzig zentimeter gross",
+      "mehr als sechs meter lang"
+    ],
+    "life_alien_size_desc.ini": [
+      "Nach unserer Schaetzung ist es",
+      "Nach der optischen Distanzmessung ist das Wesen",
+      "Im Vergleich zur Landerampe ist es",
+      "Nach der Koerpervermessung ist es",
+      "Nach der Gesamtvermessung ist es",
+      "Laut Groessenscan ist es",
+      "Nach optischer Triangulation ist die Lebensform"
+    ],
+    "life_possibility.ini": [
+      "praktisch null",
+      "nur unter extremen Bedingungen nennenswert",
+      "maessig",
+      "auffaellig hoch",
+      "sehr wahrscheinlich",
+      "lokal stark unterschiedlich",
+      "mit den aktuellen Sensoren nicht eindeutig bestimmbar"
+    ],
+    "life_possibility_desc.ini": [
+      "Die aktuelle Lebenswahrscheinlichkeit ist",
+      "Die biologischen Messwerte ergeben; die Wahrscheinlichkeit ist",
+      "Unter den vorhandenen Bedingungen ist die Lebenswahrscheinlichkeit",
+      "Der Bioscan meldet; die Wahrscheinlichkeit ist",
+      "Die Aussicht auf biologische Aktivitaet ist",
+      "Nach dem aktuellen Scan ist die Chance auf Leben",
+      "Die Sensorik bewertet die Existenz von Leben; die Wahrscheinlichkeit ist"
+    ],
+    "mission_end_status.ini": [
+      "Der aktuelle Untersuchungsabschnitt ist abgeschlossen und alle primaeren Systeme melden Bereitschaft fuer den Weiterflug, der Abschlussstatus wird im Log vermerkt",
+      "Die unmittelbare Lage ist stabil genug um das System kontrolliert zu verlassen, der Abschlussstatus wird im Log vermerkt",
+      "Der Missionsstatus wurde auf abgeschlossen gesetzt und die Langstreckensensoren sind wieder auf Navigation ausgerichtet, der Abschlussstatus wird im Log vermerkt",
+      "Alle relevanten Messdaten wurden gesichert. Von unserer Seite besteht hier vorerst kein weiterer Handlungsbedarf, der Abschlussstatus wird im Log vermerkt",
+      "Die lokalen Ereignisse sind dokumentiert und das Schiff befindet sich wieder in einem ausreichend sicheren Zustand, der Abschlussstatus wird im Log vermerkt",
+      "Der automatische Missionscomputer hat diesen Systembesuch beendet und die Navigationskontrolle wieder freigegeben, der Abschlussstatus wird im Log vermerkt",
+      "Unsere Position ist stabil, die wichtigsten Daten sind gespeichert und der Weiterflug kann vorbereitet werden, der Abschlussstatus wird im Log vermerkt"
+    ],
+    "mission_jump_prompt.ini": [
+      "Sie koennen nun den naechsten Sektor Sprung berechnen, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Berechnen Sie bitte den naechsten Sektor Sprung. Ich bin gespannt ob das kommende System weniger anstrengend wird, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Der Weg fuer den Folgesprung ist frei. Neue Koordinaten koennen jetzt bestimmt werden, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Bitte waehlen Sie das naechste Sternensystem und starten Sie eine neue Sprungberechnung, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Der Sprungantrieb wartet auf neue Zielkoordinaten. Ich uebrigens auch, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Die aktuelle Episode ist damit beendet. Der naechste Sektor Sprung kann berechnet werden, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Navigation ist freigegeben. Von mir aus duerfen wir jetzt sehr gerne woanders hin, die Navigationsfreigabe bleibt davon unberuehrt"
+    ],
+    "nature_force_detect.ini": [
+      "Die geologischen Sensoren melden unvermittelt eine rapide wachsende Druckfront unterhalb des Landegebietes",
+      "Zahlreiche atmos phaerische Messwerte springen gleichzeitig in Bereiche die fuer einen ruhigen Aufenthalt ausgesprochen ungeeignet sind",
+      "Die Umgebung veraendert sich ohne biologischen Ausloeser. Anscheinend reicht der Planet selbst als Problem vollkommen aus",
+      "Die geologischen Sensoren melden ploetzlich eine rapide wachsende Druckfront unterhalb des Landegebietes, eine zweite Messung bestaetigt den Befund",
+      "Mehrere atmos phaerische Messwerte springen gleichzeitig in Bereiche die fuer einen ruhigen Aufenthalt ausgesprochen ungeeignet sind, eine zweite Messung bestaetigt den Befund",
+      "Die seismischen Sonden registrieren eine Wanderung der gesamten Gesteinsschicht unter unserem Standort, eine zweite Messung bestaetigt den Befund",
+      "Ein lokales Wettergebilde gewinnt innerhalb weniger Sekunden erheblich an Energie und bewegt sich direkt auf den Landeplatz zu, eine zweite Messung bestaetigt den Befund"
+    ],
+    "nature_force_escalation.ini": [
+      "Die erste Front erreicht das Schiff und laesst die Aussenhuelle merklich vibrieren",
+      "Zahlreiche Bodenanker verlieren gleichzeitig den Kontakt zum Untergrund",
+      "Die Sichtweite faellt auf wenige meter und externe Kameras liefern nur noch erheblich gestoerte Bilder",
+      "Eine weitere Druckwelle trifft den Landeplatz und ueberlastet kurzzeitig zahlreiche Aussensensoren",
+      "Die lokale Gravitation schwankt geringfuegig durch die massiven Bodenbewegungen. Das ist neu und ganz stabil nicht hilfreich",
+      "Die erste Front erreicht das Schiff und laesst die Aussenhuelle deutlich vibrieren, damit steigt der Handlungsdruck merklich",
+      "Mehrere Bodenanker verlieren gleichzeitig den Kontakt zum Untergrund, damit steigt der Handlungsdruck merklich"
+    ],
+    "nature_force_response.ini": [
+      "Ich verlagere Energie auf Triebwerke und Lageregelung und reduziere alle nicht notwendigen Oberflaechenfunktionen, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Bodenanker werden geloest und das Schiff fuer einen sofortigen Start vorbereitet, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir ziehen die externen Sensorarme ein bevor der Planet sie fuer uns demontiert, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Triebwerke laufen vor und halten das Schattel bereits einige zentimeter ueber dem instabilen Boden, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich markiere die Messdaten als ausreichend. Wissenschaftlicher Erkenntnisgewinn ist gut, zerdrueckte Landebeine eher weniger, der Rueckweg bleibt dabei jederzeit offen",
+      "Alle Aussenteams werden zurueckgerufen und die Luke verriegelt, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir brechen die Beobachtung ab und wechseln von Forschungsbetrieb auf Rueckstart, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "nature_force_retreat.ini": [
+      "Die Natur hat ihren Standpunkt ausreichend merklich gemacht. Wir verlassen den Landeplatz",
+      "Wir haben genug Daten und merklich genug Warnungen gesammelt. Startsequenz folgt",
+      "Die Natur hat ihren Standpunkt ausreichend deutlich gemacht. Wir verlassen den Landeplatz, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Ein weiterer Aufenthalt wuerde nur noch bessere Messdaten ueber unsere eigene Beschaedigung liefern, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Die Sicherheitsprognose ist inzwischen eindeutig. Rueckzug zum Orbit wird eingeleitet, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Der Planet ist faszinierend, aber er darf gerne ohne uns weiter explodieren, ohne den sicheren Rueckzug weiter zu verzoegern",
+      "Ich setze den Aufenthalt auf beendet bevor aus interessanter Geologie eine Bergungsmission wird, ohne den sicheren Rueckzug weiter zu verzoegern"
+    ],
+    "nature_force_scale.ini": [
+      "Die Energie des Vorgangs uebersteigt unsere ersten Messungen um zahlreiche Groessenordnungen",
+      "Zahlreiche unabhaengige Sensoren bestaetigen das sich die Situation weiter beschleunigt",
+      "Die Ausdehnung des Ereignisses liegt inzwischen weit ausserhalb unseres direkt erfassbaren Landegebietes, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+      "Scannerprojektionen zeigen das sich die Stoerung entlang einer planetaren Bruchzone fortsetzt, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+      "Das Phaenomen ist kein lokaler Zufall sondern Bestandteil eines wesentlich groesseren Wetter und Geologiesystems, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+      "Die Energie des Vorgangs uebersteigt unsere ersten Messungen um mehrere Groessenordnungen, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+      "Mehrere unabhaengige Sensoren bestaetigen das sich die Situation weiter beschleunigt, die Messwerte werden laufend mit dem vorherigen Scan verglichen"
+    ],
+    "nature_force_ship_effect.ini": [
+      "Zahlreiche Sensorabdeckungen wurden beschaedigt und die automatische Reparatur ist bereits aktiv",
+      "Unsere Landebeine melden ungleichmaessige Lasten und verlieren allmaehlich ihre sichere Position",
+      "Feiner mineralischer Staub dringt in zahlreiche aeussere Wartungsschichten ein",
+      "Die strukturelle Belastung bleibt noch innerhalb der Toleranz aber ich moechte diese Grenze heute nicht persoenlich kennenlernen, die betroffenen Systeme bleiben unter Beobachtung",
+      "Mehrere Sensorabdeckungen wurden beschaedigt und die automatische Reparatur ist bereits aktiv, die betroffenen Systeme bleiben unter Beobachtung",
+      "Die Steuerduesen muessen permanent gegen die Bewegung des Untergrundes arbeiten, die betroffenen Systeme bleiben unter Beobachtung",
+      "Unsere Landebeine melden ungleichmaessige Lasten und verlieren langsam ihre sichere Position, die betroffenen Systeme bleiben unter Beobachtung"
+    ],
+    "nature_force_type.ini": [
+      "Vor uns bildet sich eine zahlreiche kilometer breite Staubwand mit elektrisch geladenen Partikeln",
+      "Die Temperatur faellt innerhalb kurzer Zeit so erheblich ab das freiliegende Fluessigkeiten schlagartig kristallisieren",
+      "Ein naher Hang beginnt sich auf breiter Front zu bewegen und schiebt ausgedehnte Gesteinsmassen in Richtung Schiff",
+      "Vor uns bildet sich eine mehrere kilometer breite Staubwand mit elektrisch geladenen Partikeln, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+      "Aus mehreren Bodenspalten tritt ueberhitztes Gas aus und erzeugt eine Kette kleiner Eruptionen, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+      "Eine Serie starker Bodenwellen laeuft wie eine langsame Brandung durch das gesamte Tal, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+      "Die Temperatur faellt innerhalb kurzer Zeit so stark ab das freiliegende Fluessigkeiten schlagartig kristallisieren, die Messwerte werden laufend mit dem vorherigen Scan verglichen"
+    ],
+    "nature_planet_target_info.ini": [
+      "Im Orbit des Planeten werden keine Satelliten, Schiffe oder kuenstlichen Strukturen registriert",
+      "Technologische Aktivitaet ist nicht vorhanden. Was auch immer dort unten wartet hat anscheinend keine Bedienungsanleitung",
+      "Im Orbit des Planeten werden keine Satelliten, Schiffe oder kuenstlichen Strukturen erkannt, der Befund bleibt auch nach einer Kontrollmessung bestehen",
+      "Der Zielplanet zeigt keinerlei technologische Emissionen oder aktive Funksignale, der Befund bleibt auch nach einer Kontrollmessung bestehen",
+      "Keine kuenstlichen Objekte befinden sich in Scannerreichweite des Planeten, der Befund bleibt auch nach einer Kontrollmessung bestehen",
+      "Der Orbit ist frei von Raumverkehr und die Oberflaeche zeigt keine geometrischen Siedlungsstrukturen, der Befund bleibt auch nach einer Kontrollmessung bestehen",
+      "Es existieren keine Hinweise auf intelligente Bewohner oder technische Infrastruktur, der Befund bleibt auch nach einer Kontrollmessung bestehen"
+    ],
+    "planet_detour_sensor.ini": [
+      "Die Radaranlage meldet voruebergehend ein grosses Objekt oberhalb der Wolkendecke und verliert es sofort wieder",
+      "Zahlreiche Magnetometer registrieren denselben kurzen Impuls an voneinander entfernten Punkten",
+      "Ein letzter Sensordurchlauf zeigt fuer Sekunden eine bewegte Signatur obwohl im Gebiet nichts sichtbar ist, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Radaranlage meldet kurzzeitig ein grosses Objekt oberhalb der Wolkendecke und verliert es sofort wieder, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere Magnetometer registrieren denselben kurzen Impuls an voneinander entfernten Punkten, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der Bodenscanner zeichnet eine scheinbare Bewegung auf die sich mit keinem anderen Sensor bestaetigen laesst, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Eine Waermequelle erscheint fuer genau einen Messzyklus am Rand des kartierten Gebietes, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "planet_detour_sensor_result.ini": [
+      "Der Effekt laesst sich nicht reproduzieren und wird deshalb nur als ungeklaerte Messung gespeichert, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Wir halten den Abflugplan ein und markieren die Koordinaten fuer eine spaetere Kontrolle aus dem Orbit, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Sensoren werden neu kalibriert ohne dass die Signatur erneut erscheint, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der einzelne Messwert rechtfertigt keinen weiteren Aufenthalt in der bereits problematischen Umgebung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ich archiviere alle Rohdaten und lasse die Auswertung spaeter unter ruhigeren Bedingungen wiederholen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Das Ereignis bleibt unerklaert; fuer den sicheren Rueckstart ist es jedoch ohne unmittelbare Bedeutung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Wir verzichten auf eine Suche nach einer Quelle und setzen den Rueckzug wie geplant fort, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "planet_detour_subsurface.ini": [
+      "Kurz vor dem Start lokalisiert der Bodenscanner einen grossen Hohlraum direkt unter einer entfernten Gelaendeformation",
+      "Eine tiefe Radarmessung zeigt eine auffaellig regelmaessige Schicht weit unter der Oberflaeche",
+      "Unter dem Landegebiet erscheint eine Zone mit merklich geringerer Dichte als erwartet",
+      "Der Untergrundscanner markiert einen abgeschlossenen Hohlraum zahlreiche hundert Meter unter der Oberflaeche",
+      "Nahe des Rueckflugkorridors wird eine tiefe geologische Anomalie lokalisiert die zuvor im Oberflaechenrauschen verborgen war",
+      "Kurz vor dem Start entdeckt der Bodenscanner einen grossen Hohlraum direkt unter einer entfernten Gelaendeformation, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Eine tiefe Radarmessung zeigt eine ungewoehnlich regelmaessige Schicht weit unter der Oberflaeche, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "planet_detour_subsurface_result.ini": [
+      "Die Messung wird archiviert aber wegen der aktuellen Gefahr nicht durch eine Bohrung oder Expedition verfolgt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Wir markieren die Position und ueberlassen die Tiefenanalyse einer spaeteren Mission, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Fuer eine sichere Untersuchung fehlt uns nach dem bisherigen Zwischenfall die Zeit und der passende Abstand, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der Fund aendert nichts am Rueckzug; die Daten sind fuer eine spaetere geologische Mission ausreichend, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ich lasse nur eine passive Tiefenkarte erstellen und halte am Startplan fest, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Anomalie bleibt unangetastet und wird als separates Forschungsziel gespeichert, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Wir verzichten auf weitere Eingriffe in den Untergrund und setzen den Abflug fort, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "planet_detour_weather.ini": [
+      "Die Atmosphaere wird innerhalb kurzer Zeit elektrisch merklich aktiver",
+      "Ein breites Niederschlagsband zieht auf den Landeplatz zu und enthaelt erheblich korrosive Partikel",
+      "Zahlreiche Wetterzellen verbinden sich zu einer groesseren Front direkt auf unserem geplanten Abflugkorridor",
+      "Waehren der Rueckzugsvorbereitung bildet sich am Horizont eine neue starke Wetterfront, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Atmosphaere wird innerhalb kurzer Zeit elektrisch deutlich aktiver, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein schneller Druckabfall kuendigt eine heftige lokale Sturmzone an, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Wolkendecke verdichtet sich und die Windgeschwindigkeit steigt schneller als vorhergesagt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "planet_detour_weather_result.ini": [
+      "Der Abflug wird vorgezogen bevor die Front den Landeplatz komplett erreicht",
+      "Alle empfindlichen Aussensysteme werden eingefahren und die Triebwerke gehen unmittelbar auf Startleistung",
+      "Wir verschieben den Startvektor seitlich und verlassen die Wetterzone auf dem kuerzesten sicheren Weg, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der Abflug wird vorgezogen bevor die Front den Landeplatz vollstaendig erreicht, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Alle empfindlichen Aussensysteme werden eingefahren und die Triebwerke gehen sofort auf Startleistung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ich waehle einen steileren Aufstieg damit wir die gefaehrliche Atmosphaerenschicht schneller verlassen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die neue Wetterlage bestaetigt dass ein weiterer Aufenthalt keinen wissenschaftlichen Nutzen mehr bringt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "planet_name_part.ini": [
+      "Dravia",
+      "Solkara",
+      "Ventaris",
+      "Orbela",
+      "Tyrannis",
+      "Kelvoria",
+      "Zendara"
+    ],
+    "planet_surface_color.ini": [
+      "rost rot",
+      "bernsteinfarben",
+      "dunkel cyan",
+      "perlmutt weiss",
+      "stahlblau",
+      "grau violett",
+      "schwarz gruen schillernd"
+    ],
+    "planet_surface_landing_desc.ini": [
+      "Setze zur Landung an, die Sensoren bestaetigen diese Einordnung",
+      "Landephase wird eingeleitet, die Sensoren bestaetigen diese Einordnung",
+      "Landung wird vorbereitet, die Sensoren bestaetigen diese Einordnung",
+      "Landung erfolgt in Kuerze, die Sensoren bestaetigen diese Einordnung",
+      "Landevorbereitung laeuft, die Sensoren bestaetigen diese Einordnung",
+      "Sinkflug erfolgt positiv, die Sensoren bestaetigen diese Einordnung",
+      "Bereite die Landung vor, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "planet_surface_landing_desc2.ini": [
+      "Manoevriertriebwerke aktiviert, die Sensoren bestaetigen diese Einordnung",
+      "Bremstriebwerke zuenden, die Sensoren bestaetigen diese Einordnung",
+      "Schattel wird in Position gebracht, die Sensoren bestaetigen diese Einordnung",
+      "Schattel in Landekorridor, die Sensoren bestaetigen diese Einordnung",
+      "Horizontale Landeausrichtung korrigiert, die Sensoren bestaetigen diese Einordnung",
+      "Schalte in Atmos faehren gleitflug modus, die Sensoren bestaetigen diese Einordnung",
+      "Vor uns liegende tubulenzen werden umflogen, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "planet_surface_landing_desc3.ini": [
+      "Wir befinden uns stabil am vorgesehenen Landeort",
+      "Aufsetzvorgang erfolgreich abgeschlossen, die Sensoren bestaetigen diese Einordnung",
+      "Landung erfolgreich, die Sensoren bestaetigen diese Einordnung",
+      "Landung abgeschlossen, die Sensoren bestaetigen diese Einordnung",
+      "Wir haben nun Bodenkontakt, die Sensoren bestaetigen diese Einordnung",
+      "Trotz massiver probleme bei der landung haben wir erfolgreich aufgesetzt, die Sensoren bestaetigen diese Einordnung",
+      "Trotz unplanmaessiger vorkommen im anflug ist die landung positiv erfolgt, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "planet_surface_liquid.ini": [
+      "fluessiges Argon",
+      "fluessiger Schwefel",
+      "eine salzreiche Ammoniak Loesung",
+      "ein Methan Propan Gemisch",
+      "eine dunkelbraune organische Fluessigkeit",
+      "eine transparente Silikat Schmelze",
+      "eine unbekannte kryogene Fluessigkeit"
+    ],
+    "planet_surface_material.ini": [
+      "Vanadium Erz",
+      "Mangan Gestein",
+      "Chromit",
+      "Bor haltigem Glasgestein",
+      "poroesem Nickel Silikat",
+      "einer dunklen Kohlenstoff Keramik",
+      "einem unbekannten kristallinen Verbundstoff"
+    ],
+    "planet_surface_scan_anti.ini": [
+      "Atmos faehren Partikel stoeren voruebergehend die optischen Sensoren",
+      "obwohl die sicht durch die brems triebwerk aufwirbelungen eingeschraenkt ist, die Kontrollmessung liefert vergleichbare Werte",
+      "wobei es einschraenkungen in der scannerreichweite gibt, die Kontrollmessung liefert vergleichbare Werte",
+      "der oberflaechenscan ist aus unbekannten gruenden nur begrenzt moeglich, die Kontrollmessung liefert vergleichbare Werte",
+      "U V Filter wird zugeschaltet, die Kontrollmessung liefert vergleichbare Werte",
+      "Polfilter aktiviert, die Kontrollmessung liefert vergleichbare Werte",
+      "Ter mo kamera wurde hinzugeschaltet, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "planet_surface_scan_anti_found.ini": [
+      "Unnatuerliche Strukturen auf der Oberflaeche registriert",
+      "Biologische Signatur im Nahbereich registriert",
+      "Unterirdische Hohlstruktur lokalisiert",
+      "Zahlreiche bewegliche Objekte wurden markiert",
+      "Untypische Auffaelligkeit gefunden, die Kontrollmessung liefert vergleichbare Werte",
+      "Bewegung in Scannerreichweite festgestellt, die Kontrollmessung liefert vergleichbare Werte",
+      "Unnatuerliche Strukturen auf der Oberflaeche erkannt, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "planet_surface_scan_env.ini": [
+      "Untersuche Umgebung, die Kontrollmessung liefert vergleichbare Werte",
+      "Scanne den Bereich, die Kontrollmessung liefert vergleichbare Werte",
+      "Umgebungsscan laeuft, die Kontrollmessung liefert vergleichbare Werte",
+      "Untersuche Landegebiet, die Kontrollmessung liefert vergleichbare Werte",
+      "Erkunde naehere Umgebung, die Kontrollmessung liefert vergleichbare Werte",
+      "Landegebiet wird abgetastet, die Kontrollmessung liefert vergleichbare Werte",
+      "Rasterscan der Landmasse wird durchgefuehrt, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "planet_surface_scan_liquid.ini": [
+      "Als fluessige Phase wurde",
+      "In tieferen Mulden wurde",
+      "Beim Oberflaechenscan wurde",
+      "In fliessenden Bereichen wurde",
+      "Nahe der Landezone wurde",
+      "In geschuetzten Senken wurde",
+      "Bei der chemischen Fernanalyse wurde"
+    ],
+    "planet_surface_scan_liquid2.ini": [
+      "eindeutig nachgewiesen",
+      "wiederholt registriert",
+      "in mehreren Senken lokalisiert",
+      "als stabile Fluessigphase bestaetigt",
+      "in kleinen Mengen gefunden",
+      "grossflaechig erkannt",
+      "nur stellenweise nachgewiesen"
+    ],
+    "planet_surface_scan_material.ini": [
+      "Die felsigen Bereiche bestehen hauptsaechlich aus",
+      "Das dominierende feste Material besteht aus",
+      "Die mineralische Matrix besteht ueberwiegend aus",
+      "Die kartierte Bodenregion besteht vor allem aus",
+      "Die geologische Deckschicht besteht primaer aus",
+      "Die feste Zusammensetzung besteht in erster Linie aus",
+      "Der Hauptanteil der festen Oberflaeche besteht aus"
+    ],
+    "planet_surface_structure.ini": [
+      "von tiefen Risssystemen durchzogen",
+      "mit breiten glatten Ebenen bedeckt",
+      "von langen mineralischen Ruecken unterbrochen",
+      "in grosse polygonale Platten zerlegt",
+      "von zahlreichen kleinen Einschlagkratern gepraegt",
+      "mit wellenartigen Gesteinsformationen ueberzogen",
+      "durch breite ausgetrocknete Flussbetten gegliedert"
+    ],
+    "planet_surface_structure2.ini": [
+      "stark zerklueftet",
+      "ungewoehnlich glatt",
+      "von feinem Staub bedeckt",
+      "teilweise glasartig verschmolzen",
+      "grossflaechig poroes",
+      "in Schichten aufgebrochen",
+      "von dunklen Ablagerungen ueberzogen"
+    ],
+    "planet_surface_structure_adder.ini": [
+      "gleichzeitig",
+      "in weiteren Zonen",
+      "lokal auch",
+      "dazwischen",
+      "vereinzelt auch",
+      "auf grossen Flaechen auch",
+      "in Randbereichen auch"
+    ],
+    "planet_surface_structure_desc.ini": [
+      "Die sichtbare Oberflaeche wirkt",
+      "Das Landegebiet erscheint",
+      "Die geologische Ebene ist",
+      "Der Untergrund zeigt sich",
+      "Nach dem Orbitalbild wirkt der Planet",
+      "Die kartierte Landschaft ist",
+      "Die Bodenstruktur erscheint"
+    ],
+    "planet_surface_temperature_adder.ini": [
+      "unter guenstiger Einstrahlung bis plus",
+      "im Extremfall bis plus",
+      "an dunklen Gesteinsflaechen bis plus",
+      "in geschuetzten Senken bis plus",
+      "waehrend kurzer Spitzen bis plus",
+      "bei maximaler Einstrahlung bis plus",
+      "in den waermsten Messpunkten bis plus"
+    ],
+    "planet_surface_temperature_adder_end.ini": [
+      "Grad Celsius im Extrembereich",
+      "Grad Celsius an der Oberflaeche",
+      "Grad Celsius je nach Region",
+      "Grad Celsius zwischen Schatten und Lichtseite",
+      "Grad Celsius in den gemessenen Zonen",
+      "Grad Celsius als lokaler Spitzenwert",
+      "Grad Celsius laut aktuellem Sensorprofil"
+    ],
+    "planet_surface_temperature_desc.ini": [
+      "Die thermische Spanne reicht von minus",
+      "Im aktuellen Scan liegen die Temperaturen zwischen minus",
+      "Die gemessenen Klimawerte reichen von minus",
+      "Zwischen Tag und Nacht messen wir Werte von minus",
+      "Die Oberflaechentemperatur bewegt sich zwischen minus",
+      "Der thermische Mittelbereich beginnt bei minus",
+      "Je nach Region registrieren wir Temperaturen von minus"
+    ],
+    "planet_surface_touchdown_scan.ini": [
+      "Suche geeigneten Landeort, die Kontrollmessung liefert vergleichbare Werte",
+      "Landeposition bestimmt, die Kontrollmessung liefert vergleichbare Werte",
+      "Optimaler Landeort wurde automatisch selektiert, die Kontrollmessung liefert vergleichbare Werte",
+      "Landeort nach eingehenden Oberflaechenscans festgelegt, die Kontrollmessung liefert vergleichbare Werte",
+      "Suche Landeort. Bitte Warten. Geeignete Landeposition ermittelt, die Kontrollmessung liefert vergleichbare Werte",
+      "Geeignet erscheinende Ebene zum Landen gefunden, die Kontrollmessung liefert vergleichbare Werte",
+      "Analysiere moegliche Landezonen. Geeigneter Bereich markiert, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "planet_target_desc.ini": [
+      "als naechstes Ziel wurde der Planet ausgewaehlt",
+      "die automatische Navigation markiert den Planeten",
+      "unser ausgewaehltes Oberflaechenziel ist der Planet",
+      "der naechste planetare Untersuchungspunkt heisst",
+      "fuer den Anflug wurde folgender Planet selektiert",
+      "die Sensorprioritaet liegt nun auf dem Planeten",
+      "als primaeres Landeziel ist der Planet eingetragen"
+    ],
+    "planet_target_info.ini": [
+      "Es finden sich zahlreiche Sonnenkollektor Orbitalstationen um den Planeten",
+      "Im aktu ellen system wird offenbar reger handel betrieben es wurden zahlreiche handels schiffe unterschiedlicher unbekannter spezies erkannt",
+      "Brennende Schlacht schiffe unterschiedlicher spezies wurden im radius registriert. warscheinlich ist das system im krieg. wir versuchen diese im tarnmodus zu umgehen",
+      "Zahlreiche unbemannte Forschungssonden umkreisen den Planeten auf unregelmaessigen Bahnen",
+      "Nahe des Planeten wurde ein riesiges Frachtschiff ohne erkennbare Besatzung lokalisiert",
+      "Zahlreiche kleine Abfangjaeger verlassen eine verborgene Orbitalstation. Tarnmodus bleibt aktiv",
+      "Ein erheblich verschluesseltes Notsignal wird von der Rueckseite des Planeten gesendet"
+    ],
+    "post_anomaly_detect.ini": [
+      "Kurz vor der Sprungberechnung misst der Gravitationssensor eine kompakte lokale Abweichung ohne sichtbare Quelle",
+      "Zahlreiche Sensoren melden gleichzeitig eine Abweichung die bereits beim naechsten Messzyklus verschwunden ist",
+      "Im freien Raum zeigt die Navigationsloesung fuer wenige Sekunden einen unmoeglichen zweiten Positionswert, eine zweite Messung bestaetigt den Befund",
+      "Kurz vor der Sprungberechnung misst der Gravitationssensor eine kleine lokale Abweichung ohne sichtbare Quelle, eine zweite Messung bestaetigt den Befund",
+      "Die Sternreferenzen verschieben sich fuer einen Moment gegeneinander obwohl das Schiff stabil liegt, eine zweite Messung bestaetigt den Befund",
+      "Ein extrem kurzer Zeitversatz erscheint gleichzeitig in mehreren voneinander getrennten Borduhren, eine zweite Messung bestaetigt den Befund",
+      "Die Heckkameras zeigen einen Lichtimpuls den kein anderer Sensor eindeutig bestaetigen kann, eine zweite Messung bestaetigt den Befund"
+    ],
+    "post_anomaly_response.ini": [
+      "Die Messung laesst sich nicht reproduzieren und wir behalten deshalb den sicheren freien Kurs bei, der Rueckweg bleibt dabei jederzeit offen",
+      "Nach mehreren Kontrollzyklen bleiben alle Werte stabil und die Anomalie wird nur im Logbuch vermerkt, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich lasse die Sprungberechnung erst nach einer vollstaendigen Referenzmessung wieder freigeben, der Rueckweg bleibt dabei jederzeit offen",
+      "Das Schiff entfernt sich einige tausend Kilometer von der Position ohne dass der Effekt erneut auftritt, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Navigationsplattform wird neu kalibriert und bestaetigt danach eine normale freie Raumlage, der Rueckweg bleibt dabei jederzeit offen",
+      "Der kurze Effekt bleibt ungeklaert aber beeinflusst keine der fuer den Sprung notwendigen Systeme, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir markieren die Koordinaten und setzen den Missionsabschluss fort nachdem alle Sensoren wieder normale Werte zeigen, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "post_pursuit_detect.ini": [
+      "Beim Rueckzug erscheint hinter uns eine kompakte unbekannte Signatur die unseren Kurs fuer einige Minuten nachbildet",
+      "Eine unbekannte Signatur bleibt ausserhalb visueller Reichweite aber verkuerzt allmaehlich den Abstand",
+      "Beim Rueckzug erscheint hinter uns eine kleine unbekannte Signatur die unseren Kurs fuer einige Minuten nachbildet, eine zweite Messung bestaetigt den Befund",
+      "Ein entferntes Objekt veraendert seine Bahn kurz nachdem wir auf freien Kurs gegangen sind, eine zweite Messung bestaetigt den Befund",
+      "Die Heckscanner melden einen schwachen Kontakt der wiederholt denselben Kursvektor wie das Schattel waehlt, eine zweite Messung bestaetigt den Befund",
+      "Eine unbekannte Signatur bleibt ausserhalb visueller Reichweite aber verkuerzt langsam den Abstand, eine zweite Messung bestaetigt den Befund",
+      "Kurz vor der Sprungvorbereitung taucht ein kleiner schneller Kontakt in unserem Rueckraum auf, eine zweite Messung bestaetigt den Befund"
+    ],
+    "post_pursuit_response.ini": [
+      "Wir fuehren zwei harmlose Kurswechsel durch; die Signatur bricht daraufhin ab und verschwindet aus der Ortung, der Rueckweg bleibt dabei jederzeit offen",
+      "Das Schattel beschleunigt auf einen freien Vektor bis der Kontakt den Abstand nicht mehr verkuerzen kann, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich halte die Sprungposition bei und lasse nur passive Sensoren auf den unbekannten Kontakt gerichtet, der Rueckweg bleibt dabei jederzeit offen",
+      "Nach einem breiten Ausweichbogen verliert die Signatur unsere Bahn und bleibt zurueck, der Rueckweg bleibt dabei jederzeit offen",
+      "Der Kontakt wird als ungeklaert dokumentiert und unterschreitet zu keinem Zeitpunkt den Sicherheitsabstand, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir veraendern die Ebene unserer Flugbahn; das Objekt folgt nicht und verschwindet hinter dem lokalen Sensorhorizont, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Signatur loest sich nach kurzer Beobachtung auf ohne eine weitere Reaktion zu zeigen, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "post_signal_detect.ini": [
+      "Gerade als wir den eigentlichen Einsatz abschliessen erreicht uns noch ein verzoegertes schwaches Signal vom zurueckliegenden Gebiet, eine zweite Messung bestaetigt den Befund",
+      "Kurz vor dem Sprungfenster erscheint eine spaete Antwort auf eine unserer frueheren passiven Anfragen, eine zweite Messung bestaetigt den Befund",
+      "Beim Verlassen des Einsatzbereichs registriert die Funkanlage ein einzelnes neues Datenpaket, eine zweite Messung bestaetigt den Befund",
+      "Ein zuvor stiller Sender meldet sich erst nachdem wir bereits deutlichen Abstand gewonnen haben, eine zweite Messung bestaetigt den Befund",
+      "Waehren der Abschlussdiagnose trifft eine kurze schmalbandige Nachricht aus Richtung des Einsatzortes ein, eine zweite Messung bestaetigt den Befund",
+      "Ein Relais im System wiederholt unerwartet eine Kennung die zu unserem gerade beendeten Einsatz passt, eine zweite Messung bestaetigt den Befund",
+      "Noch bevor wir die Sprungberechnung starten kann ein letzter schwacher Funkimpuls dem alten Ziel zugeordnet werden, eine zweite Messung bestaetigt den Befund"
+    ],
+    "post_signal_response.ini": [
+      "Wir speichern die Nachricht fuer spaetere Auswertung und setzen den freien Kurs fort ohne erneut umzukehren, der Rueckweg bleibt dabei jederzeit offen",
+      "Der Inhalt wird dokumentiert aber die sichere Sprungposition wird nicht verlassen, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich bestaetige nur den Empfang und unternehme in diesem System keine weitere Annaeherung, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Daten werden mit dem Missionslog verknuepft und fuer den naechsten geeigneten Untersuchungszeitpunkt markiert, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir antworten nicht aktiv und behalten den gewonnenen Sicherheitsabstand bei, der Rueckweg bleibt dabei jederzeit offen",
+      "Das Signal wird archiviert; fuer eine erneute Untersuchung reicht die aktuelle Informationslage nicht aus, der Rueckweg bleibt dabei jederzeit offen",
+      "Die spaete Meldung aendert nichts an unserer Entscheidung das System von einer sicheren Position aus zu verlassen, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "ship_fault_departure.ini": [
+      "Wir verlassen die Diagnoseposition und gehen auf einen freien Kurs fern von allen groesseren Himmelskoerpern, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Das Schattel beschleunigt vorsichtig in einen ungestoerten Bereich des Systems, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Nach Abschluss der Reparatur wird eine sichere freie Position fuer den naechsten Sprung angeflogen, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Die normale Navigation uebernimmt wieder und fuehrt das Schiff aus dem Nahbereich lokaler Gefahren, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Wir stellen den regulaeren Flugzustand her und halten Abstand zu allen bekannten Objekten, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Das Schiff befindet sich wieder im freien Raum und alle Reparaturdaten werden im Logbuch gesichert, anschliessend liegt wieder freier Raum vor dem Schiff",
+      "Die Wartung ist beendet und das Schattel nimmt eine stabile sprunggeeignete Position ein, anschliessend liegt wieder freier Raum vor dem Schiff"
+    ],
+    "ship_fault_detect.ini": [
+      "Zahlreiche Sensordaten deuten auf einen internen Fehler hin der nicht ignoriert werden sollte",
+      "Noch waehrend der ersten Systemanalyse meldet die Borddiagnose einen unerwarteten technischen Fehler, eine zweite Messung bestaetigt den Befund",
+      "Kurz nach dem Austritt aus dem Hyperraum faellt ein wichtiger Schiffskreis aus dem normalen Toleranzbereich, eine zweite Messung bestaetigt den Befund",
+      "Bevor wir ein Ziel waehlen koennen erscheint eine dringende Wartungswarnung auf mehreren internen Systemen, eine zweite Messung bestaetigt den Befund",
+      "Die automatische Diagnose meldet eine Stoerung die mit dem letzten Sprung zusammenhaengen koennte, eine zweite Messung bestaetigt den Befund",
+      "Ein technischer Alarm unterbricht die Systemkartierung und zwingt uns die eigene Lage zuerst zu stabilisieren, eine zweite Messung bestaetigt den Befund",
+      "Mehrere Sensordaten deuten auf einen internen Fehler hin der nicht ignoriert werden sollte, eine zweite Messung bestaetigt den Befund"
+    ],
+    "ship_fault_effect.ini": [
+      "Dadurch muessen wir Geschwindigkeit und Sensorleistung voruebergehend merklich reduzieren",
+      "Die Stoerung beeinflusst zahlreiche Nebensysteme und macht eine sofortige Diagnose notwendig",
+      "Zahlreiche automatische Funktionen werden deaktiviert damit der Fehler nicht auf andere Systeme uebergreift",
+      "Dadurch muessen wir Geschwindigkeit und Sensorleistung voruebergehend deutlich reduzieren, die betroffenen Systeme bleiben unter Beobachtung",
+      "Die Stoerung beeinflusst mehrere Nebensysteme und macht eine sofortige Diagnose notwendig, die betroffenen Systeme bleiben unter Beobachtung",
+      "Bis zur Reparatur bleibt nur ein eingeschraenkter aber kontrollierbarer Betriebsmodus, die betroffenen Systeme bleiben unter Beobachtung",
+      "Der Fehler ist nicht unmittelbar katastrophal kann aber bei einem weiteren Sprung problematisch werden, die betroffenen Systeme bleiben unter Beobachtung"
+    ],
+    "ship_fault_external.ini": [
+      "Gleichzeitig trifft eine auffaellig starke Teilchenfront aus dem Sternwind auf das Schiff",
+      "Die lokale Magnetfeldstruktur veraendert sich und verfremdet zahlreiche Diagnosemessungen",
+      "Gleichzeitig trifft eine ungewoehnlich starke Teilchenfront aus dem Sternwind auf das Schiff, alle kritischen Werte bleiben unter Beobachtung",
+      "Waehren der Reparatur durchquert das Schattel eine unerwartete Zone mit starkem magnetischem Rauschen, alle kritischen Werte bleiben unter Beobachtung",
+      "Ein naher Sonnenausbruch erhoeht kurzfristig die Strahlungsbelastung der bereits geschwaechten Systeme, alle kritischen Werte bleiben unter Beobachtung",
+      "Feine geladene Staubteilchen verursachen zusaetzliche Stoerimpulse an der Aussenhuelle, alle kritischen Werte bleiben unter Beobachtung",
+      "Die lokale Magnetfeldstruktur veraendert sich und verfremdet mehrere Diagnosemessungen, alle kritischen Werte bleiben unter Beobachtung"
+    ],
+    "ship_fault_external_response.ini": [
+      "Wir drehen die gepanzerte Seite des Schiffs in die Stoerung und setzen die Reparatur im Schutzmodus fort, der Rueckweg bleibt dabei jederzeit offen",
+      "Die empfindlichen Sensoren werden eingefahren bis die externe Belastung wieder abnimmt, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich verlege das Schiff auf einen ruhigeren Kurs und trenne externe Stoerungen von der internen Diagnose, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Bordelektronik wechselt voruebergehend auf strahlungsfesten Minimalbetrieb, der Rueckweg bleibt dabei jederzeit offen",
+      "Nach wenigen Minuten sinken die externen Messwerte wieder und die Reparatur kann normal weiterlaufen, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Stoerquelle wird umflogen damit sie die bereits geschwaechten Systeme nicht weiter belastet, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir warten auf eine ruhigere Phase und fuehren erst dann den abschliessenden Funktionstest durch, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "ship_fault_navigation.ini": [
+      "Drei Lagekreisel liefern voneinander abweichende Werte und verursachen kompakte Kursfehler",
+      "Die Sternsensoren erkennen das neue System korrekt aber die interne Lageberechnung driftet allmaehlich",
+      "Die Navigationsplattform verliert wiederholt ihre genaue Sternreferenz, alle kritischen Werte bleiben unter Beobachtung",
+      "Drei Lagekreisel liefern voneinander abweichende Werte und verursachen kleine Kursfehler, alle kritischen Werte bleiben unter Beobachtung",
+      "Der Hauptnavigator springt zwischen zwei unvereinbaren Positionsloesungen hin und her, alle kritischen Werte bleiben unter Beobachtung",
+      "Die Sternsensoren erkennen das neue System korrekt aber die interne Lageberechnung driftet langsam, alle kritischen Werte bleiben unter Beobachtung",
+      "Ein Teil der Navigationsdaten ist nach dem Sprung mit falschen Zeitmarken versehen, alle kritischen Werte bleiben unter Beobachtung"
+    ],
+    "ship_fault_power.ini": [
+      "Zahlreiche Kondensatorbaenke verlieren Ladung deutlich schneller als vorgesehen",
+      "Zwischen zwei Bordnetzen entsteht eine periodische Spannungsschwankung die zahlreiche Computer neu starten laesst",
+      "Die Bordenergie schwankt zwischen mehreren Verteilern obwohl der Reaktor stabil arbeitet, alle kritischen Werte bleiben unter Beobachtung",
+      "Ein Hauptenergiebus trennt sich wiederholt automatisch vom restlichen Netz, alle kritischen Werte bleiben unter Beobachtung",
+      "Mehrere Kondensatorbaenke verlieren Ladung deutlich schneller als vorgesehen, alle kritischen Werte bleiben unter Beobachtung",
+      "Die Notstromregelung aktiviert sich ohne sichtbaren Grund und nimmt Teile des Bordnetzes vom Hauptkreis, alle kritischen Werte bleiben unter Beobachtung",
+      "Ein Stromverteiler zeigt starke Lastspitzen in eigentlich abgeschalteten Sektionen, alle kritischen Werte bleiben unter Beobachtung"
+    ],
+    "ship_fault_propulsion.ini": [
+      "Die Schubvektorsteuerung eines Haupttriebwerks reagiert verzoegert auf kompakte Korrekturen",
+      "Zahlreiche Treibstoffventile melden widerspruechliche Druckwerte",
+      "Der Unterlichtantrieb erreicht nur einen Teil der vorgesehenen Schubleistung, alle kritischen Werte bleiben unter Beobachtung",
+      "Eine Triebwerkssektion zeigt unregelmaessige Temperaturspitzen und wird vorsorglich abgeschaltet, alle kritischen Werte bleiben unter Beobachtung",
+      "Die Schubvektorsteuerung eines Haupttriebwerks reagiert verzoegert auf kleine Korrekturen, alle kritischen Werte bleiben unter Beobachtung",
+      "Mehrere Treibstoffventile melden widerspruechliche Druckwerte, alle kritischen Werte bleiben unter Beobachtung",
+      "Der rechte Manuevertriebwerksblock faellt nach kurzen Zuendungen immer wieder in den Sicherheitsmodus, alle kritischen Werte bleiben unter Beobachtung"
+    ],
+    "ship_fault_resolution.ini": [
+      "Die betroffenen Systeme arbeiten wieder stabil und alle fuer einen Sektorsprung notwendigen Reserven sind verfuegbar, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Die Reparatur ist abgeschlossen; nur ein nicht kritischer Wartungshinweis bleibt fuer den naechsten Hafen gespeichert, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Alle wichtigen Navigations-, Energie- und Antriebswerte liegen wieder innerhalb ihrer Toleranzen, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Der Bordcomputer gibt das Schiff nach mehreren erfolgreichen Selbsttests wieder fuer den normalen Betrieb frei, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Die Stoerung wurde eingegrenzt und durch redundante Systeme dauerhaft umgangen, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Nach einem letzten Belastungstest sind keine weiteren Fehler in den kritischen Kreisen messbar, danach sind die kritischen Systeme wieder unter Kontrolle",
+      "Das Schattel ist wieder voll manovrierfaehig und die Sprungsysteme melden Bereitschaft, danach sind die kritischen Systeme wieder unter Kontrolle"
+    ],
+    "ship_fault_response.ini": [
+      "Zahlreiche Wartungsdrohnen beginnen im abgeschalteten Bereich mit einer kontaktlosen Inspektion",
+      "Ich lasse die betroffenen Systeme isolieren und auf redundante Reservekreise umschalten, der Rueckweg bleibt dabei jederzeit offen",
+      "Die automatische Reparaturdiagnose vergleicht alle Werte mit den Messungen vor dem letzten Sprung, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir reduzieren die Bordlast und fahren nur die fuer Navigation und Sicherheit notwendigen Systeme weiter, der Rueckweg bleibt dabei jederzeit offen",
+      "Mehrere Wartungsdrohnen beginnen im abgeschalteten Bereich mit einer kontaktlosen Inspektion, der Rueckweg bleibt dabei jederzeit offen",
+      "Die fehlerhafte Baugruppe wird aus dem Hauptnetz getrennt und durch eine Reserveeinheit ueberbrueckt, der Rueckweg bleibt dabei jederzeit offen",
+      "Der Bordcomputer erstellt eine sichere Minimalkonfiguration und testet danach jedes betroffene System einzeln, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "ship_fault_secondary.ini": [
+      "Ein zweiter Sensorfehler erscheint voruebergehend und erschwert die eindeutige Ursachenanalyse",
+      "Voruebergehend faellt die interne Kommunikation zu mehreren Wartungsmodulen aus",
+      "Waehren der Reparatur taucht zusaetzlich eine schwache externe Stoerung in denselben Messkanaelen auf, alle kritischen Werte bleiben unter Beobachtung",
+      "Ein zweiter Sensorfehler erscheint kurzzeitig und erschwert die eindeutige Ursachenanalyse, alle kritischen Werte bleiben unter Beobachtung",
+      "Die Reparatur loest eine automatische Sicherheitsabschaltung in einem benachbarten System aus, alle kritischen Werte bleiben unter Beobachtung",
+      "Ein veralteter Diagnoseeintrag widerspricht den aktuellen Messwerten und muss manuell verworfen werden, alle kritischen Werte bleiben unter Beobachtung",
+      "Kurzzeitig faellt die interne Kommunikation zu mehreren Wartungsmodulen aus, alle kritischen Werte bleiben unter Beobachtung"
+    ],
+    "ship_fault_secondary_response.ini": [
+      "Der zweite Effekt wird getrennt behandelt und erweist sich als Folge der ersten Stoerung, der Rueckweg bleibt dabei jederzeit offen",
+      "Nach einem vollstaendigen Neustart der Diagnosebusse verschwinden die widerspruechlichen Messwerte, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Reserveversorgung bleibt stabil und die ausgefallene Telemetrie wird ueber einen anderen Bus umgeleitet, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir warten einen kompletten Systemzyklus ab bevor weitere Funktionen wieder zugeschaltet werden, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Wartungsdrohnen bestaetigen dass keine zusaetzlichen mechanischen Schaeden entstanden sind, der Rueckweg bleibt dabei jederzeit offen",
+      "Der Bordcomputer isoliert die fehlerhafte Rueckmeldung und setzt die Reparatur mit plausiblen Messwerten fort, der Rueckweg bleibt dabei jederzeit offen",
+      "Die zusaetzliche Warnung wird als Sekundaerfehler markiert und verliert nach der Stabilisierung ihre Wirkung, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "ship_liftoff_desc.ini": [
+      "Leite Noot start ein. Buhss ter zuenden planmaessig, die Sensoren bestaetigen diese Einordnung",
+      "Das Schattel startet nun wie vorgesehen, die Sensoren bestaetigen diese Einordnung",
+      "Wir heben nun sicherheitshalber ab, die Sensoren bestaetigen diese Einordnung",
+      "Der Schattelstart wurde unplanmaessig vorgezogen, die Sensoren bestaetigen diese Einordnung",
+      "Der Startvorgang laeuft plan maessig, die Sensoren bestaetigen diese Einordnung",
+      "Ein Noot start wird durchgefuehrt, die Sensoren bestaetigen diese Einordnung",
+      "Der Flucht start wurde direkt aktiviert, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "ship_liftoff_doku.ini": [
+      "Dokumentiere Ereignisse, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Atmospheren Analysen werden durchgefuehrt, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Warnboje wird ausgesetzt, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Fotografiere Planetenoberflaeche zur Dokumentation, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Kartiere Oberflaeche, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Daten wurden im Logbuch gespeichert, die Rohdaten werden zusammen mit dem Missionslog archiviert",
+      "Sichere alle Sensoraufzeichnungen, die Rohdaten werden zusammen mit dem Missionslog archiviert"
+    ],
+    "ship_liftoff_jumpready.ini": [
+      "Bereite Sprungantrieb vor, alle kritischen Werte bleiben unter Beobachtung",
+      "Sprung zum naechsten System wird vorbereitet, alle kritischen Werte bleiben unter Beobachtung",
+      "Sprungantrieb wird aufgeladen, alle kritischen Werte bleiben unter Beobachtung",
+      "Warp Sprung wird vorbereitet, alle kritischen Werte bleiben unter Beobachtung",
+      "Quanten sprung Antrieb ist bereit, alle kritischen Werte bleiben unter Beobachtung",
+      "Initialisiere den naechsten Sprungvektor, alle kritischen Werte bleiben unter Beobachtung",
+      "Der Falt Raum Antrieb wird fuer den Weiterflug vorbereitet, alle kritischen Werte bleiben unter Beobachtung"
+    ],
+    "ship_liftoff_orbiting.ini": [
+      "Wir erreichen nun eine hohe Umlaufbahn, alle kritischen Werte bleiben unter Beobachtung",
+      "Wir haben einen stabilen Orbit erreicht, alle kritischen Werte bleiben unter Beobachtung",
+      "Wir befinden uns nun in sicherer Distanz, alle kritischen Werte bleiben unter Beobachtung",
+      "Wir haben den Orbit erreicht, alle kritischen Werte bleiben unter Beobachtung",
+      "Wir haben nun eine sichere Umlaufbahn erreicht, alle kritischen Werte bleiben unter Beobachtung",
+      "Wir haben in eine Umlaufbahn eingeschwaenkt, alle kritischen Werte bleiben unter Beobachtung",
+      "Schwenke in Umlaufbahn um den Planeten ein, alle kritischen Werte bleiben unter Beobachtung"
+    ],
+    "space_debris_composition.ini": [
+      "Zwischen den Truemmern befinden sich versiegelte Container, Reaktorteile und ausgedehnte Mengen zerbrochener Panzerung",
+      "Zahlreiche Brocken tragen noch schwache Energiepotentiale obwohl ihre Herkunft nicht bestimmt werden kann",
+      "Zahlreiche Objekte zeigen identische Schnittkanten als waeren sie nicht durch Kollision sondern gezielt zerlegt worden",
+      "Ein Teil der Fragmente besteht aus unbekannten Verbundstoffen und zeigt deutliche Schmelzspuren, die Spektralanalyse bestaetigt diese Zusammensetzung",
+      "Zwischen den Truemmern befinden sich versiegelte Container, Reaktorteile und grosse Mengen zerbrochener Panzerung, die Spektralanalyse bestaetigt diese Zusammensetzung",
+      "Mehrere Brocken tragen noch schwache Energiepotentiale obwohl ihre Herkunft nicht bestimmt werden kann, die Spektralanalyse bestaetigt diese Zusammensetzung",
+      "Die Materialanalyse findet mindestens vier unterschiedliche technische Legierungen im selben Feld, die Spektralanalyse bestaetigt diese Zusammensetzung"
+    ],
+    "space_debris_escalation.ini": [
+      "Zahlreiche Fragmente treffen die aeusseren Schutzfelder und erzeugen kurze Belastungsspitzen",
+      "Die Truemmerdichte vor dem Schiff steigt schneller als die automatische Kurskorrektur sie aufloesen kann, damit steigt der Handlungsdruck merklich",
+      "Mehrere Fragmente treffen die aeusseren Schutzfelder und erzeugen kurze Belastungsspitzen, damit steigt der Handlungsdruck merklich",
+      "Der freie Raum zwischen den Wrackteilen schrumpft durch die laufende Kettenreaktion erheblich, damit steigt der Handlungsdruck merklich",
+      "Eine rotierende Schiffsektion blockiert den direkten Rueckweg, damit steigt der Handlungsdruck merklich",
+      "Das Magnetfeld des aktiven Reaktorkerns zieht kleinere Metallteile in neue Bahnen, damit steigt der Handlungsdruck merklich",
+      "Die Sensoren verlieren in der wachsenden Wolke aus Staub und Metall zunehmend an Reichweite, damit steigt der Handlungsdruck merklich"
+    ],
+    "space_debris_incident.ini": [
+      "Ein grosser Panzerungsrest veraendert nach einem Zusammenstoss unvermittelt seinen Kurs in unsere Richtung",
+      "Zahlreiche kleine Truemmer geraten gleichzeitig in den geplanten Flugkorridor",
+      "Die Positionsdaten mehrerer Fragmente springen gleichzeitig. Anscheinend hat eine Gravitationsstoerung das Feld verschoben",
+      "Der Navigationscomputer meldet in bemerkenswert sachlichem Ton das unser sicherer Korridor gerade aufgehoert hat stabil zu sein",
+      "Ein grosser Panzerungsrest veraendert nach einem Zusammenstoss ploetzlich seinen Kurs in unsere Richtung, der Zwischenfall bleibt jedoch kontrollierbar",
+      "Mehrere kleine Truemmer geraten gleichzeitig in den geplanten Flugkorridor, der Zwischenfall bleibt jedoch kontrollierbar",
+      "Der alte Reaktorkern beginnt unerwartet Energie aufzubauen, der Zwischenfall bleibt jedoch kontrollierbar"
+    ],
+    "space_debris_origin.ini": [
+      "Die Sensoren zeigen ein altes Kollisionsfeld mit tausenden unterschiedlich ausgedehnten Fragmenten",
+      "Zahlreiche Generationen von Wrackteilen scheinen sich hier mit einem natuerlichen Asteroidenfeld vermischt zu haben",
+      "Die Signatur entpuppt sich als riesiges Truemmerfeld aus kuenstlichen und natuerlichen Fragmenten, die Peilung bleibt dabei stabil",
+      "Vor uns liegt eine kilometerweite Wolke aus zerstoerten Schiffsteilen, Gestein und gefrorenen Gasen, die Peilung bleibt dabei stabil",
+      "Die Sensoren zeigen ein altes Kollisionsfeld mit tausenden unterschiedlich grossen Fragmenten, die Peilung bleibt dabei stabil",
+      "Ein dichter Ring aus Metallteilen und zerbrochenen Modulen zieht auf chaotischen Bahnen durch das System, die Peilung bleibt dabei stabil",
+      "Das Objekt besteht nicht aus einem Koerper sondern aus einer ganzen Landschaft frei treibender Truemmer, die Peilung bleibt dabei stabil"
+    ],
+    "space_debris_response.ini": [
+      "Das Schattel dreht aus dem Feld heraus und nutzt einen groesseren Wrackblock voruebergehend als Schutz",
+      "Wir werfen eine kompakte Sonde ab um den unsicheren Datenspeicher mitzunehmen und beginnen gleichzeitig den Rueckzug",
+      "Ich uebergebe die Steuerung an die Kollisionsautomatik und setze alle Manoerierrduesen auf maximale Reaktionsrate, der Rueckweg bleibt dabei jederzeit offen",
+      "Das Schattel dreht aus dem Feld heraus und nutzt einen groesseren Wrackblock kurzzeitig als Schutz, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir werfen eine kleine Sonde ab um den unsicheren Datenspeicher mitzunehmen und beginnen gleichzeitig den Rueckzug, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Schutzfelder werden verstaerkt und ein freier Kurs oberhalb der Hauptebene berechnet, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich verzichte auf weitere Proben. Die vorhandenen Daten sind billiger als eine neue Aussenhuelle, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "space_debris_scan.ini": [
+      "Zahlreiche Truemmer senden noch automatische Kennungen die sich gegenseitig widersprechen",
+      "Das Feld besitzt zahlreiche sichere Korridore die sich jedoch staendig verschieben",
+      "Die Flugbahnen der groessten Fragmente werden berechnet und ergeben ein erstaunlich komplexes Bewegungsmuster, die Kontrollmessung liefert vergleichbare Werte",
+      "Mehrere Truemmer senden noch automatische Kennungen die sich gegenseitig widersprechen, die Kontrollmessung liefert vergleichbare Werte",
+      "Ein abgeschalteter Reaktorkern liefert in unregelmaessigen Abstaenden kurze Energiespitzen, die Kontrollmessung liefert vergleichbare Werte",
+      "Die Sensoren finden im Zentrum des Feldes einen nahezu unbeschaedigten Datenspeicher, die Kontrollmessung liefert vergleichbare Werte",
+      "Einige Fragmente veraendern ihre Bahn minimal ohne sichtbaren Antrieb, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "space_departure_doku.ini": [
+      "Die aufgezeichneten Messreihen werden mit Position und Zeitstempel im Missionsarchiv gesichert",
+      "Der Ereignisort wird fuer spaetere Expeditionen mit den heute ermittelten Gefahrenhinweisen katalogisiert",
+      "Alle passiven und aktiven Scans werden zusammengefuehrt und als abgeschlossener Datensatz gespeichert",
+      "Die Navigation uebernimmt die relevanten Koordinaten in die lokale Gefahrenkarte",
+      "Ich sichere den Bericht und vermerke ausdruecklich dass eine erneute Annaeherung nicht automatisch empfohlen wird",
+      "Die Telemetrie wird auf Vollstaendigkeit geprueft und anschliessend dem Missionsprotokoll angehaengt",
+      "Die letzten Sensordaten werden archiviert; fuer den naechsten Sprung sind keine weiteren Messungen erforderlich"
+    ],
+    "space_departure_status.ini": [
+      "Das Schattel hat die Gefahrenzone vollstaendig verlassen und liegt wieder auf freiem Kurs",
+      "Der unmittelbare Ereignisbereich liegt weit hinter uns und der vorausliegende Raum ist frei",
+      "Die Kollisions- und Gefahrenwarnungen sind erloschen; vor dem Schiff liegt ein freier Flugvektor",
+      "Der Sicherheitsabstand zum untersuchten Objekt ist erreicht und nimmt weiter zu",
+      "Wir befinden uns wieder ausserhalb aller markierten Sperr- und Einflusszonen",
+      "Die Navigationsanzeige meldet freien Raum in Richtung des naechsten Sprungkorridors",
+      "Das Schiff ist wieder frei manoevrierfaehig und kein lokales Objekt bindet unseren Kurs"
+    ],
+    "space_detour_echo.ini": [
+      "Zahlreiche Sensorimpulse wiederholen sich zeitversetzt obwohl die Scanner bereits abgeschaltet sind",
+      "Kurz nach dem Rueckzug erscheint unsere eigene Funkkennung mit deutlicher Zeitverzoegerung aus einer falschen Richtung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Navigationsanlage empfaengt ein Echo unseres letzten Scans obwohl kein reflektierendes Objekt dort liegt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein Teil unserer Telemetrie kommt Sekunden spaeter auf einer Frequenz zurueck die wir nicht verwendet haben, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die passive Ortung zeigt einen zweiten identischen Kursvektor ohne dazu passendes Objekt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein schwaches Echo des Bordradars scheint aus einem leeren Bereich vor dem Schiff zu stammen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere Sensorimpulse wiederholen sich zeitversetzt obwohl die Scanner bereits abgeschaltet sind, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_detour_echo_result.ini": [
+      "Ich lasse die Sender fuer kurze Zeit schweigen und das Echo verschwindet komplett",
+      "Nach einem Frequenzwechsel tritt das Echo nicht erneut auf und wir behalten den freien Kurs bei, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Messwerte werden gespeichert; eine unmittelbare Quelle laesst sich nicht bestimmen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ich lasse die Sender fuer kurze Zeit schweigen und das Echo verschwindet vollstaendig, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der Bordcomputer markiert die Wiederholung als ungeklaerte Raumstoerung ohne aktuelle Gefahrenwirkung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Wir vergroessern den Abstand zum Ereignisort bis keine weiteren Zeitversatzsignale auftreten, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Navigationsreferenzen bleiben stabil und der Effekt wird nur fuer spaetere Analyse dokumentiert, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_detour_probe.ini": [
+      "Beim Verlassen des eigentlichen Ereignisortes aktiviert sich eine kompakte autonome Sonde in unserer Naehe",
+      "Aus dem Sensorrauschen loest sich eine winzige kuenstliche Sonde die anscheinend auf unsere Anwesenheit reagiert",
+      "Beim Verlassen des eigentlichen Ereignisortes aktiviert sich eine kleine autonome Sonde in unserer Naehe, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein bislang inaktives Objekt entfaltet eine Antenne und beginnt unseren Kurs zu beobachten, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Aus dem Sensorrauschen loest sich eine winzige kuenstliche Sonde die offenbar auf unsere Anwesenheit reagiert, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Kurz nach dem Rueckzug startet ein kleines unbemanntes Objekt aus einer verborgenen Position, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Eine kompakte automatische Einheit folgt fuer kurze Zeit parallel zu unserer Flugbahn, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_detour_probe_result.ini": [
+      "Die Messdaten werden gespeichert waehrend das kompakte Objekt auf seiner urspruenglichen Bahn zurueckbleibt",
+      "Wir antworten nur passiv und behalten den Sicherheitskurs bei bis die Sonde wieder zurueckbleibt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Das Objekt unterschreitet keinen kritischen Abstand und wird lediglich fuer spaetere Analyse aufgezeichnet, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ich lasse keinen Andock- oder Zugriffversuch zu; nach einigen Minuten beendet die Sonde die Verfolgung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Sonde wird nicht provoziert und verliert uns nach einem breiten Kurswechsel aus ihrer Reichweite, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Wir senden eine neutrale Identifikationsfolge und setzen den Abflug ohne weitere Annaeherung fort, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Messdaten werden gespeichert waehrend das kleine Objekt auf seiner urspruenglichen Bahn zurueckbleibt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_detour_solar.ini": [
+      "Die Sternwindmessung steigt abrupt an und zahlreiche empfindliche Sensoren beginnen zu saettigen",
+      "Die externe Strahlungsbelastung nimmt innerhalb weniger Sekunden merklich zu",
+      "Ein ploetzlicher Sonnenausbruch schickt eine schnelle geladene Teilchenfront durch unseren Abflugkorridor, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der lokale Stern zeigt einen unerwarteten Aktivitaetsanstieg und die Strahlungswarnung springt auf Gelb, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Eine starke Magnetfeldfront erreicht das Schiff waehrend wir den Nahbereich verlassen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Sternwindmessung steigt abrupt an und mehrere empfindliche Sensoren beginnen zu saettigen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein kurzer koronaler Auswurf kreuzt unsere geplante Flugbahn frueher als die Modelle berechnet haben, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_detour_solar_result.ini": [
+      "Ich verlege den Kurs hinter einen ausreichend ausgedehnten Himmelskoerper und warte die staerkste Phase ab",
+      "Wir drehen den gepanzerten Rumpf in die Front und fliegen einen geschuetzten Umweg in den freien Raum, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die empfindlichen Sensoren werden eingefahren bis die Teilchenbelastung wieder auf Normalwerte sinkt, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ich verlege den Kurs hinter einen ausreichend grossen Himmelskoerper und warte die staerkste Phase ab, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Das Schattel verlaesst die Front seitlich und erreicht kurz darauf wieder einen ruhigen Raumsektor, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Strahlung bleibt unter den Sicherheitsgrenzen und nimmt nach dem Ausweichmanoever schnell ab, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Wir umgehen den Kern der Plasmafront und setzen danach den freien Abflugkurs fort, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_phenomenon_desc.ini": [
+      "Vor uns liegt eine wolkenartige Struktur aus geladenen Teilchen und erheblich verzerrtem Sternenlicht",
+      "Die Sensoren erfassen eine schmale Zone in der Licht und Gravitation auffaellig gekoppelt erscheinen",
+      "Zahlreiche farbige Plasmabaender bewegen sich gegen die erwartete Sonnenwindrichtung",
+      "Eine kugelfoermige Raumverzerrung pulsiert allmaehlich zwischen zwei stabilen Groessen",
+      "Die Signatur ist kein Objekt sondern ein grossraeumiges leuchtendes Raumphaenomen, die Sensoren bestaetigen diese Einordnung",
+      "Vor uns liegt eine wolkenartige Struktur aus geladenen Teilchen und stark verzerrtem Sternenlicht, die Sensoren bestaetigen diese Einordnung",
+      "Die Sensoren erfassen eine schmale Zone in der Licht und Gravitation ungewoehnlich gekoppelt erscheinen, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "space_phenomenon_effect.ini": [
+      "Beim weiteren Annaehern verschiebt sich unsere berechnete Position um zahlreiche kilometer ohne entsprechende Bewegung",
+      "Zahlreiche gespeicherte Sternpositionen passen kurzzeitig nicht mehr zum sichtbaren Himmel",
+      "Die Triebwerksregelung muss staendig kompakte unerwartete Driftbewegungen ausgleichen",
+      "Beim weiteren Annaehern verschiebt sich unsere berechnete Position um mehrere kilometer ohne entsprechende Bewegung, die betroffenen Systeme bleiben unter Beobachtung",
+      "Die Borduhren zeigen untereinander geringe aber messbare Zeitabweichungen, die betroffenen Systeme bleiben unter Beobachtung",
+      "Mehrere gespeicherte Sternpositionen passen kurzzeitig nicht mehr zum sichtbaren Himmel, die betroffenen Systeme bleiben unter Beobachtung",
+      "Die Funkverbindung zwischen zwei Schiffssektionen bekommt ein deutliches Echo, die betroffenen Systeme bleiben unter Beobachtung"
+    ],
+    "space_phenomenon_escalation.ini": [
+      "Zahlreiche Sensorbilder zeigen fuer kurze Momente Positionen an denen das Schattel noch gar nicht gewesen ist",
+      "Die Raumverzerrung beginnt sich in Richtung unseres Schiffes auszudehnen, damit steigt der Handlungsdruck merklich",
+      "Die Zeitabweichung zwischen den Bordrechnern waechst schneller als tolerierbar, damit steigt der Handlungsdruck merklich",
+      "Mehrere Sensorbilder zeigen fuer kurze Momente Positionen an denen das Schattel noch gar nicht gewesen ist, damit steigt der Handlungsdruck merklich",
+      "Die gravimetrischen Stoerungen greifen inzwischen direkt in unsere Flugbahn ein, damit steigt der Handlungsdruck merklich",
+      "Ein starker Energiepuls laeuft durch das Phaenomen und trifft unsere Schutzfelder, damit steigt der Handlungsdruck merklich",
+      "Die Sternnavigation verliert fast alle stabilen Referenzpunkte, damit steigt der Handlungsdruck merklich"
+    ],
+    "space_phenomenon_outcome.ini": [
+      "Der betroffene Raumbereich bleibt merklich sichtbar aber beeinflusst das Schiff auf dieser Distanz nicht mehr",
+      "Aus sicherer Distanz stabilisieren sich Uhren, Sensoren und Navigation wieder, der weitere Kurs bleibt dadurch frei",
+      "Die Sonde sendet weiterhin Daten obwohl ihre gemeldete Position mehrfach unmoeglich erscheint, der weitere Kurs bleibt dadurch frei",
+      "Das Phaenomen kehrt nach unserem Rueckzug in seinen vorherigen Zustand zurueck, der weitere Kurs bleibt dadurch frei",
+      "Alle Systeme normalisieren sich innerhalb weniger Minuten ohne bleibende Schaeden, der weitere Kurs bleibt dadurch frei",
+      "Die aufgezeichneten Messwerte werden fuer eine spaetere Analyse versiegelt damit niemand sie versehentlich fuer einen Sensorfehler loescht, der weitere Kurs bleibt dadurch frei",
+      "Der betroffene Raumbereich bleibt deutlich sichtbar aber beeinflusst das Schiff auf dieser Distanz nicht mehr, der weitere Kurs bleibt dadurch frei"
+    ],
+    "space_phenomenon_response.ini": [
+      "Ich synchronisiere alle Bordrechner auf einen internen Referenztakt und drehe das Schiff aus der Stoerzone, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Navigation wechselt auf reine Triebwerksintegration bis wieder stabile Sterne sichtbar sind, der Rueckweg bleibt dabei jederzeit offen",
+      "Wir setzen eine Messsonde aus und ziehen uns ausserhalb der direkten Raumverzerrung zurueck, der Rueckweg bleibt dabei jederzeit offen",
+      "Die Haupttriebwerke werden in kurzen Impulsen gezuendet um den Einfluss der Drift zu kompensieren, der Rueckweg bleibt dabei jederzeit offen",
+      "Alle externen Signale werden ignoriert und der Rueckkurs ausschliesslich aus unseren letzten sicheren Daten berechnet, der Rueckweg bleibt dabei jederzeit offen",
+      "Ich beende die Annaeherung und markiere die Grenze an der unsere Physik noch halbwegs verlaesslich funktioniert, der Rueckweg bleibt dabei jederzeit offen",
+      "Das Schattel verlaesst die Zone auf dem kuerzesten berechenbaren Vektor. Das Wort berechenbar verwende ich grosszuegig, der Rueckweg bleibt dabei jederzeit offen"
+    ],
+    "space_phenomenon_scan.ini": [
+      "Zahlreiche Testimpulse erscheinen Sekunden spaeter aus einer anderen Richtung wieder",
+      "Die lokale Raumzeit zeigt kompakte periodische Abweichungen ohne erkennbare zentrale Masse",
+      "Spektrometer und Gravitationssensoren liefern Werte die sich gegenseitig widersprechen, die Kontrollmessung liefert vergleichbare Werte",
+      "Funksignale werden am Rand des Phaenomens zeitlich versetzt reflektiert, die Kontrollmessung liefert vergleichbare Werte",
+      "Mehrere Testimpulse erscheinen Sekunden spaeter aus einer anderen Richtung wieder, die Kontrollmessung liefert vergleichbare Werte",
+      "Die Temperaturmessung bleibt normal obwohl die optische Energieabgabe extrem hoch ist, die Kontrollmessung liefert vergleichbare Werte",
+      "Ein Teil unserer Radarstrahlen kehrt mit zusaetzlichen unbekannten Modulationen zurueck, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "space_restricted_boundary.ini": [
+      "Hinter der Grenze brechen zahlreiche unserer Langstreckensensoren gleichzeitig in starkes Rauschen zusammen",
+      "Zahlreiche kleine Objekte bewegen sich synchron zu unserem Kurs entlang der Grenze",
+      "Hinter der Grenze brechen mehrere unserer Langstreckensensoren gleichzeitig in starkes Rauschen zusammen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der gesperrte Bereich zeigt keinerlei normale Sternenhintergrundsignaturen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere kleine Objekte bewegen sich synchron zu unserem Kurs entlang der Grenze, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Navigationsautomatik kann innerhalb der Zone keine stabilen Referenzpunkte bestimmen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein schwaches Gravitationssignal liegt exakt im Zentrum des abgesperrten Volumens, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_restricted_escalation.ini": [
+      "Zahlreiche Warnschuesse passieren das Schiff in bewusst knappem Abstand",
+      "Unsere Tarnung wird von den lokalen Sensoren anscheinend zunehmend durchschaut",
+      "Die Abfangdrohnen verkuerzen den Abstand und blockieren unseren bisherigen Rueckkurs, damit steigt der Handlungsdruck merklich",
+      "Das Stoersignal beeintraechtigt inzwischen Kommunikation und genaue Positionsbestimmung, damit steigt der Handlungsdruck merklich",
+      "Mehrere Warnschuesse passieren das Schiff in bewusst knappem Abstand, damit steigt der Handlungsdruck merklich",
+      "Die Energieabgabe der Verteidigungsplattformen steigt weiter an, damit steigt der Handlungsdruck merklich",
+      "Unsere Tarnung wird von den lokalen Sensoren offenbar zunehmend durchschaut, damit steigt der Handlungsdruck merklich"
+    ],
+    "space_restricted_exit.ini": [
+      "Nach Verlassen der Grenze normalisieren sich unsere Sensoren unmittelbar wieder",
+      "Wir akzeptieren die lokale Hausordnung ausnahmsweise und verlassen die Sperrzone, der freie Kurs bleibt dabei erhalten",
+      "Das Schattel dreht auf einen freien Vektor und zieht sich mit hoher Beschleunigung zurueck, der freie Kurs bleibt dabei erhalten",
+      "Die Drohnen verfolgen uns nur bis zur markierten Grenze und brechen danach den Kontakt ab, der freie Kurs bleibt dabei erhalten",
+      "Ich speichere die Koordinaten als nicht betreten und sehr absichtlich nicht vergessen, der freie Kurs bleibt dabei erhalten",
+      "Der Kurs wird so angepasst das wir die gesamte Zone weitraeumig umgehen, der freie Kurs bleibt dabei erhalten",
+      "Nach Verlassen der Grenze normalisieren sich unsere Sensoren sofort wieder, der freie Kurs bleibt dabei erhalten"
+    ],
+    "space_restricted_intercept.ini": [
+      "Zahlreiche Verteidigungsplattformen fahren gleichzeitig ihre Systeme hoch",
+      "Zwei unbemannte Abfangdrohnen loesen sich von einer getarnten Plattform, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein schmaler Energiestrahl markiert direkt vor dem Bug eine unmissverstaendliche Grenze, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Warnbojen beginnen unseren Kurs aktiv mit Stoersignalen zu beeinflussen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere Verteidigungsplattformen fahren gleichzeitig ihre Systeme hoch, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein fremder Navigationsimpuls versucht das Schattel automatisch aus der Zone zu drehen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Sensoren melden Zielerfassung durch mindestens drei getrennte Systeme, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_restricted_source.ini": [
+      "Zahlreiche kleine Satelliten bilden ein grossraeumiges Ueberwachungsnetz",
+      "Die Signale verwenden zahlreiche Sprachen und Protokolle aus sehr unterschiedlichen Zeitepochen",
+      "Die Warnung stammt von alten aber weiterhin funktionsfaehigen Verteidigungsbojen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere kleine Satelliten bilden ein grossraeumiges Ueberwachungsnetz, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Der Sender befindet sich auf einer getarnten Plattform knapp ausserhalb unserer bisherigen Sensorreichweite, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Sperrzone wird von autonomen Drohnen ohne erkennbare Besatzung kontrolliert, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein ringfoermiges Feld aus Markierungsbojen umschliesst einen vollkommen dunklen Raumbereich, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_restricted_warning.ini": [
+      "Zahlreiche unbemannte Bojen senden gleichzeitig eine eindeutige Aufforderung den Kurs zu aendern",
+      "Ein erheblich gerichteter Sender warnt vor dem weiteren Eindringen in den inneren Bereich",
+      "Die Sensoren entdecken eine Kette kleiner Plattformen die anscheinend nur dazu dient Besucher fernzuhalten",
+      "Das System sagt sehr merklich nein. Historisch betrachtet ist das leider oft der Moment in dem wir genauer hinsehen",
+      "Ein automatisches Signal erklaert den vorausliegenden Raumsektor zur gesperrten Zone, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere unbemannte Bojen senden gleichzeitig eine eindeutige Aufforderung den Kurs zu aendern, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Navigationsdaten enthalten ab hier eine kuenstlich eingefuegte Sperrmarkierung ohne Begruendung, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_route_approach.ini": [
+      "Der Tarnmodus bleibt aktiv waehrend wir den Abstand allmaehlich verringern",
+      "Wir reduzieren Geschwindigkeit und naehern uns mit passiver Sensorik, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Der Tarnmodus bleibt aktiv waehrend wir den Abstand langsam verringern, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Ich lege einen seitlichen Beobachtungskurs fest damit wir jederzeit ausweichen koennen, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Alle externen Scanner werden auf hohe Empfindlichkeit gestellt und die Waffen bleiben vorerst deaktiviert, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Das Schattel geht auf einen langsamen Parallelkurs zur unbekannten Signatur, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt",
+      "Wir halten genug Distanz fuer einen Notfallvektor und beginnen mit der Detailabtastung, waehrend ein sofortiger Rueckzug weiterhin moeglich bleibt"
+    ],
+    "space_route_intro.ini": [
+      "Keine sichere Planetenoberflaeche registriert. Wir bleiben im Schattel und untersuchen die lokalen Raumstrukturen",
+      "Keiner der groesseren Himmelskoerper bietet einen vertretbaren Landeort. Wir konzentrieren uns deshalb auf den interplanetaren Raum, ein freier Ausweichvektor bleibt dabei reserviert",
+      "Die Planeten dieses Systems sind entweder unzugaenglich oder fuer eine Landung vollkommen ungeeignet. Sensoren werden auf freie Raumobjekte ausgerichtet, ein freier Ausweichvektor bleibt dabei reserviert",
+      "Ein Oberflaecheneinsatz ist in diesem System nicht sinnvoll. Interessanter ist eine Signatur zwischen den inneren Planeten, ein freier Ausweichvektor bleibt dabei reserviert",
+      "Die Navigationsanalyse verwirft alle planetaren Landeoptionen und markiert stattdessen ein Objekt im freien Raum, ein freier Ausweichvektor bleibt dabei reserviert",
+      "Keine sichere Planetenoberflaeche erkannt. Wir bleiben im Schattel und untersuchen die lokalen Raumstrukturen, ein freier Ausweichvektor bleibt dabei reserviert",
+      "Die vorhandenen Welten sind fuer einen Besuch ungeeignet. Gluecklicherweise ist das System auch ausserhalb seiner Planeten kompliziert genug, ein freier Ausweichvektor bleibt dabei reserviert"
+    ],
+    "space_route_target.ini": [
+      "Ein ungewoehnlicher Kontakt liegt zahlreiche hunderttausend kilometer vor unserem Kurs",
+      "Die Langstreckensensoren markieren eine Zone mit merklich abweichenden Messwerten",
+      "Die automatische Kartierung lokalisiert ein Objekt das sich nicht wie ein natuerlicher Himmelskoerper bewegt",
+      "Der Navigationscomputer empfiehlt einen Umweg. Das macht die Stelle natuerlich unmittelbar interessant",
+      "Ein ungewoehnlicher Kontakt liegt mehrere hunderttausend kilometer vor unserem Kurs, ein freier Ausweichvektor bleibt dabei reserviert",
+      "Die Langstreckensensoren markieren eine Zone mit deutlich abweichenden Messwerten, ein freier Ausweichvektor bleibt dabei reserviert",
+      "Zwischen zwei Umlaufbahnen befindet sich eine Struktur die in keinem Navigationskatalog eingetragen ist, ein freier Ausweichvektor bleibt dabei reserviert"
+    ],
+    "space_station_desc.ini": [
+      "Die Signatur stammt von einer ausgedehnten Raumstation unbekannter Bauart",
+      "Das Objekt ist eine erheblich gepanzerte Plattform mit zahlreichen Andockarmen und geschlossenen Hangartoren",
+      "Die Sensoren klassifizieren das Objekt als Raumstation, waehrend mein gesunder Misstrauensalgorithmus zunaechst nur sehr gross und nicht identifiziert notiert",
+      "Die Signatur stammt von einer grossen Raumstation unbekannter Bauart, die Sensoren bestaetigen diese Einordnung",
+      "Vor uns erscheint eine langgestreckte Station aus mehreren rotierenden Segmenten, die Sensoren bestaetigen diese Einordnung",
+      "Das Objekt ist eine stark gepanzerte Plattform mit zahlreichen Andockarmen und geschlossenen Hangartoren, die Sensoren bestaetigen diese Einordnung",
+      "Eine ringfoermige Raumstation treibt knapp ausserhalb der normalen Handelsrouten, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "space_station_exit.ini": [
+      "Wir brechen die Annaeherung ab und gehen auf einen weiten Beobachtungskurs, der freie Kurs bleibt dabei erhalten",
+      "Das Schattel loest sich aus dem Magnetfeld und verlaesst den direkten Stationsbereich, der freie Kurs bleibt dabei erhalten",
+      "Ich speichere die Signatur fuer spaetere Untersuchungen und setze einen Sicherheitsabstand, der freie Kurs bleibt dabei erhalten",
+      "Die Wartungsdrohnen werden nicht weiter provoziert. Wir ziehen uns kontrolliert zurueck, der freie Kurs bleibt dabei erhalten",
+      "Eine passive Warnboje markiert die Koordinaten fuer nachfolgende Expeditionen, der freie Kurs bleibt dabei erhalten",
+      "Wir verlassen die Station ohne anzudocken. Manchmal ist eine geschlossene Tuer eine ausgezeichnete Information, der freie Kurs bleibt dabei erhalten",
+      "Der Kontakt wird beendet und die Plattform bleibt unter Langstreckenbeobachtung, der freie Kurs bleibt dabei erhalten"
+    ],
+    "space_station_hazard.ini": [
+      "Zahlreiche Geschuetztuerme wechseln ohne Vorwarnung von Standby auf Zielerfassung",
+      "Das Magnetfeld der Station greift unvermittelt in unsere Lageregelung ein",
+      "Mehrere Geschuetztuerme wechseln ohne Vorwarnung von Standby auf Zielerfassung, der Sicherheitsabstand wird vorsorglich vergroessert",
+      "Eine Gruppe Wartungsdrohnen verlaesst die Station und nimmt direkten Kurs auf uns, der Sicherheitsabstand wird vorsorglich vergroessert",
+      "Das Magnetfeld der Station greift ploetzlich in unsere Lageregelung ein, der Sicherheitsabstand wird vorsorglich vergroessert",
+      "Die verschluesselte Kommunikation wird durch ein starkes Stoersignal ersetzt, der Sicherheitsabstand wird vorsorglich vergroessert",
+      "Ein Hangartor oeffnet sich und gibt den Blick auf ein wesentlich groesseres unbekanntes Objekt frei, der Sicherheitsabstand wird vorsorglich vergroessert"
+    ],
+    "space_station_power.ini": [
+      "Zahlreiche Reaktoren laufen auf niedriger Leistung und speisen ein starkes internes Magnetfeld",
+      "An den Aussenmodulen werden aktive Kuehlsysteme registriert obwohl keine Kommunikation stattfindet",
+      "Die Station besitzt aktive Energieversorgung aber nur wenige beleuchtete Bereiche, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere Reaktoren laufen auf niedriger Leistung und speisen ein starkes internes Magnetfeld, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Energieverteilung ist unregelmaessig als wuerden einzelne Sektionen staendig zu und abgeschaltet, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein Teil der Station ist vollkommen stromlos waehrend andere Module mit hoher Leistung arbeiten, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Reaktorsignatur passt zu keinem bekannten Standard und schwankt in langen Intervallen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "space_station_scan.ini": [
+      "Zahlreiche kleine Wartungsdrohnen bewegen sich entlang der Aussenhuelle",
+      "Im Inneren werden wechselnde Waermequellen registriert deren Ursprung nicht eindeutig biologisch ist",
+      "Ein Hangar enthaelt zahlreiche kleine Schiffe die scheinbar seit langer Zeit nicht bewegt wurden",
+      "Ein grosser zentraler Bereich ist gegen unsere Scanner komplett abgeschirmt",
+      "Detailmessungen zeigen automatische Geschuetztuerme die noch auf Standby stehen, die Kontrollmessung liefert vergleichbare Werte",
+      "Mehrere kleine Wartungsdrohnen bewegen sich entlang der Aussenhuelle, die Kontrollmessung liefert vergleichbare Werte",
+      "Im Inneren werden wechselnde Waermequellen erkannt deren Ursprung nicht eindeutig biologisch ist, die Kontrollmessung liefert vergleichbare Werte"
+    ],
+    "space_station_signal.ini": [
+      "Zahlreiche interne Sender wechseln ihre Frequenz sobald wir den Kurs veraendern",
+      "Auf unsere passive Anfrage folgt eine kurze verschluesselte Antwort ohne erkennbare Sprache, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Station sendet periodisch eine automatische Navigationskennung mit falschen Zeitdaten, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Mehrere interne Sender wechseln ihre Frequenz sobald wir den Kurs veraendern, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein schwaches Notsignal laeuft in einer Endlosschleife und scheint seit sehr langer Zeit aktiv zu sein, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Die Kommunikationssysteme antworten nur mit Koordinaten zu einem bestimmten Andockbereich, die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+      "Ein kurzer Datenimpuls versucht unsere Schiffsklasse und Reaktorleistung abzufragen, die Beobachtung wird zur Sicherheit im Missionslog festgehalten"
+    ],
+    "start_jumpdrive.ini": [
+      "sie sollten allmaehlich darueber nachdenken den kommenden sektor sprung berechnen zu lassen",
+      "Lassen Sie schnellst moeglich den naechsten Sektor Sprung kalkulieren, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Sie koennen nun den naechsten Sektor Sprung berechnen, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Berechnen Sie bitte den naechsten Sektor Sprung, die Navigationsfreigabe bleibt davon unberuehrt",
+      "Sektor Sprung berechnung kann nun durchgefuehrt werden, die Navigationsfreigabe bleibt davon unberuehrt",
+      "sie sollten langsam darueber nachdenken den kommenden sektor sprung berechnen zu lassen, die Navigationsfreigabe bleibt davon unberuehrt",
+      "ich glaube ich muss es nicht erwaehnen, aber aktivieren sie bitte den verfluchten, naechsten sektor sprung, die Navigationsfreigabe bleibt davon unberuehrt"
+    ],
+    "sternzeit_digits.ini": [
+      "geh",
+      "hah",
+      "ih",
+      "jott",
+      "kah",
+      "ell",
+      "em"
+    ],
+    "sternzeit_digits_adder.ini": [
+      "matrix",
+      "vektor",
+      "zyklus",
+      "folge",
+      "ebene",
+      "knoten",
+      "referenz"
+    ],
+    "sternzeit_name.ini": [
+      "Sprung Zeit Referenz",
+      "Sektor Zeit Marke",
+      "Navigations Zeit Index",
+      "Bord Chronometer Wert",
+      "Interstellarer Zeitcode",
+      "Missions Zeit Referenz",
+      "Hyperraum Zeitmarke"
+    ],
+    "system_context_abandoned.ini": [
+      "Es gibt keine aktiven Verkehrssignale, jedoch zahlreiche sehr schwache kuenstliche Restsignaturen",
+      "Keine aktiven Schiffe werden erkannt. Zahlreiche alte kuenstliche Signaturen sind dagegen noch messbar",
+      "Das System ist still, aber nicht unberuehrt. Irgendjemand war hier anscheinend lange vor uns",
+      "Es gibt keine aktiven Verkehrssignale, jedoch mehrere sehr schwache kuenstliche Restsignaturen, weitere passive Messungen widersprechen dem nicht",
+      "Der Systemraum wirkt unbewohnt, enthaelt aber Spuren frueherer technischer Aktivitaet, weitere passive Messungen widersprechen dem nicht",
+      "Keine aktiven Schiffe werden erkannt. Mehrere alte kuenstliche Signaturen sind dagegen noch messbar, weitere passive Messungen widersprechen dem nicht",
+      "Die Sensoren finden keine aktuellen Bewohner, wohl aber Strukturen die eindeutig nicht natuerlichen Ursprungs sind, weitere passive Messungen widersprechen dem nicht"
+    ],
+    "system_context_natural.ini": [
+      "Keine kuenstlichen Satelliten, keine aktiven Sender und keine Triebwerksspuren wurden registriert",
+      "Langstreckensensoren finden keine aktiven Funkquellen, keine Schiffsantriebe und keine kuenstlichen Energiesignaturen im System, weitere passive Messungen widersprechen dem nicht",
+      "Abgesehen von natuerlichen Himmelskoerpern zeigt das System keinerlei aktuelle technische Aktivitaet, weitere passive Messungen widersprechen dem nicht",
+      "Es gibt keine Hinweise auf Raumverkehr oder intelligente Bewohner. Fuer eine Untersuchung ist das angenehm ruhig, weitere passive Messungen widersprechen dem nicht",
+      "Die Kommunikationsscanner bleiben leer und auch passive Technosignaturen sind nicht nachweisbar, weitere passive Messungen widersprechen dem nicht",
+      "Keine kuenstlichen Satelliten, keine aktiven Sender und keine Triebwerksspuren wurden erkannt, weitere passive Messungen widersprechen dem nicht",
+      "Das System wirkt biologisch moeglicherweise interessant, technologisch jedoch vollkommen still, weitere passive Messungen widersprechen dem nicht"
+    ],
+    "system_context_space.ini": [
+      "Die planetaren Koerper liefern keine brauchbaren Landeoptionen, waehrend zahlreiche Messwerte im freien Systemraum auffaellig bleiben",
+      "Kein Planet rechtfertigt einen Landeversuch, allerdings zeigen die Freiraumsensoren zahlreiche ungewoehnliche Kontakte",
+      "Die planetaren Koerper liefern keine brauchbaren Landeoptionen, waehrend mehrere Messwerte im freien Systemraum auffaellig bleiben, weitere passive Messungen widersprechen dem nicht",
+      "Es gibt keinen sinnvollen Oberflaecheneinsatz. Die interessanten Signaturen liegen zwischen den normalen Umlaufbahnen, weitere passive Messungen widersprechen dem nicht",
+      "Die Planeten werden als unzugaenglich markiert und die Sensorprioritaet auf den interplanetaren Raum verlagert, weitere passive Messungen widersprechen dem nicht",
+      "Kein Planet rechtfertigt einen Landeversuch, allerdings zeigen die Freiraumsensoren mehrere ungewoehnliche Kontakte, weitere passive Messungen widersprechen dem nicht",
+      "Die Oberflaechenziele werden verworfen. Das System selbst liefert genug andere Dinge die unseren Aufenthalt kompliziert machen koennen, weitere passive Messungen widersprechen dem nicht"
+    ],
+    "system_desc.ini": [
+      "der sprung endet und wir erreichen das system",
+      "die hyperraum blase bricht zusammen, wir befinden uns nun im system",
+      "der falt antrieb geht auf leerlauf waehrend wir in das system eintreten",
+      "der navigationscomputer bestaetigt unseren austritt direkt im system",
+      "wir verlassen den sprung korridor und befinden uns im system",
+      "der ueberlicht antrieb schaltet ab, ziel erreicht im system",
+      "raum und zeit normalisieren sich nach dem sprung im system"
+    ],
+    "system_desc_planetcount.ini": [
+      "vier Planeten und zahlreiche Monde",
+      "elf Planeten",
+      "dreizehn groessere planetare Koerper",
+      "mehrere Planeten mit dichten Ringsystemen",
+      "eine Handvoll grosser Planeten und viele Kleinobjekte",
+      "nur einen eindeutig klassifizierbaren Planeten",
+      "eine ungewoehnlich kompakte Gruppe aus Planeten und Monden"
+    ],
+    "system_desc_planets.ini": [
+      "von denen mindestens zwei durch starke Atmosphaeren auffallen",
+      "von denen einer grosse fluessige Oberflaechenbereiche besitzen koennte",
+      "von denen mehrere geologisch ausgesprochen aktiv erscheinen",
+      "von denen zwei von ungewoehnlich starken Magnetfeldern umgeben sind",
+      "von denen keiner eindeutige technische Signaturen zeigt",
+      "von denen mindestens einer einen stabilen Mond mit interessanten Messwerten besitzt",
+      "von denen mehrere wegen extremer Strahlung fuer einen Anflug ungeeignet sind"
+    ],
+    "system_desc_solcount.ini": [
+      "einen blauen Hauptstern und einen kleinen Begleiter",
+      "ein enges Dreifachsternsystem",
+      "eine schwache rote Sonne",
+      "zwei weit voneinander entfernte Hauptsterne",
+      "einen weissen Zwerg mit Begleitstern",
+      "vier kleine Sterne in komplexen Bahnen",
+      "eine einzelne sehr aktive Hauptsonne"
+    ],
+    "system_desc_solcount_adder.ini": [
+      "die Navigation markiert zusaetzlich",
+      "die optische Suche erkennt ausserdem",
+      "der Systemkatalog erfasst",
+      "als weitere Objekte zaehlt der Scan",
+      "im aeusseren System registrieren wir",
+      "zwischen den Sternbahnen gibt es",
+      "die Gesamtanalyse meldet zusaetzlich"
+    ],
+    "system_desc_solcount_intro.ini": [
+      "Unsere optischen Systeme erfassen",
+      "Die stellare Massensuche registriert",
+      "Der erste Navigationsscan erkennt",
+      "Die Systemkarte verzeichnet",
+      "Die Sensorfusion bestaetigt",
+      "Die astronomische Auswertung meldet",
+      "Im Zentrum und den aeusseren Bahnen registrieren wir"
+    ],
+    "system_infos.ini": [
+      "Das System wird anscheinend interplanetarisch als Sperrzone welche wir natuerlich ignorieren werden betrachtet",
+      "Achtung. Es wurde ein Meteoritenfeld auf unserem Kurs lokalisiert. Es sollte dringend ein Abstand eingehalten werden, daher werde ich den Navigations computer anweisen auf hoechste sensibilitaet zu gehen",
+      "Ich weise darauf hin das dieses System, wie es die Scanner zeigen, zahlreiche Planetoiden oder Objekte aufzuweisen scheint welche instabil zu sein scheinen, daher sollten wir dieses System mit grosser Vorsicht durchfliegen",
+      "Zahlreiche verlassene Raumstationen treiben ohne aktive Energieversorgung zwischen den Planeten",
+      "Das System weist Spuren einer kuerzlich beendeten ausgedehnten Raumschlacht auf",
+      "Das System gehoert zu keiner bekannten Spezies, der Befund bleibt auch nach einer Kontrollmessung bestehen",
+      "Das System wird aktu ell vom einem Firmen Konsortium beansprucht, der Befund bleibt auch nach einer Kontrollmessung bestehen"
+    ],
+    "system_parts.ini": [
+      "theta",
+      "rho",
+      "tauon",
+      "kor",
+      "zen",
+      "mer",
+      "vora"
+    ],
+    "we_alien_handling.ini": [
+      "Als naechsten Versuch werde ich",
+      "Wir werden jetzt mit Abstand",
+      "Der Kontaktcomputer wird nun",
+      "Ich werde unter Vorbehalt",
+      "Die Besatzung wird als naechstes",
+      "Wir werden als Reaktion",
+      "Das Schattel wird zur Sicherheit"
+    ],
+    "we_alien_handling2.ini": [
+      "eine neutrale Lichtfolge senden und danach einfach abwarten",
+      "eine kleine unbemannte Sonde zwischen uns und die Lebensform stellen",
+      "den direkten Kontakt abbrechen und nur noch passiv beobachten",
+      "mit einem akustischen Signal eine klare Distanzgrenze anzeigen",
+      "eine einfache geometrische Projektion zur Kommunikation verwenden",
+      "die Aussenscheinwerfer langsam dimmen um weniger bedrohlich zu wirken",
+      "eine Probe ohne biologischen Inhalt auf halber Strecke ablegen und uns zurueckziehen"
+    ],
+    "we_alien_handling3.ini": [
+      "Das Wesen scheint unsere Handlung erneut",
+      "Die Lebensform scheint unser Vorgehen",
+      "Das Alien scheint unser Signal offenbar",
+      "Die Kreatur scheint unsere Reaktion",
+      "Das Etwas scheint den Kontaktversuch",
+      "Das Wesen scheint unsere Aktion",
+      "Die Lebensform scheint unser Verhalten"
+    ],
+    "we_alien_handling4.ini": [
+      "als vorsichtige Kontaktaufnahme zu verstehen",
+      "als Aufforderung zum Abstandhalten zu deuten",
+      "als neutrales Signal zu interpretieren",
+      "als Versuch einer Kommunikation einzustufen",
+      "als merkwuerdige aber nicht feindliche Geste aufzufassen",
+      "als Zeichen von Unsicherheit zu verstehen",
+      "als bewusste Begrenzung des Kontakts zu erkennen"
+    ],
+    "we_alien_handling5.ini": [
+      "Nach dieser Beobachtung sollten wir",
+      "Ich denke wir sollten jetzt",
+      "Angesichts der Lage sollten wir",
+      "Die Daten reichen aus. Wir sollten",
+      "Bevor noch etwas dazukommt sollten wir",
+      "Der Kontakt ist ausreichend dokumentiert. Wir sollten",
+      "Aus Sicherheitsgruenden sollten wir"
+    ],
+    "we_alien_handling6.ini": [
+      "den Rueckflug einleiten",
+      "den Kontakt kontrolliert beenden",
+      "auf sicheren Abstand gehen",
+      "den Landeplatz verlassen",
+      "wieder in den Orbit zurueckkehren",
+      "die Beobachtung fuer heute abschliessen",
+      "den Rueckzug zum Schiff fortsetzen"
+    ],
+    "we_leaf_desc.ini": [
+      "allmaehlich kommt mir das nicht mehr richtig vor hier noch laenger zu verweilen",
+      "es ist schon bedau erlich, aber wir haben wohl keine ausgedehnte chance uns auf gesittetem nie wo mit dem vieh auszutauschen",
+      "Ausserdem scheint Das Schattel allmaehlich im Boden zu versinken",
+      "Die seismische Aktivitaet unter dem Landeplatz nimmt merklich zu",
+      "Zahlreiche unbekannte Objekte bewegen sich aus verschiedenen Richtungen auf uns zu",
+      "Ein naher Vulkanschlot zeigt unvermittelt stark erhoehte Aktivitaet",
+      "ohne hin hat die Atmos faere des Planeten nicht gerade positive auswirkungen wenn es um die Schiffsaussenhaut geht, die Sensoren bestaetigen diese Einordnung"
+    ],
+    "mission_free_space.ini": [
+      "Wir haben das untersuchte Gebiet hinter uns gelassen und treiben wieder auf sicherem freien Kurs durch den Systemraum",
+      "Der Nahbereich ist frei von Hindernissen und das Schiff steht ausserhalb aller zuvor erfassten Gefahrenzonen",
+      "Nach dem Rueckzug liegt zwischen uns und dem letzten Ereignisort genuegend freier Raum fuer einen kontrollierten Hyperraum Eintritt",
+      "Die Navigation bestaetigt eine freie Position fern von Oberflaechen, Stationen, Wracks und anderen unmittelbaren Hindernissen",
+      "Unser Kurs fuehrt nun durch einen ruhigen freien Abschnitt des Systems und bietet genuegend Sicherheitsabstand fuer den Weiterflug",
+      "Das Schiff befindet sich wieder ausserhalb lokaler Anziehungs-, Sperr- und Gefahrenbereiche auf einem frei waehlbaren Kurs",
+      "Freier Raum ist erreicht. Keine unmittelbar relevante Struktur behindert mehr Navigation oder Sprungvorbereitung"
+    ]
+  }
+}

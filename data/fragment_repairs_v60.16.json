@@ -1,0 +1,468 @@
+{
+  "version": "60.16",
+  "description": "Historical fragment lines intentionally replaced during the v60.16 compatibility/grammar audit. Historical manifests stay immutable; tests may accept an entry listed here as a documented repair.",
+  "manifests": {
+    "fragment_expansion_v60.14.json": {
+      "removed_or_rewritten_lines": {
+        "cloud_adder.ini": [
+          "mit einschluessen in",
+          "durchsetzt von",
+          "stellenweise auch",
+          "uebergehend in",
+          "vermischt mit",
+          "in schichten aus",
+          "unterbrochen durch"
+        ],
+        "cloud_adder_end.ini": [
+          "schimmernd.",
+          "marmoriert.",
+          "durchzogen.",
+          "gesprenkelt.",
+          "mehrschichtig angeordnet.",
+          "unregelmaessig verteilt.",
+          "in pulsierenden baendern sichtbar."
+        ],
+        "cloud_desc.ini": [
+          "Mehrere hohe Wolkenbaenke zeigen sich in",
+          "Die Atmos faehre enthaelt langgezogene Wolkenstreifen in",
+          "Ueber dem Horizont sammeln sich dichte Wolken in",
+          "In mittlerer Hoehe schweben wolkenartige Formationen in",
+          "Der Himmel wird von langsam rotierenden Wolkenwirbeln in",
+          "Nahe der Pole befinden sich leuchtende Wolkenschichten in",
+          "Vereinzelte elektrisch geladene Wolken erscheinen in"
+        ],
+        "life_alien_color_desc.ini": [
+          "Seine Haut schimmert",
+          "Die Oberflaeche des Wesens wirkt",
+          "Unter dem Sekret erscheint es",
+          "Bei Bewegung veraendert sich seine Farbe zu",
+          "Im Licht der Scheinwerfer wirkt es",
+          "Die aeussere Haut ist stellenweise",
+          "Sein Koerper reflektiert das Umgebungslicht in"
+        ],
+        "life_alien_desc.ini": [
+          ", auffaellig daran sind",
+          ", auf dem Oberkoerper befinden sich",
+          ", darueber hinaus zeigt die Lebensform",
+          ", entlang des Koerpers finden sich"
+        ],
+        "life_alien_face_desc.ini": [
+          "Der obere Koerper endet in einem"
+        ],
+        "life_alien_face_desc2.ini": [
+          ", darin befindet sich",
+          ", darunter liegt",
+          ", seitlich davon erkennt man",
+          ", im Zentrum befindet sich",
+          ", eingerahmt wird es durch",
+          ", darunter oeffnet sich",
+          ", unmittelbar daneben liegt"
+        ],
+        "life_alien_face_desc3.ini": [
+          ", darueber befinden sich",
+          ", im oberen Bereich besitzt es",
+          ", rund um das Gesicht liegen",
+          ", als Sehorgane dienen ihm",
+          ", direkt darunter befinden sich",
+          ", im Kopfbereich zaehle ich"
+        ],
+        "life_alien_size_desc.ini": [
+          "Die Kreatur erscheint ",
+          "Von der Hoehe her ist es ",
+          "Die gemessene Groesse betraegt "
+        ],
+        "life_possibility.ini": [
+          "nur unter der Oberflaeche denkbar",
+          "durch chemische Spuren angedeutet",
+          "mit ungefair fuenfundsiebzig prozent zu bewerten",
+          "auf einfache Mikro organismen begrenzt"
+        ],
+        "life_possibility_desc.ini": [
+          "Die Sensoren bewerten die Chance auf Leben als ",
+          "Nach den vorliegenden Messwerten ist Leben ",
+          "Biologische Aktivitaet erscheint ",
+          "Unter diesen Bedingungen ist die Existenz von Leben ",
+          "Das Analysemodul stuft moegliches Leben als "
+        ],
+        "planet_surface_scan_liquid.ini": [
+          "Die Fluessigkeitsanalyse ergab",
+          "In den Vertiefungen befindet sich",
+          "Der spektrale Scan identifizierte",
+          "Die Probenanalyse deutet auf",
+          "Die fliessende Substanz ist vermutlich"
+        ],
+        "planet_surface_scan_liquid2.ini": [
+          "nachgewiesen.",
+          "analysiert.",
+          "als wahrscheinlich eingestuft.",
+          "in mehreren Becken lokalisiert.",
+          "durch den Spektral Scan bestaetigt.",
+          "in geringer Konzentration gemessen.",
+          "unter der Oberflaeche vermutet."
+        ],
+        "planet_surface_scan_material.ini": [
+          "Die oberste Bodenschicht besteht hauptsaechlich aus ",
+          "Der geologische Scan zeigt grosse Mengen ",
+          "Das Gelaende enthaelt ueberwiegend ",
+          "Die feste Oberflaechenmaterie wurde bestimmt als ",
+          "In den Gesteinsproben dominiert ",
+          "Die mineralogische Zusammensetzung besteht primaer aus ",
+          "Unter der Staubschicht befindet sich "
+        ],
+        "planet_surface_structure_adder.ini": [
+          "darueber hinaus ist er ",
+          "stellenweise ist er ",
+          "in weiten Bereichen ist er ",
+          "zudem erscheint er ",
+          "gleichzeitig wirkt er ",
+          "an anderen Stellen ist er ",
+          "ausserdem zeigt er sich "
+        ],
+        "planet_surface_structure_desc.ini": [
+          "Die geologische Struktur des Planeten ist",
+          "Die sichtbare Landschaft ist",
+          "Nach den Orbitalaufnahmen ist der Planet"
+        ],
+        "planet_surface_temperature_adder.ini": [
+          "bis maximal plus",
+          "und steigt zeitweise auf plus",
+          "mit Spitzenwerten von plus",
+          "waehrend der Tagesseite bis plus",
+          "und auf der Sonnenseite plus",
+          "bei maximal gemessenen plus",
+          "sowie in warmen Regionen plus"
+        ],
+        "planet_surface_temperature_desc.ini": [
+          "Auf der Nachtseite beginnt die Temperatur bei minus",
+          "Je nach Region liegen die Temperaturen zwischen minus",
+          "Der thermische Scan misst Schwankungen zwischen minus",
+          "Die extremen Klimawerte bewegen sich zwischen minus",
+          "Unsere Sensoren registrieren Werte von minus",
+          "Im Landegebiet variiert die Temperatur zwischen minus"
+        ],
+        "system_desc_planetcount.ini": [
+          "so viele Objekte das die automatische Nummerierung aufgegeben hat"
+        ],
+        "system_desc_planets.ini": [
+          "von denen zwei starke kuenstliche Energiequellen aufweisen"
+        ],
+        "system_desc_solcount_adder.ini": [
+          "die Sensoren melden ausserdem ",
+          "im erweiterten Scan erscheinen ",
+          "weiterhin befinden sich dort ",
+          "zusaetzlich zaehlt der Bordcomputer ",
+          "in den aeusseren Bahnen gibt es ",
+          "auf den ersten Blick sehe ich ",
+          "der Systemscan verzeichnet "
+        ],
+        "system_desc_solcount_intro.ini": [
+          "Der Sternenkatalog zeigt ",
+          "Im Zentrum des Systems befinden sich ",
+          "Die optischen Sensoren erfassen ",
+          "Als stellare Hauptobjekte zaehle ich ",
+          "Der Systemscan bestaetigt ",
+          "In diesem Sektor leuchten ",
+          "Die lokale Sternengruppe besteht aus "
+        ],
+        "we_alien_handling.ini": [
+          "Das Schattel soll zunaechst",
+          "Ich halte es fuer angemessen",
+          "Wir koennten aus wissenschaftlichem Interesse",
+          "Der Sicherheitscomputer empfiehlt"
+        ],
+        "we_alien_handling3.ini": [
+          "Die Kreatur reagiert mit einem tiefen Brummen und scheint unsere Massnahme ",
+          "Das Wesen richtet sich auf und scheint unser Signal ",
+          "Die Lebensform veraendert ihre Farbe. Offenbar beginnt sie unsere Handlung ",
+          "Das Etwas zieht sich kurz zurueck und scheint den Versuch ",
+          "Das Alien antwortet mit Lichtimpulsen und scheint unser Vorgehen ",
+          "Die Kreatur schlaegt auf den Boden und scheint die Aktion ",
+          "Das Wesen oeffnet mehrere Membranen und scheint unser Verhalten "
+        ],
+        "we_alien_handling4.ini": [
+          "als Warnung aufzufassen.",
+          "als Einladung zum Naeherkommen zu verstehen.",
+          "als wissenschaftliches Interesse zu erkennen.",
+          "als Herausforderung zu deuten.",
+          "als Zeichen unserer Unterwerfung zu interpretieren.",
+          "als vollkommen bedeutungslos einzustufen.",
+          "als Beginn eines merkwuerdigen Rituals zu verstehen."
+        ],
+        "we_alien_handling5.ini": [
+          "Aus reinem Selbsterhaltungstrieb schlage ich vor wir sollten",
+          "Ich habe genug Daten und deutlich genug von diesem Wesen. Wir sollten"
+        ],
+        "we_alien_handling6.ini": [
+          "zum Schattel zurueckkehren.",
+          "den Oberflaecheneinsatz sofort abbrechen.",
+          "uns langsam in Richtung Landezone zurueckziehen.",
+          "den Kontakt beenden und Sicherheitsabstand herstellen.",
+          "ohne weitere Diskussion starten.",
+          "die Umgebung verlassen bevor noch etwas dazukommt.",
+          "den Planeten moeglichst geordnet hinter uns lassen."
+        ]
+      },
+      "count": 143
+    },
+    "branch_fragments_v60.15.json": {
+      "removed_or_rewritten_lines": {
+        "nature_force_detect.ini": [
+          "Die geologischen Sensoren melden ploetzlich eine rapide wachsende Druckfront unterhalb des Landegebietes",
+          "Mehrere atmos phaerische Messwerte springen gleichzeitig in Bereiche die fuer einen ruhigen Aufenthalt ausgesprochen ungeeignet sind",
+          "Die seismischen Sonden registrieren eine Wanderung der gesamten Gesteinsschicht unter unserem Standort",
+          "Ein lokales Wettergebilde gewinnt innerhalb weniger Sekunden erheblich an Energie und bewegt sich direkt auf den Landeplatz zu",
+          "Die Magnetfeldsensoren zeigen eine starke planetare Entladung die sich entlang der Oberflaeche ausbreitet",
+          "Unterhalb der Landeflaeche baut sich ein enormer thermischer Gradient auf. Das ist geologisch interessant und praktisch ziemlich laestig",
+          "Die Umgebung veraendert sich ohne biologischen Ausloeser. Offenbar reicht der Planet selbst als Problem vollkommen aus"
+        ],
+        "nature_force_escalation.ini": [
+          "Die erste Front erreicht das Schiff und laesst die Aussenhuelle deutlich vibrieren",
+          "Mehrere Bodenanker verlieren gleichzeitig den Kontakt zum Untergrund",
+          "Die Sichtweite faellt auf wenige meter und externe Kameras liefern nur noch stark gestoerte Bilder",
+          "Der Untergrund hebt sich auf einer Seite des Schattels um fast einen meter",
+          "Eine weitere Druckwelle trifft den Landeplatz und ueberlastet kurzzeitig mehrere Aussensensoren",
+          "Die thermische Belastung steigt schneller als die Kuehlung nachregeln kann",
+          "Die lokale Gravitation schwankt geringfuegig durch die massiven Bodenbewegungen. Das ist neu und ganz sicher nicht hilfreich"
+        ],
+        "nature_force_response.ini": [
+          "Die Bodenanker werden geloest und das Schiff fuer einen sofortigen Start vorbereitet",
+          "Wir ziehen die externen Sensorarme ein bevor der Planet sie fuer uns demontiert",
+          "Die Triebwerke laufen vor und halten das Schattel bereits einige zentimeter ueber dem instabilen Boden",
+          "Ich markiere die Messdaten als ausreichend. Wissenschaftlicher Erkenntnisgewinn ist gut, zerdrueckte Landebeine eher weniger",
+          "Alle Aussenteams werden zurueckgerufen und die Luke verriegelt",
+          "Wir brechen die Beobachtung ab und wechseln von Forschungsbetrieb auf Rueckstart"
+        ],
+        "nature_force_retreat.ini": [
+          "Der Planet ist faszinierend, aber er darf gerne ohne uns weiter explodieren",
+          "Ich setze den Aufenthalt auf beendet bevor aus interessanter Geologie eine Bergungsmission wird",
+          "Die letzte Messsonde wird aufgegeben und der sofortige Abflug freigegeben"
+        ],
+        "nature_force_scale.ini": [
+          "Die Ausdehnung des Ereignisses liegt inzwischen weit ausserhalb unseres direkt erfassbaren Landegebietes",
+          "Scannerprojektionen zeigen das sich die Stoerung entlang einer planetaren Bruchzone fortsetzt",
+          "Das Phaenomen ist kein lokaler Zufall sondern Bestandteil eines wesentlich groesseren Wetter und Geologiesystems",
+          "Die Energie des Vorgangs uebersteigt unsere ersten Messungen um mehrere Groessenordnungen",
+          "Mehrere unabhaengige Sensoren bestaetigen das sich die Situation weiter beschleunigt",
+          "Unsere Modelle kommen zu dem wenig beruhigenden Ergebnis das der aktuelle Standort exakt in der weiteren Ausbreitungsrichtung liegt"
+        ],
+        "nature_force_ship_effect.ini": [
+          "Die strukturelle Belastung bleibt noch innerhalb der Toleranz aber ich moechte diese Grenze heute nicht persoenlich kennenlernen",
+          "Mehrere Sensorabdeckungen wurden beschaedigt und die automatische Reparatur ist bereits aktiv",
+          "Die Steuerduesen muessen permanent gegen die Bewegung des Untergrundes arbeiten",
+          "Unsere Landebeine melden ungleichmaessige Lasten und verlieren langsam ihre sichere Position",
+          "Feiner mineralischer Staub dringt in mehrere aeussere Wartungsschichten ein",
+          "Die Kuehlsysteme laufen mit erhoehter Leistung und beginnen unangenehm viel Reserveenergie zu verbrauchen",
+          "Die Navigationsplattform kann den Standort nur noch mit staendigen Korrekturen stabil halten"
+        ],
+        "nature_force_type.ini": [
+          "Ein extrem dichter Niederschlag aus mineralischen Partikeln beginnt die Umgebung zu bedecken",
+          "Ein naher Hang beginnt sich auf breiter Front zu bewegen und schiebt grosse Gesteinsmassen in Richtung Schiff"
+        ]
+      },
+      "count": 38
+    },
+    "branch_fragments_v60.16.json": {
+      "removed_or_rewritten_lines": {},
+      "count": 0
+    },
+    "fragment_expansion_v60.16.json": {
+      "removed_or_rewritten_lines": {
+        "abandoned_orbital_trace.ini": [
+          "Die Luftschleusenstatistik zeigt eine ausgedehnte Zahl von Ausgaengen innerhalb eines sehr kurzen Zeitraums"
+        ],
+        "abandoned_surface_trace.ini": [
+          "An mehreren Waenden sind helle Bereiche sichtbar an denen frueher ausgedehnte Gegenstaende befestigt waren"
+        ],
+        "cloud_adder.ini": [
+          "durchzogen von",
+          "stellenweise vermischt mit",
+          "ueberlagert von",
+          "an den Raendern uebergehend in",
+          "in einzelnen Feldern kombiniert mit",
+          "in breiten Baendern neben",
+          "mit vereinzelten Zonen aus"
+        ],
+        "cloud_adder_end.ini": [
+          "in feinen Wirbeln verteilt",
+          "in breiten Fronten angeordnet",
+          "wolkenartig verwischt",
+          "ringfoermig geschichtet",
+          "in unregelmaessigen Feldern sichtbar",
+          "von feinen Schlieren durchsetzt",
+          "in grossen Wirbelzonen konzentriert"
+        ],
+        "cloud_color.ini": [
+          "kaltes silberblau"
+        ],
+        "cloud_color2.ini": [
+          "kaltes stahlblau"
+        ],
+        "cloud_desc.ini": [
+          "Dichte Wolkenfelder zeigen sich in",
+          "Mehrschichtige Wolkenbaenke erscheinen in",
+          "Die obere Atmosphaere traegt Wolken in",
+          "Der Himmel ist grossflaechig bedeckt von Wolken in",
+          "Vereinzelte Sturmzellen sind sichtbar in",
+          "Breite atmosphaerische Wirbel zeigen Wolken in",
+          "In mehreren Hoehenschichten liegen Wolken in"
+        ],
+        "distress_context.ini": [
+          "Abseits der geplanten Route sendet ein unbekanntes Objekt in ausgedehnten Abstaenden ein Notsignal"
+        ],
+        "distress_signal_origin.ini": [
+          "Die Peilung fuehrt zu einem kleinen Objekt knapp ausserhalb einer erheblich geneigten Umlaufbahn"
+        ],
+        "distress_vessel_desc.ini": [
+          "Der Notruf kommt von einem Forschungsschiff mit erheblich verbrannten Triebwerkssektionen",
+          "Ein erheblich beschaedigtes Schiff treibt ohne Kurskorrektur durch den Systemraum und sendet weiterhin automatisch"
+        ],
+        "fauna_appearance.ini": [
+          "Es handelt sich um flache vierbeinige Organismen mit leuchtenden Seitenstreifen und sehr ausgedehnten Kieferplatten"
+        ],
+        "fauna_behavior.ini": [
+          "Die Tiere umkreisen das Schiff und reagieren besonders erheblich auf die warmen Triebwerkssektionen"
+        ],
+        "fauna_detect.ini": [
+          "Thermische Signaturen bestaetigen zahlreiche Dutzend Tiere unterschiedlicher Groesse im direkten Umfeld"
+        ],
+        "flora_appearance.ini": [
+          "Zahlreiche meter hohe spiralenfoermige Staengel tragen harte glasartige Blaetter"
+        ],
+        "flora_attack.ini": [
+          "Die Pflanzen setzen eine erheblich korrosive Fluessigkeit frei die auf der Aussenhuelle reagiert"
+        ],
+        "jump_story_already_used.ini": [
+          "Ich wiederhole mich nur ungern und diese Story ganz stabil nicht. Neuer Sprung, bitte"
+        ],
+        "life_possibility.ini": [
+          "sehr wahrscheinlich"
+        ],
+        "nature_force_detect.ini": [
+          "Die geologischen Sensoren melden unvermittelt eine rapide wachsende Druckfront unterhalb des Landegebietes",
+          "Zahlreiche atmos phaerische Messwerte springen gleichzeitig in Bereiche die fuer einen ruhigen Aufenthalt ausgesprochen ungeeignet sind",
+          "Die Umgebung veraendert sich ohne biologischen Ausloeser. Anscheinend reicht der Planet selbst als Problem vollkommen aus",
+          "Die geologischen Sensoren melden ploetzlich eine rapide wachsende Druckfront unterhalb des Landegebietes, eine zweite Messung bestaetigt den Befund",
+          "Mehrere atmos phaerische Messwerte springen gleichzeitig in Bereiche die fuer einen ruhigen Aufenthalt ausgesprochen ungeeignet sind, eine zweite Messung bestaetigt den Befund",
+          "Die seismischen Sonden registrieren eine Wanderung der gesamten Gesteinsschicht unter unserem Standort, eine zweite Messung bestaetigt den Befund",
+          "Ein lokales Wettergebilde gewinnt innerhalb weniger Sekunden erheblich an Energie und bewegt sich direkt auf den Landeplatz zu, eine zweite Messung bestaetigt den Befund"
+        ],
+        "nature_force_escalation.ini": [
+          "Die erste Front erreicht das Schiff und laesst die Aussenhuelle merklich vibrieren",
+          "Zahlreiche Bodenanker verlieren gleichzeitig den Kontakt zum Untergrund",
+          "Die Sichtweite faellt auf wenige meter und externe Kameras liefern nur noch erheblich gestoerte Bilder",
+          "Eine weitere Druckwelle trifft den Landeplatz und ueberlastet kurzzeitig zahlreiche Aussensensoren",
+          "Die lokale Gravitation schwankt geringfuegig durch die massiven Bodenbewegungen. Das ist neu und ganz stabil nicht hilfreich",
+          "Die erste Front erreicht das Schiff und laesst die Aussenhuelle deutlich vibrieren, damit steigt der Handlungsdruck merklich",
+          "Mehrere Bodenanker verlieren gleichzeitig den Kontakt zum Untergrund, damit steigt der Handlungsdruck merklich"
+        ],
+        "nature_force_response.ini": [
+          "Ich verlagere Energie auf Triebwerke und Lageregelung und reduziere alle nicht notwendigen Oberflaechenfunktionen, der Rueckweg bleibt dabei jederzeit offen",
+          "Die Bodenanker werden geloest und das Schiff fuer einen sofortigen Start vorbereitet, der Rueckweg bleibt dabei jederzeit offen",
+          "Wir ziehen die externen Sensorarme ein bevor der Planet sie fuer uns demontiert, der Rueckweg bleibt dabei jederzeit offen",
+          "Die Triebwerke laufen vor und halten das Schattel bereits einige zentimeter ueber dem instabilen Boden, der Rueckweg bleibt dabei jederzeit offen",
+          "Ich markiere die Messdaten als ausreichend. Wissenschaftlicher Erkenntnisgewinn ist gut, zerdrueckte Landebeine eher weniger, der Rueckweg bleibt dabei jederzeit offen",
+          "Alle Aussenteams werden zurueckgerufen und die Luke verriegelt, der Rueckweg bleibt dabei jederzeit offen",
+          "Wir brechen die Beobachtung ab und wechseln von Forschungsbetrieb auf Rueckstart, der Rueckweg bleibt dabei jederzeit offen"
+        ],
+        "nature_force_retreat.ini": [
+          "Die Natur hat ihren Standpunkt ausreichend merklich gemacht. Wir verlassen den Landeplatz",
+          "Wir haben genug Daten und merklich genug Warnungen gesammelt. Startsequenz folgt",
+          "Die Natur hat ihren Standpunkt ausreichend deutlich gemacht. Wir verlassen den Landeplatz, ohne den sicheren Rueckzug weiter zu verzoegern",
+          "Ein weiterer Aufenthalt wuerde nur noch bessere Messdaten ueber unsere eigene Beschaedigung liefern, ohne den sicheren Rueckzug weiter zu verzoegern",
+          "Die Sicherheitsprognose ist inzwischen eindeutig. Rueckzug zum Orbit wird eingeleitet, ohne den sicheren Rueckzug weiter zu verzoegern",
+          "Der Planet ist faszinierend, aber er darf gerne ohne uns weiter explodieren, ohne den sicheren Rueckzug weiter zu verzoegern",
+          "Ich setze den Aufenthalt auf beendet bevor aus interessanter Geologie eine Bergungsmission wird, ohne den sicheren Rueckzug weiter zu verzoegern"
+        ],
+        "nature_force_scale.ini": [
+          "Die Energie des Vorgangs uebersteigt unsere ersten Messungen um zahlreiche Groessenordnungen",
+          "Zahlreiche unabhaengige Sensoren bestaetigen das sich die Situation weiter beschleunigt",
+          "Die Ausdehnung des Ereignisses liegt inzwischen weit ausserhalb unseres direkt erfassbaren Landegebietes, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+          "Scannerprojektionen zeigen das sich die Stoerung entlang einer planetaren Bruchzone fortsetzt, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+          "Das Phaenomen ist kein lokaler Zufall sondern Bestandteil eines wesentlich groesseren Wetter und Geologiesystems, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+          "Die Energie des Vorgangs uebersteigt unsere ersten Messungen um mehrere Groessenordnungen, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+          "Mehrere unabhaengige Sensoren bestaetigen das sich die Situation weiter beschleunigt, die Messwerte werden laufend mit dem vorherigen Scan verglichen"
+        ],
+        "nature_force_ship_effect.ini": [
+          "Zahlreiche Sensorabdeckungen wurden beschaedigt und die automatische Reparatur ist bereits aktiv",
+          "Unsere Landebeine melden ungleichmaessige Lasten und verlieren allmaehlich ihre sichere Position",
+          "Feiner mineralischer Staub dringt in zahlreiche aeussere Wartungsschichten ein",
+          "Die strukturelle Belastung bleibt noch innerhalb der Toleranz aber ich moechte diese Grenze heute nicht persoenlich kennenlernen, die betroffenen Systeme bleiben unter Beobachtung",
+          "Mehrere Sensorabdeckungen wurden beschaedigt und die automatische Reparatur ist bereits aktiv, die betroffenen Systeme bleiben unter Beobachtung",
+          "Die Steuerduesen muessen permanent gegen die Bewegung des Untergrundes arbeiten, die betroffenen Systeme bleiben unter Beobachtung",
+          "Unsere Landebeine melden ungleichmaessige Lasten und verlieren langsam ihre sichere Position, die betroffenen Systeme bleiben unter Beobachtung"
+        ],
+        "nature_force_type.ini": [
+          "Vor uns bildet sich eine zahlreiche kilometer breite Staubwand mit elektrisch geladenen Partikeln",
+          "Die Temperatur faellt innerhalb kurzer Zeit so erheblich ab das freiliegende Fluessigkeiten schlagartig kristallisieren",
+          "Ein naher Hang beginnt sich auf breiter Front zu bewegen und schiebt ausgedehnte Gesteinsmassen in Richtung Schiff",
+          "Vor uns bildet sich eine mehrere kilometer breite Staubwand mit elektrisch geladenen Partikeln, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+          "Aus mehreren Bodenspalten tritt ueberhitztes Gas aus und erzeugt eine Kette kleiner Eruptionen, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+          "Eine Serie starker Bodenwellen laeuft wie eine langsame Brandung durch das gesamte Tal, die Messwerte werden laufend mit dem vorherigen Scan verglichen",
+          "Die Temperatur faellt innerhalb kurzer Zeit so stark ab das freiliegende Fluessigkeiten schlagartig kristallisieren, die Messwerte werden laufend mit dem vorherigen Scan verglichen"
+        ],
+        "planet_detour_subsurface.ini": [
+          "Der Untergrundscanner markiert einen abgeschlossenen Hohlraum zahlreiche hundert Meter unter der Oberflaeche"
+        ],
+        "planet_detour_weather.ini": [
+          "Die Atmosphaere wird innerhalb kurzer Zeit elektrisch merklich aktiver",
+          "Ein breites Niederschlagsband zieht auf den Landeplatz zu und enthaelt erheblich korrosive Partikel"
+        ],
+        "planet_surface_structure_adder.ini": [
+          "gleichzeitig",
+          "in weiteren Zonen",
+          "lokal auch",
+          "dazwischen",
+          "vereinzelt auch",
+          "auf grossen Flaechen auch",
+          "in Randbereichen auch"
+        ],
+        "planet_target_info.ini": [
+          "Ein erheblich verschluesseltes Notsignal wird von der Rueckseite des Planeten gesendet"
+        ],
+        "space_debris_composition.ini": [
+          "Zwischen den Truemmern befinden sich versiegelte Container, Reaktorteile und ausgedehnte Mengen zerbrochener Panzerung"
+        ],
+        "space_debris_origin.ini": [
+          "Die Sensoren zeigen ein altes Kollisionsfeld mit tausenden unterschiedlich ausgedehnten Fragmenten"
+        ],
+        "space_detour_solar_result.ini": [
+          "Ich verlege den Kurs hinter einen ausreichend ausgedehnten Himmelskoerper und warte die staerkste Phase ab"
+        ],
+        "space_phenomenon_effect.ini": [
+          "Beim weiteren Annaehern verschiebt sich unsere berechnete Position um zahlreiche kilometer ohne entsprechende Bewegung"
+        ],
+        "space_restricted_warning.ini": [
+          "Ein erheblich gerichteter Sender warnt vor dem weiteren Eindringen in den inneren Bereich",
+          "Das System sagt sehr merklich nein. Historisch betrachtet ist das leider oft der Moment in dem wir genauer hinsehen"
+        ],
+        "space_route_target.ini": [
+          "Ein ungewoehnlicher Kontakt liegt zahlreiche hunderttausend kilometer vor unserem Kurs"
+        ],
+        "space_station_desc.ini": [
+          "Das Objekt ist eine erheblich gepanzerte Plattform mit zahlreichen Andockarmen und geschlossenen Hangartoren"
+        ],
+        "we_leaf_desc.ini": [
+          "es ist schon bedau erlich, aber wir haben wohl keine ausgedehnte chance uns auf gesittetem nie wo mit dem vieh auszutauschen"
+        ],
+        "planet_surface_temperature_desc.ini": [
+          "Im aktuellen Scan liegen die Temperaturen zwischen minus",
+          "Zwischen Tag und Nacht messen wir Werte von minus",
+          "Die Oberflaechentemperatur bewegt sich zwischen minus",
+          "Der thermische Mittelbereich beginnt bei minus",
+          "Je nach Region registrieren wir Temperaturen von minus"
+        ],
+        "planet_surface_temperature_adder.ini": [
+          "unter guenstiger Einstrahlung bis plus",
+          "im Extremfall bis plus",
+          "an dunklen Gesteinsflaechen bis plus",
+          "in geschuetzten Senken bis plus",
+          "waehrend kurzer Spitzen bis plus",
+          "bei maximaler Einstrahlung bis plus",
+          "in den waermsten Messpunkten bis plus"
+        ]
+      },
+      "count": 117
+    }
+  },
+  "total_documented_repairs": 298
+}
