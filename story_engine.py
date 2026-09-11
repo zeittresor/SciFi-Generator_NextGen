@@ -114,6 +114,21 @@ class StoryEngine:
 
     BRANCH_RNG_XOR = 0x5C1F1C0DE
 
+    # v60.16 sentence-library expansion deliberately reuses a few short
+    # operational clauses across many context-specific variants.  They are
+    # useful once, but hearing the exact same clause two or three times in a
+    # single mission makes otherwise independent fragments sound stitched
+    # together.  Keep the source files fully selectable while avoiding a
+    # repeated stock clause inside one generated story whenever another line
+    # is available in the current source file.
+    REPETITIVE_CLAUSE_MARKERS = (
+        "die Beobachtung wird zur Sicherheit im Missionslog festgehalten",
+        "der Rueckweg bleibt dabei jederzeit offen",
+        "die Sensoren bestaetigen diese Einordnung",
+        "die Kontrollmessung liefert vergleichbare Werte",
+        "alle kritischen Werte bleiben unter Beobachtung",
+    )
+
     def __init__(self, vars_dir: Path, sequence_file: Path):
         self.vars_dir = Path(vars_dir)
         self.sequence_file = Path(sequence_file)
@@ -251,6 +266,63 @@ class StoryEngine:
             return total
         return count(self.sequence)
 
+    def enumerate_branch_routes(self) -> list[list[str]]:
+        """Return every structurally reachable branch route without consuming RNG."""
+        def combine(steps: list[dict]) -> list[list[str]]:
+            routes: list[list[str]] = [[]]
+            for step in steps:
+                if str(step.get("kind", "pick")) != "branch":
+                    continue
+                branch_routes: list[list[str]] = []
+                for choice in step.get("choices", []):
+                    label = str(choice.get("label") or choice.get("id") or "Unbenannt")
+                    nested = combine(choice.get("steps", []))
+                    if not nested:
+                        nested = [[]]
+                    branch_routes.extend([[label, *tail] for tail in nested])
+                if not branch_routes:
+                    branch_routes = [[]]
+                routes = [left + right for left in routes for right in branch_routes]
+            return routes
+
+        return combine(self.sequence)
+
+    def _enumerate_source_paths(self, steps: list[dict]) -> list[list[str]]:
+        paths: list[list[str]] = [[]]
+        for step in steps:
+            kind = str(step.get("kind", "pick"))
+            if kind == "pick":
+                token = str(step.get("file", ""))
+                paths = [path + [token] for path in paths]
+            elif kind == "value":
+                token = f"<value:{step.get('name', '')}>"
+                paths = [path + [token] for path in paths]
+            elif kind == "branch":
+                alternatives: list[list[str]] = []
+                for choice in step.get("choices", []):
+                    alternatives.extend(self._enumerate_source_paths(choice.get("steps", [])))
+                paths = [left + right for left in paths for right in alternatives]
+        return paths
+
+    def validate_terminal_invariant(self) -> list[str]:
+        """Verify that every possible storyline returns to the common jump-ready end."""
+        expected = [
+            "mission_free_space.ini",
+            "mission_end_status.ini",
+            "ship_liftoff_jumpready.ini",
+            "mission_jump_prompt.ini",
+        ]
+        errors: list[str] = []
+        paths = self._enumerate_source_paths(self.sequence)
+        if not paths:
+            return ["Die Sequenz besitzt keinen erzaehlbaren Pfad."]
+        for index, path in enumerate(paths, start=1):
+            if path[-len(expected):] != expected:
+                errors.append(
+                    f"Pfad {index} endet mit {path[-len(expected):]!r} statt {expected!r}"
+                )
+        return errors
+
     def validate_sources(self) -> list[str]:
         missing: list[str] = []
 
@@ -268,6 +340,22 @@ class StoryEngine:
         visit(self.sequence)
         return sorted(set(missing))
 
+    @staticmethod
+    def _join_fragment(raw: str, suffix: str) -> str:
+        """Join a selected source fragment and its configured suffix cleanly.
+
+        Legacy source files occasionally already carry sentence punctuation while the
+        sequence adds the same punctuation.  Keep the source text traceable, but avoid
+        creating artifacts such as ``..`` or ``.,`` in the rendered story.
+        """
+        base = raw.strip()
+        tail = suffix
+        if tail.startswith(".") and base.endswith((".", "!", "?")):
+            tail = tail[1:]
+        if tail.startswith(",") and base.endswith((",", ";", ":")):
+            tail = tail[1:]
+        return base + tail
+
     def generate(
         self,
         seed: int | None = None,
@@ -282,6 +370,8 @@ class StoryEngine:
         branch_rng = random.Random(seed ^ self.BRANCH_RNG_XOR)
         saved: dict[str, str] = {}
         selections: list[Selection] = []
+        used_repetitive_markers: set[str] = set()
+        used_raw_by_source: dict[str, set[str]] = {}
         fragments: list[str] = []
         decisions: list[BranchDecision] = []
         plan = self._expand_plan(self.sequence, branch_rng, decisions)
@@ -313,11 +403,51 @@ class StoryEngine:
                     if not source_path.is_file():
                         raise StoryEngineError(f"Satzteil-Datei fehlt: {source_path}")
                     choices = self._read_lines(source_path, ignore_blank_lines)
+                    exclude_saved = step.get("exclude_saved", [])
+                    if isinstance(exclude_saved, str):
+                        exclude_saved = [exclude_saved]
+                    excluded_values = {
+                        saved[name].strip().casefold()
+                        for name in exclude_saved
+                        if name in saved
+                    }
+                    if excluded_values:
+                        filtered = [
+                            choice for choice in choices
+                            if choice[1].strip().casefold() not in excluded_values
+                        ]
+                        if filtered:
+                            choices = filtered
+
+                    if step.get("avoid_repeat"):
+                        previous = used_raw_by_source.get(filename, set())
+                        if previous:
+                            fresh = [
+                                candidate for candidate in choices
+                                if candidate[1].strip().casefold() not in previous
+                            ]
+                            if fresh:
+                                choices = fresh
+
+                    if used_repetitive_markers:
+                        def has_used_marker(candidate: tuple[int, str]) -> bool:
+                            folded = candidate[1].casefold()
+                            return any(marker.casefold() in folded for marker in used_repetitive_markers)
+
+                        varied = [candidate for candidate in choices if not has_used_marker(candidate)]
+                        if varied:
+                            choices = varied
+
                     line_number, raw = text_rng.choice(choices)
+                    used_raw_by_source.setdefault(filename, set()).add(raw.strip().casefold())
+                    raw_folded = raw.casefold()
+                    for marker in self.REPETITIVE_CLAUSE_MARKERS:
+                        if marker.casefold() in raw_folded:
+                            used_repetitive_markers.add(marker)
                     save_as = step.get("save_as")
                     if save_as:
-                        saved[str(save_as)] = raw
-                    fragment = raw + suffix
+                        saved[str(save_as)] = raw.strip()
+                    fragment = self._join_fragment(raw, suffix)
                     fragments.append(fragment)
                     rendered_fragment = self.legacy_umlaut_conversion(fragment) if legacy_umlauts else fragment
                     selections.append(
@@ -332,7 +462,7 @@ class StoryEngine:
                     if name not in saved:
                         raise StoryEngineError(f"Gespeicherter Wert ist nicht verfügbar: {name}")
                     raw = saved[name]
-                    fragment = raw + suffix
+                    fragment = self._join_fragment(raw, suffix)
                     fragments.append(fragment)
                     rendered_fragment = self.legacy_umlaut_conversion(fragment) if legacy_umlauts else fragment
                     selections.append(

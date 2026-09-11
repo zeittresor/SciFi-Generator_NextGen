@@ -6,12 +6,12 @@ from math import gcd
 from datetime import datetime
 from pathlib import Path
 
-from PySide6.QtCore import Qt, QObject, Signal, QThread, QTimer, QUrl
-from PySide6.QtGui import QAction, QDesktopServices, QFont, QIcon, QResizeEvent
-from PySide6.QtMultimedia import QAudioOutput, QMediaPlayer
-from PySide6.QtTextToSpeech import QTextToSpeech
-from PySide6.QtWidgets import (
-    QApplication, QCheckBox, QComboBox, QDoubleSpinBox, QFileDialog, QFormLayout, QFrame,
+from PyQt6.QtCore import Qt, QObject, pyqtSignal, QThread, QTimer, QUrl
+from PyQt6.QtGui import QAction, QDesktopServices, QFont, QIcon, QResizeEvent
+from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
+from PyQt6.QtTextToSpeech import QTextToSpeech
+from PyQt6.QtWidgets import (
+    QApplication, QCheckBox, QComboBox, QDoubleSpinBox, QFileDialog, QFormLayout, QFrame, QGridLayout,
     QGroupBox, QHBoxLayout, QLabel, QLayout, QLineEdit, QMainWindow, QMessageBox,
     QProgressBar, QProgressDialog, QPushButton, QScrollArea, QSizePolicy, QSlider, QSpinBox,
     QTabWidget, QTextEdit, QVBoxLayout, QWidget,
@@ -46,11 +46,11 @@ BACKEND_LABELS = {
     "qt": "Qt",
 }
 
-BASE_COMPACT_WIDTH = 720
-BASE_WINDOW_HEIGHT = 900
-BASE_CONTROL_VIEWPORT_WIDTH = 650
-BASE_CONTROL_VIEWPORT_HEIGHT = 820
-MAX_UI_SCALE = 1.50
+BASE_COMPACT_WIDTH = 1180
+BASE_WINDOW_HEIGHT = 820
+BASE_CONTROL_VIEWPORT_WIDTH = 1080
+BASE_CONTROL_VIEWPORT_HEIGHT = 720
+MAX_UI_SCALE = 1.30
 
 VIDEO_RESOLUTION_PRESETS = [
     ("512 × 512 (1:1, kompakt)", 512, 512),
@@ -68,6 +68,11 @@ def emergency_stylesheet(scale: float = 1.0) -> str:
     px = lambda value: max(1, round(value * scale))
     return f"""
 QMainWindow, QWidget {{ background: #1B1D21; color: #F2F4F7; }}
+QFrame#appHeader, QFrame#heroCard, QFrame#statusStrip {{ background: #262A31; border: 1px solid #788493; border-radius: {px(8)}px; }}
+QLabel#appTitle {{ font-size: {px(19)}px; font-weight: 700; }}
+QLabel#sectionHeroTitle {{ font-size: {px(15)}px; font-weight: 700; }}
+QLabel#versionBadge, QLabel#stepBadge {{ background: #6B8FD6; color: #FFFFFF; border-radius: {px(8)}px; padding: {px(5)}px {px(9)}px; font-weight: 700; }}
+QLabel#infoCard {{ background: #262A31; border-left: {px(4)}px solid #6B8FD6; padding: {px(9)}px; }}
 QTextEdit, QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {{ background: #0F1115; color: #FFFFFF; border: 1px solid #788493; }}
 QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {{ min-height: {px(26)}px; padding: {px(2)}px {px(5)}px; }}
 QPushButton {{ background: #343941; color: #FFFFFF; border: 1px solid #788493; padding: {px(5)}px {px(9)}px; min-height: {px(28)}px; }}
@@ -84,7 +89,7 @@ QScrollBar:horizontal {{ height: {px(14)}px; }}
 
 
 class CollapsibleSection(QWidget):
-    expanded_changed = Signal(bool)
+    expanded_changed = pyqtSignal(bool)
 
     def __init__(self, title: str, *, expanded: bool = False, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -143,9 +148,9 @@ class CollapsibleSection(QWidget):
 
 
 class StoryboardGenerationWorker(QObject):
-    progress = Signal(int, str)
-    finished = Signal(object, str, str, str)
-    error = Signal(str)
+    progress = pyqtSignal(int, str)
+    finished = pyqtSignal(object, str, str, str)
+    error = pyqtSignal(str)
 
     def __init__(
         self,
@@ -294,87 +299,157 @@ class MainWindow(QMainWindow):
 
     def _build_ui(self) -> None:
         self.setWindowTitle(f"{APP_NAME} v{APP_VERSION}")
-        self.resize(BASE_COMPACT_WIDTH, BASE_WINDOW_HEIGHT)
-        self.setMinimumSize(520, 560)
+        self.resize(1180, 820)
+        self.setMinimumSize(860, 620)
         icon_path = BASE_DIR / "app_icon.svg"
         if icon_path.is_file():
             self.setWindowIcon(QIcon(str(icon_path)))
 
         central = QWidget()
-        root = QHBoxLayout(central)
+        root = QVBoxLayout(central)
         self.root_layout = root
-        root.setContentsMargins(8, 8, 8, 8)
-        root.setSpacing(8)
+        root.setContentsMargins(12, 10, 12, 10)
+        root.setSpacing(10)
         self.setCentralWidget(central)
 
-        self.tabs = QTabWidget()
-        self.story_edit = QTextEdit()
-        self.story_edit.setPlaceholderText("Zuerst „Sektor-Sprung berechnen“ anklicken …")
-        self.story_edit.setAcceptRichText(False)
-        self.story_edit.setLineWrapMode(QTextEdit.LineWrapMode.WidgetWidth)
-        self.log_edit = QTextEdit()
-        self.log_edit.setReadOnly(True)
-        self.log_edit.setAcceptRichText(False)
-        self.prompts_edit = QTextEdit()
-        self.prompts_edit.setReadOnly(True)
-        self.prompts_edit.setAcceptRichText(False)
-        self.prompts_edit.setPlaceholderText("Hier können optionale Bild-Prompts oder ein Gesamtpaket-Produktionsauftrag angezeigt werden …")
-        self.tabs.addTab(self.story_edit, "Story")
-        self.tabs.addTab(self.log_edit, "Auswahlprotokoll")
-        self.tabs.addTab(self.prompts_edit, "Prompts / Produktion")
-        self.tabs.setMinimumWidth(570)
-        self.tabs.hide()
-        root.addWidget(self.tabs, 2)
+        header = QFrame()
+        header.setObjectName("appHeader")
+        header_layout = QHBoxLayout(header)
+        header_layout.setContentsMargins(16, 12, 16, 12)
+        title_box = QVBoxLayout()
+        title_box.setSpacing(2)
+        title = QLabel(APP_NAME)
+        title.setObjectName("appTitle")
+        subtitle = QLabel("Zufällige Sektor-Missionen · Audio · Storyboard · LLM-Gesamtpakete")
+        subtitle.setObjectName("appSubtitle")
+        title_box.addWidget(title)
+        title_box.addWidget(subtitle)
+        header_layout.addLayout(title_box, 1)
+        version_badge = QLabel(f"v{APP_VERSION}")
+        version_badge.setObjectName("versionBadge")
+        version_badge.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        header_layout.addWidget(version_badge)
+        root.addWidget(header)
 
-        controls = QWidget()
-        self.controls_widget = controls
-        controls.setObjectName("controlsContent")
-        controls.setMinimumWidth(610)
-        controls.setSizePolicy(
-            QSizePolicy.Policy.Expanding,
-            QSizePolicy.Policy.MinimumExpanding,
+        self.main_tabs = QTabWidget()
+        self.main_tabs.setObjectName("mainTabs")
+        self.main_tabs.setDocumentMode(True)
+        self.main_tabs.setUsesScrollButtons(True)
+        root.addWidget(self.main_tabs, 1)
+
+        def make_scroll_page(object_name: str) -> tuple[QScrollArea, QWidget, QVBoxLayout]:
+            content = QWidget()
+            content.setObjectName(object_name)
+            layout = QVBoxLayout(content)
+            layout.setContentsMargins(16, 14, 16, 18)
+            layout.setSpacing(12)
+            layout.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
+            scroll = QScrollArea()
+            scroll.setObjectName(object_name + "Scroll")
+            scroll.setFrameShape(QFrame.Shape.NoFrame)
+            scroll.setWidgetResizable(True)
+            scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+            scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+            scroll.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
+            scroll.setWidget(content)
+            return scroll, content, layout
+
+        # ------------------------------------------------------------------
+        # Tab 1: Mission
+        # ------------------------------------------------------------------
+        mission_scroll, mission_page, mission_layout = make_scroll_page("missionPage")
+        self.controls_scroll = mission_scroll
+        self.controls_widget = mission_page
+        self.controls_layout = mission_layout
+
+        mission_intro = QFrame()
+        mission_intro.setObjectName("heroCard")
+        mission_intro_layout = QVBoxLayout(mission_intro)
+        mission_intro_layout.setContentsMargins(16, 14, 16, 14)
+        mission_intro_title = QLabel("Neue Mission")
+        mission_intro_title.setObjectName("sectionHeroTitle")
+        mission_intro_text = QLabel(
+            "Jede Geschichte beginnt mit der Ankunft in einem neuen Sternensystem und endet wieder im freien Raum, "
+            "bereit für den nächsten Sektorsprung. Der Mittelteil verzweigt sich abhängig vom Seed in unterschiedliche Ereignisse."
         )
-        right = QVBoxLayout(controls)
-        self.controls_layout = right
-        right.setContentsMargins(0, 0, 0, 0)
-        right.setSpacing(8)
-        right.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
+        mission_intro_text.setWordWrap(True)
+        mission_intro_text.setObjectName("mutedText")
+        mission_intro_layout.addWidget(mission_intro_title)
+        mission_intro_layout.addWidget(mission_intro_text)
+        mission_layout.addWidget(mission_intro)
 
         action_group = QGroupBox("Sektor-Sprung")
         action_layout = QVBoxLayout(action_group)
+        action_layout.setSpacing(10)
+        action_buttons = QHBoxLayout()
         self.generate_button = QPushButton("Sektor-Sprung berechnen")
+        self.generate_button.setObjectName("primaryAction")
         self.generate_button.setToolTip("Erzeugt eine neue Geschichte, liest sie aber noch nicht vor.")
         self.generate_button.clicked.connect(self.generate_story)
         self.execute_button = QPushButton("Sprung durchführen")
+        self.execute_button.setObjectName("secondaryAction")
         self.execute_button.setToolTip(
-            "Liest die zuvor berechnete Geschichte einmal vollständig vor. "
-            "Für eine weitere Erzählung muss danach ein neuer Sektor-Sprung berechnet werden."
+            "Liest die zuvor berechnete Geschichte einmal vollständig vor. Für eine weitere Erzählung muss danach ein neuer Sektor-Sprung berechnet werden."
         )
         self.execute_button.clicked.connect(self.execute_jump)
         self.execute_button.setEnabled(False)
-        self.toggle_story_button = QPushButton("Story / Log / Prompts einblenden  >")
-        self.toggle_story_button.setToolTip("Blendet die berechnete Story, das Auswahlprotokoll und optionale Bild-Prompts ein oder aus.")
+        action_buttons.addWidget(self.generate_button, 2)
+        action_buttons.addWidget(self.execute_button, 2)
+        action_layout.addLayout(action_buttons)
+
+        mission_nav = QHBoxLayout()
+        self.toggle_story_button = QPushButton("Story & Trace anzeigen")
+        self.toggle_story_button.setToolTip("Öffnet die Story-, Auswahlprotokoll- und Produktionsansicht.")
         self.toggle_story_button.clicked.connect(self.toggle_story_panel)
-        action_layout.addWidget(self.generate_button)
-        action_layout.addWidget(self.execute_button)
-        action_layout.addWidget(self.toggle_story_button)
-        right.addWidget(action_group)
+        media_nav_button = QPushButton("Zum Medienpaket")
+        media_nav_button.setToolTip("Öffnet die Einstellungen für Bildserie oder Gesamtpaket.")
+        media_nav_button.clicked.connect(lambda: self.main_tabs.setCurrentIndex(1))
+        mission_nav.addWidget(self.toggle_story_button)
+        mission_nav.addWidget(media_nav_button)
+        action_layout.addLayout(mission_nav)
+        mission_layout.addWidget(action_group)
 
-        storyboard_group = QGroupBox("Medienausgabe / Übergabe")
-        storyboard_layout = QVBoxLayout(storyboard_group)
+        workflow_group = QGroupBox("Typischer Ablauf")
+        workflow_layout = QGridLayout(workflow_group)
+        workflow_layout.setHorizontalSpacing(14)
+        workflow_layout.setVerticalSpacing(8)
+        workflow_steps = (
+            ("1", "Mission erzeugen", "Sektor-Sprung berechnen und Storyzweig zufällig auswählen."),
+            ("2", "Story prüfen oder vorlesen", "Text und Trace ansehen oder den Sprung per TTS durchführen."),
+            ("3", "Optional Medien erzeugen", "Storyboard oder Gesamtpaket für eine Ziel-LLM vorbereiten."),
+            ("4", "Nächster Sprung", "Nach Missionsende ist das Schiff wieder frei und sprungbereit."),
+        )
+        for row, (number, step_title, description) in enumerate(workflow_steps):
+            badge = QLabel(number)
+            badge.setObjectName("stepBadge")
+            badge.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            workflow_layout.addWidget(badge, row, 0)
+            step_label = QLabel(f"<b>{step_title}</b><br>{description}")
+            step_label.setWordWrap(True)
+            workflow_layout.addWidget(step_label, row, 1)
+        workflow_layout.setColumnStretch(1, 1)
+        mission_layout.addWidget(workflow_group)
+        mission_layout.addStretch(1)
+        self.main_tabs.addTab(mission_scroll, "Mission")
 
+        # ------------------------------------------------------------------
+        # Tab 2: Medienpaket
+        # ------------------------------------------------------------------
+        media_scroll, media_page, media_layout = make_scroll_page("mediaPage")
         self.workflow_intro_label = QLabel(
-            "<b>Empfohlener Ablauf:</b> 1. Story berechnen · 2. Gesamtpaket-Auftrag erzeugen · "
-            "3. Übergabe-ZIP speichern und in einen neuen KI-Chat hochladen."
+            "<b>Medienausgabe:</b> Wähle zuerst, ob nur eine Bildserie oder ein vollständiges Gesamtpaket mit TTS, "
+            "Hintergrundsound, Video und ZIP erzeugt werden soll. Optionale Details bleiben standardmäßig eingeklappt."
         )
         self.workflow_intro_label.setWordWrap(True)
-        storyboard_layout.addWidget(self.workflow_intro_label)
-
         self.workflow_intro_label.setObjectName("workflowIntro")
+        media_layout.addWidget(self.workflow_intro_label)
 
-        result_label = QLabel("Gewünschtes Ergebnis")
-        result_label.setObjectName("fieldHeading")
-        storyboard_layout.addWidget(result_label)
+        target_group = QGroupBox("Ziel und Ausgabe")
+        target_form = QFormLayout(target_group)
+        target_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        target_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
+        target_form.setHorizontalSpacing(18)
+        target_form.setVerticalSpacing(9)
 
         self.output_kind_combo = QComboBox()
         self.output_kind_combo.addItems([
@@ -382,73 +457,54 @@ class MainWindow(QMainWindow):
             "Nur Bildserie — keine Audio- oder Videodatei",
         ])
         self.output_kind_combo.setCurrentIndex(0)
-        self.output_kind_combo.setMinimumContentsLength(44)
         self.output_kind_combo.setToolTip(
             "Gesamtpaket erzeugt einen Produktionsauftrag für Bilder, TTS, Hintergrundmix, Video und ZIP. "
             "Nur Bildserie fordert ausdrücklich keine Audio- oder Videodateien an."
         )
         self.output_kind_combo.currentTextChanged.connect(self._update_target_ai_controls)
-        storyboard_layout.addWidget(self.output_kind_combo)
+        target_form.addRow("Gewünschtes Ergebnis:", self.output_kind_combo)
 
-        self.output_kind_status_label = QLabel()
-        self.output_kind_status_label.setObjectName("workflowStatus")
-        self.output_kind_status_label.setWordWrap(True)
-        self.output_kind_status_label.setContentsMargins(10, 8, 10, 8)
-        storyboard_layout.addWidget(self.output_kind_status_label)
-
-        choices_row = QHBoxLayout()
-        choices_row.setSpacing(12)
-        target_box = QWidget()
-        target_layout = QVBoxLayout(target_box)
-        target_layout.setContentsMargins(0, 0, 0, 0)
-        target_layout.setSpacing(4)
-        target_layout.addWidget(QLabel("Zielsystem / LLM"))
         self.target_ai_combo = QComboBox()
         self.target_ai_combo.addItems(self.prompt_profile_manager.names())
         self.target_ai_combo.currentTextChanged.connect(self._update_target_ai_controls)
-        target_layout.addWidget(self.target_ai_combo)
-        choices_row.addWidget(target_box, 3)
+        target_form.addRow("Zielsystem / LLM:", self.target_ai_combo)
 
-        scene_box = QWidget()
-        scene_layout = QVBoxLayout(scene_box)
-        scene_layout.setContentsMargins(0, 0, 0, 0)
-        scene_layout.setSpacing(4)
-        scene_layout.addWidget(QLabel("Schlüsselszenen"))
         self.scene_count_spin = QSpinBox()
         self.scene_count_spin.setRange(6, 10)
         self.scene_count_spin.setValue(8)
         self.scene_count_spin.valueChanged.connect(self._update_collapsible_summaries)
-        scene_layout.addWidget(self.scene_count_spin)
-        choices_row.addWidget(scene_box, 1)
-        storyboard_layout.addLayout(choices_row)
+        target_form.addRow("Schlüsselszenen:", self.scene_count_spin)
 
         self.custom_target_container = QWidget()
-        custom_target_layout = QVBoxLayout(self.custom_target_container)
+        custom_target_layout = QHBoxLayout(self.custom_target_container)
         custom_target_layout.setContentsMargins(0, 0, 0, 0)
-        custom_target_layout.setSpacing(4)
-        self.custom_target_label = QLabel("Andere KI")
-        custom_target_layout.addWidget(self.custom_target_label)
+        self.custom_target_label = QLabel("Andere KI:")
         self.custom_target_edit = QLineEdit()
         self.custom_target_edit.setPlaceholderText("Name der anderen Bildsynthese-KI")
         self.custom_target_edit.setToolTip("Wird nur beim Zielprofil 'Andere' verwendet.")
         self.custom_target_edit.textChanged.connect(self._update_target_ai_controls)
-        custom_target_layout.addWidget(self.custom_target_edit)
-        storyboard_layout.addWidget(self.custom_target_container)
+        custom_target_layout.addWidget(self.custom_target_label)
+        custom_target_layout.addWidget(self.custom_target_edit, 1)
+        target_form.addRow("", self.custom_target_container)
+        media_layout.addWidget(target_group)
 
-        self.media_options_section = CollapsibleSection(
-            "Video, Stimme und Übergänge (optional)", expanded=False
-        )
+        self.output_kind_status_label = QLabel()
+        self.output_kind_status_label.setObjectName("workflowStatus")
+        self.output_kind_status_label.setWordWrap(True)
+        media_layout.addWidget(self.output_kind_status_label)
+
+        self.media_options_section = CollapsibleSection("Video, Stimme und Übergänge (optional)", expanded=False)
         media_form = QFormLayout()
         media_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         media_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
+        media_form.setHorizontalSpacing(18)
+        media_form.setVerticalSpacing(8)
 
         self.video_resolution_combo = QComboBox()
         for label, width, height in VIDEO_RESOLUTION_PRESETS:
             self.video_resolution_combo.addItem(label, {"width": width, "height": height})
         self.video_resolution_combo.setCurrentIndex(1)
-        self.video_resolution_combo.setToolTip(
-            "Legt die exakte Zielauflösung des finalen Videos und das Seitenverhältnis der Szenenbilder fest."
-        )
+        self.video_resolution_combo.setToolTip("Legt die exakte Zielauflösung des finalen Videos und das Seitenverhältnis der Szenenbilder fest.")
         self.video_resolution_combo.currentIndexChanged.connect(self._update_video_resolution_controls)
         self.video_resolution_combo.currentIndexChanged.connect(self._update_collapsible_summaries)
         media_form.addRow("Videoauflösung:", self.video_resolution_combo)
@@ -475,6 +531,7 @@ class MainWindow(QMainWindow):
         custom_video_layout.addWidget(self.custom_video_width_spin)
         custom_video_layout.addWidget(QLabel("×"))
         custom_video_layout.addWidget(self.custom_video_height_spin)
+        custom_video_layout.addStretch(1)
         media_form.addRow("Eigene Größe:", self.custom_video_size_widget)
         self.custom_video_size_label = media_form.labelForField(self.custom_video_size_widget)
 
@@ -488,10 +545,7 @@ class MainWindow(QMainWindow):
             label = f"{fps} fps" + (" — empfohlen für Standbilder" if fps == 8 else "")
             self.video_fps_combo.addItem(label, fps)
         self.video_fps_combo.setCurrentIndex(0)
-        self.video_fps_combo.setToolTip(
-            "8 fps reichen für weitgehend statische Szenenbilder meist aus und halten das Video kleiner. "
-            "Höhere Werte sind für stärkere Bildbewegungen sinnvoll."
-        )
+        self.video_fps_combo.setToolTip("8 fps reichen für weitgehend statische Szenenbilder meist aus. Höhere Werte sind für stärkere Bildbewegungen sinnvoll.")
         self.video_fps_combo.currentIndexChanged.connect(self._update_collapsible_summaries)
         media_form.addRow("Bildrate:", self.video_fps_combo)
         self.video_fps_label = media_form.labelForField(self.video_fps_combo)
@@ -508,57 +562,31 @@ class MainWindow(QMainWindow):
         self.transition_label = media_form.labelForField(self.transition_spin)
 
         self.package_voice_character_combo = QComboBox()
-        self.package_voice_character_combo.addItems([
-            "Menschlich / natürlich",
-            "Neutral",
-            "Robotisch / synthetisch",
-        ])
-        self.package_voice_character_combo.setToolTip(
-            "Legt fest, ob die Stimme im Gesamtpaket möglichst natürlich wie ein Mensch, neutral oder bewusst robotisch wirken soll."
-        )
+        self.package_voice_character_combo.addItems(["Menschlich / natürlich", "Neutral", "Robotisch / synthetisch"])
         self.package_voice_character_combo.currentTextChanged.connect(self._update_collapsible_summaries)
         media_form.addRow("Stimmcharakter:", self.package_voice_character_combo)
         self.package_voice_character_label = media_form.labelForField(self.package_voice_character_combo)
 
         self.package_voice_gender_combo = QComboBox()
-        self.package_voice_gender_combo.addItems([
-            "Weiblich",
-            "Männlich",
-            "Neutral / androgyn",
-            "Egal",
-        ])
-        self.package_voice_gender_combo.setToolTip(
-            "Gewünschte stimmliche Wirkung für die Gesamtpaket-Vertonung. Bei einer Ersatzstimme soll diese Vorgabe erhalten bleiben."
-        )
+        self.package_voice_gender_combo.addItems(["Weiblich", "Männlich", "Neutral / androgyn", "Egal"])
         self.package_voice_gender_combo.currentTextChanged.connect(self._update_collapsible_summaries)
         media_form.addRow("Stimmliche Wirkung:", self.package_voice_gender_combo)
         self.package_voice_gender_label = media_form.labelForField(self.package_voice_gender_combo)
 
         self.package_voice_quality_combo = QComboBox()
-        self.package_voice_quality_combo.addItems([
-            "Beste verfügbare Qualität",
-            "Hohe Qualität",
-            "Standard / schnell",
-        ])
-        self.package_voice_quality_combo.setToolTip(
-            "Bei natürlicher Sprache werden hochwertige beziehungsweise neuronale Stimmen bevorzugt; einfache Roboter-Fallbacks sollen vermieden werden."
-        )
+        self.package_voice_quality_combo.addItems(["Beste verfügbare Qualität", "Hohe Qualität", "Standard / schnell"])
         self.package_voice_quality_combo.currentTextChanged.connect(self._update_collapsible_summaries)
         media_form.addRow("TTS-Qualität:", self.package_voice_quality_combo)
         self.package_voice_quality_label = media_form.labelForField(self.package_voice_quality_combo)
         self.media_options_section.content_layout.addLayout(media_form)
-        storyboard_layout.addWidget(self.media_options_section)
+        media_layout.addWidget(self.media_options_section)
 
-        self.result_contents_section = CollapsibleSection(
-            "Lieferumfang des Ergebnis-ZIP (optional)", expanded=False
-        )
+        self.result_contents_section = CollapsibleSection("Lieferumfang des Ergebnis-ZIP (optional)", expanded=False)
         result_contents_intro = QLabel(
-            "Diese Auswahl steuert nur, welche Dateien die Ziel-KI am Ende in das fertige Ergebnis-ZIP packen soll. "
-            "Das Video wird immer erstellt; Bilder und Audio werden für die Produktion trotzdem benötigt."
+            "Diese Auswahl bestimmt nur den finalen ZIP-Inhalt. Produktionsdateien dürfen intern trotzdem erzeugt werden, wenn sie für das Video benötigt werden."
         )
         result_contents_intro.setWordWrap(True)
         self.result_contents_section.content_layout.addWidget(result_contents_intro)
-
         self.result_include_video_check = QCheckBox("Fertiges Video (immer enthalten)")
         self.result_include_video_check.setChecked(True)
         self.result_include_video_check.setEnabled(False)
@@ -568,23 +596,15 @@ class MainWindow(QMainWindow):
         self.result_include_audio_check.setChecked(True)
         self.result_include_clips_check = QCheckBox("Einzelclips im Ergebnis-ZIP")
         self.result_include_clips_check.setChecked(False)
-        self.result_include_project_files_check = QCheckBox(
-            "Story, Prompts, Manifest, Log und Build-Dateien im Ergebnis-ZIP"
-        )
+        self.result_include_project_files_check = QCheckBox("Story, Prompts, Manifest, Log und Build-Dateien im Ergebnis-ZIP")
         self.result_include_project_files_check.setChecked(True)
-        for checkbox in (
-            self.result_include_images_check,
-            self.result_include_audio_check,
-            self.result_include_clips_check,
-            self.result_include_project_files_check,
-        ):
+        self.result_contents_section.content_layout.addWidget(self.result_include_video_check)
+        for checkbox in (self.result_include_images_check, self.result_include_audio_check, self.result_include_clips_check, self.result_include_project_files_check):
             checkbox.stateChanged.connect(self._update_collapsible_summaries)
             self.result_contents_section.content_layout.addWidget(checkbox)
-        storyboard_layout.addWidget(self.result_contents_section)
+        media_layout.addWidget(self.result_contents_section)
 
-        self.prompt_options_section = CollapsibleSection(
-            "Prompt-Verfeinerung mit Ollama (optional)", expanded=False
-        )
+        self.prompt_options_section = CollapsibleSection("Prompt-Verfeinerung mit Ollama (optional)", expanded=False)
         prompt_form = QFormLayout()
         prompt_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         prompt_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
@@ -596,50 +616,44 @@ class MainWindow(QMainWindow):
         self.ollama_model_combo = QComboBox()
         self.ollama_model_combo.setEditable(True)
         self.ollama_model_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
-        self.ollama_model_combo.setMinimumContentsLength(18)
         self.ollama_model_combo.currentTextChanged.connect(self._update_collapsible_summaries)
         prompt_form.addRow("Ollama-Modell:", self.ollama_model_combo)
         self.prompt_options_section.content_layout.addLayout(prompt_form)
-
         self.refresh_ollama_button = QPushButton("Ollama-Modelle prüfen")
-        self.refresh_ollama_button.setToolTip("Prüft, ob ein lokaler Ollama-Server läuft, und liest die verfügbaren Modelle ein.")
         self.refresh_ollama_button.clicked.connect(self.refresh_ollama_models)
         self.prompt_options_section.content_layout.addWidget(self.refresh_ollama_button)
-        storyboard_layout.addWidget(self.prompt_options_section)
+        media_layout.addWidget(self.prompt_options_section)
 
-        self.storyboard_info_label = QLabel(
-            "Der Gesamtpaket-Modus erzeugt einen Übergabeauftrag für Bilder, TTS, Hintergrundmix, Video und ZIP. "
-            "Die optionalen Detailbereiche können geschlossen bleiben."
-        )
+        self.storyboard_info_label = QLabel()
         self.storyboard_info_label.setWordWrap(True)
-        storyboard_layout.addWidget(self.storyboard_info_label)
+        self.storyboard_info_label.setObjectName("infoCard")
+        media_layout.addWidget(self.storyboard_info_label)
 
+        media_actions = QHBoxLayout()
         self.generate_prompts_button = QPushButton("Gesamtpaket-Auftrag erzeugen")
         self.generate_prompts_button.setObjectName("primaryAction")
-        self.generate_prompts_button.setToolTip(
-            "Bild-Prompts erzeugen: wahlweise als Bildserien-Auftrag oder als vollständiger Produktionsauftrag für Bilder, "
-            "Szenen-Audio, Videozusammenschnitt und ZIP-Paket. Diese Texte werden nicht vorgelesen."
-        )
         self.generate_prompts_button.clicked.connect(self.generate_storyboard_prompts)
-        storyboard_layout.addWidget(self.generate_prompts_button)
-
         self.save_prompts_button = QPushButton("Gesamtpaket-Übergabe-ZIP speichern …")
         self.save_prompts_button.setObjectName("secondaryAction")
         self.save_prompts_button.clicked.connect(self.save_storyboard_prompts)
         self.save_prompts_button.setEnabled(False)
-        storyboard_layout.addWidget(self.save_prompts_button)
-        right.addWidget(storyboard_group)
+        media_actions.addWidget(self.generate_prompts_button, 2)
+        media_actions.addWidget(self.save_prompts_button, 2)
+        media_layout.addLayout(media_actions)
+        media_layout.addStretch(1)
+        self.main_tabs.addTab(media_scroll, "Medienpaket")
 
-        self.audio_section = CollapsibleSection(
-            "Sprachausgabe, Stimme und Audioexport (optional)", expanded=False
-        )
-        speech_group = QGroupBox("Sprachausgabe")
+        # ------------------------------------------------------------------
+        # Tab 3: Sprache & Audio
+        # ------------------------------------------------------------------
+        audio_scroll, audio_page, audio_layout = make_scroll_page("audioPage")
+        self.audio_section = CollapsibleSection("Sprachausgabe, Stimme und Audioexport (optional)", expanded=True)
+        speech_group = QGroupBox("Lokale Sprachausgabe")
         speech_layout = QVBoxLayout(speech_group)
         voice_form = QFormLayout()
         voice_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         voice_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.voice_combo = QComboBox()
-        self.voice_combo.setMinimumContentsLength(22)
         self.voice_combo.currentIndexChanged.connect(self._voice_changed)
         voice_form.addRow("Stimme:", self.voice_combo)
         speech_layout.addLayout(voice_form)
@@ -647,26 +661,27 @@ class MainWindow(QMainWindow):
         voice_info_row = QHBoxLayout()
         self.voice_count_label = QLabel("Stimmen werden gesucht …")
         self.voice_count_label.setWordWrap(True)
-        self.refresh_voices_button = QPushButton("Neu laden")
-        self.refresh_voices_button.setToolTip("Liest die Stimmen aus Windows OneCore/WinRT, nativer SAPI und Qt erneut ein.")
+        self.refresh_voices_button = QPushButton("Stimmen neu laden")
         self.refresh_voices_button.clicked.connect(self.refresh_voices)
         voice_info_row.addWidget(self.voice_count_label, 1)
         voice_info_row.addWidget(self.refresh_voices_button)
         speech_layout.addLayout(voice_info_row)
 
-        speech_layout.addWidget(QLabel("Geschwindigkeit"))
+        rate_row = QGridLayout()
+        rate_row.addWidget(QLabel("Geschwindigkeit"), 0, 0)
         self.rate_slider = QSlider(Qt.Orientation.Horizontal)
         self.rate_slider.setRange(-10, 10)
         self.rate_slider.setValue(0)
         self.rate_slider.valueChanged.connect(lambda value: self.qt_tts.setRate(value / 10.0))
-        speech_layout.addWidget(self.rate_slider)
-
-        speech_layout.addWidget(QLabel("Lautstärke Stimme"))
+        rate_row.addWidget(self.rate_slider, 0, 1)
+        rate_row.addWidget(QLabel("Lautstärke Stimme"), 1, 0)
         self.voice_volume = QSlider(Qt.Orientation.Horizontal)
         self.voice_volume.setRange(0, 100)
         self.voice_volume.setValue(100)
         self.voice_volume.valueChanged.connect(lambda value: self.qt_tts.setVolume(value / 100.0))
-        speech_layout.addWidget(self.voice_volume)
+        rate_row.addWidget(self.voice_volume, 1, 1)
+        rate_row.setColumnStretch(1, 1)
+        speech_layout.addLayout(rate_row)
 
         player_row = QHBoxLayout()
         self.pause_button = QPushButton("Pause")
@@ -675,20 +690,15 @@ class MainWindow(QMainWindow):
         self.stop_button = QPushButton("Stop")
         self.stop_button.clicked.connect(self.stop_playback)
         self.stop_button.setEnabled(False)
+        self.selection_button = QPushButton("Story / Markierung vorlesen")
+        self.selection_button.clicked.connect(self.speak_selection)
         player_row.addWidget(self.pause_button)
         player_row.addWidget(self.stop_button)
+        player_row.addWidget(self.selection_button, 2)
         speech_layout.addLayout(player_row)
 
-        self.selection_button = QPushButton("Story / Markierung vorlesen")
-        self.selection_button.setToolTip("Liest den markierten Text vor; ohne Markierung wird die ganze Story gelesen.")
-        self.selection_button.clicked.connect(self.speak_selection)
-        speech_layout.addWidget(self.selection_button)
-
         self.audio_export_button = QPushButton("Story als Audiodatei speichern …")
-        self.audio_export_button.setToolTip(
-            "Erzeugt eine WAV-Datei aus der aktuellen Story und mischt auf Wunsch "
-            "die eingestellte Brückenatmosphäre hinzu. MP3 wird angeboten, wenn FFmpeg gefunden wurde."
-        )
+        self.audio_export_button.setObjectName("secondaryAction")
         self.audio_export_button.clicked.connect(self.save_story_audio)
         self.audio_export_button.setEnabled(False)
         speech_layout.addWidget(self.audio_export_button)
@@ -700,20 +710,62 @@ class MainWindow(QMainWindow):
         self.background_check.setChecked(True)
         self.background_check.stateChanged.connect(self._update_collapsible_summaries)
         ambience_layout.addWidget(self.background_check)
-        ambience_layout.addWidget(QLabel("Lautstärke Hintergrund"))
+        ambience_volume_row = QHBoxLayout()
+        ambience_volume_row.addWidget(QLabel("Lautstärke Hintergrund"))
         self.background_volume = QSlider(Qt.Orientation.Horizontal)
         self.background_volume.setRange(0, 100)
         self.background_volume.setValue(18)
         self.background_volume.valueChanged.connect(lambda value: self.background_audio.setVolume(value / 100.0))
         self.background_volume.valueChanged.connect(self._update_collapsible_summaries)
-        ambience_layout.addWidget(self.background_volume)
+        ambience_volume_row.addWidget(self.background_volume, 1)
+        ambience_layout.addLayout(ambience_volume_row)
         self.audio_section.content_layout.addWidget(ambience_group)
-        right.addWidget(self.audio_section)
+        audio_layout.addWidget(self.audio_section)
+        audio_layout.addStretch(1)
+        self.main_tabs.addTab(audio_scroll, "Sprache & Audio")
 
-        self.generation_section = CollapsibleSection(
-            "Generierungsdetails (optional)", expanded=False
-        )
-        options_group = QGroupBox("Generierung")
+        # ------------------------------------------------------------------
+        # Tab 4: Story & Trace
+        # ------------------------------------------------------------------
+        details_page = QWidget()
+        details_layout = QVBoxLayout(details_page)
+        details_layout.setContentsMargins(12, 10, 12, 12)
+        details_layout.setSpacing(8)
+        details_top = QHBoxLayout()
+        details_caption = QLabel("Story, Herkunft der Satzteile und erzeugter Produktionsauftrag")
+        details_caption.setObjectName("mutedText")
+        back_mission = QPushButton("Zur Mission")
+        back_mission.clicked.connect(lambda: self.main_tabs.setCurrentIndex(0))
+        details_top.addWidget(details_caption, 1)
+        details_top.addWidget(back_mission)
+        details_layout.addLayout(details_top)
+
+        self.tabs = QTabWidget()
+        self.tabs.setObjectName("detailTabs")
+        self.story_edit = QTextEdit()
+        self.story_edit.setPlaceholderText("Zuerst „Sektor-Sprung berechnen“ anklicken …")
+        self.story_edit.setAcceptRichText(False)
+        self.story_edit.setLineWrapMode(QTextEdit.LineWrapMode.WidgetWidth)
+        self.log_edit = QTextEdit()
+        self.log_edit.setReadOnly(True)
+        self.log_edit.setAcceptRichText(False)
+        self.prompts_edit = QTextEdit()
+        self.prompts_edit.setReadOnly(True)
+        self.prompts_edit.setAcceptRichText(False)
+        self.prompts_edit.setPlaceholderText("Hier erscheinen Bild-Prompts oder der Gesamtpaket-Produktionsauftrag …")
+        self.tabs.addTab(self.story_edit, "Story")
+        self.tabs.addTab(self.log_edit, "Auswahlprotokoll / Trace")
+        self.tabs.addTab(self.prompts_edit, "Prompts / Produktion")
+        details_layout.addWidget(self.tabs, 1)
+        self.details_page = details_page
+        self.details_tab_index = self.main_tabs.addTab(details_page, "Story & Trace")
+
+        # ------------------------------------------------------------------
+        # Tab 5: Einstellungen
+        # ------------------------------------------------------------------
+        settings_scroll, settings_page, settings_layout = make_scroll_page("settingsPage")
+        self.generation_section = CollapsibleSection("Generierungsdetails (optional)", expanded=True)
+        options_group = QGroupBox("Storygenerierung")
         options_layout = QVBoxLayout(options_group)
         self.legacy_umlauts = QCheckBox("Legacy-Umlautkonvertierung (ae/ue/oe)")
         self.legacy_umlauts.setChecked(True)
@@ -725,8 +777,6 @@ class MainWindow(QMainWindow):
         options_layout.addWidget(self.ignore_blanks)
         options_layout.addWidget(self.write_log)
         seed_form = QFormLayout()
-        seed_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
-        seed_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.seed_spin = QSpinBox()
         self.seed_spin.setRange(0, 2_147_483_647)
         self.seed_spin.setSpecialValueText("Zufällig")
@@ -737,53 +787,51 @@ class MainWindow(QMainWindow):
         seed_form.addRow("Seed:", self.seed_spin)
         options_layout.addLayout(seed_form)
         self.generation_section.content_layout.addWidget(options_group)
-        right.addWidget(self.generation_section)
+        settings_layout.addWidget(self.generation_section)
 
-        self.other_options_section = CollapsibleSection(
-            "Weitere Einstellungen (optional)", expanded=False
-        )
-        utility_row = QHBoxLayout()
-        self.save_button = QPushButton("Story speichern …")
-        self.save_button.clicked.connect(self.save_story)
-        self.clear_button = QPushButton("Text löschen")
-        self.clear_button.clicked.connect(self.clear_story)
-        utility_row.addWidget(self.save_button)
-        utility_row.addWidget(self.clear_button)
-        self.other_options_section.content_layout.addLayout(utility_row)
-
-        theme_form = QFormLayout()
-        theme_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
-        theme_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
+        self.other_options_section = CollapsibleSection("Weitere Einstellungen (optional)", expanded=True)
+        theme_group = QGroupBox("Darstellung")
+        theme_form = QFormLayout(theme_group)
         self.theme_combo = QComboBox()
         self.theme_combo.currentTextChanged.connect(self.apply_theme)
         self.theme_combo.currentTextChanged.connect(self._update_collapsible_summaries)
         theme_form.addRow("Theme:", self.theme_combo)
-        self.other_options_section.content_layout.addLayout(theme_form)
-        right.addWidget(self.other_options_section)
+        self.other_options_section.content_layout.addWidget(theme_group)
 
+        utility_group = QGroupBox("Dateien")
+        utility_layout = QGridLayout(utility_group)
+        self.save_button = QPushButton("Story speichern …")
+        self.save_button.clicked.connect(self.save_story)
+        self.clear_button = QPushButton("Text löschen")
+        self.clear_button.clicked.connect(self.clear_story)
+        open_vars_button = QPushButton("Satzteil-Ordner öffnen")
+        open_vars_button.clicked.connect(lambda: self._open_path(VARS_DIR))
+        open_logs_button = QPushButton("Log-Ordner öffnen")
+        open_logs_button.clicked.connect(lambda: self._open_path(LOG_DIR))
+        utility_layout.addWidget(self.save_button, 0, 0)
+        utility_layout.addWidget(self.clear_button, 0, 1)
+        utility_layout.addWidget(open_vars_button, 1, 0)
+        utility_layout.addWidget(open_logs_button, 1, 1)
+        self.other_options_section.content_layout.addWidget(utility_group)
+        settings_layout.addWidget(self.other_options_section)
+        settings_layout.addStretch(1)
+        self.main_tabs.addTab(settings_scroll, "Einstellungen")
+
+        # Persistent status strip
+        status_frame = QFrame()
+        status_frame.setObjectName("statusStrip")
+        status_layout = QHBoxLayout(status_frame)
+        status_layout.setContentsMargins(10, 6, 10, 6)
+        status_layout.setSpacing(10)
         self.progress = QProgressBar()
         self.progress.setRange(0, 100)
         self.progress.setValue(0)
+        self.progress.setMaximumWidth(260)
         self.status_label = QLabel("Bereit.")
         self.status_label.setWordWrap(True)
-        right.addWidget(self.progress)
-        right.addWidget(self.status_label)
-        right.addStretch(1)
-
-        self.controls_scroll = QScrollArea()
-        self.controls_scroll.setObjectName("controlsScrollArea")
-        self.controls_scroll.setFrameShape(QFrame.Shape.NoFrame)
-        self.controls_scroll.setWidgetResizable(True)
-        self.controls_scroll.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAsNeeded
-        )
-        self.controls_scroll.setVerticalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAsNeeded
-        )
-        self.controls_scroll.setMinimumWidth(500)
-        self.controls_scroll.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-        self.controls_scroll.setWidget(controls)
-        root.addWidget(self.controls_scroll, 1)
+        status_layout.addWidget(self.progress)
+        status_layout.addWidget(self.status_label, 1)
+        root.addWidget(status_frame)
 
         self._populate_theme_combo()
         self._build_menus()
@@ -797,10 +845,9 @@ class MainWindow(QMainWindow):
             self._ui_scale_timer.start()
 
     def _calculate_ui_scale(self) -> float:
-        if not hasattr(self, "controls_scroll") or not self.controls_scroll.viewport():
+        if self.centralWidget() is None:
             return 1.0
-        viewport = self.controls_scroll.viewport()
-        width_ratio = max(1.0, viewport.width() / BASE_CONTROL_VIEWPORT_WIDTH)
+        width_ratio = max(1.0, self.centralWidget().width() / BASE_CONTROL_VIEWPORT_WIDTH)
         height_ratio = max(1.0, self.centralWidget().height() / BASE_CONTROL_VIEWPORT_HEIGHT)
         return round(min(MAX_UI_SCALE, width_ratio, height_ratio), 2)
 
@@ -814,12 +861,10 @@ class MainWindow(QMainWindow):
         font.setPointSizeF(round(self._base_font_point_size * scale, 2))
         QApplication.instance().setFont(font)
 
-        self.controls_widget.setMinimumWidth(round(610 * scale))
-        self.tabs.setMinimumWidth(round(570 * scale))
-        margin = round(8 * scale)
+        margin = round(10 * scale)
         self.root_layout.setContentsMargins(margin, margin, margin, margin)
-        self.root_layout.setSpacing(round(8 * scale))
-        self.controls_layout.setSpacing(round(8 * scale))
+        self.root_layout.setSpacing(round(10 * scale))
+        self.controls_layout.setSpacing(round(12 * scale))
 
         self.apply_theme(self.theme_combo.currentText())
         self.controls_widget.updateGeometry()
@@ -851,7 +896,7 @@ class MainWindow(QMainWindow):
         file_menu.addAction(quit_action)
 
         view_menu = self.menuBar().addMenu("Ansicht")
-        toggle_action = QAction("Story / Log / Prompts ein- oder ausblenden", self)
+        toggle_action = QAction("Story & Trace anzeigen / zur Mission zurück", self)
         toggle_action.triggered.connect(self.toggle_story_panel)
         view_menu.addAction(toggle_action)
         view_menu.addSeparator()
@@ -937,15 +982,13 @@ class MainWindow(QMainWindow):
         self.status_label.setText("Alle sichtbaren optionalen Einstellungsbereiche wurden ausgeklappt.")
 
     def toggle_story_panel(self) -> None:
-        showing = self.tabs.isVisible()
-        if showing:
-            self.tabs.hide()
-            self.toggle_story_button.setText("Story / Log / Prompts einblenden  >")
-            self.resize(BASE_COMPACT_WIDTH, self.height())
+        if not hasattr(self, "main_tabs"):
+            return
+        if self.main_tabs.currentIndex() == self.details_tab_index:
+            self.main_tabs.setCurrentIndex(0)
         else:
-            self.tabs.show()
-            self.toggle_story_button.setText("<  Story / Log / Prompts ausblenden")
-            self.resize(max(1380, self.width() + 660), max(760, self.height()))
+            self.main_tabs.setCurrentIndex(self.details_tab_index)
+            self.tabs.setCurrentWidget(self.story_edit)
 
     def _load_qt_voices(self) -> None:
         entries: list[dict] = []
@@ -1122,10 +1165,19 @@ class MainWindow(QMainWindow):
         self.media_options_section.set_expanded(bool(settings.get("section_media_expanded", False)), emit_signal=False)
         self.result_contents_section.set_expanded(bool(settings.get("section_result_contents_expanded", False)), emit_signal=False)
         self.prompt_options_section.set_expanded(bool(settings.get("section_prompt_expanded", False)), emit_signal=False)
-        self.audio_section.set_expanded(bool(settings.get("section_audio_expanded", False)), emit_signal=False)
-        self.generation_section.set_expanded(bool(settings.get("section_generation_expanded", False)), emit_signal=False)
-        self.other_options_section.set_expanded(bool(settings.get("section_other_expanded", False)), emit_signal=False)
-        theme = str(settings.get("theme", "Legacy Beige"))
+        layout_version = int(settings.get("ui_layout_version", 0) or 0)
+        if layout_version < 3:
+            # v60.17 moved these controls into dedicated category tabs. Keep them
+            # expanded once after migration so an older collapsed state does not
+            # make an otherwise empty-looking tab confusing.
+            self.audio_section.set_expanded(True, emit_signal=False)
+            self.generation_section.set_expanded(True, emit_signal=False)
+            self.other_options_section.set_expanded(True, emit_signal=False)
+        else:
+            self.audio_section.set_expanded(bool(settings.get("section_audio_expanded", True)), emit_signal=False)
+            self.generation_section.set_expanded(bool(settings.get("section_generation_expanded", True)), emit_signal=False)
+            self.other_options_section.set_expanded(bool(settings.get("section_other_expanded", True)), emit_signal=False)
+        theme = str(settings.get("theme", "Aurora"))
         if theme in self.theme_manager.themes:
             self.theme_combo.setCurrentText(theme)
         elif self.theme_combo.count():
@@ -1138,6 +1190,7 @@ class MainWindow(QMainWindow):
         entry = self.voice_combo.currentData() or {}
         settings = {
             "app_version": APP_VERSION,
+            "ui_layout_version": 3,
             "rate": self.rate_slider.value(),
             "voice_volume": self.voice_volume.value(),
             "background_volume": self.background_volume.value(),
@@ -1292,7 +1345,7 @@ class MainWindow(QMainWindow):
         self.current_log = self.result.build_log(APP_VERSION)
         self.log_edit.setPlainText(self.current_log)
         self.progress.setValue(100)
-        hidden_note = " Mit ‚Story / Log einblenden‘ kann der Text angezeigt werden." if not self.tabs.isVisible() else ""
+        hidden_note = " Mit dem Tab ‚Story & Trace‘ kann der Text angezeigt werden." if not self.tabs.isVisible() else ""
         route = self.result.branches[0].choice_label if self.result.branches else "Legacy-Story"
         self.status_label.setText(f"Sektor-Sprung berechnet — {route}. Seed: {self.result.seed}.{hidden_note}")
         self.status_label.setToolTip(self.result.branch_path or route)
@@ -2326,15 +2379,14 @@ class MainWindow(QMainWindow):
             self,
             f"Über {APP_NAME}",
             f"<b>{APP_NAME} v{APP_VERSION}</b><br><br>"
-            "Python-Neuauflage des früheren VB.NET-Zufallsgeschichten-Generators.<br>"
+            "PyQt6-Neuauflage des früheren VB.NET-Zufallsgeschichten-Generators.<br>"
             "Originalautor und Textbestände: zeittresor.<br><br>"
             "Die Themes liegen als externe JSON-Dateien im Ordner <code>themes</code> und werden "
             "vor der Verwendung automatisch auf ausreichenden Textkontrast geprüft.<br><br>"
             "Die Stimmensuche kombiniert Windows OneCore/WinRT, native Windows-SAPI und Qt.<br><br>"
             "Berechnete Stories können samt der aktuell eingestellten Brückenatmosphäre als WAV "
             "und bei vorhandenem FFmpeg auch als MP3 exportiert werden.<br><br>"
-            "Die Oberfläche stellt den Gesamtpaket-Workflow in den Mittelpunkt; selten benötigte Optionen "
-            "liegen in einklappbaren Bereichen mit Kurzfassungen der aktiven Werte.<br><br>"
+            "Die Oberfläche ist in die Kategorien Mission, Medienpaket, Sprache & Audio, Story & Trace und Einstellungen gegliedert; selten benötigte Medienoptionen bleiben einklappbar.<br><br>"
             "Zusätzlich können ausführbare Bildserien-Aufträge oder vollständige Gesamtpaket-Prompts für "
             "Szenenbilder, TTS-Audio, Videozusammenschnitt und ZIP-Ausgabe erzeugt werden. Die Ausgabe wird für "
             "ChatGPT, Grok, Gemini, Stable Diffusion oder andere Systeme angepasst. "
@@ -2374,6 +2426,7 @@ def main() -> int:
     app = QApplication(sys.argv)
     app.setApplicationName(APP_NAME)
     app.setApplicationVersion(APP_VERSION)
+    app.setStyle("Fusion")
     window = MainWindow()
     window.show()
     return app.exec()

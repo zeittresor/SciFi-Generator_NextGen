@@ -7,6 +7,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 VARS = ROOT / "data" / "vars"
 MANIFEST = ROOT / "data" / "fragment_expansion_v60.14.json"
+REPAIRS = ROOT / "data" / "fragment_repairs_v60.16.json"
 
 
 def read_nonblank(path: Path) -> list[str]:
@@ -24,6 +25,12 @@ class FragmentExpansionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.payload = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        repair_payload = json.loads(REPAIRS.read_text(encoding="utf-8"))
+        repaired = repair_payload["manifests"][MANIFEST.name]["removed_or_rewritten_lines"]
+        cls.repaired = {
+            filename: {line.strip().casefold() for line in lines}
+            for filename, lines in repaired.items()
+        }
 
     def test_manifest_declares_expected_scope(self):
         self.assertEqual("60.14", self.payload["version"])
@@ -32,7 +39,7 @@ class FragmentExpansionTests(unittest.TestCase):
         self.assertEqual(609, self.payload["total_added_lines"])
         self.assertEqual(87, len(self.payload["files"]))
 
-    def test_each_ini_contains_all_seven_documented_additions(self):
+    def test_each_historical_addition_is_present_or_documented_as_repaired(self):
         for filename, additions in self.payload["files"].items():
             with self.subTest(filename=filename):
                 self.assertEqual(7, len(additions))
@@ -40,10 +47,15 @@ class FragmentExpansionTests(unittest.TestCase):
                 path = VARS / filename
                 self.assertTrue(path.is_file())
                 lines = {line.casefold() for line in read_nonblank(path)}
+                repaired = self.repaired.get(filename, set())
                 for addition in additions:
-                    self.assertIn(addition.strip().casefold(), lines)
+                    key = addition.strip().casefold()
+                    self.assertTrue(
+                        key in lines or key in repaired,
+                        f"Undocumented removal/rewrite in {filename}: {addition!r}",
+                    )
 
-    def test_manifest_covers_every_ini_file(self):
+    def test_manifest_files_still_exist(self):
         actual = {path.name for path in VARS.glob("*.ini")}
         declared = set(self.payload["files"])
         self.assertTrue(declared.issubset(actual))

@@ -8,7 +8,7 @@ import subprocess
 import tempfile
 import threading
 
-from PySide6.QtCore import QObject, Signal, Slot
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 
 from audio_mixer import AudioMixError, mix_narration_with_background
 
@@ -45,10 +45,10 @@ def find_ffmpeg(tools_dir: Path) -> Path | None:
 
 
 class AudioExportWorker(QObject):
-    progress = Signal(int, str)
-    finished = Signal(str)
-    error = Signal(str)
-    canceled = Signal()
+    progress = pyqtSignal(int, str)
+    finished = pyqtSignal(str)
+    error = pyqtSignal(str)
+    canceled = pyqtSignal()
 
     def __init__(self, request: AudioExportRequest):
         super().__init__()
@@ -138,7 +138,7 @@ class AudioExportWorker(QObject):
         if not narration_path.is_file() or narration_path.stat().st_size < 44:
             raise AudioExportError("Die TTS-Synthese hat keine verwendbare WAV-Datei erzeugt.")
 
-    @Slot()
+    @pyqtSlot()
     def run(self) -> None:
         request = self.request
         request.temp_dir.mkdir(parents=True, exist_ok=True)

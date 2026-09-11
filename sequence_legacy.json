@@ -1,8 +1,8 @@
 {
   "name": "SciFi-Generator branched mission sequence",
-  "version": 2,
-  "description": "Jede Story beginnt mit der Ankunft in einem neuen Sternensystem, verzweigt danach in unterschiedliche Missionsarten und endet wieder sprungbereit.",
-  "branch_weights_note": "Gewichte koennen frei angepasst werden; sie muessen nicht 100 ergeben.",
+  "version": "60.16",
+  "description": "Jede Story beginnt mit der Ankunft in einem neuen Sternensystem, kann an mehreren Wendepunkten in Nebenereignisse abzweigen und endet garantiert wieder im freien Raum und sprungbereit.",
+  "branch_weights_note": "Gewichte koennen frei angepasst werden; Haupt- und Nebenpfade werden separat und seed-stabil ausgewaehlt.",
   "steps": [
     {
       "kind": "scene",
@@ -58,13 +58,21 @@
       "kind": "pick",
       "file": "hyphenation.ini",
       "suffix": " ",
-      "label": "Systemname-Endteil"
+      "label": "Systemname-Endteil",
+      "exclude_saved": [
+        "system_root"
+      ],
+      "save_as": "system_end_root"
     },
     {
       "kind": "pick",
       "file": "system_parts.ini",
       "suffix": ". ",
-      "label": "Systembezeichnung"
+      "label": "Systembezeichnung",
+      "exclude_saved": [
+        "system_root",
+        "system_end_root"
+      ]
     },
     {
       "kind": "scene",
@@ -105,7 +113,7 @@
         {
           "id": "alien_encounter",
           "label": "Planetare Begegnung mit intelligenter Fremdlebensform",
-          "weight": 25,
+          "weight": 18,
           "steps": [
             {
               "kind": "pick",
@@ -132,7 +140,10 @@
             {
               "kind": "pick",
               "file": "planet_name_part.ini",
-              "suffix": ". "
+              "suffix": ". ",
+              "exclude_saved": [
+                "system_root"
+              ]
             },
             {
               "kind": "pick",
@@ -325,7 +336,7 @@
             {
               "kind": "pick",
               "file": "life_alien_size.ini",
-              "suffix": ". "
+              "suffix": ""
             },
             {
               "kind": "scene",
@@ -381,7 +392,7 @@
             {
               "kind": "pick",
               "file": "life_alien_face.ini",
-              "suffix": " "
+              "suffix": ""
             },
             {
               "kind": "pick",
@@ -391,7 +402,7 @@
             {
               "kind": "pick",
               "file": "life_alien_mouth.ini",
-              "suffix": " "
+              "suffix": ""
             },
             {
               "kind": "pick",
@@ -475,6 +486,88 @@
               "suffix": ". "
             },
             {
+              "kind": "branch",
+              "id": "alien_turning_point",
+              "label": "Unerwartete Wendung waehrend des Alien-Rueckzugs",
+              "choices": [
+                {
+                  "id": "clean_withdrawal",
+                  "label": "Rueckzug ohne weitere Wendung",
+                  "weight": 55,
+                  "steps": []
+                },
+                {
+                  "id": "late_signal",
+                  "label": "Zusaetzliches technisches Signal",
+                  "weight": 15,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Unerwartetes Signal waehrend des Rueckzugs",
+                      "visual_hint": "Ein technisches Signal erscheint waehrend die Begegnung bereits beendet wird."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "alien_detour_signal.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "alien_detour_signal_result.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "weather_shift",
+                  "label": "Rasche Verschlechterung der Umweltbedingungen",
+                  "weight": 15,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Wetterumschwung waehrend des Kontakts",
+                      "visual_hint": "Die planetaren Bedingungen verschlechtern sich und beschleunigen den Rueckzug."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "alien_detour_environment.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "alien_detour_environment_result.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "more_contacts",
+                  "label": "Weitere gleichartige Lebensformen erscheinen",
+                  "weight": 15,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Weitere Lebensformen tauchen auf",
+                      "visual_hint": "Mehrere aehnliche Wesen erscheinen und veraendern die Lage am Landeplatz."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "alien_detour_group.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "alien_detour_group_result.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "kind": "scene",
               "id": "departure",
               "title": "Abflug vom Planeten und Dokumentation",
@@ -500,7 +593,7 @@
         {
           "id": "planet_nature",
           "label": "Planet ohne intelligente Aliens — Natur, Flora oder Fauna",
-          "weight": 25,
+          "weight": 18,
           "steps": [
             {
               "kind": "pick",
@@ -527,7 +620,10 @@
             {
               "kind": "pick",
               "file": "planet_name_part.ini",
-              "suffix": ". "
+              "suffix": ". ",
+              "exclude_saved": [
+                "system_root"
+              ]
             },
             {
               "kind": "pick",
@@ -854,6 +950,88 @@
               ]
             },
             {
+              "kind": "branch",
+              "id": "planetary_detour",
+              "label": "Zusaetzliche Wendung vor dem Rueckstart",
+              "choices": [
+                {
+                  "id": "clean_departure",
+                  "label": "Keine weitere planetare Wendung",
+                  "weight": 55,
+                  "steps": []
+                },
+                {
+                  "id": "subsurface_anomaly",
+                  "label": "Unterirdische Anomalie",
+                  "weight": 15,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Unerwartete Tiefenmessung",
+                      "visual_hint": "Kurz vor dem Abflug wird eine geologische oder strukturelle Tiefenanomalie registriert."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_detour_subsurface.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_detour_subsurface_result.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "weather_change",
+                  "label": "Neue Wetterfront",
+                  "weight": 15,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Neue Wetterfront",
+                      "visual_hint": "Die Wetterbedingungen veraendern sich waehrend der Rueckzug bereits vorbereitet wird."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_detour_weather.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_detour_weather_result.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "sensor_ghost",
+                  "label": "Nicht reproduzierbare Sensorsignatur",
+                  "weight": 15,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Raetselhafte Sensorsignatur",
+                      "visual_hint": "Eine letzte Messung liefert einen nicht reproduzierbaren planetaren Kontakt."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_detour_sensor.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "planet_detour_sensor_result.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "kind": "scene",
               "id": "departure",
               "title": "Rueckstart in sicheren Orbit",
@@ -879,7 +1057,7 @@
         {
           "id": "space_only",
           "label": "Kein besuchbarer Planet — Ereignis im Weltraum",
-          "weight": 25,
+          "weight": 18,
           "steps": [
             {
               "kind": "pick",
@@ -1036,7 +1214,8 @@
                     {
                       "kind": "pick",
                       "file": "space_station_signal.ini",
-                      "suffix": ". "
+                      "suffix": ". ",
+                      "avoid_repeat": true
                     },
                     {
                       "kind": "scene",
@@ -1188,6 +1367,88 @@
               ]
             },
             {
+              "kind": "branch",
+              "id": "space_detour",
+              "label": "Zusaetzliche Wendung beim Verlassen des Weltraumereignisses",
+              "choices": [
+                {
+                  "id": "clean_departure",
+                  "label": "Freier Abflug ohne weitere Wendung",
+                  "weight": 55,
+                  "steps": []
+                },
+                {
+                  "id": "autonomous_probe",
+                  "label": "Autonome Sonde reagiert",
+                  "weight": 15,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Autonome Sonde",
+                      "visual_hint": "Ein kleines kuenstliches Objekt reagiert erst beim Rueckzug auf das Schiff."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_detour_probe.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_detour_probe_result.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "navigation_echo",
+                  "label": "Ungeklaertes Navigations- oder Funkecho",
+                  "weight": 15,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Unmoegliches Echo",
+                      "visual_hint": "Eigene Signale oder Navigationswerte kehren aus einer unplausiblen Richtung zurueck."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_detour_echo.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_detour_echo_result.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "solar_burst",
+                  "label": "Ploetzliche stellare Aktivitaet",
+                  "weight": 15,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Stellare Teilchenfront",
+                      "visual_hint": "Eine ploetzliche stellare Aktivitaet kreuzt den Rueckflugkorridor."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_detour_solar.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "space_detour_solar_result.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "kind": "scene",
               "id": "departure",
               "title": "Freier Kurs und Dokumentation",
@@ -1208,7 +1469,7 @@
         {
           "id": "abandoned_site",
           "label": "Verlassener Ort ohne aktive Bewohner",
-          "weight": 25,
+          "weight": 16,
           "steps": [
             {
               "kind": "pick",
@@ -1245,7 +1506,10 @@
                     {
                       "kind": "pick",
                       "file": "planet_name_part.ini",
-                      "suffix": ". "
+                      "suffix": ". ",
+                      "exclude_saved": [
+                        "system_root"
+                      ]
                     },
                     {
                       "kind": "pick",
@@ -1331,6 +1595,65 @@
                       "kind": "pick",
                       "file": "abandoned_surface_withdraw.ini",
                       "suffix": ". "
+                    },
+                    {
+                      "kind": "branch",
+                      "id": "abandoned_detour",
+                      "label": "Letzte Wendung am verlassenen Fundort",
+                      "choices": [
+                        {
+                          "id": "clean_withdrawal",
+                          "label": "Rueckzug ohne weitere Wendung",
+                          "weight": 60,
+                          "steps": []
+                        },
+                        {
+                          "id": "archive_wakes",
+                          "label": "Alter Archivsender aktiviert sich",
+                          "weight": 20,
+                          "steps": [
+                            {
+                              "kind": "scene",
+                              "id": "detour",
+                              "title": "Spaeter Archivimpuls",
+                              "visual_hint": "Ein alter Speicher oder Sender wird erst kurz vor Ende der Erkundung aktiv."
+                            },
+                            {
+                              "kind": "pick",
+                              "file": "abandoned_detour_signal.ini",
+                              "suffix": ". "
+                            },
+                            {
+                              "kind": "pick",
+                              "file": "abandoned_detour_signal_response.ini",
+                              "suffix": ". "
+                            }
+                          ]
+                        },
+                        {
+                          "id": "structural_failure",
+                          "label": "Alte Struktur wird instabil",
+                          "weight": 20,
+                          "steps": [
+                            {
+                              "kind": "scene",
+                              "id": "detour",
+                              "title": "Struktureller Zwischenfall",
+                              "visual_hint": "Ein alter Abschnitt wird instabil und beschleunigt den Rueckzug."
+                            },
+                            {
+                              "kind": "pick",
+                              "file": "abandoned_detour_collapse.ini",
+                              "suffix": ". "
+                            },
+                            {
+                              "kind": "pick",
+                              "file": "abandoned_detour_collapse_response.ini",
+                              "suffix": ". "
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "kind": "scene",
@@ -1432,6 +1755,65 @@
                       "suffix": ". "
                     },
                     {
+                      "kind": "branch",
+                      "id": "abandoned_detour",
+                      "label": "Letzte Wendung am verlassenen Fundort",
+                      "choices": [
+                        {
+                          "id": "clean_withdrawal",
+                          "label": "Rueckzug ohne weitere Wendung",
+                          "weight": 60,
+                          "steps": []
+                        },
+                        {
+                          "id": "archive_wakes",
+                          "label": "Alter Archivsender aktiviert sich",
+                          "weight": 20,
+                          "steps": [
+                            {
+                              "kind": "scene",
+                              "id": "detour",
+                              "title": "Spaeter Archivimpuls",
+                              "visual_hint": "Ein alter Speicher oder Sender wird erst kurz vor Ende der Erkundung aktiv."
+                            },
+                            {
+                              "kind": "pick",
+                              "file": "abandoned_detour_signal.ini",
+                              "suffix": ". "
+                            },
+                            {
+                              "kind": "pick",
+                              "file": "abandoned_detour_signal_response.ini",
+                              "suffix": ". "
+                            }
+                          ]
+                        },
+                        {
+                          "id": "structural_failure",
+                          "label": "Alte Struktur wird instabil",
+                          "weight": 20,
+                          "steps": [
+                            {
+                              "kind": "scene",
+                              "id": "detour",
+                              "title": "Struktureller Zwischenfall",
+                              "visual_hint": "Ein alter Abschnitt wird instabil und beschleunigt den Rueckzug."
+                            },
+                            {
+                              "kind": "pick",
+                              "file": "abandoned_detour_collapse.ini",
+                              "suffix": ". "
+                            },
+                            {
+                              "kind": "pick",
+                              "file": "abandoned_detour_collapse_response.ini",
+                              "suffix": ". "
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
                       "kind": "scene",
                       "id": "departure",
                       "title": "Abkoppeln und Dokumentation",
@@ -1452,8 +1834,439 @@
               ]
             }
           ]
+        },
+        {
+          "id": "distress_signal",
+          "label": "Unbekannter Notruf oder Rettungssignal",
+          "weight": 15,
+          "steps": [
+            {
+              "kind": "pick",
+              "file": "distress_context.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "target",
+              "title": "Peilung eines unbekannten Notrufs",
+              "visual_hint": "Das Schiff entdeckt ein schwaches Rettungs- oder Notsignal im System."
+            },
+            {
+              "kind": "pick",
+              "file": "distress_signal_detect.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "distress_signal_origin.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "distress_approach.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "branch",
+              "id": "distress_source",
+              "label": "Art der Notrufquelle",
+              "choices": [
+                {
+                  "id": "damaged_vessel",
+                  "label": "Havariertes Schiff",
+                  "weight": 36,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Havariertes Schiff",
+                      "visual_hint": "Ein beschaedigtes Schiff treibt ohne normalen Antrieb."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_vessel_desc.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_vessel_state.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Rettungsversuch am Wrack",
+                      "visual_hint": "Eine Rettungssonde versucht Daten oder Stabilisierung."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_vessel_event.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_vessel_response.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "escape_pod",
+                  "label": "Unbekannte Rettungskapsel",
+                  "weight": 34,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Unbekannte Rettungskapsel",
+                      "visual_hint": "Eine einzelne Rettungskapsel sendet den Hilferuf."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_pod_desc.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_pod_scan.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Bergungsversuch der Kapsel",
+                      "visual_hint": "Die Kapsel wird vorsichtig stabilisiert oder untersucht."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_pod_event.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_pod_response.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "automated_beacon",
+                  "label": "Autonome alte Notfallboje",
+                  "weight": 30,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "discovery",
+                      "title": "Autonome Notfallboje",
+                      "visual_hint": "Der Notruf stammt von einer unbemannten alten Rettungsboje."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_beacon_desc.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_beacon_payload.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "scene",
+                      "id": "investigation",
+                      "title": "Auslesen des alten Notrufspeichers",
+                      "visual_hint": "Die Boje reagiert waehrend Daten ausgelesen werden."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_beacon_event.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "distress_beacon_response.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "scene",
+              "id": "escalation",
+              "title": "Abschluss der Rettungsmassnahmen",
+              "visual_hint": "Die Situation wird soweit moeglich stabilisiert ohne unvertretbares Risiko."
+            },
+            {
+              "kind": "pick",
+              "file": "distress_resolution.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "departure",
+              "title": "Rueckkehr in freien Systemraum",
+              "visual_hint": "Das Schiff entfernt sich von der Notrufquelle und stellt freien Kurs her."
+            },
+            {
+              "kind": "pick",
+              "file": "distress_departure.ini",
+              "suffix": ". "
+            }
+          ]
+        },
+        {
+          "id": "ship_malfunction",
+          "label": "Technischer Zwischenfall am eigenen Schiff",
+          "weight": 15,
+          "steps": [
+            {
+              "kind": "scene",
+              "id": "target",
+              "title": "Interne Stoerung nach dem Sektorsprung",
+              "visual_hint": "Noch vor einer normalen Erkundung erzwingt ein Schiffssystem eine Diagnose."
+            },
+            {
+              "kind": "pick",
+              "file": "ship_fault_detect.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "branch",
+              "id": "ship_fault_type",
+              "label": "Art der technischen Stoerung",
+              "choices": [
+                {
+                  "id": "navigation_fault",
+                  "label": "Navigations- und Lageregelungsfehler",
+                  "weight": 34,
+                  "steps": [
+                    {
+                      "kind": "pick",
+                      "file": "ship_fault_navigation.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "propulsion_fault",
+                  "label": "Unterlichtantrieb oder Manoeversystem gestoert",
+                  "weight": 33,
+                  "steps": [
+                    {
+                      "kind": "pick",
+                      "file": "ship_fault_propulsion.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "power_fault",
+                  "label": "Energieverteilung und Bordnetz gestoert",
+                  "weight": 33,
+                  "steps": [
+                    {
+                      "kind": "pick",
+                      "file": "ship_fault_power.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "pick",
+              "file": "ship_fault_effect.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "investigation",
+              "title": "Diagnose und Reparatur",
+              "visual_hint": "Die Besatzung isoliert den Fehler und arbeitet mit redundanten Systemen."
+            },
+            {
+              "kind": "pick",
+              "file": "ship_fault_response.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "branch",
+              "id": "ship_fault_complication",
+              "label": "Moegliche Komplikation waehrend der Reparatur",
+              "choices": [
+                {
+                  "id": "clean_repair",
+                  "label": "Reparatur ohne weitere Komplikation",
+                  "weight": 55,
+                  "steps": []
+                },
+                {
+                  "id": "secondary_fault",
+                  "label": "Sekundaerfehler tritt auf",
+                  "weight": 25,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Sekundaerfehler",
+                      "visual_hint": "Ein zusaetzlicher technischer Effekt erschwert kurzzeitig die Reparatur."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "ship_fault_secondary.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "ship_fault_secondary_response.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                },
+                {
+                  "id": "external_interference",
+                  "label": "Externe Weltraumstoerung waehrend der Reparatur",
+                  "weight": 20,
+                  "steps": [
+                    {
+                      "kind": "scene",
+                      "id": "detour",
+                      "title": "Externe Stoerung waehrend der Reparatur",
+                      "visual_hint": "Stellare oder magnetische Umwelteinfluesse treffen auf das bereits eingeschraenkte Schiff."
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "ship_fault_external.ini",
+                      "suffix": ". "
+                    },
+                    {
+                      "kind": "pick",
+                      "file": "ship_fault_external_response.ini",
+                      "suffix": ". "
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "scene",
+              "id": "escalation",
+              "title": "Systeme wieder stabil",
+              "visual_hint": "Die Reparatur wird abgeschlossen und alle kritischen Systeme werden erneut getestet."
+            },
+            {
+              "kind": "pick",
+              "file": "ship_fault_resolution.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "scene",
+              "id": "departure",
+              "title": "Freier Kurs nach der Reparatur",
+              "visual_hint": "Das reparierte Schiff sucht eine sichere freie Sprungposition."
+            },
+            {
+              "kind": "pick",
+              "file": "ship_fault_departure.ini",
+              "suffix": ". "
+            }
+          ]
         }
       ]
+    },
+    {
+      "kind": "branch",
+      "id": "post_mission_twist",
+      "label": "Spaete Wendung auf dem Weg zur Sprungposition",
+      "choices": [
+        {
+          "id": "quiet_finish",
+          "label": "Keine weitere spaete Wendung",
+          "weight": 50,
+          "steps": []
+        },
+        {
+          "id": "delayed_signal",
+          "label": "Verspaetetes Signal vom Einsatzgebiet",
+          "weight": 20,
+          "steps": [
+            {
+              "kind": "scene",
+              "id": "post_mission_detour",
+              "title": "Verspaetete Nachricht",
+              "visual_hint": "Nach dem eigentlichen Missionsabschluss erreicht das Schiff ein letztes schwaches Signal."
+            },
+            {
+              "kind": "pick",
+              "file": "post_signal_detect.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "post_signal_response.ini",
+              "suffix": ". "
+            }
+          ]
+        },
+        {
+          "id": "brief_pursuit",
+          "label": "Unbekannter Kontakt folgt kurzzeitig",
+          "weight": 15,
+          "steps": [
+            {
+              "kind": "scene",
+              "id": "post_mission_detour",
+              "title": "Unbekannter Begleiter",
+              "visual_hint": "Ein kleiner Kontakt scheint dem Schiff beim Rueckzug kurzzeitig zu folgen."
+            },
+            {
+              "kind": "pick",
+              "file": "post_pursuit_detect.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "post_pursuit_response.ini",
+              "suffix": ". "
+            }
+          ]
+        },
+        {
+          "id": "navigation_anomaly",
+          "label": "Kurze nicht reproduzierbare Raumanomalie",
+          "weight": 15,
+          "steps": [
+            {
+              "kind": "scene",
+              "id": "post_mission_detour",
+              "title": "Letzte Raumanomalie",
+              "visual_hint": "Im freien Raum erscheint kurz vor dem Sprung ein kleiner nicht reproduzierbarer Effekt."
+            },
+            {
+              "kind": "pick",
+              "file": "post_anomaly_detect.ini",
+              "suffix": ". "
+            },
+            {
+              "kind": "pick",
+              "file": "post_anomaly_response.ini",
+              "suffix": ". "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "scene",
+      "id": "free_space",
+      "title": "Rueckkehr in den freien Raum",
+      "visual_hint": "Das Schiff hat das Einsatzgebiet verlassen und befindet sich mit sicherem Abstand wieder frei im Systemraum."
+    },
+    {
+      "kind": "pick",
+      "file": "mission_free_space.ini",
+      "suffix": ". ",
+      "label": "Freie Sprungposition"
     },
     {
       "kind": "scene",
@@ -1476,5 +2289,6 @@
       "file": "mission_jump_prompt.ini",
       "suffix": ". "
     }
-  ]
+  ],
+  "terminal_invariant": "Alle Pfade muessen mit mission_free_space.ini, mission_end_status.ini, ship_liftoff_jumpready.ini und mission_jump_prompt.ini enden."
 }

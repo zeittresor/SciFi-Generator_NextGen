@@ -31,6 +31,43 @@ QMainWindow, QWidget {{
     background-color: {p['window_bg']};
     color: {p['window_text']};
 }}
+QFrame#appHeader, QFrame#heroCard, QFrame#statusStrip {{
+    background-color: {p['panel_bg']};
+    border: 1px solid {p['border']};
+    border-radius: {px(8)}px;
+}}
+QLabel#appTitle {{
+    font-size: {px(19)}px;
+    font-weight: 700;
+    color: {p['window_text']};
+}}
+QLabel#sectionHeroTitle {{
+    font-size: {px(15)}px;
+    font-weight: 700;
+    color: {p['window_text']};
+}}
+QLabel#appSubtitle, QLabel#mutedText {{
+    color: {p['window_text']};
+}}
+QLabel#versionBadge, QLabel#stepBadge {{
+    background-color: {p['accent']};
+    color: {p['progress_text']};
+    border: 1px solid {p['border']};
+    border-radius: {px(8)}px;
+    padding: {px(5)}px {px(9)}px;
+    font-weight: 700;
+}}
+QLabel#stepBadge {{
+    min-width: {px(22)}px;
+    min-height: {px(22)}px;
+    max-width: {px(22)}px;
+}}
+QLabel#infoCard {{
+    background-color: {p['panel_bg']};
+    color: {p['window_text']};
+    border-left: {px(4)}px solid {p['accent']};
+    padding: {px(9)}px;
+}}
 QMenuBar, QMenu {{
     background-color: {p['panel_bg']};
     color: {p['window_text']};
@@ -45,14 +82,24 @@ QMenuBar::item:selected, QMenu::item:selected {{
 QTabWidget::pane {{
     border: 1px solid {p['border']};
     background-color: {p['panel_bg']};
+    border-radius: {px(6)}px;
+    top: -1px;
 }}
 QTabBar::tab {{
     background-color: {p['button_bg']};
     color: {p['button_text']};
     border: 1px solid {p['border']};
-    padding: {px(7)}px {px(12)}px;
+    border-bottom: 0;
+    padding: {px(8)}px {px(14)}px;
+    margin-right: {px(2)}px;
+    min-width: {px(82)}px;
 }}
-QTabBar::tab:selected, QTabBar::tab:hover {{
+QTabBar::tab:selected {{
+    background-color: {p['accent']};
+    color: {p['progress_text']};
+    font-weight: 700;
+}}
+QTabBar::tab:hover:!selected {{
     background-color: {p['button_hover']};
     color: {p['button_text']};
 }}
@@ -78,6 +125,7 @@ QPushButton {{
     background-color: {p['button_bg']};
     color: {p['button_text']};
     border: 1px solid {p['border']};
+    border-radius: {px(5)}px;
     padding: {px(4)}px {px(9)}px;
 }}
 QPushButton:hover {{
@@ -143,8 +191,9 @@ QPushButton:disabled, QComboBox:disabled, QSpinBox:disabled {{
 QGroupBox {{
     font-weight: 600;
     border: 1px solid {p['border']};
-    margin-top: {px(9)}px;
-    padding-top: {px(9)}px;
+    border-radius: {px(6)}px;
+    margin-top: {px(10)}px;
+    padding-top: {px(10)}px;
     background-color: {p['panel_bg']};
     color: {p['window_text']};
 }}

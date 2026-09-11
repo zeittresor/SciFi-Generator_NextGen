@@ -38,6 +38,20 @@ def main() -> int:
 
     source_count = len(list((ROOT / "data" / "vars").glob("*.ini")))
     print(f"Sentence files: {source_count}")
+    if source_count != 218:
+        errors.append(f"Unexpected sentence-file count for v60.17: {source_count} (expected 218)")
+
+    route_count = len(engine.enumerate_branch_routes())
+    print(f"Structural branch routes: {route_count}")
+    if route_count != 200:
+        errors.append(f"Unexpected structural route count: {route_count} (expected 200)")
+    terminal_errors = engine.validate_terminal_invariant()
+    errors.extend(f"Terminal invariant: {message}" for message in terminal_errors)
+
+    for ini_path in sorted((ROOT / "data" / "vars").glob("*.ini")):
+        selectable = [text.strip().casefold() for _, text in engine._read_lines(ini_path, True)]
+        if len(selectable) != len(set(selectable)):
+            errors.append(f"Duplicate selectable fragment in: {ini_path.name}")
 
     manager = ThemeManager(ROOT / "themes")
     manager.load()
@@ -52,6 +66,16 @@ def main() -> int:
     missing_profiles = expected_prompt_profiles.difference(prompt_manager.profiles)
     if missing_profiles:
         errors.append("Missing target AI prompt profiles: " + ", ".join(sorted(missing_profiles)))
+
+    requirements_text = (ROOT / "requirements.txt").read_text(encoding="utf-8")
+    if "PyQt6>=6.7,<7" not in requirements_text:
+        errors.append("GUI requirements do not declare PyQt6>=6.7,<7")
+    app_source = (ROOT / "app.py").read_text(encoding="utf-8")
+    if "from PyQt6" not in app_source or "from PySide6" in app_source:
+        errors.append("Desktop frontend is not fully migrated to PyQt6")
+    for tab_label in ("Mission", "Medienpaket", "Sprache & Audio", "Story & Trace", "Einstellungen"):
+        if tab_label not in app_source:
+            errors.append(f"PyQt category tab is missing: {tab_label}")
 
     required_files = (
         ROOT / "app.py",
@@ -79,6 +103,18 @@ def main() -> int:
         ROOT / "data" / "vars" / "jump_missing_story.ini",
         ROOT / "data" / "vars" / "jump_story_already_used.ini",
         ROOT / "data" / "branch_fragments_v60.15.json",
+        ROOT / "data" / "branch_fragments_v60.16.json",
+        ROOT / "data" / "fragment_expansion_v60.16.json",
+        ROOT / "data" / "fragment_repairs_v60.16.json",
+        ROOT / "scifi_console.py",
+        ROOT / "run_console.sh",
+        ROOT / "start_console.bat",
+        ROOT / "requirements_console.txt",
+        ROOT / "tools" / "audit_stories.py",
+        ROOT / "docs" / "CONSOLE_v60.16.md",
+        ROOT / "docs" / "STORY_BRANCHES_v60.16.md",
+        ROOT / "docs" / "GUI_v60.17.md",
+        ROOT / "data" / "vars" / "mission_free_space.ini",
         ROOT / "data" / "vars" / "mission_end_status.ini",
         ROOT / "data" / "vars" / "mission_jump_prompt.ini",
     )
@@ -99,6 +135,15 @@ def main() -> int:
         sample = engine.generate(seed=60_001)
         if not sample.display_story or len(sample.selections) < 25 or not sample.branches:
             errors.append("Deterministic branched test generation returned incomplete output")
+        terminal_sources = tuple(Path(item.source).name for item in sample.selections[-4:])
+        expected_terminal = (
+            "mission_free_space.ini",
+            "mission_end_status.ini",
+            "ship_liftoff_jumpready.ini",
+            "mission_jump_prompt.ini",
+        )
+        if terminal_sources != expected_terminal:
+            errors.append(f"Generated story does not end jump-ready: {terminal_sources!r}")
         scenes = generate_storyboard(sample, 8)
         for profile_name in expected_prompt_profiles:
             profile = prompt_manager.get(profile_name)

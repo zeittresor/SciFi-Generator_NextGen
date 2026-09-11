@@ -1,5 +1,34 @@
 # Changelog
 
+## 60.17 — 2026-09-10
+
+- Replaced the desktop GUI toolkit from PySide6 with PyQt6 while keeping the cross-platform standard-library console frontend independent of any Qt package.
+- Rebuilt the main window around five task-oriented category tabs: Mission, Medienpaket, Sprache & Audio, Story & Trace, and Einstellungen.
+- Removed the old side-by-side expandable control-panel workflow; story, trace and production prompt now live in a dedicated analysis workspace with nested tabs.
+- Added a persistent application header, version badge and bottom status/progress strip so navigation no longer hides execution state.
+- Moved the primary story workflow into a focused Mission page and separated media production, local speech/audio and configuration from it.
+- Kept rarely used video, result-ZIP and Ollama settings collapsible inside the Media Package page and preserved their saved state.
+- Added migration logic so Audio and Settings pages are expanded once when upgrading from the older collapsible-panel layout.
+- Changed the fresh-install default theme to Aurora and expanded external theme styling for application headers, cards, category tabs, badges and status strips.
+- Changed category pages to vertical scrolling without normal horizontal scrolling and retained responsive font/layout scaling.
+- Updated Windows dependencies, documentation and regression checks from PySide6 to PyQt6.
+
+## 60.16 — 2026-09-10
+
+- Added a standard-library-only command-line frontend (`scifi_console.py`) for Windows, Linux and macOS; pure story generation no longer requires PyQt6, TTS, NumPy or FFmpeg.
+- Added CLI options for deterministic seeds, multi-story generation, raw/display output, JSON, output files, structural validation and full route enumeration.
+- Added `--trace`, which records the chosen branch path and every selected fragment in exact output order with source filename and original line number for debugging awkward transitions.
+- Added `start_console.bat`, executable `run_console.sh` and a dependency-free `requirements_console.txt`.
+- Expanded the branching storyline with distress/rescue missions, ship-system malfunctions, branch-specific mid-mission detours and a late post-mission twist before the final jump position.
+- Increased the sequence to six main mission families and 200 structurally reachable branch routes while retaining deterministic seed-derived routing.
+- Added an explicit terminal invariant shared by every route: `mission_free_space.ini` → `mission_end_status.ini` → `ship_liftoff_jumpready.ini` → `mission_jump_prompt.ini`. Every storyline therefore returns to free space and a stable jump-ready state.
+- Added 59 new sentence-fragment files for the new branches, each with seven initial alternatives (413 branch-specific lines).
+- Expanded all 218 sentence-fragment files by another seven documented alternatives each (1,526 additions before quality repairs); the final library contains 4,306 non-empty unique selectable lines.
+- Added combination repairs for grammatically incompatible fragment families, duplicate-name avoidance, punctuation cleanup and repeated-stock-clause avoidance while preserving intentional phonetic TTS spellings. The repair manifest documents 298 historical lines that were intentionally rewritten or removed.
+- Normalized the temperature-description chain to a shared lower/upper-bound grammar frame so every temperature prefix can safely combine with every following connector and value.
+- Added machine-readable v60.16 expansion/repair manifests plus a cross-platform mass-story audit tool.
+- Mass-tested 10,000 deterministic stories with all 200 routes observed and no structural/text sanity findings; expanded automated regression coverage for the CLI, trace output, terminal invariant and sentence-library integrity.
+
 ## 60.15 — 2026-08-22
 
 - Replaced the formerly linear mission sequence with a deterministic weighted branching engine while preserving the original alien route as one complete branch.

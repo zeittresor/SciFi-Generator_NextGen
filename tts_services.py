@@ -5,14 +5,14 @@ import json
 import os
 import tempfile
 
-from PySide6.QtCore import QObject, QProcess, QThread, QTimer, Signal, Slot
+from PyQt6.QtCore import QObject, QProcess, QThread, QTimer, pyqtSignal, pyqtSlot
 
 
 class WinRtTtsService(QObject):
-    voices_ready = Signal(object)
-    synthesis_ready = Signal(str)
-    error = Signal(str)
-    state_changed = Signal(str)
+    voices_ready = pyqtSignal(object)
+    synthesis_ready = pyqtSignal(str)
+    error = pyqtSignal(str)
+    state_changed = pyqtSignal(str)
 
     def __init__(self, tools_dir: Path, temp_dir: Path, parent: QObject | None = None):
         super().__init__(parent)
@@ -46,7 +46,7 @@ class WinRtTtsService(QObject):
         process.finished.connect(self._voice_list_finished)
         process.start()
 
-    @Slot(int, QProcess.ExitStatus)
+    @pyqtSlot(int, QProcess.ExitStatus)
     def _voice_list_finished(self, exit_code: int, _status: QProcess.ExitStatus) -> None:
         process = self._list_process
         self._list_process = None
@@ -113,7 +113,7 @@ class WinRtTtsService(QObject):
         self.state_changed.emit("preparing")
         process.start()
 
-    @Slot(int, QProcess.ExitStatus)
+    @pyqtSlot(int, QProcess.ExitStatus)
     def _synthesis_finished(self, exit_code: int, _status: QProcess.ExitStatus) -> None:
         process = self._synth_process
         self._synth_process = None
@@ -159,9 +159,9 @@ class WinRtTtsService(QObject):
 
 
 class _SapiWorker(QObject):
-    voices_ready = Signal(object)
-    state_changed = Signal(str)
-    error = Signal(str)
+    voices_ready = pyqtSignal(object)
+    state_changed = pyqtSignal(str)
+    error = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
@@ -170,7 +170,7 @@ class _SapiWorker(QObject):
         self.timer: QTimer | None = None
         self.comtypes = None
 
-    @Slot()
+    @pyqtSlot()
     def initialize(self) -> None:
         if os.name != "nt":
             self.voices_ready.emit([])
@@ -189,7 +189,7 @@ class _SapiWorker(QObject):
             self.error.emit(f"Native Windows-SAPI konnte nicht initialisiert werden: {exc}")
             self.voices_ready.emit([])
 
-    @Slot()
+    @pyqtSlot()
     def refresh(self) -> None:
         if self.voice is None:
             self.initialize()
@@ -219,7 +219,7 @@ class _SapiWorker(QObject):
             self.error.emit(f"SAPI-Stimmen konnten nicht gelesen werden: {exc}")
             self.voices_ready.emit([])
 
-    @Slot(str, str, int, int)
+    @pyqtSlot(str, str, int, int)
     def speak(self, text: str, voice_id: str, rate: int, volume: int) -> None:
         if self.voice is None:
             self.error.emit("Windows SAPI ist nicht initialisiert.")
@@ -240,7 +240,7 @@ class _SapiWorker(QObject):
             self.error.emit(f"SAPI-Sprachausgabe fehlgeschlagen: {exc}")
             self.state_changed.emit("error")
 
-    @Slot()
+    @pyqtSlot()
     def pause(self) -> None:
         try:
             if self.voice is not None:
@@ -249,7 +249,7 @@ class _SapiWorker(QObject):
         except Exception as exc:
             self.error.emit(f"SAPI konnte nicht pausiert werden: {exc}")
 
-    @Slot()
+    @pyqtSlot()
     def resume(self) -> None:
         try:
             if self.voice is not None:
@@ -258,7 +258,7 @@ class _SapiWorker(QObject):
         except Exception as exc:
             self.error.emit(f"SAPI konnte nicht fortgesetzt werden: {exc}")
 
-    @Slot()
+    @pyqtSlot()
     def stop(self) -> None:
         try:
             if self.voice is not None:
@@ -269,7 +269,7 @@ class _SapiWorker(QObject):
         except Exception:
             pass
 
-    @Slot()
+    @pyqtSlot()
     def _poll(self) -> None:
         try:
             if self.voice is None:
@@ -287,16 +287,16 @@ class _SapiWorker(QObject):
 
 
 class SapiTtsService(QObject):
-    voices_ready = Signal(object)
-    state_changed = Signal(str)
-    error = Signal(str)
+    voices_ready = pyqtSignal(object)
+    state_changed = pyqtSignal(str)
+    error = pyqtSignal(str)
 
-    request_initialize = Signal()
-    request_refresh = Signal()
-    request_speak = Signal(str, str, int, int)
-    request_pause = Signal()
-    request_resume = Signal()
-    request_stop = Signal()
+    request_initialize = pyqtSignal()
+    request_refresh = pyqtSignal()
+    request_speak = pyqtSignal(str, str, int, int)
+    request_pause = pyqtSignal()
+    request_resume = pyqtSignal()
+    request_stop = pyqtSignal()
 
     def __init__(self, parent: QObject | None = None):
         super().__init__(parent)

@@ -1,23 +1,24 @@
-﻿SCIFI-GENERATOR — GENERATION LOG
-App-Version: 60.15
-Erzeugt: 2026-08-22T12:05:02+00:00
+SCIFI-GENERATOR — GENERATION LOG
+App-Version: 60.16
+Erzeugt: 2026-09-10T19:22:16+00:00
 Seed: 57
-Auswahlschritte: 61
-Story-Zweig: Planet ohne intelligente Aliens — Natur, Flora oder Fauna > Naturgewalten ohne Lebensformkontakt
+Auswahlschritte: 64
+Story-Zweig: Planet ohne intelligente Aliens — Natur, Flora oder Fauna > Naturgewalten ohne Lebensformkontakt > Keine weitere planetare Wendung > Kurze nicht reproduzierbare Raumanomalie
 
 STORY-ZWEIGE
 ========================================================================
-[01] Hauptverlauf der Systemerkundung: Planet ohne intelligente Aliens — Natur, Flora oder Fauna (ID=planet_nature, Gewicht=25)
+[01] Hauptverlauf der Systemerkundung: Planet ohne intelligente Aliens — Natur, Flora oder Fauna (ID=planet_nature, Gewicht=18)
 [02] Planetarer Ereignistyp: Naturgewalten ohne Lebensformkontakt (ID=natural_forces, Gewicht=34)
+[03] Zusaetzliche Wendung vor dem Rueckstart: Keine weitere planetare Wendung (ID=clean_departure, Gewicht=55)
+[04] Spaete Wendung auf dem Weg zur Sprungposition: Kurze nicht reproduzierbare Raumanomalie (ID=navigation_anomaly, Gewicht=15)
 
 AUSGEWÄHLTE SATZTEILE
 ========================================================================
 [001] Sternzeit
 Quelle: data/vars/sternzeit_name.ini
 Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 1
-Text: Sternzeit 
-Ausgabe: Sternzeit  
+Zeile: 2
+Text: Stern Zeit Bereich 
 
 [002] Sternzeit-Ziffer 1/6
 Quelle: data/vars/sternzeit_digits.ini
@@ -29,92 +30,92 @@ Ausgabe: noll
 [003] Sternzeit-Ziffer 2/6
 Quelle: data/vars/sternzeit_digits.ini
 Szene: Warp-Austritt und Systemname (arrival)
+Zeile: 19
+Text: hah
+Ausgabe: hah 
+
+[004] Sternzeit-Ziffer 3/6
+Quelle: data/vars/sternzeit_digits.ini
+Szene: Warp-Austritt und Systemname (arrival)
+Zeile: 20
+Text: ih
+Ausgabe: ih 
+
+[005] Sternzeit-Ziffer 4/6
+Quelle: data/vars/sternzeit_digits.ini
+Szene: Warp-Austritt und Systemname (arrival)
 Zeile: 1
 Text: eins
 Ausgabe: eins 
 
-[004] Sternzeit-Ziffer 3/6
+[006] Sternzeit-Ziffer 5/6
 Quelle: data/vars/sternzeit_digits.ini
 Szene: Warp-Austritt und Systemname (arrival)
 Zeile: 8
 Text: acht
 Ausgabe: acht 
 
-[005] Sternzeit-Ziffer 4/6
+[007] Sternzeit-Ziffer 6/6
 Quelle: data/vars/sternzeit_digits.ini
 Szene: Warp-Austritt und Systemname (arrival)
 Zeile: 17
 Text: eff
 Ausgabe: eff 
 
-[006] Sternzeit-Ziffer 5/6
-Quelle: data/vars/sternzeit_digits.ini
-Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 11
-Text: zwo
-Ausgabe: zwo 
-
-[007] Sternzeit-Ziffer 6/6
-Quelle: data/vars/sternzeit_digits.ini
-Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 16
-Text: deh
-Ausgabe: deh 
-
 [008] Sternzeit-Trenner
 Quelle: data/vars/sternzeit_digits_adder.ini
 Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 5
-Text: strich 
-Ausgabe: strich  
+Zeile: 11
+Text: matrix
+Ausgabe: matrix 
 
 [009] Sternzeit-Nachkommastelle
 Quelle: data/vars/sternzeit_digits.ini
 Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 14
-Text: beh
-Ausgabe: beh. 
+Zeile: 16
+Text: deh
+Ausgabe: deh. 
 
 [010] Systemankunft
 Quelle: data/vars/system_desc.ini
 Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 13
-Text: unsere sensoren bestaetigen die ankunft im system
-Ausgabe: unsere sensoren bestätigen die ankunft im system 
+Zeile: 10
+Text: der sprung endet planmaessig im system
+Ausgabe: der sprung endet planmässig im system 
 
 [011] Systemname-Stamm
 Quelle: data/vars/hyphenation.ini
 Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 2
-Text: baraili 
-Ausgabe: baraili  
+Zeile: 28
+Text: guma 
 
 [012] Systemname-Mittelteil
 Quelle: data/vars/hyphenation_pre.ini
 Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 22
-Text: NI 
+Zeile: 82
+Text: NOVA 
+Ausgabe: NOVA
 
 [013] Systemname-Endteil
 Quelle: data/vars/hyphenation.ini
 Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 34
-Text: mira 
-Ausgabe: mira  
+Zeile: 55
+Text: dravium
+Ausgabe: dravium 
 
 [014] Systembezeichnung
 Quelle: data/vars/system_parts.ini
 Szene: Warp-Austritt und Systemname (arrival)
-Zeile: 30
-Text: caldris
-Ausgabe: caldris. 
+Zeile: 26
+Text: lambda
+Ausgabe: lambda. 
 
 [015] system_desc_solcount_intro.ini
 Quelle: data/vars/system_desc_solcount_intro.ini
 Szene: Systemanalyse und erste Orientierung (system_analysis)
-Zeile: 10
-Text: Der Systemscan bestaetigt 
-Ausgabe: Der Systemscan bestätigt  
+Zeile: 1
+Text: Der Systemscan registriert
+Ausgabe: Der Systemscan registriert 
 
 [016] system_desc_solcount.ini
 Quelle: data/vars/system_desc_solcount.ini
@@ -126,321 +127,342 @@ Ausgabe: sechs sonnen.
 [017] system_desc_solcount_adder.ini
 Quelle: data/vars/system_desc_solcount_adder.ini
 Szene: Systemanalyse und erste Orientierung (system_analysis)
-Zeile: 7
-Text: dazu gibt es kostenlos 
-Ausgabe: dazu gibt es kostenlos  
+Zeile: 17
+Text: die optische Suche erkennt ausserdem
+Ausgabe: die optische Suche erkennt ausserdem 
 
 [018] system_desc_planetcount.ini
 Quelle: data/vars/system_desc_planetcount.ini
 Szene: Systemanalyse und erste Orientierung (system_analysis)
-Zeile: 13
-Text: mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann
-Ausgabe: mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, 
+Zeile: 20
+Text: nur zwei erkennbare Planeten
+Ausgabe: nur zwei erkennbare Planeten, 
 
 [019] system_desc_planets.ini
 Quelle: data/vars/system_desc_planets.ini
 Szene: Systemanalyse und erste Orientierung (system_analysis)
-Zeile: 7
-Text: von denen zwei im lebens freundlichen bereich liegen
-Ausgabe: von denen zwei im lebens freundlichen bereich liegen. 
+Zeile: 24
+Text: von denen nicht ein einziger in der habitabelen zone ist
+Ausgabe: von denen nicht ein einziger in der habitabelen zone ist. 
 
 [020] system_context_natural.ini
 Quelle: data/vars/system_context_natural.ini
 Szene: Systemanalyse und erste Orientierung (system_analysis)
-Zeile: 6
-Text: Das System wirkt biologisch moeglicherweise interessant, technologisch jedoch vollkommen still
-Ausgabe: Das System wirkt biologisch möglicherweise interessant, technologisch jedoch vollkommen still. 
+Zeile: 7
+Text: Bislang spricht alles dafuer das wir hier mit Natur und nicht mit irgendwelchen Bewohnern diskutieren muessen
+Ausgabe: Bislang spricht alles dafür das wir hier mit Natur und nicht mit irgendwelchen Bewohnern diskutieren müssen. 
 
 [021] planet_target_desc.ini
 Quelle: data/vars/planet_target_desc.ini
 Szene: Zielplanet ohne intelligente Lebenszeichen (target)
-Zeile: 10
-Text: die Sensoren identifizieren den Zielplaneten als
-Ausgabe: die Sensoren identifizieren den Zielplaneten als 
+Zeile: 13
+Text: unser ausgewaehltes Oberflaechenziel ist der Planet
+Ausgabe: unser ausgewähltes Oberflächenziel ist der Planet 
 
 [022] Abgeleiteter Planetenname
 Quelle: <gespeichert:system_root>
 Szene: Zielplanet ohne intelligente Lebenszeichen (target)
-Text: baraili 
-Ausgabe: baraili  
+Text: guma
+Ausgabe: guma 
 
 [023] planet_name_part.ini
 Quelle: data/vars/planet_name_part.ini
 Szene: Zielplanet ohne intelligente Lebenszeichen (target)
-Zeile: 63
-Text: Korvax
-Ausgabe: Korvax. 
+Zeile: 14
+Text: Tatiana
+Ausgabe: Tatiana. 
 
 [024] nature_planet_target_info.ini
 Quelle: data/vars/nature_planet_target_info.ini
 Szene: Zielplanet ohne intelligente Lebenszeichen (target)
-Zeile: 5
-Text: Es existieren keine Hinweise auf intelligente Bewohner oder technische Infrastruktur
-Ausgabe: Es existieren keine Hinweise auf intelligente Bewohner oder technische Infrastruktur. 
+Zeile: 11
+Text: Der Zielplanet zeigt keinerlei technologische Emissionen oder aktive Funksignale, der Befund bleibt auch nach einer Kontrollmessung bestehen
+Ausgabe: Der Zielplanet zeigt keinerlei technologische Emissionen oder aktive Funksignale, der Befund bleibt auch nach einer Kontrollmessung bestehen. 
 
 [025] planet_surface_structure_desc.ini
 Quelle: data/vars/planet_surface_structure_desc.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 9
-Text: Anscheinend ist der Planet 
-Ausgabe: Anscheinend ist der Planet  
+Zeile: 19
+Text: Die geologische Ebene ist
+Ausgabe: Die geologische Ebene ist 
 
 [026] planet_surface_structure.ini
 Quelle: data/vars/planet_surface_structure.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 21
-Text: von schwimmenden Gesteinsinseln umgeben
-Ausgabe: von schwimmenden Gesteinsinseln umgeben 
+Zeile: 22
+Text: von tiefen Risssystemen durchzogen
+Ausgabe: von tiefen Risssystemen durchzogen 
 
 [027] planet_surface_structure_adder.ini
 Quelle: data/vars/planet_surface_structure_adder.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 10
-Text: gleichzeitig wirkt er 
-Ausgabe: gleichzeitig wirkt er  
+Zeile: 16
+Text: und dazwischen
+Ausgabe: und dazwischen 
 
 [028] planet_surface_structure2.ini
 Quelle: data/vars/planet_surface_structure2.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 5
-Text: geroellhaltig.
-Ausgabe: geröllhaltig.. 
+Zeile: 18
+Text: stark zerklueftet
+Ausgabe: stark zerklüftet. 
 
 [029] planet_surface_scan_liquid.ini
 Quelle: data/vars/planet_surface_scan_liquid.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 10
-Text: In den Seen wurde
-Ausgabe: In den Seen wurde 
+Zeile: 9
+Text: Im spektralen Scan wurde
+Ausgabe: Im spektralen Scan wurde 
 
 [030] planet_surface_liquid.ini
 Quelle: data/vars/planet_surface_liquid.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 5
-Text: Ethanol
-Ausgabe: Ethanol 
+Zeile: 27
+Text: eine unbekannte kryogene Fluessigkeit
+Ausgabe: eine unbekannte kryogene Flüssigkeit 
 
 [031] planet_surface_scan_liquid2.ini
 Quelle: data/vars/planet_surface_scan_liquid2.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 3
-Text: erkannt.
-Ausgabe: erkannt.. 
+Zeile: 20
+Text: nur stellenweise nachgewiesen
+Ausgabe: nur stellenweise nachgewiesen. 
 
 [032] planet_surface_scan_material.ini
 Quelle: data/vars/planet_surface_scan_material.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 7
-Text: Der geologische Scan zeigt grosse Mengen 
-Ausgabe: Der geologische Scan zeigt grosse Mengen  
+Zeile: 5
+Text: Das Landegebiet besteht mineralogisch vor allem aus
+Ausgabe: Das Landegebiet besteht mineralogisch vor allem aus 
 
 [033] planet_surface_material.ini
 Quelle: data/vars/planet_surface_material.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 72
-Text: Sonnen brenner Basalt
-Ausgabe: Sonnen brenner Basalt. 
+Zeile: 73
+Text: Stein kohle
+Ausgabe: Stein kohle. 
 
 [034] planet_surface_temperature_desc.ini
 Quelle: data/vars/planet_surface_temperature_desc.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 3
-Text: Der Planet ist ungewoehnlich fremdartig mit Temperaturen zwischen minus
-Ausgabe: Der Planet ist ungewöhnlich fremdartig mit Temperaturen zwischen minus 
+Zeile: 5
+Text: Die Oberflaechentemperatur reicht von minus
+Ausgabe: Die Oberflächentemperatur reicht von minus 
 
 [035] digits.ini
 Quelle: data/vars/digits.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 38
-Text: mehr als tausend
-Ausgabe: mehr als tausend 
+Zeile: 9
+Text: neun
+Ausgabe: neun 
 
 [036] planet_surface_temperature_adder.ini
 Quelle: data/vars/planet_surface_temperature_adder.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 7
-Text: waehrend der Tagesseite bis plus
-Ausgabe: während der Tagesseite bis plus 
+Zeile: 13
+Text: bis im Extremfall plus
+Ausgabe: bis im Extremfall plus 
 
 [037] digits.ini
 Quelle: data/vars/digits.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 33
-Text: dreihundert
-Ausgabe: dreihundert 
+Zeile: 36
+Text: siebenhundert fuenfzig
+Ausgabe: siebenhundert fünfzig 
 
 [038] planet_surface_temperature_adder_end.ini
 Quelle: data/vars/planet_surface_temperature_adder_end.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 3
-Text: Grad Rankine
-Ausgabe: Grad Rankine. 
+Zeile: 5
+Text: Grad Delisle
+Ausgabe: Grad Delisle. 
 
 [039] cloud_desc.ini
 Quelle: data/vars/cloud_desc.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 10
-Text: Ueber dem Horizont sammeln sich dichte Wolken in
-Ausgabe: Über dem Horizont sammeln sich dichte Wolken in 
+Zeile: 19
+Text: Vereinzelte Sturmzellen sind sichtbar und erscheinen
+Ausgabe: Vereinzelte Sturmzellen sind sichtbar und erscheinen 
 
 [040] cloud_color.ini
 Quelle: data/vars/cloud_color.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 14
-Text: tief orange
-Ausgabe: tief orange 
+Zeile: 30
+Text: kalt silberblau
+Ausgabe: kalt silberblau 
 
 [041] cloud_adder.ini
 Quelle: data/vars/cloud_adder.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 6
-Text: ausserdem etwas
-Ausgabe: ausserdem etwas 
+Zeile: 14
+Text: und lokal auch
+Ausgabe: und lokal auch 
 
 [042] cloud_color2.ini
 Quelle: data/vars/cloud_color2.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 19
-Text: dunkel kupferfarben
-Ausgabe: dunkel kupferfarben 
+Zeile: 17
+Text: hell silbrig
+Ausgabe: hell silbrig 
 
 [043] cloud_adder_end.ini
 Quelle: data/vars/cloud_adder_end.ini
 Szene: Planetarer Natur- und Oberflaechenscan (surface_scan)
-Zeile: 9
-Text: schimmernd.
-Ausgabe: schimmernd.. 
+Zeile: 6
+Text: zwischen den sichtbaren Wetterfronten
+Ausgabe: zwischen den sichtbaren Wetterfronten. 
 
 [044] planet_surface_touchdown_scan.ini
 Quelle: data/vars/planet_surface_touchdown_scan.ini
 Szene: Landung in unbesiedelter Wildnis (landing)
-Zeile: 9
-Text: Suche nach ebener Flaeche abgeschlossen. Zielpunkt gesetzt.
-Ausgabe: Suche nach ebener Fläche abgeschlossen. Zielpunkt gesetzt.. 
+Zeile: 19
+Text: Geeignet erscheinende Ebene zum Landen gefunden, die Kontrollmessung liefert vergleichbare Werte
+Ausgabe: Geeignet erscheinende Ebene zum Landen gefunden, die Kontrollmessung liefert vergleichbare Werte. 
 
 [045] planet_surface_landing_desc.ini
 Quelle: data/vars/planet_surface_landing_desc.ini
 Szene: Landung in unbesiedelter Wildnis (landing)
-Zeile: 4
-Text: Landung erfolgt in Kuerze.
-Ausgabe: Landung erfolgt in Kürze.. 
+Zeile: 14
+Text: Aufsetz sek wens wird vorbereitet.
+Ausgabe: Aufsetz sek wens wird vorbereitet. 
 
 [046] planet_surface_landing_desc2.ini
 Quelle: data/vars/planet_surface_landing_desc2.ini
 Szene: Landung in unbesiedelter Wildnis (landing)
-Zeile: 8
-Text: Vor uns liegende tubulenzen werden umflogen.
-Ausgabe: Vor uns liegende tubulenzen werden umflogen.. 
+Zeile: 12
+Text: Brems Fallschirm wurde aufgrund des steilen Eintritts winkels aktiviert.
+Ausgabe: Brems Fallschirm wurde aufgrund des steilen Eintritts winkels aktiviert. 
 
 [047] planet_surface_landing_desc3.ini
 Quelle: data/vars/planet_surface_landing_desc3.ini
 Szene: Landung in unbesiedelter Wildnis (landing)
-Zeile: 15
-Text: Der Aufsetzvorgang ist trotz leichter Abweichung abgeschlossen.
-Ausgabe: Der Aufsetzvorgang ist trotz leichter Abweichung abgeschlossen.. 
+Zeile: 19
+Text: Landung abgeschlossen, die Sensoren bestaetigen diese Einordnung
+Ausgabe: Landung abgeschlossen, die Sensoren bestätigen diese Einordnung. 
 
 [048] planet_surface_scan_env.ini
 Quelle: data/vars/planet_surface_scan_env.ini
 Szene: Landung in unbesiedelter Wildnis (landing)
-Zeile: 9
-Text: Rasterscan der Landmasse wird durchgefuehrt.
-Ausgabe: Rasterscan der Landmasse wird durchgeführt.. 
+Zeile: 17
+Text: Kartiere alle Objekte innerhalb des Sicherheitsradius.
+Ausgabe: Kartiere alle Objekte innerhalb des Sicherheitsradius. 
 
 [049] nature_force_detect.ini
 Quelle: data/vars/nature_force_detect.ini
 Szene: Planetare Naturgewalt erkannt (discovery)
-Zeile: 4
-Text: Ein lokales Wettergebilde gewinnt innerhalb weniger Sekunden erheblich an Energie und bewegt sich direkt auf den Landeplatz zu
-Ausgabe: Ein lokales Wettergebilde gewinnt innerhalb weniger Sekunden erheblich an Energie und bewegt sich direkt auf den Landeplatz zu. 
+Zeile: 9
+Text: Eine neue Umweltstoerung baut sich in Reichweite des Landeplatzes auf und gewinnt rasch an Intensitaet
+Ausgabe: Eine neü Umweltstörung baut sich in Reichweite des Landeplatzes auf und gewinnt rasch an Intensität. 
 
 [050] nature_force_type.ini
 Quelle: data/vars/nature_force_type.ini
 Szene: Planetare Naturgewalt erkannt (discovery)
-Zeile: 6
-Text: Der Luftdruck steigt unregelmaessig an und erzeugt kurze aber sehr heftige Druckstoesse
-Ausgabe: Der Luftdruck steigt unregelmässig an und erzeugt kurze aber sehr heftige Druckstösse. 
+Zeile: 4
+Text: Die Temperatur faellt innerhalb kurzer Zeit so stark ab das freiliegende Fluessigkeiten schlagartig kristallisieren
+Ausgabe: Die Temperatur fällt innerhalb kurzer Zeit so stark ab das freiliegende Flüssigkeiten schlagartig kristallisieren. 
 
 [051] nature_force_scale.ini
 Quelle: data/vars/nature_force_scale.ini
 Szene: Planetare Naturgewalt erkannt (discovery)
-Zeile: 2
-Text: Scannerprojektionen zeigen das sich die Stoerung entlang einer planetaren Bruchzone fortsetzt
-Ausgabe: Scannerprojektionen zeigen das sich die Störung entlang einer planetaren Bruchzone fortsetzt. 
+Zeile: 4
+Text: Unsere Modelle kommen zu dem wenig beruhigenden Ergebnis das der aktuelle Standort in der weiteren Ausbreitungsrichtung liegt
+Ausgabe: Unsere Modelle kommen zu dem wenig beruhigenden Ergebnis das der aktülle Standort in der weiteren Ausbreitungsrichtung liegt. 
 
 [052] nature_force_escalation.ini
 Quelle: data/vars/nature_force_escalation.ini
 Szene: Naturgewalt eskaliert (investigation)
-Zeile: 4
-Text: Der Untergrund hebt sich auf einer Seite des Schattels um fast einen meter
-Ausgabe: Der Untergrund hebt sich auf einer Seite des Schattels um fast einen meter. 
+Zeile: 14
+Text: Weitere passive Beobachtung bleibt moeglich, ein Verbleib am Boden wird jedoch zunehmend unvernünftig
+Ausgabe: Weitere passive Beobachtung bleibt möglich, ein Verbleib am Boden wird jedoch zunehmend unvernünftig. 
 
 [053] nature_force_ship_effect.ini
 Quelle: data/vars/nature_force_ship_effect.ini
 Szene: Naturgewalt eskaliert (investigation)
-Zeile: 4
-Text: Unsere Landebeine melden ungleichmaessige Lasten und verlieren langsam ihre sichere Position
-Ausgabe: Unsere Landebeine melden ungleichmässige Lasten und verlieren langsam ihre sichere Position. 
+Zeile: 5
+Text: Die automatische Startkontrolle fordert eine erneute Pruefung aller Landebeine und Triebwerkssektionen an
+Ausgabe: Die automatische Startkontrolle fordert eine erneute Prüfung aller Landebeine und Triebwerkssektionen an. 
 
 [054] nature_force_response.ini
 Quelle: data/vars/nature_force_response.ini
 Szene: Gegenmassnahmen und Rueckzug (escalation)
-Zeile: 1
-Text: Ich verlagere Energie auf Triebwerke und Lageregelung und reduziere alle nicht notwendigen Oberflaechenfunktionen
-Ausgabe: Ich verlagere Energie auf Triebwerke und Lageregelung und reduziere alle nicht notwendigen Oberflächenfunktionen. 
+Zeile: 7
+Text: Wir brechen die aktive Beobachtung ab und wechseln von Forschungsbetrieb auf Rueckstart
+Ausgabe: Wir brechen die aktive Beobachtung ab und wechseln von Forschungsbetrieb auf Rückstart. 
 
 [055] nature_force_retreat.ini
 Quelle: data/vars/nature_force_retreat.ini
 Szene: Gegenmassnahmen und Rueckzug (escalation)
-Zeile: 6
-Text: Die letzte Messsonde wird aufgegeben und der sofortige Abflug freigegeben
-Ausgabe: Die letzte Messsonde wird aufgegeben und der sofortige Abflug freigegeben. 
+Zeile: 11
+Text: Die Messreihe ist beendet. Der naechste sinnvolle Messpunkt liegt meiner Meinung nach im Orbit
+Ausgabe: Die Messreihe ist beendet. Der nächste sinnvolle Messpunkt liegt meiner Meinung nach im Orbit. 
 
 [056] ship_liftoff_desc.ini
 Quelle: data/vars/ship_liftoff_desc.ini
 Szene: Rueckstart in sicheren Orbit (departure)
-Zeile: 15
-Text: Lift off. Der steigflug durch die atmos faehre erfolgt.
-Ausgabe: Lift off. Der steigflug durch die atmos fähre erfolgt.. 
+Zeile: 7
+Text: Der Flucht start wurde direkt aktiviert.
+Ausgabe: Der Flucht start wurde direkt aktiviert. 
 
 [057] ship_liftoff_orbiting.ini
 Quelle: data/vars/ship_liftoff_orbiting.ini
 Szene: Rueckstart in sicheren Orbit (departure)
-Zeile: 15
-Text: Wir halten nun eine sichere Position oberhalb des Planeten.
-Ausgabe: Wir halten nun eine sichere Position oberhalb des Planeten.. 
+Zeile: 14
+Text: Eine stabile Fluchtbahn wurde erreicht.
+Ausgabe: Eine stabile Fluchtbahn wurde erreicht. 
 
 [058] ship_liftoff_doku.ini
 Quelle: data/vars/ship_liftoff_doku.ini
 Szene: Rueckstart in sicheren Orbit (departure)
-Zeile: 1
-Text: Dokumentiere Ereignisse.
-Ausgabe: Dokumentiere Ereignisse.. 
+Zeile: 15
+Text: Atmospheren Analysen werden durchgefuehrt, die Rohdaten werden zusammen mit dem Missionslog archiviert
+Ausgabe: Atmospheren Analysen werden durchgeführt, die Rohdaten werden zusammen mit dem Missionslog archiviert. 
 
-[059] mission_end_status.ini
+[059] post_anomaly_detect.ini
+Quelle: data/vars/post_anomaly_detect.ini
+Szene: Letzte Raumanomalie (post_mission_detour)
+Zeile: 1
+Text: Im freien Raum zeigt die Navigationsloesung fuer wenige Sekunden einen unmoeglichen zweiten Positionswert
+Ausgabe: Im freien Raum zeigt die Navigationslösung für wenige Sekunden einen unmöglichen zweiten Positionswert. 
+
+[060] post_anomaly_response.ini
+Quelle: data/vars/post_anomaly_response.ini
+Szene: Letzte Raumanomalie (post_mission_detour)
+Zeile: 11
+Text: Das Schiff entfernt sich einige tausend Kilometer von der Position ohne dass der Effekt erneut auftritt, der Rueckweg bleibt dabei jederzeit offen
+Ausgabe: Das Schiff entfernt sich einige tausend Kilometer von der Position ohne dass der Effekt erneut auftritt, der Rückweg bleibt dabei jederzeit offen. 
+
+[061] Freie Sprungposition
+Quelle: data/vars/mission_free_space.ini
+Szene: Rueckkehr in den freien Raum (free_space)
+Zeile: 8
+Text: Wir haben das untersuchte Gebiet hinter uns gelassen und treiben wieder auf sicherem freien Kurs durch den Systemraum
+Ausgabe: Wir haben das untersuchte Gebiet hinter uns gelassen und treiben wieder auf sicherem freien Kurs durch den Systemraum. 
+
+[062] mission_end_status.ini
 Quelle: data/vars/mission_end_status.ini
 Szene: Missionsabschluss und naechster Sektorsprung (jump_ready)
-Zeile: 4
-Text: Alle relevanten Messdaten wurden gesichert. Von unserer Seite besteht hier vorerst kein weiterer Handlungsbedarf
-Ausgabe: Alle relevanten Messdaten wurden gesichert. Von unserer Seite besteht hier vorerst kein weiterer Handlungsbedarf. 
+Zeile: 8
+Text: Der aktuelle Untersuchungsabschnitt ist abgeschlossen und alle primaeren Systeme melden Bereitschaft fuer den Weiterflug, der Abschlussstatus wird im Log vermerkt
+Ausgabe: Der aktülle Untersuchungsabschnitt ist abgeschlossen und alle primären Systeme melden Bereitschaft für den Weiterflug, der Abschlussstatus wird im Log vermerkt. 
 
-[060] ship_liftoff_jumpready.ini
+[063] ship_liftoff_jumpready.ini
 Quelle: data/vars/ship_liftoff_jumpready.ini
 Szene: Missionsabschluss und naechster Sektorsprung (jump_ready)
 Zeile: 1
 Text: Bereite Sprungantrieb vor.
-Ausgabe: Bereite Sprungantrieb vor.. 
+Ausgabe: Bereite Sprungantrieb vor. 
 
-[061] mission_jump_prompt.ini
+[064] mission_jump_prompt.ini
 Quelle: data/vars/mission_jump_prompt.ini
 Szene: Missionsabschluss und naechster Sektorsprung (jump_ready)
-Zeile: 5
-Text: Der Sprungantrieb wartet auf neue Zielkoordinaten. Ich uebrigens auch
-Ausgabe: Der Sprungantrieb wartet auf neü Zielkoordinaten. Ich übrigens auch. 
+Zeile: 7
+Text: Navigation ist freigegeben. Von mir aus duerfen wir jetzt sehr gerne woanders hin
+Ausgabe: Navigation ist freigegeben. Von mir aus dürfen wir jetzt sehr gerne woanders hin. 
 
 RAW STORY (Originalschreibweise)
 ========================================================================
-Sternzeit  noll eins acht eff zwo deh strich  beh. unsere sensoren bestaetigen die ankunft im system baraili  NI mira  caldris. Der Systemscan bestaetigt  sechs sonnen. dazu gibt es kostenlos  mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen bereich liegen. Das System wirkt biologisch moeglicherweise interessant, technologisch jedoch vollkommen still. die Sensoren identifizieren den Zielplaneten als baraili  Korvax. Es existieren keine Hinweise auf intelligente Bewohner oder technische Infrastruktur. Anscheinend ist der Planet  von schwimmenden Gesteinsinseln umgeben gleichzeitig wirkt er  geroellhaltig.. In den Seen wurde Ethanol erkannt.. Der geologische Scan zeigt grosse Mengen  Sonnen brenner Basalt. Der Planet ist ungewoehnlich fremdartig mit Temperaturen zwischen minus mehr als tausend waehrend der Tagesseite bis plus dreihundert Grad Rankine. Ueber dem Horizont sammeln sich dichte Wolken in tief orange ausserdem etwas dunkel kupferfarben schimmernd.. Suche nach ebener Flaeche abgeschlossen. Zielpunkt gesetzt.. Landung erfolgt in Kuerze.. Vor uns liegende tubulenzen werden umflogen.. Der Aufsetzvorgang ist trotz leichter Abweichung abgeschlossen.. Rasterscan der Landmasse wird durchgefuehrt.. Ein lokales Wettergebilde gewinnt innerhalb weniger Sekunden erheblich an Energie und bewegt sich direkt auf den Landeplatz zu. Der Luftdruck steigt unregelmaessig an und erzeugt kurze aber sehr heftige Druckstoesse. Scannerprojektionen zeigen das sich die Stoerung entlang einer planetaren Bruchzone fortsetzt. Der Untergrund hebt sich auf einer Seite des Schattels um fast einen meter. Unsere Landebeine melden ungleichmaessige Lasten und verlieren langsam ihre sichere Position. Ich verlagere Energie auf Triebwerke und Lageregelung und reduziere alle nicht notwendigen Oberflaechenfunktionen. Die letzte Messsonde wird aufgegeben und der sofortige Abflug freigegeben. Lift off. Der steigflug durch die atmos faehre erfolgt.. Wir halten nun eine sichere Position oberhalb des Planeten.. Dokumentiere Ereignisse.. Alle relevanten Messdaten wurden gesichert. Von unserer Seite besteht hier vorerst kein weiterer Handlungsbedarf. Bereite Sprungantrieb vor.. Der Sprungantrieb wartet auf neue Zielkoordinaten. Ich uebrigens auch.
+Stern Zeit Bereich noll hah ih eins acht eff matrix deh. der sprung endet planmaessig im system guma NOVAdravium lambda. Der Systemscan registriert sechs sonnen. die optische Suche erkennt ausserdem nur zwei erkennbare Planeten, von denen nicht ein einziger in der habitabelen zone ist. Bislang spricht alles dafuer das wir hier mit Natur und nicht mit irgendwelchen Bewohnern diskutieren muessen. unser ausgewaehltes Oberflaechenziel ist der Planet guma Tatiana. Der Zielplanet zeigt keinerlei technologische Emissionen oder aktive Funksignale, der Befund bleibt auch nach einer Kontrollmessung bestehen. Die geologische Ebene ist von tiefen Risssystemen durchzogen und dazwischen stark zerklueftet. Im spektralen Scan wurde eine unbekannte kryogene Fluessigkeit nur stellenweise nachgewiesen. Das Landegebiet besteht mineralogisch vor allem aus Stein kohle. Die Oberflaechentemperatur reicht von minus neun bis im Extremfall plus siebenhundert fuenfzig Grad Delisle. Vereinzelte Sturmzellen sind sichtbar und erscheinen kalt silberblau und lokal auch hell silbrig zwischen den sichtbaren Wetterfronten. Geeignet erscheinende Ebene zum Landen gefunden, die Kontrollmessung liefert vergleichbare Werte. Aufsetz sek wens wird vorbereitet. Brems Fallschirm wurde aufgrund des steilen Eintritts winkels aktiviert. Landung abgeschlossen, die Sensoren bestaetigen diese Einordnung. Kartiere alle Objekte innerhalb des Sicherheitsradius. Eine neue Umweltstoerung baut sich in Reichweite des Landeplatzes auf und gewinnt rasch an Intensitaet. Die Temperatur faellt innerhalb kurzer Zeit so stark ab das freiliegende Fluessigkeiten schlagartig kristallisieren. Unsere Modelle kommen zu dem wenig beruhigenden Ergebnis das der aktuelle Standort in der weiteren Ausbreitungsrichtung liegt. Weitere passive Beobachtung bleibt moeglich, ein Verbleib am Boden wird jedoch zunehmend unvernünftig. Die automatische Startkontrolle fordert eine erneute Pruefung aller Landebeine und Triebwerkssektionen an. Wir brechen die aktive Beobachtung ab und wechseln von Forschungsbetrieb auf Rueckstart. Die Messreihe ist beendet. Der naechste sinnvolle Messpunkt liegt meiner Meinung nach im Orbit. Der Flucht start wurde direkt aktiviert. Eine stabile Fluchtbahn wurde erreicht. Atmospheren Analysen werden durchgefuehrt, die Rohdaten werden zusammen mit dem Missionslog archiviert. Im freien Raum zeigt die Navigationsloesung fuer wenige Sekunden einen unmoeglichen zweiten Positionswert. Das Schiff entfernt sich einige tausend Kilometer von der Position ohne dass der Effekt erneut auftritt, der Rueckweg bleibt dabei jederzeit offen. Wir haben das untersuchte Gebiet hinter uns gelassen und treiben wieder auf sicherem freien Kurs durch den Systemraum. Der aktuelle Untersuchungsabschnitt ist abgeschlossen und alle primaeren Systeme melden Bereitschaft fuer den Weiterflug, der Abschlussstatus wird im Log vermerkt. Bereite Sprungantrieb vor. Navigation ist freigegeben. Von mir aus duerfen wir jetzt sehr gerne woanders hin.
 
 DISPLAY/TTS STORY (Legacy-Umlautkonvertierung)
 ========================================================================
-Sternzeit  noll eins acht eff zwo deh strich  beh. unsere sensoren bestätigen die ankunft im system baraili  NI mira  caldris. Der Systemscan bestätigt  sechs sonnen. dazu gibt es kostenlos  mehr Planeten als der im schiff eingebaute c vier und sechzig bord computer erkennen kann, von denen zwei im lebens freundlichen bereich liegen. Das System wirkt biologisch möglicherweise interessant, technologisch jedoch vollkommen still. die Sensoren identifizieren den Zielplaneten als baraili  Korvax. Es existieren keine Hinweise auf intelligente Bewohner oder technische Infrastruktur. Anscheinend ist der Planet  von schwimmenden Gesteinsinseln umgeben gleichzeitig wirkt er  geröllhaltig.. In den Seen wurde Ethanol erkannt.. Der geologische Scan zeigt grosse Mengen  Sonnen brenner Basalt. Der Planet ist ungewöhnlich fremdartig mit Temperaturen zwischen minus mehr als tausend während der Tagesseite bis plus dreihundert Grad Rankine. Über dem Horizont sammeln sich dichte Wolken in tief orange ausserdem etwas dunkel kupferfarben schimmernd.. Suche nach ebener Fläche abgeschlossen. Zielpunkt gesetzt.. Landung erfolgt in Kürze.. Vor uns liegende tubulenzen werden umflogen.. Der Aufsetzvorgang ist trotz leichter Abweichung abgeschlossen.. Rasterscan der Landmasse wird durchgeführt.. Ein lokales Wettergebilde gewinnt innerhalb weniger Sekunden erheblich an Energie und bewegt sich direkt auf den Landeplatz zu. Der Luftdruck steigt unregelmässig an und erzeugt kurze aber sehr heftige Druckstösse. Scannerprojektionen zeigen das sich die Störung entlang einer planetaren Bruchzone fortsetzt. Der Untergrund hebt sich auf einer Seite des Schattels um fast einen meter. Unsere Landebeine melden ungleichmässige Lasten und verlieren langsam ihre sichere Position. Ich verlagere Energie auf Triebwerke und Lageregelung und reduziere alle nicht notwendigen Oberflächenfunktionen. Die letzte Messsonde wird aufgegeben und der sofortige Abflug freigegeben. Lift off. Der steigflug durch die atmos fähre erfolgt.. Wir halten nun eine sichere Position oberhalb des Planeten.. Dokumentiere Ereignisse.. Alle relevanten Messdaten wurden gesichert. Von unserer Seite besteht hier vorerst kein weiterer Handlungsbedarf. Bereite Sprungantrieb vor.. Der Sprungantrieb wartet auf neü Zielkoordinaten. Ich übrigens auch.
+Stern Zeit Bereich noll hah ih eins acht eff matrix deh. der sprung endet planmässig im system guma NOVAdravium lambda. Der Systemscan registriert sechs sonnen. die optische Suche erkennt ausserdem nur zwei erkennbare Planeten, von denen nicht ein einziger in der habitabelen zone ist. Bislang spricht alles dafür das wir hier mit Natur und nicht mit irgendwelchen Bewohnern diskutieren müssen. unser ausgewähltes Oberflächenziel ist der Planet guma Tatiana. Der Zielplanet zeigt keinerlei technologische Emissionen oder aktive Funksignale, der Befund bleibt auch nach einer Kontrollmessung bestehen. Die geologische Ebene ist von tiefen Risssystemen durchzogen und dazwischen stark zerklüftet. Im spektralen Scan wurde eine unbekannte kryogene Flüssigkeit nur stellenweise nachgewiesen. Das Landegebiet besteht mineralogisch vor allem aus Stein kohle. Die Oberflächentemperatur reicht von minus neun bis im Extremfall plus siebenhundert fünfzig Grad Delisle. Vereinzelte Sturmzellen sind sichtbar und erscheinen kalt silberblau und lokal auch hell silbrig zwischen den sichtbaren Wetterfronten. Geeignet erscheinende Ebene zum Landen gefunden, die Kontrollmessung liefert vergleichbare Werte. Aufsetz sek wens wird vorbereitet. Brems Fallschirm wurde aufgrund des steilen Eintritts winkels aktiviert. Landung abgeschlossen, die Sensoren bestätigen diese Einordnung. Kartiere alle Objekte innerhalb des Sicherheitsradius. Eine neü Umweltstörung baut sich in Reichweite des Landeplatzes auf und gewinnt rasch an Intensität. Die Temperatur fällt innerhalb kurzer Zeit so stark ab das freiliegende Flüssigkeiten schlagartig kristallisieren. Unsere Modelle kommen zu dem wenig beruhigenden Ergebnis das der aktülle Standort in der weiteren Ausbreitungsrichtung liegt. Weitere passive Beobachtung bleibt möglich, ein Verbleib am Boden wird jedoch zunehmend unvernünftig. Die automatische Startkontrolle fordert eine erneute Prüfung aller Landebeine und Triebwerkssektionen an. Wir brechen die aktive Beobachtung ab und wechseln von Forschungsbetrieb auf Rückstart. Die Messreihe ist beendet. Der nächste sinnvolle Messpunkt liegt meiner Meinung nach im Orbit. Der Flucht start wurde direkt aktiviert. Eine stabile Fluchtbahn wurde erreicht. Atmospheren Analysen werden durchgeführt, die Rohdaten werden zusammen mit dem Missionslog archiviert. Im freien Raum zeigt die Navigationslösung für wenige Sekunden einen unmöglichen zweiten Positionswert. Das Schiff entfernt sich einige tausend Kilometer von der Position ohne dass der Effekt erneut auftritt, der Rückweg bleibt dabei jederzeit offen. Wir haben das untersuchte Gebiet hinter uns gelassen und treiben wieder auf sicherem freien Kurs durch den Systemraum. Der aktülle Untersuchungsabschnitt ist abgeschlossen und alle primären Systeme melden Bereitschaft für den Weiterflug, der Abschlussstatus wird im Log vermerkt. Bereite Sprungantrieb vor. Navigation ist freigegeben. Von mir aus dürfen wir jetzt sehr gerne woanders hin.

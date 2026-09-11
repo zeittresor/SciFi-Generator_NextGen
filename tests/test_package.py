@@ -31,14 +31,12 @@ class PackageTests(unittest.TestCase):
             self.assertIn('set /p "VERSION="<"version.txt"', content)
             self.assertIsNone(re.search(r'set "VERSION=\d', content))
 
-    def test_control_panel_uses_scroll_area_with_as_needed_policies(self):
+    def test_category_pages_use_vertical_scroll_without_normal_horizontal_scroll(self):
         app_source = (ROOT / "app.py").read_text(encoding="utf-8")
         self.assertIn("QScrollArea", app_source)
         self.assertIn("setWidgetResizable(True)", app_source)
-        self.assertGreaterEqual(
-            app_source.count("Qt.ScrollBarPolicy.ScrollBarAsNeeded"),
-            2,
-        )
+        self.assertIn("Qt.ScrollBarPolicy.ScrollBarAlwaysOff", app_source)
+        self.assertIn("Qt.ScrollBarPolicy.ScrollBarAsNeeded", app_source)
         self.assertIn("QLayout.SizeConstraint.SetMinimumSize", app_source)
 
     def test_responsive_ui_scaling_is_present(self):
@@ -49,7 +47,8 @@ class PackageTests(unittest.TestCase):
         self.assertIn("QTimer", app_source)
         self.assertIn("QFont", app_source)
         self.assertIn("MAX_UI_SCALE", app_source)
-        self.assertIn("QSizePolicy.Policy.MinimumExpanding", app_source)
+        self.assertIn("self.main_tabs", app_source)
+        self.assertIn("BASE_CONTROL_VIEWPORT_WIDTH", app_source)
 
     def test_readme_is_german_first_with_short_english_summary(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
@@ -86,7 +85,8 @@ class PackageTests(unittest.TestCase):
         self.assertTrue((ROOT / "storyboard_generator.py").is_file())
         self.assertTrue((ROOT / "ollama_client.py").is_file())
         app_source = (ROOT / "app.py").read_text(encoding="utf-8")
-        self.assertIn("Bild-Prompts erzeugen", app_source)
+        self.assertIn("Nur Bildserien-Prompt erzeugen", app_source)
+        self.assertIn("Gesamtpaket-Auftrag erzeugen", app_source)
         self.assertIn("def generate_storyboard_prompts", app_source)
         self.assertIn("Ollama (lokales Modell)", app_source)
         self.assertIn("self.prompts_edit", app_source)
@@ -107,16 +107,23 @@ class PackageTests(unittest.TestCase):
             self.assertTrue((ROOT / "prompt_profiles" / filename).is_file())
 
 
-    def test_optional_settings_are_collapsible_and_closed_by_default(self):
+    def test_pyqt6_category_gui_and_optional_media_sections(self):
         app_source = (ROOT / "app.py").read_text(encoding="utf-8")
+        requirements = (ROOT / "requirements.txt").read_text(encoding="utf-8")
+        self.assertIn("from PyQt6", app_source)
+        self.assertNotIn("from PySide6", app_source)
+        self.assertIn("PyQt6>=6.7,<7", requirements)
+        self.assertIn('self.main_tabs.addTab(mission_scroll, "Mission")', app_source)
+        self.assertIn('self.main_tabs.addTab(media_scroll, "Medienpaket")', app_source)
+        self.assertIn('self.main_tabs.addTab(audio_scroll, "Sprache & Audio")', app_source)
+        self.assertIn('"Story & Trace"', app_source)
+        self.assertIn('self.main_tabs.addTab(settings_scroll, "Einstellungen")', app_source)
         self.assertIn("class CollapsibleSection", app_source)
         self.assertIn("Video, Stimme und Übergänge (optional)", app_source)
         self.assertIn("Lieferumfang des Ergebnis-ZIP (optional)", app_source)
         self.assertIn("Prompt-Verfeinerung mit Ollama (optional)", app_source)
-        self.assertIn("Sprachausgabe, Stimme und Audioexport (optional)", app_source)
-        self.assertIn("Generierungsdetails (optional)", app_source)
-        self.assertIn("Weitere Einstellungen (optional)", app_source)
-        self.assertGreaterEqual(app_source.count("expanded=False"), 6)
+        self.assertGreaterEqual(app_source.count("expanded=False"), 3)
+        self.assertIn("ui_layout_version", app_source)
         self.assertIn("section_media_expanded", app_source)
         self.assertIn("_update_collapsible_summaries", app_source)
 

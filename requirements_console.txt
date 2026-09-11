@@ -1,0 +1,2 @@
+# Console story generation has no third-party dependencies.
+# Python 3.10+ is sufficient on Windows, Linux and macOS.
