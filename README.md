@@ -10,7 +10,9 @@ https://github.com/user-attachments/assets/3faf7d43-e822-43bb-97c6-a5813b237d41
 
 Bedienoberfläche:
 
-<img width="1185" height="858" alt="grafik" src="https://github.com/user-attachments/assets/b82ec548-5624-4463-94b2-89f939409f89" />
+<img width="1185" height="858" alt="grafik" src="https://github.com/user-attachments/assets/dee766b5-fc72-4dd9-9b4d-b7251676a709" />
+
+<img width="1189" height="855" alt="grafik" src="https://github.com/user-attachments/assets/256a2f02-d309-4d3e-a132-7270c9c22932" />
 
 Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 
