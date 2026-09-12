@@ -16,7 +16,7 @@ class V6017PyQtGuiTests(unittest.TestCase):
         cls.requirements = (ROOT / "requirements.txt").read_text(encoding="utf-8")
 
     def test_release_version(self):
-        self.assertEqual("60.17", APP_VERSION)
+        self.assertEqual("60.26", APP_VERSION)
 
     def test_runtime_gui_modules_use_pyqt6_only(self):
         self.assertIn("PyQt6>=6.7,<7", self.requirements)
@@ -29,8 +29,9 @@ class V6017PyQtGuiTests(unittest.TestCase):
         expected = (
             'addTab(mission_scroll, "Mission")',
             'addTab(media_scroll, "Medienpaket")',
-            'addTab(audio_scroll, "Sprache & Audio")',
-            'addTab(details_page, "Story & Trace")',
+            'addTab(audio_scroll, "Sprache && Audio")',
+            'addTab(manager_scroll, "Sprachmanager")',
+            'addTab(details_page, "Story && Trace")',
             'addTab(settings_scroll, "Einstellungen")',
         )
         positions = [self.app_source.index(token) for token in expected]
@@ -41,14 +42,17 @@ class V6017PyQtGuiTests(unittest.TestCase):
         self.assertIn('self.tabs.addTab(self.log_edit, "Auswahlprotokoll / Trace")', self.app_source)
         self.assertIn('self.tabs.addTab(self.prompts_edit, "Prompts / Produktion")', self.app_source)
 
-    def test_optional_media_details_are_closed_by_default(self):
+    def test_tab_sections_are_directly_visible_without_nested_collapsibles(self):
         for title in (
-            "Video, Stimme und Übergänge (optional)",
-            "Lieferumfang des Ergebnis-ZIP (optional)",
-            "Prompt-Verfeinerung mit Ollama (optional)",
+            'QGroupBox("Video, Stimme und Übergänge")',
+            'QGroupBox("Lieferumfang des Ergebnis-ZIP")',
+            'QGroupBox("Prompt-Verfeinerung mit Ollama")',
+            'QGroupBox("Lokale Sprachausgabe")',
+            'QGroupBox("Brückenatmosphäre")',
         ):
             self.assertIn(title, self.app_source)
-        self.assertGreaterEqual(self.app_source.count("expanded=False"), 3)
+        self.assertNotIn("class CollapsibleSection", self.app_source)
+        self.assertNotIn("collapsibleHeader", self.app_source)
 
     def test_new_visual_hierarchy_is_theme_driven(self):
         for selector in (

@@ -107,7 +107,7 @@ class PackageTests(unittest.TestCase):
             self.assertTrue((ROOT / "prompt_profiles" / filename).is_file())
 
 
-    def test_pyqt6_category_gui_and_optional_media_sections(self):
+    def test_pyqt6_category_gui_and_direct_tab_sections(self):
         app_source = (ROOT / "app.py").read_text(encoding="utf-8")
         requirements = (ROOT / "requirements.txt").read_text(encoding="utf-8")
         self.assertIn("from PyQt6", app_source)
@@ -115,17 +115,18 @@ class PackageTests(unittest.TestCase):
         self.assertIn("PyQt6>=6.7,<7", requirements)
         self.assertIn('self.main_tabs.addTab(mission_scroll, "Mission")', app_source)
         self.assertIn('self.main_tabs.addTab(media_scroll, "Medienpaket")', app_source)
-        self.assertIn('self.main_tabs.addTab(audio_scroll, "Sprache & Audio")', app_source)
-        self.assertIn('"Story & Trace"', app_source)
+        self.assertIn('self.main_tabs.addTab(audio_scroll, "Sprache && Audio")', app_source)
+        self.assertIn('"Story && Trace"', app_source)
+        self.assertIn('self.main_tabs.addTab(manager_scroll, "Sprachmanager")', app_source)
         self.assertIn('self.main_tabs.addTab(settings_scroll, "Einstellungen")', app_source)
-        self.assertIn("class CollapsibleSection", app_source)
-        self.assertIn("Video, Stimme und Übergänge (optional)", app_source)
-        self.assertIn("Lieferumfang des Ergebnis-ZIP (optional)", app_source)
-        self.assertIn("Prompt-Verfeinerung mit Ollama (optional)", app_source)
-        self.assertGreaterEqual(app_source.count("expanded=False"), 3)
+        self.assertNotIn("class CollapsibleSection", app_source)
+        self.assertIn('QGroupBox("Video, Stimme und Übergänge")', app_source)
+        self.assertIn('QGroupBox("Lieferumfang des Ergebnis-ZIP")', app_source)
+        self.assertIn('QGroupBox("Prompt-Verfeinerung mit Ollama")', app_source)
+        self.assertIn('QGroupBox("Lokale Sprachausgabe")', app_source)
+        self.assertIn('QGroupBox("Brückenatmosphäre")', app_source)
         self.assertIn("ui_layout_version", app_source)
-        self.assertIn("section_media_expanded", app_source)
-        self.assertIn("_update_collapsible_summaries", app_source)
+        self.assertIn("_update_tab_status_summaries", app_source)
 
     def test_total_media_package_prompt_is_packaged(self):
         self.assertTrue((ROOT / "media_package_generator.py").is_file())

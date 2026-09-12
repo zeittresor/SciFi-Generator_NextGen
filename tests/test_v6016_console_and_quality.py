@@ -40,8 +40,8 @@ class V6016ConsoleAndQualityTests(unittest.TestCase):
         return {line.strip().casefold() for line in section.get(filename, [])}
 
     def test_version_and_console_assets(self):
-        self.assertEqual("60.17", APP_VERSION)
-        self.assertEqual("60.17", (ROOT / "version.txt").read_text(encoding="utf-8").strip())
+        self.assertEqual("60.26", APP_VERSION)
+        self.assertEqual("60.26", (ROOT / "version.txt").read_text(encoding="utf-8").strip())
         for relative in (
             "scifi_console.py",
             "run_console.sh",
@@ -166,7 +166,7 @@ class V6016ConsoleAndQualityTests(unittest.TestCase):
         self.assertEqual(0, proc.returncode, proc.stderr)
         payload = json.loads(proc.stdout)
         self.assertEqual(57, payload["seed"])
-        self.assertEqual("60.17", payload["version"])
+        self.assertEqual("60.26", payload["version"])
         self.assertTrue(payload["story"])
         self.assertTrue(payload["branch_path"])
         self.assertTrue(payload["selections"])

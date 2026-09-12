@@ -231,7 +231,7 @@ def concat_narration(ffmpeg: str, audio_files: list[Path], output: Path) -> None
         encoding="utf-8",
     )
     run([
-        ffmpeg, "-y", "-hide_banner", "-loglevel", "error",
+        ffmpeg, "-y", "-loglevel", "error",
         "-f", "concat", "-safe", "0", "-i", str(list_file),
         "-ar", "48000", "-ac", "2", "-c:a", "pcm_s16le", str(output),
     ], "Szenenaudios zur vollständigen Erzählung verbinden")
@@ -257,14 +257,14 @@ def mix_background(ffmpeg: str, ffprobe: str, manifest: dict, narration: Path, o
             "alimiter=limit=0.95[out]"
         )
         run([
-            ffmpeg, "-y", "-hide_banner", "-loglevel", "error",
+            ffmpeg, "-y", "-loglevel", "error",
             "-i", str(narration), "-stream_loop", "-1", "-i", str(asset),
             "-filter_complex", filter_graph, "-map", "[out]",
             "-ar", "48000", "-ac", "2", "-c:a", "pcm_s16le", str(output),
         ], "Erzählung und Brückenatmosphäre hörbar mischen")
     else:
         run([
-            ffmpeg, "-y", "-hide_banner", "-loglevel", "error", "-i", str(narration),
+            ffmpeg, "-y", "-loglevel", "error", "-i", str(narration),
             "-ar", "48000", "-ac", "2", "-c:a", "pcm_s16le", str(output),
         ], "Finalen Audiomix ohne Hintergrundsound erzeugen")
 
@@ -275,7 +275,7 @@ def build_scene_clip(ffmpeg: str, image: Path, audio: Path, output: Path, width:
         f"crop={width}:{height},setsar=1,format=yuv420p"
     )
     run([
-        ffmpeg, "-y", "-hide_banner", "-loglevel", "error",
+        ffmpeg, "-y", "-loglevel", "error",
         "-loop", "1", "-framerate", str(fps), "-i", str(image), "-i", str(audio),
         "-vf", vf, "-r", str(fps), "-c:v", "libx264", "-preset", "medium", "-crf", "18",
         "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(output),
@@ -294,7 +294,7 @@ def build_final_video(
     transition: float,
 ) -> None:
     transition = max(0.0, min(transition, min(durations) / 2 if durations else 0.0))
-    command = [ffmpeg, "-y", "-hide_banner", "-loglevel", "error"]
+    command = [ffmpeg, "-y", "-loglevel", "error"]
     for index, (image, duration) in enumerate(zip(images, durations)):
         source_duration = duration + (transition if index < len(images) - 1 else 0.0)
         command.extend(["-loop", "1", "-framerate", str(fps), "-t", f"{source_duration:.3f}", "-i", str(image)])

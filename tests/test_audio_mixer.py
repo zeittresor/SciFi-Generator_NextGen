@@ -57,6 +57,19 @@ class AudioMixerTests(unittest.TestCase):
             self.assertEqual(1, samples.shape[1])
             self.assertTrue(output.is_file())
 
+    def test_narration_volume_is_applied_for_external_tts_backends(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            narration = root / "narration.wav"
+            full = root / "full.wav"
+            quiet = root / "quiet.wav"
+            self._write_tone(narration, rate=22050, seconds=0.1, channels=1, amplitude=0.6)
+            mix_narration_with_background(narration, full, narration_volume=1.0)
+            mix_narration_with_background(narration, quiet, narration_volume=0.25)
+            full_samples, _ = read_pcm_wav(full)
+            quiet_samples, _ = read_pcm_wav(quiet)
+            self.assertLess(float(np.max(np.abs(quiet_samples))), float(np.max(np.abs(full_samples))) * 0.35)
+
     def test_wave_format_extensible_pcm_is_supported(self):
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "extensible.wav"
