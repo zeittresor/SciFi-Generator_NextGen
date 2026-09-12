@@ -392,3 +392,7 @@ GPL-3.0 license
 **SciFi-Generator v60.17** is a PyQt6-based local Windows application that builds randomized science-fiction mission reports from editable text fragments and narrates them with installed TTS voices. Stories branch after arrival in a new star system into alien encounters, natural hazards, hostile flora/fauna, space-only events, abandoned locations, distress/rescue situations or ship malfunctions. Additional turning points create 200 structurally reachable routes, all ending explicitly in free space and a stable jump-ready state.
 
 A dependency-free Python 3.10+ console frontend also runs on Windows, Linux and macOS. It can output only the story or a complete trace with branch choices, source files and line numbers. The reorganized GUI uses category tabs for Mission, Media Package, Speech & Audio, Story & Trace and Settings. It additionally supports Windows/Qt TTS, audio export, themes, storyboards and configurable media-production handoffs for external AI systems. GPL-3.0 license
+
+## Persönliche Empfehlung
+
+Ich würde empfehlen die Anwendung mit der Stimme Kerstin (low) - de_DE (Piper..) aus den optionalen Sprachpaketen zu verwenden, ansonsten die Windows Stimme Katja, möglich das auch viele andere gut passen aber die genannten sind eben meine persönliche Favoriten beim testen. :-)
