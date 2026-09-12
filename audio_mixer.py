@@ -171,12 +171,15 @@ def mix_narration_with_background(
     *,
     background_path: Path | None = None,
     background_volume: float = 0.0,
+    narration_volume: float = 1.0,
     cancel_check: Callable[[], None] | None = None,
     progress_callback: Callable[[float], None] | None = None,
 ) -> None:
     narration, sample_rate = read_pcm_wav(narration_path)
     if narration.size == 0:
         raise AudioMixError("Die synthetisierte Sprachausgabe ist leer.")
+
+    narration = narration.astype(np.float32, copy=False) * max(0.0, min(1.0, float(narration_volume)))
 
     if background_path is None or background_volume <= 0.0:
         write_pcm16_wav(

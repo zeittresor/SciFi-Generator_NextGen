@@ -6,5 +6,12 @@ if not exist ".venv\Scripts\python.exe" (
   pause
   exit /b 1
 )
-".venv\Scripts\python.exe" app.py
-if errorlevel 1 pause
+if not exist "logs" mkdir "logs" >nul 2>nul
+".venv\Scripts\python.exe" launcher.py
+if errorlevel 1 (
+  echo.
+  echo [ERROR] SciFi-Generator could not be started.
+  echo [INFO] Diagnostic log: "%CD%\logs\startup_error.log"
+  pause
+  exit /b 1
+)

@@ -6,15 +6,15 @@ from math import gcd
 from datetime import datetime
 from pathlib import Path
 
-from PyQt6.QtCore import Qt, QObject, pyqtSignal, QThread, QTimer, QUrl
+from PyQt6.QtCore import Qt, QObject, pyqtSignal, pyqtSlot, QThread, QTimer, QUrl
 from PyQt6.QtGui import QAction, QDesktopServices, QFont, QIcon, QResizeEvent
-from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
+from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer, QSoundEffect
 from PyQt6.QtTextToSpeech import QTextToSpeech
 from PyQt6.QtWidgets import (
-    QApplication, QCheckBox, QComboBox, QDoubleSpinBox, QFileDialog, QFormLayout, QFrame, QGridLayout,
-    QGroupBox, QHBoxLayout, QLabel, QLayout, QLineEdit, QMainWindow, QMessageBox,
+    QAbstractItemView, QApplication, QCheckBox, QComboBox, QDoubleSpinBox, QFileDialog, QFormLayout, QFrame, QGridLayout,
+    QGroupBox, QHBoxLayout, QHeaderView, QLabel, QLayout, QLineEdit, QMainWindow, QMessageBox,
     QProgressBar, QProgressDialog, QPushButton, QScrollArea, QSizePolicy, QSlider, QSpinBox,
-    QTabWidget, QTextEdit, QVBoxLayout, QWidget,
+    QTabWidget, QTableWidget, QTableWidgetItem, QTextEdit, QVBoxLayout, QWidget, QListWidget,
 )
 
 from audio_export import AudioExportRequest, AudioExportWorker, find_ffmpeg
@@ -25,7 +25,9 @@ from handoff_package import HandoffPackageError, create_handoff_zip, validate_to
 from ollama_client import OllamaClient, OllamaClientError
 from prompt_profile_manager import PromptProfile, PromptProfileManager
 from theme_manager import ThemeManager
-from tts_services import SapiTtsService, WinRtTtsService
+from tts_services import PiperTtsService, SapiTtsService, WinRtTtsService
+from tts_package_manager import TtsPackageError, TtsPackageManager
+from runtime_diagnostics import RuntimeDiagnostics
 
 APP_NAME = "SciFi-Generator"
 BASE_DIR = Path(__file__).resolve().parent
@@ -39,11 +41,16 @@ PROMPT_PROFILE_DIR = BASE_DIR / "prompt_profiles"
 TOOLS_DIR = BASE_DIR / "tools"
 TEMP_DIR = BASE_DIR / "temp"
 SETTINGS_FILE = BASE_DIR / "settings.json"
+TTS_PACKAGE_CATALOG = BASE_DIR / "tts_package_catalog.json"
+MLS_SPEAKER_ALIASES_FILE = BASE_DIR / "data" / "mls_speaker_aliases.json"
+CONFIG_PROFILE_FORMAT = "SciFi-Generator configuration profile"
+CONFIG_PROFILE_VERSION = 1
 
 BACKEND_LABELS = {
     "winrt": "Windows OneCore/WinRT",
     "sapi": "Windows SAPI",
     "qt": "Qt",
+    "piper": "Piper (lokales Komplettpaket)",
 }
 
 BASE_COMPACT_WIDTH = 1180
@@ -63,6 +70,70 @@ VIDEO_RESOLUTION_PRESETS = [
     ("Benutzerdefiniert …", 0, 0),
 ]
 
+PIPER_PROSODY_PRESETS = [
+    ("Stabil / gleichmäßig (empfohlen)", "stable", 0.45, 0.35),
+    ("Natürlich (Modellstandard)", "natural", None, None),
+    ("Ausdrucksstärker", "expressive", 0.80, 0.95),
+]
+
+PIPER_STYLE_LABELS = {
+    "amused": "Amüsiert",
+    "angry": "Wütend",
+    "disgusted": "Angeekelt",
+    "drunk": "Betrunken",
+    "neutral": "Neutral",
+    "sleepy": "Schläfrig",
+    "surprised": "Überrascht",
+    "whisper": "Flüstern",
+}
+
+
+
+def load_mls_speaker_aliases(path: Path = MLS_SPEAKER_ALIASES_FILE) -> dict[int, str]:
+    """Load stable fictional mnemonic aliases for the Piper MLS speakers.
+
+    The aliases are intentionally unrelated to the real dataset speakers. They
+    exist only so humans can remember a voice more easily than a numeric ID.
+    """
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        raw = payload.get("aliases", {}) if isinstance(payload, dict) else {}
+        aliases = {int(key): str(value).strip() for key, value in raw.items() if str(value).strip()}
+    except (OSError, UnicodeError, json.JSONDecodeError, TypeError, ValueError):
+        return {}
+    return aliases
+
+def qsoundeffect_infinite_loop_count() -> int:
+    """Return Qt's infinite QSoundEffect loop value across Python Qt bindings.
+
+    PyQt6 exposes the scoped C++ enum as QSoundEffect.Loop.Infinite while
+    some older bindings exposed QSoundEffect.Infinite directly.  The numeric
+    Qt value is -2.  Keeping the fallback makes the application robust against
+    binding/API differences without making startup depend on one enum layout.
+    """
+    loop_enum = getattr(QSoundEffect, "Loop", None)
+    if loop_enum is not None:
+        infinite = getattr(loop_enum, "Infinite", None)
+        if infinite is not None:
+            value = getattr(infinite, "value", infinite)
+            try:
+                return int(value)
+            except (TypeError, ValueError):
+                pass
+
+    legacy = getattr(QSoundEffect, "Infinite", None)
+    if legacy is not None:
+        value = getattr(legacy, "value", legacy)
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            pass
+
+    # Qt defines QSoundEffect::Infinite as -2.  Reaching this branch means the
+    # Python binding does not publish either enum spelling, but setLoopCount()
+    # still accepts the documented integer value.
+    return -2
+
 
 def emergency_stylesheet(scale: float = 1.0) -> str:
     px = lambda value: max(1, round(value * scale))
@@ -77,8 +148,7 @@ QTextEdit, QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {{ background: #0F1115
 QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {{ min-height: {px(26)}px; padding: {px(2)}px {px(5)}px; }}
 QPushButton {{ background: #343941; color: #FFFFFF; border: 1px solid #788493; padding: {px(5)}px {px(9)}px; min-height: {px(28)}px; }}
 QPushButton:hover {{ background: #48505B; }}
-QPushButton#collapsibleHeader {{ text-align: left; font-weight: 600; padding: {px(7)}px {px(10)}px; }}
-QLabel#collapsibleSummary, QLabel#workflowIntro, QLabel#workflowStatus {{ background: #262A31; color: #F2F4F7; border: 1px solid #788493; padding: {px(7)}px; }}
+QLabel#workflowIntro, QLabel#workflowStatus {{ background: #262A31; color: #F2F4F7; border: 1px solid #788493; padding: {px(7)}px; }}
 QPushButton#primaryAction {{ background: #6B8FD6; color: #FFFFFF; font-weight: 700; min-height: {px(36)}px; }}
 QPushButton#secondaryAction {{ font-weight: 600; min-height: {px(34)}px; }}
 QGroupBox {{ border: 1px solid #788493; margin-top: {px(9)}px; padding-top: {px(9)}px; }}
@@ -86,64 +156,6 @@ QGroupBox::title {{ subcontrol-origin: margin; left: {px(8)}px; padding: 0 {px(4
 QScrollBar:vertical {{ width: {px(14)}px; }}
 QScrollBar:horizontal {{ height: {px(14)}px; }}
 """
-
-
-class CollapsibleSection(QWidget):
-    expanded_changed = pyqtSignal(bool)
-
-    def __init__(self, title: str, *, expanded: bool = False, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-        self._title = title.replace(" (optional)", "")
-        self._summary = ""
-        self.setObjectName("collapsibleSection")
-
-        outer = QVBoxLayout(self)
-        outer.setContentsMargins(0, 0, 0, 0)
-        outer.setSpacing(0)
-
-        self.header_button = QPushButton()
-        self.header_button.setObjectName("collapsibleHeader")
-        self.header_button.setCheckable(True)
-        self.header_button.setChecked(expanded)
-        self.header_button.setMinimumHeight(38)
-        self.header_button.setToolTip("Optionale Einstellungen ein- oder ausklappen")
-        self.header_button.clicked.connect(self.set_expanded)
-        outer.addWidget(self.header_button)
-
-        self.summary_label = QLabel()
-        self.summary_label.setObjectName("collapsibleSummary")
-        self.summary_label.setWordWrap(True)
-        self.summary_label.setContentsMargins(12, 2, 10, 7)
-        outer.addWidget(self.summary_label)
-
-        self.content_widget = QWidget()
-        self.content_widget.setObjectName("collapsibleContent")
-        self.content_layout = QVBoxLayout(self.content_widget)
-        self.content_layout.setContentsMargins(12, 8, 8, 10)
-        self.content_layout.setSpacing(8)
-        outer.addWidget(self.content_widget)
-
-        self.set_expanded(expanded, emit_signal=False)
-
-    def is_expanded(self) -> bool:
-        return self.header_button.isChecked()
-
-    def set_summary(self, summary: str) -> None:
-        self._summary = summary.strip()
-        self.summary_label.setText(self._summary)
-        self.summary_label.setVisible(bool(self._summary))
-
-    def set_expanded(self, expanded: bool, emit_signal: bool = True) -> None:
-        expanded = bool(expanded)
-        self.header_button.setChecked(expanded)
-        self.content_widget.setVisible(expanded)
-        self._update_header_text()
-        if emit_signal:
-            self.expanded_changed.emit(expanded)
-
-    def _update_header_text(self) -> None:
-        arrow = "▼" if self.header_button.isChecked() else "▶"
-        self.header_button.setText(f"{arrow}  {self._title}")
 
 
 
@@ -208,6 +220,44 @@ class StoryboardGenerationWorker(QObject):
 
 
 
+class TtsPackageWorker(QObject):
+    progress = pyqtSignal(int, str)
+    finished = pyqtSignal(str, str)
+    error = pyqtSignal(str)
+
+    def __init__(self, manager: TtsPackageManager, package_id: str, action: str = "install") -> None:
+        super().__init__()
+        self.manager = manager
+        self.package_id = package_id
+        self.action = action
+        self._canceled = False
+
+    def cancel(self) -> None:
+        self._canceled = True
+
+    def _check_cancel(self) -> None:
+        if self._canceled:
+            raise TtsPackageError("Vorgang wurde abgebrochen.")
+
+    @pyqtSlot()
+    def run(self) -> None:
+        try:
+            if self.action == "remove":
+                self.progress.emit(20, "Sprachpaket wird entfernt …")
+                self.manager.remove(self.package_id)
+                self.progress.emit(100, "Sprachpaket entfernt.")
+                self.finished.emit(self.package_id, "removed")
+            else:
+                self.manager.install(
+                    self.package_id,
+                    callback=lambda value, message: self.progress.emit(value, message),
+                    cancel_check=self._check_cancel,
+                )
+                self.finished.emit(self.package_id, "installed")
+        except Exception as exc:
+            self.error.emit(str(exc))
+
+
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
@@ -221,16 +271,30 @@ class MainWindow(QMainWindow):
         self.story_completed = False
         self.current_activation_text = ""
         self._pending_background = False
-        self._winrt_audio_file: str | None = None
-        self.voice_catalogs: dict[str, list[dict]] = {"winrt": [], "sapi": [], "qt": []}
+        self._narration_temp_file: str | None = None
+        self.voice_catalogs: dict[str, list[dict]] = {"winrt": [], "sapi": [], "qt": [], "piper": []}
         self.qt_voice_objects: dict[str, object] = {}
         self.voice_diagnostics: list[str] = []
         self.saved_voice_backend = ""
         self.saved_voice_id = ""
         self.saved_voice_name = ""
+        self._pending_saved_voice_key = ""
+        self.saved_piper_speakers: dict[str, str] = {}
+        self.saved_piper_prosody = "stable"
+        self.mls_speaker_aliases = load_mls_speaker_aliases()
+        self._settings_loaded = False
+        self._settings_autosave_timer = QTimer(self)
+        self._settings_autosave_timer.setSingleShot(True)
+        self._settings_autosave_timer.setInterval(450)
+        self._settings_autosave_timer.timeout.connect(self._save_settings)
+        self.runtime_diagnostics = RuntimeDiagnostics(LOG_DIR, APP_NAME, APP_VERSION)
+        self._previous_excepthook = sys.excepthook
+        self._background_was_playing_before_pause = False
         self._export_thread: QThread | None = None
         self._export_worker: AudioExportWorker | None = None
         self._export_dialog: QProgressDialog | None = None
+        self._tts_package_thread: QThread | None = None
+        self._tts_package_worker: TtsPackageWorker | None = None
         self.storyboard_scenes: list[StoryboardScene] = []
         self.storyboard_text = ""
         self.ollama_client = OllamaClient()
@@ -259,19 +323,22 @@ class MainWindow(QMainWindow):
         self.theme_manager.load()
         self.prompt_profile_manager = PromptProfileManager(PROMPT_PROFILE_DIR)
         self.prompt_profile_manager.load()
+        self.tts_package_manager = TtsPackageManager(BASE_DIR, TTS_PACKAGE_CATALOG)
 
         self.qt_tts = QTextToSpeech(self)
         self.qt_tts.stateChanged.connect(self._qt_tts_state_changed)
 
-        self.background_audio = QAudioOutput(self)
-        self.background_player = QMediaPlayer(self)
-        self.background_player.setAudioOutput(self.background_audio)
+        # QSoundEffect is deliberately used for the short looping bridge ambience.
+        # Running two QMediaPlayer instances at once (Piper/WinRT narration + ambience)
+        # caused some Windows multimedia backends to replay only the first buffer of
+        # the ambience. QSoundEffect is designed for resident, gapless WAV loops and
+        # is independent from the narration QMediaPlayer.
+        self.background_effect = QSoundEffect(self)
         if SOUND_FILE.is_file():
-            self.background_player.setSource(QUrl.fromLocalFile(str(SOUND_FILE)))
-            try:
-                self.background_player.setLoops(QMediaPlayer.Loops.Infinite)
-            except AttributeError:
-                self.background_player.setLoops(-1)
+            self.background_effect.setSource(QUrl.fromLocalFile(str(SOUND_FILE)))
+            self.background_effect.setLoopCount(qsoundeffect_infinite_loop_count())
+            self.background_effect.setVolume(0.18)
+            self.background_effect.statusChanged.connect(self._background_status_changed)
 
         self.narration_audio = QAudioOutput(self)
         self.narration_player = QMediaPlayer(self)
@@ -289,9 +356,17 @@ class MainWindow(QMainWindow):
         self.sapi_service.state_changed.connect(lambda state: self._handle_speech_state("sapi", state))
         self.sapi_service.error.connect(self._voice_service_error)
 
+        self.piper_service = PiperTtsService(TEMP_DIR, self)
+        self.piper_service.synthesis_ready.connect(self._piper_synthesis_ready)
+        self.piper_service.error.connect(self._voice_service_error)
+        self.piper_service.state_changed.connect(lambda state: self._handle_speech_state("piper", state))
+
         self._build_ui()
         self._load_qt_voices()
+        self._refresh_piper_voice_catalog()
         self._load_settings()
+        self._settings_loaded = True
+        self._connect_settings_autosave()
         self._validate_installation()
         self.winrt_service.refresh_voices()
         QTimer.singleShot(0, self._update_ui_scale)
@@ -398,7 +473,7 @@ class MainWindow(QMainWindow):
         action_layout.addLayout(action_buttons)
 
         mission_nav = QHBoxLayout()
-        self.toggle_story_button = QPushButton("Story & Trace anzeigen")
+        self.toggle_story_button = QPushButton("Story && Trace anzeigen")
         self.toggle_story_button.setToolTip("Öffnet die Story-, Auswahlprotokoll- und Produktionsansicht.")
         self.toggle_story_button.clicked.connect(self.toggle_story_panel)
         media_nav_button = QPushButton("Zum Medienpaket")
@@ -438,7 +513,7 @@ class MainWindow(QMainWindow):
         media_scroll, media_page, media_layout = make_scroll_page("mediaPage")
         self.workflow_intro_label = QLabel(
             "<b>Medienausgabe:</b> Wähle zuerst, ob nur eine Bildserie oder ein vollständiges Gesamtpaket mit TTS, "
-            "Hintergrundsound, Video und ZIP erzeugt werden soll. Optionale Details bleiben standardmäßig eingeklappt."
+            "Hintergrundsound, Video und ZIP erzeugt werden soll. Alle zugehörigen Optionen stehen direkt in diesem Tab."
         )
         self.workflow_intro_label.setWordWrap(True)
         self.workflow_intro_label.setObjectName("workflowIntro")
@@ -472,7 +547,7 @@ class MainWindow(QMainWindow):
         self.scene_count_spin = QSpinBox()
         self.scene_count_spin.setRange(6, 10)
         self.scene_count_spin.setValue(8)
-        self.scene_count_spin.valueChanged.connect(self._update_collapsible_summaries)
+        self.scene_count_spin.valueChanged.connect(self._update_tab_status_summaries)
         target_form.addRow("Schlüsselszenen:", self.scene_count_spin)
 
         self.custom_target_container = QWidget()
@@ -493,7 +568,8 @@ class MainWindow(QMainWindow):
         self.output_kind_status_label.setWordWrap(True)
         media_layout.addWidget(self.output_kind_status_label)
 
-        self.media_options_section = CollapsibleSection("Video, Stimme und Übergänge (optional)", expanded=False)
+        self.media_options_group = QGroupBox("Video, Stimme und Übergänge")
+        media_options_layout = QVBoxLayout(self.media_options_group)
         media_form = QFormLayout()
         media_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         media_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
@@ -506,7 +582,7 @@ class MainWindow(QMainWindow):
         self.video_resolution_combo.setCurrentIndex(1)
         self.video_resolution_combo.setToolTip("Legt die exakte Zielauflösung des finalen Videos und das Seitenverhältnis der Szenenbilder fest.")
         self.video_resolution_combo.currentIndexChanged.connect(self._update_video_resolution_controls)
-        self.video_resolution_combo.currentIndexChanged.connect(self._update_collapsible_summaries)
+        self.video_resolution_combo.currentIndexChanged.connect(self._update_tab_status_summaries)
         media_form.addRow("Videoauflösung:", self.video_resolution_combo)
         self.video_resolution_label = media_form.labelForField(self.video_resolution_combo)
 
@@ -526,8 +602,8 @@ class MainWindow(QMainWindow):
         self.custom_video_height_spin.setSuffix(" px")
         self.custom_video_width_spin.valueChanged.connect(self._update_video_resolution_controls)
         self.custom_video_height_spin.valueChanged.connect(self._update_video_resolution_controls)
-        self.custom_video_width_spin.valueChanged.connect(self._update_collapsible_summaries)
-        self.custom_video_height_spin.valueChanged.connect(self._update_collapsible_summaries)
+        self.custom_video_width_spin.valueChanged.connect(self._update_tab_status_summaries)
+        self.custom_video_height_spin.valueChanged.connect(self._update_tab_status_summaries)
         custom_video_layout.addWidget(self.custom_video_width_spin)
         custom_video_layout.addWidget(QLabel("×"))
         custom_video_layout.addWidget(self.custom_video_height_spin)
@@ -546,7 +622,7 @@ class MainWindow(QMainWindow):
             self.video_fps_combo.addItem(label, fps)
         self.video_fps_combo.setCurrentIndex(0)
         self.video_fps_combo.setToolTip("8 fps reichen für weitgehend statische Szenenbilder meist aus. Höhere Werte sind für stärkere Bildbewegungen sinnvoll.")
-        self.video_fps_combo.currentIndexChanged.connect(self._update_collapsible_summaries)
+        self.video_fps_combo.currentIndexChanged.connect(self._update_tab_status_summaries)
         media_form.addRow("Bildrate:", self.video_fps_combo)
         self.video_fps_label = media_form.labelForField(self.video_fps_combo)
 
@@ -557,36 +633,37 @@ class MainWindow(QMainWindow):
         self.transition_spin.setValue(0.8)
         self.transition_spin.setSuffix(" s")
         self.transition_spin.setToolTip("Gewünschte Dauer der sanften Überblendung zwischen zwei Szenen im Gesamtpaket.")
-        self.transition_spin.valueChanged.connect(self._update_collapsible_summaries)
+        self.transition_spin.valueChanged.connect(self._update_tab_status_summaries)
         media_form.addRow("Überblendung:", self.transition_spin)
         self.transition_label = media_form.labelForField(self.transition_spin)
 
         self.package_voice_character_combo = QComboBox()
         self.package_voice_character_combo.addItems(["Menschlich / natürlich", "Neutral", "Robotisch / synthetisch"])
-        self.package_voice_character_combo.currentTextChanged.connect(self._update_collapsible_summaries)
+        self.package_voice_character_combo.currentTextChanged.connect(self._update_tab_status_summaries)
         media_form.addRow("Stimmcharakter:", self.package_voice_character_combo)
         self.package_voice_character_label = media_form.labelForField(self.package_voice_character_combo)
 
         self.package_voice_gender_combo = QComboBox()
         self.package_voice_gender_combo.addItems(["Weiblich", "Männlich", "Neutral / androgyn", "Egal"])
-        self.package_voice_gender_combo.currentTextChanged.connect(self._update_collapsible_summaries)
+        self.package_voice_gender_combo.currentTextChanged.connect(self._update_tab_status_summaries)
         media_form.addRow("Stimmliche Wirkung:", self.package_voice_gender_combo)
         self.package_voice_gender_label = media_form.labelForField(self.package_voice_gender_combo)
 
         self.package_voice_quality_combo = QComboBox()
         self.package_voice_quality_combo.addItems(["Beste verfügbare Qualität", "Hohe Qualität", "Standard / schnell"])
-        self.package_voice_quality_combo.currentTextChanged.connect(self._update_collapsible_summaries)
+        self.package_voice_quality_combo.currentTextChanged.connect(self._update_tab_status_summaries)
         media_form.addRow("TTS-Qualität:", self.package_voice_quality_combo)
         self.package_voice_quality_label = media_form.labelForField(self.package_voice_quality_combo)
-        self.media_options_section.content_layout.addLayout(media_form)
-        media_layout.addWidget(self.media_options_section)
+        media_options_layout.addLayout(media_form)
+        media_layout.addWidget(self.media_options_group)
 
-        self.result_contents_section = CollapsibleSection("Lieferumfang des Ergebnis-ZIP (optional)", expanded=False)
+        self.result_contents_group = QGroupBox("Lieferumfang des Ergebnis-ZIP")
+        result_contents_layout = QVBoxLayout(self.result_contents_group)
         result_contents_intro = QLabel(
             "Diese Auswahl bestimmt nur den finalen ZIP-Inhalt. Produktionsdateien dürfen intern trotzdem erzeugt werden, wenn sie für das Video benötigt werden."
         )
         result_contents_intro.setWordWrap(True)
-        self.result_contents_section.content_layout.addWidget(result_contents_intro)
+        result_contents_layout.addWidget(result_contents_intro)
         self.result_include_video_check = QCheckBox("Fertiges Video (immer enthalten)")
         self.result_include_video_check.setChecked(True)
         self.result_include_video_check.setEnabled(False)
@@ -598,31 +675,32 @@ class MainWindow(QMainWindow):
         self.result_include_clips_check.setChecked(False)
         self.result_include_project_files_check = QCheckBox("Story, Prompts, Manifest, Log und Build-Dateien im Ergebnis-ZIP")
         self.result_include_project_files_check.setChecked(True)
-        self.result_contents_section.content_layout.addWidget(self.result_include_video_check)
+        result_contents_layout.addWidget(self.result_include_video_check)
         for checkbox in (self.result_include_images_check, self.result_include_audio_check, self.result_include_clips_check, self.result_include_project_files_check):
-            checkbox.stateChanged.connect(self._update_collapsible_summaries)
-            self.result_contents_section.content_layout.addWidget(checkbox)
-        media_layout.addWidget(self.result_contents_section)
+            checkbox.stateChanged.connect(self._update_tab_status_summaries)
+            result_contents_layout.addWidget(checkbox)
+        media_layout.addWidget(self.result_contents_group)
 
-        self.prompt_options_section = CollapsibleSection("Prompt-Verfeinerung mit Ollama (optional)", expanded=False)
+        self.prompt_options_group = QGroupBox("Prompt-Verfeinerung mit Ollama")
+        prompt_options_layout = QVBoxLayout(self.prompt_options_group)
         prompt_form = QFormLayout()
         prompt_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         prompt_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.prompt_mode_combo = QComboBox()
         self.prompt_mode_combo.addItems(["Lokal (regelbasiert)", "Ollama (lokales Modell)"])
         self.prompt_mode_combo.currentIndexChanged.connect(self._update_storyboard_mode_controls)
-        self.prompt_mode_combo.currentIndexChanged.connect(self._update_collapsible_summaries)
+        self.prompt_mode_combo.currentIndexChanged.connect(self._update_tab_status_summaries)
         prompt_form.addRow("Prompt-Verfeinerung:", self.prompt_mode_combo)
         self.ollama_model_combo = QComboBox()
         self.ollama_model_combo.setEditable(True)
         self.ollama_model_combo.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
-        self.ollama_model_combo.currentTextChanged.connect(self._update_collapsible_summaries)
+        self.ollama_model_combo.currentTextChanged.connect(self._update_tab_status_summaries)
         prompt_form.addRow("Ollama-Modell:", self.ollama_model_combo)
-        self.prompt_options_section.content_layout.addLayout(prompt_form)
+        prompt_options_layout.addLayout(prompt_form)
         self.refresh_ollama_button = QPushButton("Ollama-Modelle prüfen")
         self.refresh_ollama_button.clicked.connect(self.refresh_ollama_models)
-        self.prompt_options_section.content_layout.addWidget(self.refresh_ollama_button)
-        media_layout.addWidget(self.prompt_options_section)
+        prompt_options_layout.addWidget(self.refresh_ollama_button)
+        media_layout.addWidget(self.prompt_options_group)
 
         self.storyboard_info_label = QLabel()
         self.storyboard_info_label.setWordWrap(True)
@@ -647,7 +725,10 @@ class MainWindow(QMainWindow):
         # Tab 3: Sprache & Audio
         # ------------------------------------------------------------------
         audio_scroll, audio_page, audio_layout = make_scroll_page("audioPage")
-        self.audio_section = CollapsibleSection("Sprachausgabe, Stimme und Audioexport (optional)", expanded=True)
+        self.audio_tab_status_label = QLabel("Aktive Stimme und Hintergrund werden nach dem Laden angezeigt.")
+        self.audio_tab_status_label.setObjectName("workflowStatus")
+        self.audio_tab_status_label.setWordWrap(True)
+        audio_layout.addWidget(self.audio_tab_status_label)
         speech_group = QGroupBox("Lokale Sprachausgabe")
         speech_layout = QVBoxLayout(speech_group)
         voice_form = QFormLayout()
@@ -655,6 +736,7 @@ class MainWindow(QMainWindow):
         voice_form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         self.voice_combo = QComboBox()
         self.voice_combo.currentIndexChanged.connect(self._voice_changed)
+        self.voice_combo.activated.connect(self._voice_user_activated)
         voice_form.addRow("Stimme:", self.voice_combo)
         speech_layout.addLayout(voice_form)
 
@@ -663,9 +745,52 @@ class MainWindow(QMainWindow):
         self.voice_count_label.setWordWrap(True)
         self.refresh_voices_button = QPushButton("Stimmen neu laden")
         self.refresh_voices_button.clicked.connect(self.refresh_voices)
+        self.open_tts_manager_button = QPushButton("Weitere Stimmen …")
+        self.open_tts_manager_button.clicked.connect(lambda: self.main_tabs.setCurrentIndex(self.tts_manager_tab_index))
         voice_info_row.addWidget(self.voice_count_label, 1)
         voice_info_row.addWidget(self.refresh_voices_button)
+        voice_info_row.addWidget(self.open_tts_manager_button)
         speech_layout.addLayout(voice_info_row)
+
+        self.piper_options_group = QGroupBox("Piper-Optionen")
+        piper_options_form = QFormLayout(self.piper_options_group)
+        piper_options_form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        self.piper_style_label = QLabel("Emotion / Stil:")
+        self.piper_style_combo = QComboBox()
+        self.piper_style_combo.currentIndexChanged.connect(self._piper_style_changed)
+        piper_options_form.addRow(self.piper_style_label, self.piper_style_combo)
+
+        # Large multi-speaker Piper models (for example MLS Deutsch with 236
+        # speakers) use an always-visible scrollable list instead of a searchable
+        # combo box.  The user should be able to browse voices without already
+        # knowing a dataset speaker identifier.
+        self.piper_speaker_list_label = QLabel("Sprecher:")
+        self.piper_speaker_list = QListWidget()
+        self.piper_speaker_list.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.piper_speaker_list.setMinimumHeight(170)
+        self.piper_speaker_list.setMaximumHeight(230)
+        self.piper_speaker_list.currentRowChanged.connect(self._piper_style_changed)
+        piper_options_form.addRow(self.piper_speaker_list_label, self.piper_speaker_list)
+        self.piper_speaker_list_hint = QLabel(
+            "Bei großen Mehrsprecher-Modellen kannst du direkt durch alle verfügbaren Sprecher scrollen. "
+            "Für MLS werden optional stabile, frei erfundene Merknamen angezeigt; sie haben keinen Bezug zur echten Identität der Dataset-Sprecher."
+        )
+        self.piper_speaker_list_hint.setWordWrap(True)
+        piper_options_form.addRow("", self.piper_speaker_list_hint)
+
+        self.piper_prosody_combo = QComboBox()
+        for label, key, _noise_scale, _noise_w in PIPER_PROSODY_PRESETS:
+            self.piper_prosody_combo.addItem(label, key)
+        self.piper_prosody_combo.currentIndexChanged.connect(self._update_tab_status_summaries)
+        piper_options_form.addRow("Prosodie:", self.piper_prosody_combo)
+        self.piper_prosody_hint = QLabel(
+            "Stabil reduziert die zufällige Klang- und Rhythmusvariation zwischen Sätzen. "
+            "Natürlich verwendet die Werte des jeweiligen Piper-Modells."
+        )
+        self.piper_prosody_hint.setWordWrap(True)
+        piper_options_form.addRow("", self.piper_prosody_hint)
+        self.piper_options_group.setVisible(False)
+        speech_layout.addWidget(self.piper_options_group)
 
         rate_row = QGridLayout()
         rate_row.addWidget(QLabel("Geschwindigkeit"), 0, 0)
@@ -702,30 +827,118 @@ class MainWindow(QMainWindow):
         self.audio_export_button.clicked.connect(self.save_story_audio)
         self.audio_export_button.setEnabled(False)
         speech_layout.addWidget(self.audio_export_button)
-        self.audio_section.content_layout.addWidget(speech_group)
+        audio_layout.addWidget(speech_group)
 
         ambience_group = QGroupBox("Brückenatmosphäre")
         ambience_layout = QVBoxLayout(ambience_group)
         self.background_check = QCheckBox("Hintergrundsound während des Vorlesens und im Gesamtpaket")
         self.background_check.setChecked(True)
-        self.background_check.stateChanged.connect(self._update_collapsible_summaries)
+        self.background_check.stateChanged.connect(self._update_tab_status_summaries)
         ambience_layout.addWidget(self.background_check)
         ambience_volume_row = QHBoxLayout()
         ambience_volume_row.addWidget(QLabel("Lautstärke Hintergrund"))
         self.background_volume = QSlider(Qt.Orientation.Horizontal)
         self.background_volume.setRange(0, 100)
         self.background_volume.setValue(18)
-        self.background_volume.valueChanged.connect(lambda value: self.background_audio.setVolume(value / 100.0))
-        self.background_volume.valueChanged.connect(self._update_collapsible_summaries)
+        self.background_volume.valueChanged.connect(lambda value: self.background_effect.setVolume(value / 100.0))
+        self.background_volume.valueChanged.connect(self._update_tab_status_summaries)
         ambience_volume_row.addWidget(self.background_volume, 1)
         ambience_layout.addLayout(ambience_volume_row)
-        self.audio_section.content_layout.addWidget(ambience_group)
-        audio_layout.addWidget(self.audio_section)
+        audio_layout.addWidget(ambience_group)
         audio_layout.addStretch(1)
-        self.main_tabs.addTab(audio_scroll, "Sprache & Audio")
+        self.main_tabs.addTab(audio_scroll, "Sprache && Audio")
 
         # ------------------------------------------------------------------
-        # Tab 4: Story & Trace
+        # Tab 4: Sprachmanager / zusätzliche lokale TTS-Pakete
+        # ------------------------------------------------------------------
+        manager_scroll, manager_page, manager_layout = make_scroll_page("ttsManagerPage")
+        manager_hero = QFrame()
+        manager_hero.setObjectName("heroCard")
+        manager_hero_layout = QVBoxLayout(manager_hero)
+        manager_title = QLabel("Zusätzliche Sprachausgabe-Komplettpakete")
+        manager_title.setObjectName("sectionHeroTitle")
+        manager_intro = QLabel(
+            "Hier können zusätzliche lokale TTS-Stimmen vollständig in den Programmordner installiert werden. "
+            "Ein Komplettpaket enthält bzw. beschafft automatisch Laufzeit, Bibliotheken und Sprachmodell. "
+            "Bereits vorhandene Piper-Dateien in Programm-Unterordnern, benachbarten Projektordnern oder Downloads "
+            "werden geprüft und kopiert, bevor etwas erneut heruntergeladen wird."
+        )
+        manager_intro.setWordWrap(True)
+        manager_hero_layout.addWidget(manager_title)
+        manager_hero_layout.addWidget(manager_intro)
+        manager_layout.addWidget(manager_hero)
+
+        manager_group = QGroupBox("Verfügbare Komplettpakete")
+        manager_group_layout = QVBoxLayout(manager_group)
+        self.tts_package_table = QTableWidget(0, 5)
+        self.tts_package_table.setHorizontalHeaderLabels(["Stimme", "Engine", "Qualität", "Größe", "Status"])
+        self.tts_package_table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.tts_package_table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.tts_package_table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.tts_package_table.verticalHeader().setVisible(False)
+        package_header = self.tts_package_table.horizontalHeader()
+        # Sprachpakete sollen sich wie eine echte Verwaltungs-Tabelle verhalten:
+        # Spaltenbreiten koennen per Trenner angepasst, komplette Spalten per Drag & Drop
+        # verschoben und alle Kategorien per Klick auf den Kopf sortiert werden.
+        package_header.setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
+        package_header.setSectionsMovable(True)
+        package_header.setSectionsClickable(True)
+        package_header.setSortIndicatorShown(True)
+        package_header.setToolTip(
+            "Spaltenkopf anklicken: sortieren · erneut anklicken: Reihenfolge umkehren · "
+            "Spaltenkopf ziehen: umordnen · Trenner ziehen: Breite ändern"
+        )
+        package_header.setMinimumSectionSize(70)
+        package_header.setStretchLastSection(False)
+        for column, width in enumerate((500, 90, 180, 160, 120)):
+            self.tts_package_table.setColumnWidth(column, width)
+        self.tts_package_table.setSortingEnabled(True)
+        self.tts_package_table.sortItems(0, Qt.SortOrder.AscendingOrder)
+        self.tts_package_table.itemSelectionChanged.connect(self._tts_package_selection_changed)
+        manager_group_layout.addWidget(self.tts_package_table)
+
+        self.tts_package_details = QLabel()
+        self.tts_package_details.setObjectName("infoCard")
+        self.tts_package_details.setWordWrap(True)
+        manager_group_layout.addWidget(self.tts_package_details)
+
+        manager_buttons = QHBoxLayout()
+        self.tts_package_install_button = QPushButton("Komplettpaket installieren / reparieren")
+        self.tts_package_install_button.setObjectName("primaryAction")
+        self.tts_package_install_button.clicked.connect(self.install_selected_tts_package)
+        self.tts_package_remove_button = QPushButton("Paket entfernen")
+        self.tts_package_remove_button.clicked.connect(self.remove_selected_tts_package)
+        self.tts_package_folder_button = QPushButton("Paketordner öffnen")
+        self.tts_package_folder_button.clicked.connect(self.open_selected_tts_package_folder)
+        self.tts_package_rescan_button = QPushButton("Pakete und Stimmen neu scannen")
+        self.tts_package_rescan_button.clicked.connect(self.refresh_tts_packages)
+        manager_buttons.addWidget(self.tts_package_install_button, 2)
+        manager_buttons.addWidget(self.tts_package_remove_button)
+        manager_buttons.addWidget(self.tts_package_folder_button)
+        manager_buttons.addWidget(self.tts_package_rescan_button)
+        manager_group_layout.addLayout(manager_buttons)
+
+        self.tts_package_progress = QProgressBar()
+        self.tts_package_progress.setRange(0, 100)
+        self.tts_package_progress.setValue(0)
+        self.tts_package_progress.setFormat("Bereit")
+        manager_group_layout.addWidget(self.tts_package_progress)
+        manager_layout.addWidget(manager_group)
+
+        manager_note = QLabel(
+            "Aktuell kuratiert der Sprachmanager deutsche Piper-Stimmen. Die Haupt-Sprachauswahl zeigt weiterhin nur "
+            "Stimmen an, die auf diesem Rechner wirklich vorhanden sind: Windows/Qt-Stimmen sowie vollständig installierte "
+            "Piper-Pakete. Der Paketkatalog liegt extern in tts_package_catalog.json und kann später um weitere lokale TTS-Engines erweitert werden."
+        )
+        manager_note.setObjectName("workflowStatus")
+        manager_note.setWordWrap(True)
+        manager_layout.addWidget(manager_note)
+        manager_layout.addStretch(1)
+        self.tts_manager_tab_index = self.main_tabs.addTab(manager_scroll, "Sprachmanager")
+        self._populate_tts_package_table()
+
+        # ------------------------------------------------------------------
+        # Tab 5: Story & Trace
         # ------------------------------------------------------------------
         details_page = QWidget()
         details_layout = QVBoxLayout(details_page)
@@ -758,13 +971,12 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self.prompts_edit, "Prompts / Produktion")
         details_layout.addWidget(self.tabs, 1)
         self.details_page = details_page
-        self.details_tab_index = self.main_tabs.addTab(details_page, "Story & Trace")
+        self.details_tab_index = self.main_tabs.addTab(details_page, "Story && Trace")
 
         # ------------------------------------------------------------------
-        # Tab 5: Einstellungen
+        # Tab 6: Einstellungen
         # ------------------------------------------------------------------
         settings_scroll, settings_page, settings_layout = make_scroll_page("settingsPage")
-        self.generation_section = CollapsibleSection("Generierungsdetails (optional)", expanded=True)
         options_group = QGroupBox("Storygenerierung")
         options_layout = QVBoxLayout(options_group)
         self.legacy_umlauts = QCheckBox("Legacy-Umlautkonvertierung (ae/ue/oe)")
@@ -773,30 +985,75 @@ class MainWindow(QMainWindow):
         self.ignore_blanks.setChecked(True)
         self.write_log = QCheckBox("Protokolldatei automatisch speichern")
         self.write_log.setChecked(True)
+        self.runtime_error_log = QCheckBox("Erweitertes Laufzeit-Fehlerprotokoll schreiben")
+        self.runtime_error_log.setToolTip(
+            "Schreibt bei aktivierter Option einen fortlaufenden Diagnose-Log mit Bedienpfad, "
+            "Stimmenwechseln, TTS-Zuständen und Python-Fehlern in den logs-Ordner. "
+            "Hilfreich bei sporadischen Abstürzen."
+        )
+        self.runtime_error_log.toggled.connect(self._runtime_diagnostics_toggled)
         options_layout.addWidget(self.legacy_umlauts)
         options_layout.addWidget(self.ignore_blanks)
         options_layout.addWidget(self.write_log)
+        options_layout.addWidget(self.runtime_error_log)
         seed_form = QFormLayout()
         self.seed_spin = QSpinBox()
         self.seed_spin.setRange(0, 2_147_483_647)
         self.seed_spin.setSpecialValueText("Zufällig")
         self.seed_spin.setValue(0)
-        self.seed_spin.valueChanged.connect(self._update_collapsible_summaries)
-        self.write_log.stateChanged.connect(self._update_collapsible_summaries)
-        self.legacy_umlauts.stateChanged.connect(self._update_collapsible_summaries)
+        self.seed_spin.valueChanged.connect(self._update_tab_status_summaries)
+        self.write_log.stateChanged.connect(self._update_tab_status_summaries)
+        self.runtime_error_log.stateChanged.connect(self._update_tab_status_summaries)
+        self.legacy_umlauts.stateChanged.connect(self._update_tab_status_summaries)
         seed_form.addRow("Seed:", self.seed_spin)
         options_layout.addLayout(seed_form)
-        self.generation_section.content_layout.addWidget(options_group)
-        settings_layout.addWidget(self.generation_section)
+        settings_layout.addWidget(options_group)
 
-        self.other_options_section = CollapsibleSection("Weitere Einstellungen (optional)", expanded=True)
         theme_group = QGroupBox("Darstellung")
         theme_form = QFormLayout(theme_group)
         self.theme_combo = QComboBox()
         self.theme_combo.currentTextChanged.connect(self.apply_theme)
-        self.theme_combo.currentTextChanged.connect(self._update_collapsible_summaries)
+        self.theme_combo.currentTextChanged.connect(self._update_tab_status_summaries)
         theme_form.addRow("Theme:", self.theme_combo)
-        self.other_options_section.content_layout.addWidget(theme_group)
+        settings_layout.addWidget(theme_group)
+
+        speech_settings_group = QGroupBox("Sprachoptionen")
+        speech_settings_layout = QVBoxLayout(speech_settings_group)
+        self.mls_aliases_check = QCheckBox("Fiktive Merknamen für MLS-Sprecher anzeigen (optional)")
+        self.mls_aliases_check.setChecked(False)
+        self.mls_aliases_check.setToolTip(
+            "Optional: Zeigt für die 236 MLS-Sprecher stabile, frei erfundene Vornamen als Merkhilfe. "
+            "Die Aliasnamen sind nicht die echten Namen und werden derzeit nicht zur Geschlechtsangabe verwendet. "
+            "Die Option ist bei einer frischen Konfiguration standardmäßig ausgeschaltet."
+        )
+        self.mls_aliases_check.toggled.connect(self._mls_alias_setting_changed)
+        speech_settings_layout.addWidget(self.mls_aliases_check)
+        alias_info = QLabel(
+            "Standardmäßig werden nur Sprecherposition und MLS-ID angezeigt. Die optionalen Aliasnamen stehen in "
+            "data/mls_speaker_aliases.json und dienen ausschließlich als Merkhilfe; eine gespeicherte Konfiguration kann "
+            "die Anzeige weiterhin bewusst aktivieren."
+        )
+        alias_info.setWordWrap(True)
+        alias_info.setObjectName("mutedText")
+        speech_settings_layout.addWidget(alias_info)
+        settings_layout.addWidget(speech_settings_group)
+
+        profile_group = QGroupBox("Konfigurationsprofile")
+        profile_layout = QVBoxLayout(profile_group)
+        profile_info = QLabel(
+            "Die aktuellen Einstellungen werden automatisch lokal gespeichert. Zusätzlich kannst du vollständige Konfigurationsprofile als JSON sichern, austauschen und später wieder laden."
+        )
+        profile_info.setWordWrap(True)
+        profile_layout.addWidget(profile_info)
+        profile_buttons = QHBoxLayout()
+        self.export_config_button = QPushButton("Konfiguration speichern …")
+        self.export_config_button.clicked.connect(self.save_configuration_profile)
+        self.import_config_button = QPushButton("Konfiguration laden …")
+        self.import_config_button.clicked.connect(self.load_configuration_profile)
+        profile_buttons.addWidget(self.export_config_button)
+        profile_buttons.addWidget(self.import_config_button)
+        profile_layout.addLayout(profile_buttons)
+        settings_layout.addWidget(profile_group)
 
         utility_group = QGroupBox("Dateien")
         utility_layout = QGridLayout(utility_group)
@@ -812,8 +1069,7 @@ class MainWindow(QMainWindow):
         utility_layout.addWidget(self.clear_button, 0, 1)
         utility_layout.addWidget(open_vars_button, 1, 0)
         utility_layout.addWidget(open_logs_button, 1, 1)
-        self.other_options_section.content_layout.addWidget(utility_group)
-        settings_layout.addWidget(self.other_options_section)
+        settings_layout.addWidget(utility_group)
         settings_layout.addStretch(1)
         self.main_tabs.addTab(settings_scroll, "Einstellungen")
 
@@ -896,16 +1152,12 @@ class MainWindow(QMainWindow):
         file_menu.addAction(quit_action)
 
         view_menu = self.menuBar().addMenu("Ansicht")
-        toggle_action = QAction("Story & Trace anzeigen / zur Mission zurück", self)
+        tts_manager_action = QAction("Sprachmanager öffnen", self)
+        tts_manager_action.triggered.connect(lambda: self.main_tabs.setCurrentIndex(self.tts_manager_tab_index))
+        view_menu.addAction(tts_manager_action)
+        toggle_action = QAction("Story && Trace anzeigen / zur Mission zurück", self)
         toggle_action.triggered.connect(self.toggle_story_panel)
         view_menu.addAction(toggle_action)
-        view_menu.addSeparator()
-        collapse_options_action = QAction("Alle optionalen Bereiche einklappen", self)
-        collapse_options_action.triggered.connect(self.collapse_optional_sections)
-        view_menu.addAction(collapse_options_action)
-        expand_options_action = QAction("Alle optionalen Bereiche ausklappen", self)
-        expand_options_action.triggered.connect(self.expand_optional_sections)
-        view_menu.addAction(expand_options_action)
         view_menu.addSeparator()
         open_themes = QAction("Theme-Ordner öffnen", self)
         open_themes.triggered.connect(lambda: self._open_path(THEME_DIR))
@@ -960,27 +1212,6 @@ class MainWindow(QMainWindow):
                 "Keine gültigen Ziel-KI-Promptprofile gefunden. Bitte den Ordner prompt_profiles prüfen."
             )
 
-    def _optional_sections(self) -> tuple[CollapsibleSection, ...]:
-        return (
-            self.media_options_section,
-            self.result_contents_section,
-            self.prompt_options_section,
-            self.audio_section,
-            self.generation_section,
-            self.other_options_section,
-        )
-
-    def collapse_optional_sections(self) -> None:
-        for section in self._optional_sections():
-            section.set_expanded(False)
-        self.status_label.setText("Alle optionalen Einstellungsbereiche wurden eingeklappt.")
-
-    def expand_optional_sections(self) -> None:
-        for section in self._optional_sections():
-            if section.isVisible():
-                section.set_expanded(True)
-        self.status_label.setText("Alle sichtbaren optionalen Einstellungsbereiche wurden ausgeklappt.")
-
     def toggle_story_panel(self) -> None:
         if not hasattr(self, "main_tabs"):
             return
@@ -1008,12 +1239,180 @@ class MainWindow(QMainWindow):
         self.voice_catalogs["qt"] = entries
         self._rebuild_voice_combo()
 
+    def _refresh_piper_voice_catalog(self, *, rebuild: bool = True) -> None:
+        try:
+            self.voice_catalogs["piper"] = self.tts_package_manager.installed_voices()
+        except Exception as exc:
+            self.voice_catalogs["piper"] = []
+            self._voice_service_error(f"Piper-Sprachpakete konnten nicht eingelesen werden: {exc}")
+        if rebuild and hasattr(self, "voice_combo"):
+            self._rebuild_voice_combo()
+
+    def _populate_tts_package_table(self) -> None:
+        if not hasattr(self, "tts_package_table"):
+            return
+        header = self.tts_package_table.horizontalHeader()
+        sort_column = header.sortIndicatorSection()
+        sort_order = header.sortIndicatorOrder()
+        sorting_enabled = self.tts_package_table.isSortingEnabled()
+        self.tts_package_table.setSortingEnabled(False)
+        self.tts_package_table.setRowCount(0)
+        for definition in self.tts_package_manager.packages:
+            row = self.tts_package_table.rowCount()
+            self.tts_package_table.insertRow(row)
+            size_text = f"{definition.model_bytes / 1048576:.0f} MiB + Runtime" if definition.model_bytes else "Runtime + Modell"
+            values = (
+                definition.display_name,
+                "Piper",
+                definition.quality,
+                size_text,
+                self.tts_package_manager.status_text(definition),
+            )
+            for column, value in enumerate(values):
+                item = QTableWidgetItem(value)
+                item.setData(Qt.ItemDataRole.UserRole, definition.package_id)
+                self.tts_package_table.setItem(row, column, item)
+        self.tts_package_table.setSortingEnabled(sorting_enabled)
+        if sorting_enabled and 0 <= sort_column < self.tts_package_table.columnCount():
+            self.tts_package_table.sortItems(sort_column, sort_order)
+        if self.tts_package_table.rowCount():
+            self.tts_package_table.selectRow(0)
+        else:
+            self.tts_package_details.setText(
+                "Der TTS-Paketkatalog ist leer oder ungültig. "
+                + " ".join(self.tts_package_manager.catalog_errors)
+            )
+        self._tts_package_selection_changed()
+
+    def _selected_tts_package_id(self) -> str:
+        row = self.tts_package_table.currentRow() if hasattr(self, "tts_package_table") else -1
+        if row < 0:
+            return ""
+        item = self.tts_package_table.item(row, 0)
+        return str(item.data(Qt.ItemDataRole.UserRole) or "") if item is not None else ""
+
+    def _tts_package_selection_changed(self) -> None:
+        package_id = self._selected_tts_package_id()
+        definition = self.tts_package_manager.package(package_id) if package_id else None
+        if definition is None:
+            self.tts_package_details.setText("Kein Sprachpaket ausgewählt.")
+            self.tts_package_install_button.setEnabled(False)
+            self.tts_package_remove_button.setEnabled(False)
+            self.tts_package_folder_button.setEnabled(False)
+            return
+        installed = self.tts_package_manager.is_installed(package_id)
+        supported = self.tts_package_manager.package_supported(definition)
+        engine = self.tts_package_manager.engines.get(definition.engine_id, {})
+        self.tts_package_details.setText(
+            f"{definition.display_name} · {definition.language} · Qualität: {definition.quality} · "
+            f"Stimmwirkung: {definition.gender_hint or 'nicht angegeben'}\n"
+            f"Engine: {engine.get('name', definition.engine_id)} · Status: {self.tts_package_manager.status_text(definition)}\n"
+            f"Quelle: {definition.source_url}\n"
+            "Installation erfolgt vollständig lokal unter tts_packages/. Bereits vorhandene passende Dateien werden vor einem Download wiederverwendet."
+        )
+        busy = self._tts_package_thread is not None
+        self.tts_package_install_button.setEnabled(supported and not busy)
+        self.tts_package_remove_button.setEnabled(installed and not busy)
+        self.tts_package_folder_button.setEnabled(installed and self.tts_package_manager.package_dir(package_id).exists())
+
+    def refresh_tts_packages(self) -> None:
+        self.tts_package_manager.reload_catalog()
+        self._populate_tts_package_table()
+        self._refresh_piper_voice_catalog()
+        self.status_label.setText(
+            f"Sprachmanager aktualisiert — {len(self.voice_catalogs['piper'])} installierte Piper-Stimmvarianten verfügbar."
+        )
+
+    def _start_tts_package_action(self, package_id: str, action: str) -> None:
+        if self._tts_package_thread is not None:
+            self.status_label.setText("Ein Sprachpaket-Vorgang läuft bereits.")
+            return
+        definition = self.tts_package_manager.package(package_id)
+        if definition is None:
+            return
+        thread = QThread(self)
+        worker = TtsPackageWorker(self.tts_package_manager, package_id, action)
+        worker.moveToThread(thread)
+        thread.started.connect(worker.run)
+        worker.progress.connect(self._tts_package_progress_changed)
+        worker.finished.connect(self._tts_package_action_finished)
+        worker.error.connect(self._tts_package_action_failed)
+        worker.finished.connect(thread.quit)
+        worker.error.connect(thread.quit)
+        worker.finished.connect(worker.deleteLater)
+        worker.error.connect(worker.deleteLater)
+        thread.finished.connect(self._tts_package_thread_finished)
+        self._tts_package_thread = thread
+        self._tts_package_worker = worker
+        self.tts_package_progress.setValue(0)
+        self.tts_package_progress.setFormat("Wird vorbereitet …")
+        self._tts_package_selection_changed()
+        self.status_label.setText(
+            f"{'Installiere' if action == 'install' else 'Entferne'} Sprachpaket {definition.display_name} …"
+        )
+        thread.start()
+
+    def install_selected_tts_package(self) -> None:
+        package_id = self._selected_tts_package_id()
+        if package_id:
+            self._start_tts_package_action(package_id, "install")
+
+    def remove_selected_tts_package(self) -> None:
+        package_id = self._selected_tts_package_id()
+        definition = self.tts_package_manager.package(package_id) if package_id else None
+        if definition is None:
+            return
+        answer = QMessageBox.question(
+            self,
+            "Sprachpaket entfernen",
+            f"Soll das lokale Sprachmodell „{definition.display_name}“ entfernt werden?\n\n"
+            "Die gemeinsam genutzte Piper-Laufzeit und der Download-Cache bleiben erhalten, damit andere Stimmen weiterhin funktionieren und spätere Installationen nichts unnötig erneut laden.",
+        )
+        if answer == QMessageBox.StandardButton.Yes:
+            self._start_tts_package_action(package_id, "remove")
+
+    def open_selected_tts_package_folder(self) -> None:
+        package_id = self._selected_tts_package_id()
+        if package_id:
+            self._open_path(self.tts_package_manager.package_dir(package_id))
+
+    def _tts_package_progress_changed(self, value: int, message: str) -> None:
+        self.tts_package_progress.setValue(max(0, min(100, value)))
+        self.tts_package_progress.setFormat(message)
+        self.status_label.setText(message)
+
+    def _tts_package_action_finished(self, package_id: str, action: str) -> None:
+        definition = self.tts_package_manager.package(package_id)
+        name = definition.display_name if definition else package_id
+        self.tts_package_progress.setValue(100)
+        self.tts_package_progress.setFormat("Installiert" if action == "installed" else "Entfernt")
+        self._populate_tts_package_table()
+        self._refresh_piper_voice_catalog()
+        self.status_label.setText(
+            f"Sprachpaket {name} {'ist einsatzbereit' if action == 'installed' else 'wurde entfernt'}."
+        )
+
+    def _tts_package_action_failed(self, message: str) -> None:
+        self.tts_package_progress.setFormat("Fehler")
+        self.status_label.setText("Sprachpaket-Vorgang fehlgeschlagen.")
+        QMessageBox.critical(self, "Sprachmanager", message)
+
+    def _tts_package_thread_finished(self) -> None:
+        thread = self._tts_package_thread
+        self._tts_package_thread = None
+        self._tts_package_worker = None
+        if thread is not None:
+            thread.deleteLater()
+        self._populate_tts_package_table()
+        self._tts_package_selection_changed()
+
     def refresh_voices(self) -> None:
         self.voice_diagnostics.clear()
         self.voice_count_label.setText("Stimmen werden neu eingelesen …")
         self._load_qt_voices()
         self.voice_catalogs["winrt"] = []
         self.voice_catalogs["sapi"] = []
+        self._refresh_piper_voice_catalog(rebuild=False)
         self._rebuild_voice_combo()
         self.winrt_service.refresh_voices()
         self.sapi_service.refresh_voices()
@@ -1032,20 +1431,39 @@ class MainWindow(QMainWindow):
         self.voice_combo.blockSignals(True)
         self.voice_combo.clear()
         total = 0
-        for backend in ("winrt", "sapi", "qt"):
+        for backend in ("winrt", "sapi", "qt", "piper"):
             for entry in self.voice_catalogs[backend]:
                 locale = f" — {entry['locale']}" if entry.get("locale") else ""
                 self.voice_combo.addItem(f"{entry['name']}{locale} [{BACKEND_LABELS[backend]}]", entry)
                 total += 1
         self.voice_combo.blockSignals(False)
 
-        target_key = current_key or (self.saved_voice_backend + "|" + self.saved_voice_id)
+        target_key = self._pending_saved_voice_key or current_key or (self.saved_voice_backend + "|" + self.saved_voice_id)
         selected = -1
         if target_key != "|":
             for index in range(self.voice_combo.count()):
                 entry = self.voice_combo.itemData(index)
                 if entry and entry.get("backend", "") + "|" + entry.get("id", "") == target_key:
                     selected = index
+                    break
+        # v60.18/v60.19 exposed Thorsten Emotional styles as separate voice IDs
+        # such as package:4. v60.20 keeps one voice entry and shows the style in
+        # a dedicated selector, so migrate the old saved ID automatically.
+        if selected < 0 and self.saved_voice_backend == "piper" and ":" in self.saved_voice_id:
+            legacy_package_id, legacy_speaker_text = self.saved_voice_id.split(":", 1)
+            try:
+                legacy_speaker_id = int(legacy_speaker_text)
+            except ValueError:
+                legacy_speaker_id = None
+            for index in range(self.voice_combo.count()):
+                entry = self.voice_combo.itemData(index) or {}
+                if entry.get("backend") == "piper" and entry.get("package_id") == legacy_package_id:
+                    selected = index
+                    if legacy_speaker_id is not None:
+                        for option in entry.get("speaker_options") or []:
+                            if int(option.get("id", -1)) == legacy_speaker_id:
+                                self.saved_piper_speakers[legacy_package_id] = str(option.get("name", ""))
+                                break
                     break
         if selected < 0 and self.saved_voice_name:
             for index in range(self.voice_combo.count()):
@@ -1056,152 +1474,453 @@ class MainWindow(QMainWindow):
         if selected < 0 and self.voice_combo.count():
             selected = 0
         if selected >= 0:
+            selected_entry = self.voice_combo.itemData(selected) or {}
+            selected_key = selected_entry.get("backend", "") + "|" + selected_entry.get("id", "")
             self.voice_combo.setCurrentIndex(selected)
             self._voice_changed(selected)
+            if self._pending_saved_voice_key and selected_key == self._pending_saved_voice_key:
+                self._pending_saved_voice_key = ""
 
-        counts = [f"{BACKEND_LABELS[key]}: {len(self.voice_catalogs[key])}" for key in ("winrt", "sapi", "qt")]
+        counts = [f"{BACKEND_LABELS[key]}: {len(self.voice_catalogs[key])}" for key in ("winrt", "sapi", "qt", "piper")]
         self.voice_count_label.setText(f"{total} Einträge — " + ", ".join(counts))
         self.execute_button.setEnabled(bool(total) and not self.playback_active)
         self.audio_export_button.setEnabled(bool(self.result and total) and self._export_thread is None)
 
+    def _mls_alias_for_speaker(self, speaker_id: int) -> str:
+        return self.mls_speaker_aliases.get(int(speaker_id), "")
+
+    def _format_large_piper_speaker_name(self, entry: dict, option: dict, row: int) -> str:
+        raw_name = str(option.get("name", ""))
+        speaker_id = int(option.get("id", row))
+        numeric_label = f"Sprecher {speaker_id + 1:03d}"
+        if str(entry.get("package_id", "")) == "piper-de-mls-medium" and raw_name.isdigit():
+            alias = self._mls_alias_for_speaker(speaker_id) if self.mls_aliases_check.isChecked() else ""
+            if alias:
+                return f"{alias} — {numeric_label} · MLS-ID {raw_name}"
+            return f"{numeric_label} — MLS-ID {raw_name}"
+        if raw_name:
+            return f"{numeric_label} — {raw_name}"
+        return numeric_label
+
+    def _mls_alias_setting_changed(self, _checked: bool) -> None:
+        entry = self.voice_combo.currentData() or {}
+        if entry.get("backend") == "piper" and self._piper_uses_speaker_list(entry):
+            selected_name = self._current_piper_style_name(entry)
+            if entry.get("package_id") and selected_name:
+                self.saved_piper_speakers[str(entry["package_id"])] = selected_name
+            self._refresh_piper_option_controls(entry)
+        self._schedule_settings_save()
+
+    def _piper_prosody_values(self) -> tuple[float | None, float | None]:
+        key = str(self.piper_prosody_combo.currentData() or "stable")
+        for _label, preset_key, noise_scale, noise_w in PIPER_PROSODY_PRESETS:
+            if preset_key == key:
+                return noise_scale, noise_w
+        return 0.45, 0.35
+
+    def _piper_uses_speaker_list(self, entry: dict | None = None) -> bool:
+        entry = entry or (self.voice_combo.currentData() or {})
+        return bool(entry.get("speaker_selector") and len(entry.get("speaker_options") or []) > 32)
+
+    def _current_piper_selector_value(self, entry: dict | None = None) -> dict | None:
+        entry = entry or (self.voice_combo.currentData() or {})
+        if entry.get("backend") != "piper" or not entry.get("speaker_selector"):
+            return None
+        if self._piper_uses_speaker_list(entry):
+            item = self.piper_speaker_list.currentItem()
+            if item is not None:
+                value = item.data(Qt.ItemDataRole.UserRole)
+                return value if isinstance(value, dict) else None
+        elif self.piper_style_combo.count():
+            value = self.piper_style_combo.currentData()
+            return value if isinstance(value, dict) else None
+        return None
+
+    def _current_piper_speaker_id(self, entry: dict | None = None) -> int | None:
+        entry = entry or (self.voice_combo.currentData() or {})
+        if entry.get("backend") != "piper":
+            return None
+        value = self._current_piper_selector_value(entry)
+        if value and value.get("id") is not None:
+            return int(value["id"])
+        raw_id = entry.get("speaker_id")
+        return int(raw_id) if raw_id is not None else None
+
+    def _current_piper_style_name(self, entry: dict | None = None) -> str:
+        entry = entry or (self.voice_combo.currentData() or {})
+        if entry.get("backend") != "piper":
+            return ""
+        value = self._current_piper_selector_value(entry)
+        if value:
+            return str(value.get("name", ""))
+        return str(entry.get("speaker_name", ""))
+
+    def _voice_with_piper_options(self, entry: dict) -> dict:
+        resolved = dict(entry)
+        if resolved.get("backend") == "piper":
+            resolved["speaker_id"] = self._current_piper_speaker_id(resolved)
+            resolved["speaker_name"] = self._current_piper_style_name(resolved)
+        return resolved
+
+    def _piper_style_changed(self, _index: int) -> None:
+        entry = self.voice_combo.currentData() or {}
+        if entry.get("backend") == "piper" and entry.get("package_id"):
+            style_name = self._current_piper_style_name(entry)
+            if style_name:
+                self.saved_piper_speakers[str(entry["package_id"])] = style_name
+        self._update_tab_status_summaries()
+
+    def _refresh_piper_option_controls(self, entry: dict) -> None:
+        is_piper = entry.get("backend") == "piper"
+        self.piper_options_group.setVisible(is_piper)
+        if not is_piper:
+            return
+
+        options = list(entry.get("speaker_options") or [])
+        has_selector = bool(entry.get("speaker_selector") and options)
+        list_mode = bool(has_selector and len(options) > 32)
+
+        self.piper_style_label.setVisible(has_selector and not list_mode)
+        self.piper_style_combo.setVisible(has_selector and not list_mode)
+        self.piper_speaker_list_label.setVisible(list_mode)
+        self.piper_speaker_list.setVisible(list_mode)
+        self.piper_speaker_list_hint.setVisible(list_mode)
+
+        if not has_selector:
+            self.piper_style_combo.clear()
+            self.piper_speaker_list.clear()
+            return
+
+        package_id = str(entry.get("package_id", ""))
+        desired_name = self.saved_piper_speakers.get(package_id, str(entry.get("speaker_name", "")))
+        selector_label = str(entry.get("speaker_selector_label") or "Sprecher / Stil") + ":"
+
+        if list_mode:
+            self.piper_speaker_list_label.setText(selector_label)
+            self.piper_speaker_list.blockSignals(True)
+            self.piper_speaker_list.clear()
+            selected_row = -1
+            for row, option in enumerate(options):
+                raw_name = str(option.get("name", ""))
+                display_name = self._format_large_piper_speaker_name(entry, option, row)
+                self.piper_speaker_list.addItem(display_name)
+                item = self.piper_speaker_list.item(row)
+                item.setData(Qt.ItemDataRole.UserRole, option)
+                if raw_name == desired_name:
+                    selected_row = row
+            if selected_row < 0 and options:
+                selected_row = 0
+            if selected_row >= 0:
+                self.piper_speaker_list.setCurrentRow(selected_row)
+                self.piper_speaker_list.scrollToItem(self.piper_speaker_list.item(selected_row))
+            self.piper_speaker_list.blockSignals(False)
+            self.piper_style_combo.clear()
+            return
+
+        self.piper_style_label.setText(selector_label)
+        self.piper_style_combo.blockSignals(True)
+        self.piper_style_combo.clear()
+        selected = -1
+        for option in options:
+            raw_name = str(option.get("name", ""))
+            display_name = PIPER_STYLE_LABELS.get(raw_name, raw_name.replace("_", " ").title())
+            self.piper_style_combo.addItem(display_name, option)
+            if raw_name == desired_name:
+                selected = self.piper_style_combo.count() - 1
+        if selected < 0:
+            for i in range(self.piper_style_combo.count()):
+                data = self.piper_style_combo.itemData(i) or {}
+                if data.get("name") == "neutral":
+                    selected = i
+                    break
+        self.piper_style_combo.setCurrentIndex(max(0, selected))
+        self.piper_style_combo.blockSignals(False)
+        self.piper_speaker_list.clear()
+
+    def _voice_user_activated(self, index: int) -> None:
+        """Record an explicit user choice and cancel any deferred startup restoration."""
+        entry = self.voice_combo.itemData(index) or {}
+        if not entry:
+            return
+        self._pending_saved_voice_key = ""
+        self.saved_voice_backend = str(entry.get("backend", ""))
+        self.saved_voice_id = str(entry.get("id", ""))
+        self.saved_voice_name = str(entry.get("name", ""))
+        self._schedule_settings_save()
+
     def _voice_changed(self, index: int) -> None:
         if index < 0:
+            self.piper_options_group.setVisible(False)
             return
         entry = self.voice_combo.itemData(index)
         if not entry:
+            self.piper_options_group.setVisible(False)
             return
+        # Switching voices while Piper/WinRT is still synthesizing used to race
+        # against QProcess.finished. Stop/cancel the old request first.
+        if self.playback_active:
+            self.runtime_diagnostics.breadcrumb(
+                "voice_change_while_active", old_backend=self.active_backend, new_backend=entry.get("backend"),
+                new_voice=entry.get("name")
+            )
+            self.stop_playback()
+        self.runtime_diagnostics.breadcrumb(
+            "voice_changed", backend=entry.get("backend"), voice=entry.get("name"), voice_id=entry.get("id")
+        )
         if entry.get("backend") == "qt":
             voice = self.qt_voice_objects.get(entry.get("id", ""))
             if voice is not None:
                 self.qt_tts.setVoice(voice)
-        self._update_collapsible_summaries()
+        self._refresh_piper_option_controls(entry)
+        self._update_tab_status_summaries()
 
     def _voice_service_error(self, message: str) -> None:
         if message not in self.voice_diagnostics:
             self.voice_diagnostics.append(message)
+        self.runtime_diagnostics.breadcrumb(
+            "tts_service_error", backend=self.active_backend or "none", message=message
+        )
         self.status_label.setText(message)
+
+    def _runtime_diagnostics_toggled(self, enabled: bool) -> None:
+        if enabled:
+            path = self.runtime_diagnostics.enable()
+            if path is not None and hasattr(self, "status_label"):
+                self.status_label.setText(f"Laufzeit-Diagnose aktiv: {path.name}")
+        else:
+            self.runtime_diagnostics.disable()
+
+    def _handle_uncaught_exception(self, exc_type, exc_value, exc_traceback) -> None:
+        try:
+            if isinstance(exc_value, BaseException):
+                self.runtime_diagnostics.log_exception("uncaught_python_exception", exc_value)
+        finally:
+            self._previous_excepthook(exc_type, exc_value, exc_traceback)
 
     def show_voice_diagnostics(self) -> None:
         lines = [f"{APP_NAME} v{APP_VERSION}", "", "Gefundene Stimmen:"]
-        for backend in ("winrt", "sapi", "qt"):
+        for backend in ("winrt", "sapi", "qt", "piper"):
             lines.append(f"\n{BACKEND_LABELS[backend]} ({len(self.voice_catalogs[backend])})")
             for entry in self.voice_catalogs[backend]:
                 locale = f" / {entry.get('locale')}" if entry.get("locale") else ""
                 lines.append(f"  • {entry.get('name')}{locale}")
+        lines.append("\nSprachmanager:")
+        lines.extend(f"  • {item}" for item in self.tts_package_manager.diagnostics())
         if self.voice_diagnostics:
             lines.append("\nHinweise/Fehler:")
             lines.extend(f"  • {item}" for item in self.voice_diagnostics)
         QMessageBox.information(self, "TTS-Stimmendiagnose", "\n".join(lines))
+
+    @staticmethod
+    def _setting_int(settings: dict, key: str, default: int) -> int:
+        try:
+            return int(settings.get(key, default))
+        except (TypeError, ValueError):
+            return default
+
+    @staticmethod
+    def _setting_float(settings: dict, key: str, default: float) -> float:
+        try:
+            return float(settings.get(key, default))
+        except (TypeError, ValueError):
+            return default
+
+    def _apply_settings_dict(self, settings: dict) -> None:
+        """Apply a local settings file or an imported configuration profile safely."""
+        if not isinstance(settings, dict):
+            settings = {}
+        was_loaded = self._settings_loaded
+        self._settings_loaded = False
+        try:
+            self.rate_slider.setValue(self._setting_int(settings, "rate", 0))
+            self.voice_volume.setValue(self._setting_int(settings, "voice_volume", 100))
+            self.background_volume.setValue(self._setting_int(settings, "background_volume", 18))
+            self.background_check.setChecked(bool(settings.get("background", True)) and SOUND_FILE.is_file())
+            self.write_log.setChecked(bool(settings.get("write_log", True)))
+            self.runtime_error_log.setChecked(bool(settings.get("runtime_error_log", False)))
+            self.legacy_umlauts.setChecked(bool(settings.get("legacy_umlauts", True)))
+            self.ignore_blanks.setChecked(bool(settings.get("ignore_blanks", True)))
+            self.seed_spin.setValue(self._setting_int(settings, "seed", 0))
+            self.mls_aliases_check.setChecked(bool(settings.get("mls_speaker_aliases", False)))
+
+            self.saved_voice_backend = str(settings.get("voice_backend", ""))
+            self.saved_voice_id = str(settings.get("voice_id", ""))
+            self.saved_voice_name = str(settings.get("voice_name", ""))
+            self._pending_saved_voice_key = (
+                self.saved_voice_backend + "|" + self.saved_voice_id
+                if self.saved_voice_backend and self.saved_voice_id else ""
+            )
+            raw_piper_speakers = settings.get("piper_speaker_selection", {})
+            self.saved_piper_speakers = (
+                {str(key): str(value) for key, value in raw_piper_speakers.items()}
+                if isinstance(raw_piper_speakers, dict) else {}
+            )
+            self.saved_piper_prosody = str(settings.get("piper_prosody", "stable"))
+            prosody_index = self.piper_prosody_combo.findData(self.saved_piper_prosody)
+            self.piper_prosody_combo.setCurrentIndex(prosody_index if prosody_index >= 0 else 0)
+
+            prompt_mode = str(settings.get("storyboard_mode", "Lokal (regelbasiert)"))
+            if self.prompt_mode_combo.findText(prompt_mode) >= 0:
+                self.prompt_mode_combo.setCurrentText(prompt_mode)
+
+            output_kind = str(settings.get("storyboard_output_kind", "Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP"))
+            legacy_output_map = {
+                "Bildserie": "Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP",
+                "Gesamtpaket (Bilder + Audio + Video)": "Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP",
+                "Gesamtpaket — Video + TTS + Hintergrundsound + ZIP": "Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP",
+            }
+            output_kind = legacy_output_map.get(output_kind, output_kind)
+            if self.output_kind_combo.findText(output_kind) >= 0:
+                self.output_kind_combo.setCurrentText(output_kind)
+            else:
+                self.output_kind_combo.setCurrentIndex(0)
+
+            self.custom_video_width_spin.setValue(self._setting_int(settings, "package_video_custom_width", 1024))
+            self.custom_video_height_spin.setValue(self._setting_int(settings, "package_video_custom_height", 1024))
+            resolution_label = str(settings.get("package_video_resolution_preset", "1024 × 1024 (1:1, Standard)"))
+            resolution_index = self.video_resolution_combo.findText(resolution_label)
+            self.video_resolution_combo.setCurrentIndex(resolution_index if resolution_index >= 0 else 1)
+
+            saved_fps = self._setting_int(settings, "package_video_fps", 8)
+            fps_index = next(
+                (index for index in range(self.video_fps_combo.count()) if int(self.video_fps_combo.itemData(index)) == saved_fps),
+                0,
+            )
+            self.video_fps_combo.setCurrentIndex(fps_index)
+            self.transition_spin.setValue(self._setting_float(settings, "storyboard_transition_seconds", 0.8))
+
+            for combo, key, default in (
+                (self.package_voice_character_combo, "package_voice_character", "Menschlich / natürlich"),
+                (self.package_voice_gender_combo, "package_voice_gender", "Weiblich"),
+                (self.package_voice_quality_combo, "package_voice_quality", "Beste verfügbare Qualität"),
+            ):
+                value = str(settings.get(key, default))
+                if combo.findText(value) >= 0:
+                    combo.setCurrentText(value)
+
+            self.result_include_images_check.setChecked(bool(settings.get("result_zip_include_images", True)))
+            self.result_include_audio_check.setChecked(bool(settings.get("result_zip_include_audio", True)))
+            self.result_include_clips_check.setChecked(bool(settings.get("result_zip_include_clips", False)))
+            self.result_include_project_files_check.setChecked(bool(settings.get("result_zip_include_project_files", True)))
+
+            target_ai = str(settings.get("storyboard_target_ai", "ChatGPT"))
+            if target_ai in self.prompt_profile_manager.profiles:
+                self.target_ai_combo.setCurrentText(target_ai)
+            elif self.target_ai_combo.count():
+                self.target_ai_combo.setCurrentIndex(0)
+            self.custom_target_edit.setText(str(settings.get("storyboard_custom_target", "")))
+            self.scene_count_spin.setValue(self._setting_int(settings, "storyboard_scene_count", 8))
+
+            saved_ollama_model = str(settings.get("ollama_model", ""))
+            if saved_ollama_model:
+                if self.ollama_model_combo.findText(saved_ollama_model) < 0:
+                    self.ollama_model_combo.addItem(saved_ollama_model)
+                self.ollama_model_combo.setCurrentText(saved_ollama_model)
+
+            theme = str(settings.get("theme", "Aurora"))
+            if theme in self.theme_manager.themes:
+                self.theme_combo.setCurrentText(theme)
+            elif self.theme_combo.count():
+                self.theme_combo.setCurrentIndex(0)
+            self.apply_theme(self.theme_combo.currentText())
+            self._apply_tts_manager_table_settings(settings)
+            self._rebuild_voice_combo()
+            self._update_tab_status_summaries()
+        finally:
+            self._settings_loaded = was_loaded
+
+    def _apply_tts_manager_table_settings(self, settings: dict) -> None:
+        if not hasattr(self, "tts_package_table"):
+            return
+        header = self.tts_package_table.horizontalHeader()
+        column_count = self.tts_package_table.columnCount()
+
+        widths = settings.get("tts_manager_column_widths", [])
+        if isinstance(widths, list) and len(widths) == column_count:
+            for logical_index, raw_width in enumerate(widths):
+                try:
+                    width = max(header.minimumSectionSize(), int(raw_width))
+                except (TypeError, ValueError):
+                    continue
+                self.tts_package_table.setColumnWidth(logical_index, width)
+
+        order = settings.get("tts_manager_column_order", [])
+        if isinstance(order, list):
+            try:
+                logical_order = [int(value) for value in order]
+            except (TypeError, ValueError):
+                logical_order = []
+            if sorted(logical_order) == list(range(column_count)):
+                for target_visual, logical_index in enumerate(logical_order):
+                    current_visual = header.visualIndex(logical_index)
+                    if current_visual != target_visual:
+                        header.moveSection(current_visual, target_visual)
+
+        sort_column = self._setting_int(settings, "tts_manager_sort_column", 0)
+        sort_order_name = str(settings.get("tts_manager_sort_order", "ascending")).lower()
+        sort_order = (
+            Qt.SortOrder.DescendingOrder
+            if sort_order_name == "descending"
+            else Qt.SortOrder.AscendingOrder
+        )
+        if 0 <= sort_column < column_count:
+            self.tts_package_table.sortItems(sort_column, sort_order)
+
+    def _tts_manager_table_settings(self) -> dict:
+        if not hasattr(self, "tts_package_table"):
+            return {}
+        header = self.tts_package_table.horizontalHeader()
+        column_count = self.tts_package_table.columnCount()
+        sort_order = header.sortIndicatorOrder()
+        return {
+            "tts_manager_column_widths": [self.tts_package_table.columnWidth(i) for i in range(column_count)],
+            "tts_manager_column_order": [header.logicalIndex(i) for i in range(column_count)],
+            "tts_manager_sort_column": header.sortIndicatorSection(),
+            "tts_manager_sort_order": (
+                "descending" if sort_order == Qt.SortOrder.DescendingOrder else "ascending"
+            ),
+        }
 
     def _load_settings(self) -> None:
         try:
             settings = json.loads(SETTINGS_FILE.read_text(encoding="utf-8"))
         except (OSError, UnicodeError, json.JSONDecodeError):
             settings = {}
-        self.rate_slider.setValue(int(settings.get("rate", 0)))
-        self.voice_volume.setValue(int(settings.get("voice_volume", 100)))
-        self.background_volume.setValue(int(settings.get("background_volume", 18)))
-        self.background_check.setChecked(bool(settings.get("background", True)) and SOUND_FILE.is_file())
-        self.write_log.setChecked(bool(settings.get("write_log", True)))
-        self.legacy_umlauts.setChecked(bool(settings.get("legacy_umlauts", True)))
-        self.ignore_blanks.setChecked(bool(settings.get("ignore_blanks", True)))
-        self.saved_voice_backend = str(settings.get("voice_backend", ""))
-        self.saved_voice_id = str(settings.get("voice_id", ""))
-        self.saved_voice_name = str(settings.get("voice_name", ""))
-        self.prompt_mode_combo.setCurrentText(str(settings.get("storyboard_mode", "Lokal (regelbasiert)")))
-        output_kind = str(settings.get("storyboard_output_kind", "Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP"))
-        legacy_output_map = {
-            # In v60.9 "Bildserie" was also the default and therefore ambiguous.
-            # Migrate it to the safer complete-package default; users can explicitly
-            # select the newly named image-only mode afterwards.
-            "Bildserie": "Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP",
-            "Gesamtpaket (Bilder + Audio + Video)": "Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP",
-            "Gesamtpaket — Video + TTS + Hintergrundsound + ZIP": "Gesamtpaket — fertiges Video mit TTS, Hintergrundsound und ZIP",
-        }
-        output_kind = legacy_output_map.get(output_kind, output_kind)
-        if self.output_kind_combo.findText(output_kind) >= 0:
-            self.output_kind_combo.setCurrentText(output_kind)
-        else:
-            self.output_kind_combo.setCurrentIndex(0)
-        self.custom_video_width_spin.setValue(int(settings.get("package_video_custom_width", 1024)))
-        self.custom_video_height_spin.setValue(int(settings.get("package_video_custom_height", 1024)))
-        resolution_label = str(settings.get("package_video_resolution_preset", "1024 × 1024 (1:1, Standard)"))
-        resolution_index = self.video_resolution_combo.findText(resolution_label)
-        if resolution_index >= 0:
-            self.video_resolution_combo.setCurrentIndex(resolution_index)
-        else:
-            self.video_resolution_combo.setCurrentIndex(1)
-        saved_fps = int(settings.get("package_video_fps", 8))
-        fps_index = next(
-            (index for index in range(self.video_fps_combo.count()) if int(self.video_fps_combo.itemData(index)) == saved_fps),
-            0,
-        )
-        self.video_fps_combo.setCurrentIndex(fps_index)
-        self.transition_spin.setValue(float(settings.get("storyboard_transition_seconds", 0.8)))
-        voice_character = str(settings.get("package_voice_character", "Menschlich / natürlich"))
-        if self.package_voice_character_combo.findText(voice_character) >= 0:
-            self.package_voice_character_combo.setCurrentText(voice_character)
-        voice_gender = str(settings.get("package_voice_gender", "Weiblich"))
-        if self.package_voice_gender_combo.findText(voice_gender) >= 0:
-            self.package_voice_gender_combo.setCurrentText(voice_gender)
-        voice_quality = str(settings.get("package_voice_quality", "Beste verfügbare Qualität"))
-        if self.package_voice_quality_combo.findText(voice_quality) >= 0:
-            self.package_voice_quality_combo.setCurrentText(voice_quality)
-        self.result_include_images_check.setChecked(bool(settings.get("result_zip_include_images", True)))
-        self.result_include_audio_check.setChecked(bool(settings.get("result_zip_include_audio", True)))
-        self.result_include_clips_check.setChecked(bool(settings.get("result_zip_include_clips", False)))
-        self.result_include_project_files_check.setChecked(bool(settings.get("result_zip_include_project_files", True)))
-        target_ai = str(settings.get("storyboard_target_ai", "ChatGPT"))
-        if target_ai in self.prompt_profile_manager.profiles:
-            self.target_ai_combo.setCurrentText(target_ai)
-        elif self.target_ai_combo.count():
-            self.target_ai_combo.setCurrentIndex(0)
-        self.custom_target_edit.setText(str(settings.get("storyboard_custom_target", "")))
-        self.scene_count_spin.setValue(int(settings.get("storyboard_scene_count", 8)))
-        saved_ollama_model = str(settings.get("ollama_model", ""))
-        if saved_ollama_model:
-            self.ollama_model_combo.addItem(saved_ollama_model)
-            self.ollama_model_combo.setCurrentText(saved_ollama_model)
-        self.media_options_section.set_expanded(bool(settings.get("section_media_expanded", False)), emit_signal=False)
-        self.result_contents_section.set_expanded(bool(settings.get("section_result_contents_expanded", False)), emit_signal=False)
-        self.prompt_options_section.set_expanded(bool(settings.get("section_prompt_expanded", False)), emit_signal=False)
-        layout_version = int(settings.get("ui_layout_version", 0) or 0)
-        if layout_version < 3:
-            # v60.17 moved these controls into dedicated category tabs. Keep them
-            # expanded once after migration so an older collapsed state does not
-            # make an otherwise empty-looking tab confusing.
-            self.audio_section.set_expanded(True, emit_signal=False)
-            self.generation_section.set_expanded(True, emit_signal=False)
-            self.other_options_section.set_expanded(True, emit_signal=False)
-        else:
-            self.audio_section.set_expanded(bool(settings.get("section_audio_expanded", True)), emit_signal=False)
-            self.generation_section.set_expanded(bool(settings.get("section_generation_expanded", True)), emit_signal=False)
-            self.other_options_section.set_expanded(bool(settings.get("section_other_expanded", True)), emit_signal=False)
-        theme = str(settings.get("theme", "Aurora"))
-        if theme in self.theme_manager.themes:
-            self.theme_combo.setCurrentText(theme)
-        elif self.theme_combo.count():
-            self.theme_combo.setCurrentIndex(0)
-        self.apply_theme(self.theme_combo.currentText())
-        self._rebuild_voice_combo()
-        self._update_collapsible_summaries()
+        self._apply_settings_dict(settings)
 
-    def _save_settings(self) -> None:
+    def _collect_settings(self) -> dict:
         entry = self.voice_combo.currentData() or {}
-        settings = {
+        if entry.get("backend") == "piper" and entry.get("package_id"):
+            selected_name = self._current_piper_style_name(entry)
+            if selected_name:
+                self.saved_piper_speakers[str(entry["package_id"])] = selected_name
+        if self._pending_saved_voice_key:
+            voice_backend = self.saved_voice_backend
+            voice_id = self.saved_voice_id
+            voice_name = self.saved_voice_name
+        else:
+            voice_backend = entry.get("backend", "")
+            voice_id = entry.get("id", "")
+            voice_name = entry.get("name", "")
+        return {
             "app_version": APP_VERSION,
-            "ui_layout_version": 3,
+            "ui_layout_version": 7,
             "rate": self.rate_slider.value(),
             "voice_volume": self.voice_volume.value(),
             "background_volume": self.background_volume.value(),
             "background": self.background_check.isChecked(),
             "write_log": self.write_log.isChecked(),
+            "runtime_error_log": self.runtime_error_log.isChecked(),
             "legacy_umlauts": self.legacy_umlauts.isChecked(),
             "ignore_blanks": self.ignore_blanks.isChecked(),
+            "seed": self.seed_spin.value(),
+            "mls_speaker_aliases": self.mls_aliases_check.isChecked(),
             "theme": self.theme_combo.currentText(),
-            "voice_backend": entry.get("backend", ""),
-            "voice_id": entry.get("id", ""),
-            "voice_name": entry.get("name", ""),
+            "voice_backend": voice_backend,
+            "voice_id": voice_id,
+            "voice_name": voice_name,
+            "piper_speaker_selection": dict(self.saved_piper_speakers),
+            "piper_prosody": str(self.piper_prosody_combo.currentData() or "stable"),
             "storyboard_mode": self.prompt_mode_combo.currentText(),
             "storyboard_output_kind": self.output_kind_combo.currentText(),
             "storyboard_transition_seconds": self.transition_spin.value(),
@@ -1220,17 +1939,132 @@ class MainWindow(QMainWindow):
             "storyboard_custom_target": self.custom_target_edit.text().strip(),
             "storyboard_scene_count": self.scene_count_spin.value(),
             "ollama_model": self.ollama_model_combo.currentText().strip(),
-            "section_media_expanded": self.media_options_section.is_expanded(),
-            "section_result_contents_expanded": self.result_contents_section.is_expanded(),
-            "section_prompt_expanded": self.prompt_options_section.is_expanded(),
-            "section_audio_expanded": self.audio_section.is_expanded(),
-            "section_generation_expanded": self.generation_section.is_expanded(),
-            "section_other_expanded": self.other_options_section.is_expanded(),
+            **self._tts_manager_table_settings(),
+        }
+
+    @staticmethod
+    def _write_json_atomic(path: Path, payload: dict) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temp_path = path.with_name(path.name + ".tmp")
+        temp_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        temp_path.replace(path)
+
+    def _save_settings(self) -> None:
+        if not hasattr(self, "voice_combo"):
+            return
+        try:
+            self._write_json_atomic(SETTINGS_FILE, self._collect_settings())
+        except OSError as exc:
+            self.runtime_diagnostics.breadcrumb("settings_save_failed", error=str(exc))
+
+    def _schedule_settings_save(self, *_args) -> None:
+        if self._settings_loaded:
+            self._settings_autosave_timer.start()
+
+    def _connect_settings_autosave(self) -> None:
+        value_widgets = (
+            self.rate_slider, self.voice_volume, self.background_volume, self.seed_spin,
+            self.custom_video_width_spin, self.custom_video_height_spin, self.scene_count_spin,
+        )
+        for widget in value_widgets:
+            widget.valueChanged.connect(self._schedule_settings_save)
+        self.transition_spin.valueChanged.connect(self._schedule_settings_save)
+
+        toggle_widgets = (
+            self.background_check, self.write_log, self.runtime_error_log, self.legacy_umlauts,
+            self.ignore_blanks, self.mls_aliases_check, self.result_include_images_check,
+            self.result_include_audio_check, self.result_include_clips_check, self.result_include_project_files_check,
+        )
+        for widget in toggle_widgets:
+            widget.toggled.connect(self._schedule_settings_save)
+
+        combo_widgets = (
+            self.voice_combo, self.piper_style_combo, self.piper_prosody_combo, self.theme_combo,
+            self.prompt_mode_combo, self.output_kind_combo, self.video_resolution_combo, self.video_fps_combo,
+            self.package_voice_character_combo, self.package_voice_gender_combo, self.package_voice_quality_combo,
+            self.target_ai_combo, self.ollama_model_combo,
+        )
+        for widget in combo_widgets:
+            widget.currentIndexChanged.connect(self._schedule_settings_save)
+        self.piper_speaker_list.currentRowChanged.connect(self._schedule_settings_save)
+        self.custom_target_edit.textChanged.connect(self._schedule_settings_save)
+        package_header = self.tts_package_table.horizontalHeader()
+        package_header.sectionMoved.connect(self._schedule_settings_save)
+        package_header.sectionResized.connect(self._schedule_settings_save)
+        package_header.sortIndicatorChanged.connect(self._schedule_settings_save)
+
+    def save_configuration_profile(self) -> None:
+        suggested = BASE_DIR / f"SciFi-Generator_config_v{APP_VERSION}.json"
+        path_text, _ = QFileDialog.getSaveFileName(
+            self,
+            "Konfiguration speichern",
+            str(suggested),
+            "SciFi-Generator-Konfiguration (*.json);;JSON-Dateien (*.json);;Alle Dateien (*.*)",
+        )
+        if not path_text:
+            return
+        path = Path(path_text)
+        if path.suffix.lower() != ".json":
+            path = path.with_suffix(".json")
+        payload = {
+            "format": CONFIG_PROFILE_FORMAT,
+            "format_version": CONFIG_PROFILE_VERSION,
+            "created_with": APP_VERSION,
+            "saved_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+            "settings": self._collect_settings(),
         }
         try:
-            SETTINGS_FILE.write_text(json.dumps(settings, ensure_ascii=False, indent=2), encoding="utf-8")
-        except OSError:
-            pass
+            self._write_json_atomic(path, payload)
+        except OSError as exc:
+            QMessageBox.critical(self, "Konfiguration speichern fehlgeschlagen", str(exc))
+            return
+        self.runtime_diagnostics.breadcrumb("configuration_profile_saved", path=str(path))
+        self.status_label.setText(f"Konfiguration gespeichert: {path.name}")
+
+    def load_configuration_profile(self) -> None:
+        path_text, _ = QFileDialog.getOpenFileName(
+            self,
+            "Konfiguration laden",
+            str(BASE_DIR),
+            "SciFi-Generator-Konfiguration (*.json);;JSON-Dateien (*.json);;Alle Dateien (*.*)",
+        )
+        if not path_text:
+            return
+        path = Path(path_text)
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            QMessageBox.critical(self, "Konfiguration laden fehlgeschlagen", f"Die Datei konnte nicht gelesen werden:\n{exc}")
+            return
+        if not isinstance(payload, dict):
+            QMessageBox.critical(self, "Konfiguration laden fehlgeschlagen", "Die Datei enthält kein gültiges JSON-Objekt.")
+            return
+        if "settings" in payload:
+            if payload.get("format") != CONFIG_PROFILE_FORMAT:
+                QMessageBox.critical(self, "Konfiguration laden fehlgeschlagen", "Die Datei ist kein unterstütztes SciFi-Generator-Konfigurationsprofil.")
+                return
+            settings = payload.get("settings")
+        else:
+            # Backward-compatible import of a plain settings.json snapshot.
+            settings = payload
+        if not isinstance(settings, dict):
+            QMessageBox.critical(self, "Konfiguration laden fehlgeschlagen", "Im Profil fehlt der settings-Bereich.")
+            return
+
+        if self.playback_active:
+            self.stop_playback()
+        self._settings_loaded = False
+        try:
+            self._apply_settings_dict(settings)
+        except Exception as exc:
+            self.runtime_diagnostics.log_exception("configuration_profile_apply_failed", exc)
+            QMessageBox.critical(self, "Konfiguration laden fehlgeschlagen", f"Die Einstellungen konnten nicht angewendet werden:\n{exc}")
+            self._settings_loaded = True
+            return
+        self._settings_loaded = True
+        self._save_settings()
+        self.runtime_diagnostics.breadcrumb("configuration_profile_loaded", path=str(path))
+        self.status_label.setText(f"Konfiguration geladen: {path.name}")
 
     def _populate_theme_combo(self) -> None:
         self.theme_combo.blockSignals(True)
@@ -1309,6 +2143,10 @@ class MainWindow(QMainWindow):
         QMessageBox.information(self, "Prompt-Profilprüfung", "\n".join(lines))
 
     def generate_story(self) -> None:
+        self.runtime_diagnostics.breadcrumb(
+            "generate_story_requested", selected_voice=(self.voice_combo.currentText() if hasattr(self, "voice_combo") else ""),
+            playback_active=self.playback_active, active_backend=self.active_backend or "none"
+        )
         self.stop_playback()
         self.story_completed = False
         self.current_activation_text = ""
@@ -1336,11 +2174,21 @@ class MainWindow(QMainWindow):
                 progress=on_progress,
             )
         except StoryEngineError as exc:
+            self.runtime_diagnostics.log_exception("story_generation", exc, seed=seed)
             QMessageBox.critical(self, "Generierungsfehler", str(exc))
             self.status_label.setText("Generierung fehlgeschlagen.")
             self.generate_button.setEnabled(True)
             return
+        except Exception as exc:
+            self.runtime_diagnostics.log_exception("story_generation_unexpected", exc, seed=seed)
+            QMessageBox.critical(self, "Unerwarteter Generierungsfehler", str(exc))
+            self.status_label.setText("Generierung fehlgeschlagen.")
+            self.generate_button.setEnabled(True)
+            return
 
+        self.runtime_diagnostics.breadcrumb(
+            "generate_story_finished", seed=self.result.seed, branch=self.result.branch_path
+        )
         self.story_edit.setPlainText(self.result.display_story)
         self.current_log = self.result.build_log(APP_VERSION)
         self.log_edit.setPlainText(self.current_log)
@@ -1433,6 +2281,10 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, "Keine Stimme", "Es wurde keine verwendbare TTS-Stimme gefunden.")
             return
         self.stop_playback()
+        self.runtime_diagnostics.breadcrumb(
+            "speak_requested", backend=entry.get("backend"), voice=entry.get("name"),
+            purpose=purpose, background=with_background, text_chars=len(text)
+        )
         self.playback_active = True
         self.playback_purpose = purpose
         self.active_backend = entry["backend"]
@@ -1441,12 +2293,21 @@ class MainWindow(QMainWindow):
         self.stop_button.setEnabled(True)
         self.pause_button.setText("Pause")
         self.narration_audio.setVolume(1.0)
-        self.background_audio.setVolume(self.background_volume.value() / 100.0)
+        self.background_effect.setVolume(self.background_volume.value() / 100.0)
 
         if self.active_backend == "winrt":
             self.pause_button.setEnabled(False)
             self.status_label.setText("Windows-Stimme bereitet die Story vor …")
             self.winrt_service.synthesize(text, entry["id"], self.rate_slider.value(), self.voice_volume.value())
+        elif self.active_backend == "piper":
+            self.pause_button.setEnabled(False)
+            self.status_label.setText("Piper-Stimme bereitet die Story lokal vor …")
+            piper_entry = self._voice_with_piper_options(entry)
+            noise_scale, noise_w = self._piper_prosody_values()
+            self.piper_service.synthesize(
+                text, piper_entry, self.rate_slider.value(), self.voice_volume.value(),
+                noise_scale=noise_scale, noise_w=noise_w,
+            )
         elif self.active_backend == "sapi":
             self.pause_button.setEnabled(True)
             if with_background and SOUND_FILE.is_file():
@@ -1467,7 +2328,7 @@ class MainWindow(QMainWindow):
         if not self.playback_active or self.active_backend != "winrt":
             Path(filename).unlink(missing_ok=True)
             return
-        self._winrt_audio_file = filename
+        self._narration_temp_file = filename
         self.narration_player.setSource(QUrl.fromLocalFile(filename))
         if self._pending_background and SOUND_FILE.is_file():
             self._start_background()
@@ -1475,35 +2336,67 @@ class MainWindow(QMainWindow):
         self.narration_player.play()
         self._handle_speech_state("winrt", "speaking")
 
+    def _piper_synthesis_ready(self, filename: str) -> None:
+        if not self.playback_active or self.active_backend != "piper":
+            Path(filename).unlink(missing_ok=True)
+            return
+        self._narration_temp_file = filename
+        self.narration_player.setSource(QUrl.fromLocalFile(filename))
+        self.narration_audio.setVolume(self.voice_volume.value() / 100.0)
+        if self._pending_background and SOUND_FILE.is_file():
+            self._start_background()
+        self.pause_button.setEnabled(True)
+        self.narration_player.play()
+        self._handle_speech_state("piper", "speaking")
+
     def _start_background(self) -> None:
-        self.background_player.setPosition(0)
-        self.background_player.play()
+        if not SOUND_FILE.is_file():
+            return
+        self.background_effect.setVolume(self.background_volume.value() / 100.0)
+        self.runtime_diagnostics.breadcrumb(
+            "background_start", volume=self.background_volume.value(), source=SOUND_FILE
+        )
+        self.background_effect.stop()
+        self.background_effect.play()
+
+    def _background_status_changed(self) -> None:
+        try:
+            status = self.background_effect.status()
+            self.runtime_diagnostics.breadcrumb("background_status", status=str(status))
+        except Exception as exc:
+            self.runtime_diagnostics.log_exception("background_status", exc)
 
     def pause_or_resume(self) -> None:
         if not self.playback_active or not self.active_backend:
             return
         if self.speech_state == "speaking":
-            if self.active_backend == "winrt":
+            if self.active_backend in {"winrt", "piper"}:
                 self.narration_player.pause()
-                self._handle_speech_state("winrt", "paused")
+                self._handle_speech_state(self.active_backend, "paused")
             elif self.active_backend == "sapi":
                 self.sapi_service.pause()
             else:
                 self.qt_tts.pause()
-            self.background_player.pause()
+            self._background_was_playing_before_pause = bool(self._pending_background and self.background_effect.isPlaying())
+            self.background_effect.stop()
         elif self.speech_state == "paused":
-            if self.active_backend == "winrt":
+            if self.active_backend in {"winrt", "piper"}:
                 self.narration_player.play()
-                self._handle_speech_state("winrt", "speaking")
+                self._handle_speech_state(self.active_backend, "speaking")
             elif self.active_backend == "sapi":
                 self.sapi_service.resume()
             else:
                 self.qt_tts.resume()
-            if self._pending_background and SOUND_FILE.is_file():
-                self.background_player.play()
+            if self._pending_background and SOUND_FILE.is_file() and self._background_was_playing_before_pause:
+                self.background_effect.play()
+            self._background_was_playing_before_pause = False
 
     def stop_playback(self) -> None:
         was_active = self.playback_active
+        if was_active or self.active_backend:
+            self.runtime_diagnostics.breadcrumb(
+                "stop_playback", backend=self.active_backend or "none", purpose=self.playback_purpose, state=self.speech_state
+            )
         stopped_purpose = self.playback_purpose
         self.playback_active = False
         self.playback_purpose = "generic"
@@ -1512,13 +2405,15 @@ class MainWindow(QMainWindow):
         self.qt_tts.stop()
         self.sapi_service.stop()
         self.winrt_service.cancel()
+        self.piper_service.cancel()
         self.narration_player.stop()
         self.narration_player.setSource(QUrl())
-        self.background_player.stop()
+        self.background_effect.stop()
         self.winrt_service.release_output()
-        if self._winrt_audio_file:
-            Path(self._winrt_audio_file).unlink(missing_ok=True)
-            self._winrt_audio_file = None
+        self.piper_service.release_output()
+        if self._narration_temp_file:
+            Path(self._narration_temp_file).unlink(missing_ok=True)
+            self._narration_temp_file = None
         self.pause_button.setEnabled(False)
         self.stop_button.setEnabled(False)
         self.pause_button.setText("Pause")
@@ -1540,17 +2435,24 @@ class MainWindow(QMainWindow):
 
     def _narration_media_status_changed(self, status: QMediaPlayer.MediaStatus) -> None:
         if status == QMediaPlayer.MediaStatus.EndOfMedia:
-            self._handle_speech_state("winrt", "ready")
-        elif status == QMediaPlayer.MediaStatus.InvalidMedia and self.active_backend == "winrt":
-            self._handle_speech_state("winrt", "error")
+            if self.active_backend in {"winrt", "piper"}:
+                self._handle_speech_state(self.active_backend, "ready")
+        elif status == QMediaPlayer.MediaStatus.InvalidMedia and self.active_backend in {"winrt", "piper"}:
+            self._handle_speech_state(self.active_backend, "error")
 
     def _handle_speech_state(self, backend: str, state: str) -> None:
+        self.runtime_diagnostics.breadcrumb(
+            "speech_state", backend=backend, state=state, active_backend=self.active_backend or "none",
+            playback_active=self.playback_active
+        )
         if backend != self.active_backend:
             return
         self.speech_state = state
         if state == "preparing":
             self.pause_button.setEnabled(False)
-            self.status_label.setText("Windows-Stimme bereitet die Story vor …")
+            self.status_label.setText(
+                "Piper-Stimme wird lokal synthetisiert …" if backend == "piper" else "Windows-Stimme bereitet die Story vor …"
+            )
         elif state == "speaking":
             self.pause_button.setEnabled(True)
             self.pause_button.setText("Pause")
@@ -1561,7 +2463,7 @@ class MainWindow(QMainWindow):
         elif state == "ready" and self.playback_active:
             self._finish_playback()
         elif state == "error":
-            self.background_player.stop()
+            self.background_effect.stop()
             self.playback_active = False
             self.playback_purpose = "generic"
             self.pause_button.setEnabled(False)
@@ -1571,13 +2473,14 @@ class MainWindow(QMainWindow):
 
     def _finish_playback(self) -> None:
         completed_purpose = self.playback_purpose
-        self.background_player.stop()
+        self.background_effect.stop()
         self.narration_player.stop()
         self.narration_player.setSource(QUrl())
         self.winrt_service.release_output()
-        if self._winrt_audio_file:
-            Path(self._winrt_audio_file).unlink(missing_ok=True)
-            self._winrt_audio_file = None
+        self.piper_service.release_output()
+        if self._narration_temp_file:
+            Path(self._narration_temp_file).unlink(missing_ok=True)
+            self._narration_temp_file = None
         self.playback_active = False
         self.playback_purpose = "generic"
         self.active_backend = None
@@ -1598,7 +2501,7 @@ class MainWindow(QMainWindow):
 
     def _resolve_audio_export_voice(self, selected: dict) -> dict | None:
         backend = selected.get("backend", "")
-        if backend in {"winrt", "sapi"}:
+        if backend in {"winrt", "sapi", "piper"}:
             return selected
         selected_name = " ".join(str(selected.get("name", "")).lower().split())
         selected_locale = str(selected.get("locale", "")).lower()
@@ -1626,13 +2529,15 @@ class MainWindow(QMainWindow):
             return
         selected = self.voice_combo.currentData() or {}
         export_voice = self._resolve_audio_export_voice(selected)
+        if export_voice and export_voice.get("backend") == "piper":
+            export_voice = self._voice_with_piper_options(export_voice)
         if not export_voice:
             QMessageBox.warning(
                 self,
                 "Stimme nicht exportierbar",
                 "Die ausgewählte Qt-Stimme kann nicht direkt in eine Audiodatei geschrieben werden "
                 "und es wurde keine gleichnamige Windows-OneCore/WinRT- oder SAPI-Stimme gefunden. "
-                "Bitte wählen Sie für den Export eine Windows-Stimme aus.",
+                "Bitte wählen Sie eine exportierbare Windows-Stimme oder ein installiertes Piper-Komplettpaket aus.",
             )
             return
 
@@ -1661,6 +2566,10 @@ class MainWindow(QMainWindow):
             if self.background_check.isChecked() and SOUND_FILE.is_file()
             else None
         )
+        self.runtime_diagnostics.breadcrumb(
+            "audio_export_requested", backend=export_voice.get("backend"), voice=export_voice.get("name"),
+            output=output_path, background=bool(background_path), background_volume=self.background_volume.value()
+        )
         request = AudioExportRequest(
             text=narration,
             backend=str(export_voice.get("backend", "")),
@@ -1673,6 +2582,12 @@ class MainWindow(QMainWindow):
             tools_dir=TOOLS_DIR,
             temp_dir=TEMP_DIR,
             ffmpeg_path=ffmpeg_path,
+            piper_engine_path=(Path(str(export_voice.get("engine_path"))) if export_voice.get("engine_path") else None),
+            piper_model_path=(Path(str(export_voice.get("model_path"))) if export_voice.get("model_path") else None),
+            piper_config_path=(Path(str(export_voice.get("config_path"))) if export_voice.get("config_path") else None),
+            piper_speaker_id=(int(export_voice["speaker_id"]) if export_voice.get("speaker_id") is not None else None),
+            piper_noise_scale=self._piper_prosody_values()[0],
+            piper_noise_w=self._piper_prosody_values()[1],
         )
 
         dialog = QProgressDialog(
@@ -1726,6 +2641,7 @@ class MainWindow(QMainWindow):
             self._export_worker.cancel()
 
     def _audio_export_finished(self, filename: str) -> None:
+        self.runtime_diagnostics.breadcrumb("audio_export_finished", output=filename)
         if self._export_dialog is not None:
             self._export_dialog.setValue(100)
             self._export_dialog.close()
@@ -1737,12 +2653,14 @@ class MainWindow(QMainWindow):
         )
 
     def _audio_export_failed(self, message: str) -> None:
+        self.runtime_diagnostics.breadcrumb("audio_export_failed", message=message)
         if self._export_dialog is not None:
             self._export_dialog.close()
         self.status_label.setText("Audioexport fehlgeschlagen.")
         QMessageBox.critical(self, "Audioexport fehlgeschlagen", message)
 
     def _audio_export_canceled(self) -> None:
+        self.runtime_diagnostics.breadcrumb("audio_export_canceled")
         if self._export_dialog is not None:
             self._export_dialog.close()
         self.status_label.setText("Audioexport abgebrochen.")
@@ -1793,59 +2711,24 @@ class MainWindow(QMainWindow):
         else:
             description = "benutzerdefiniertes Format"
         self.video_aspect_info_label.setText(f"{ratio} — {description}; {width} × {height} px")
-        self._update_collapsible_summaries()
+        self._update_tab_status_summaries()
 
-    def _update_collapsible_summaries(self, *args) -> None:
-        if not hasattr(self, "media_options_section"):
-            return
-        try:
-            width, height, _ratio = self._selected_video_resolution()
-            fps = int(self.video_fps_combo.currentData() or 8)
-            media_summary = (
-                f"{width}×{height}, {fps} fps, {self.package_voice_gender_combo.currentText()}, "
-                f"{self.package_voice_character_combo.currentText()}"
-            )
-            self.media_options_section.set_summary(media_summary)
-        except (AttributeError, RuntimeError):
-            pass
-
-        if hasattr(self, "result_contents_section"):
-            selected = ["Video"]
-            if self.result_include_images_check.isChecked():
-                selected.append("Bilder")
-            if self.result_include_audio_check.isChecked():
-                selected.append("Audio")
-            if self.result_include_clips_check.isChecked():
-                selected.append("Clips")
-            if self.result_include_project_files_check.isChecked():
-                selected.append("Projektdateien")
-            self.result_contents_section.set_summary(" + ".join(selected))
-
-        if hasattr(self, "prompt_options_section"):
-            if self.prompt_mode_combo.currentText().startswith("Ollama"):
-                model = self.ollama_model_combo.currentText().strip() or "Modell noch nicht gewählt"
-                self.prompt_options_section.set_summary(f"Ollama: {model}")
-            else:
-                self.prompt_options_section.set_summary("lokale Erzeugung")
-
-        if hasattr(self, "audio_section"):
+    def _update_tab_status_summaries(self, *args) -> None:
+        """Refresh compact status text for the always-visible category-tab controls."""
+        if hasattr(self, "audio_tab_status_label") and hasattr(self, "voice_combo"):
             entry = self.voice_combo.currentData() if self.voice_combo.count() else None
             voice_name = (entry or {}).get("name", "Standardstimme")
+            if (entry or {}).get("backend") == "piper":
+                style_name = self._current_piper_style_name(entry or {})
+                if style_name:
+                    voice_name += " / " + PIPER_STYLE_LABELS.get(style_name, style_name)
+                voice_name += f" / {self.piper_prosody_combo.currentText()}"
             ambience = (
                 f"Hintergrund {self.background_volume.value()} %"
                 if self.background_check.isChecked()
                 else "ohne Hintergrund"
             )
-            self.audio_section.set_summary(f"{voice_name}, {ambience}")
-
-        if hasattr(self, "generation_section"):
-            seed_text = str(self.seed_spin.value()) if self.seed_spin.value() else "Zufalls-Seed"
-            log_text = "Log an" if self.write_log.isChecked() else "Log aus"
-            self.generation_section.set_summary(f"{seed_text}, {log_text}")
-
-        if hasattr(self, "other_options_section"):
-            theme_name = self.theme_combo.currentText() or "Theme"
-            self.other_options_section.set_summary(theme_name)
+            self.audio_tab_status_label.setText(f"Aktiv: {voice_name}; {ambience}")
 
     def _update_target_ai_controls(self) -> None:
         profile = self._selected_prompt_profile()
@@ -1854,8 +2737,8 @@ class MainWindow(QMainWindow):
         self.custom_target_container.setVisible(is_other)
 
         is_package = self.output_kind_combo.currentText().startswith("Gesamtpaket")
-        self.media_options_section.setVisible(is_package)
-        self.result_contents_section.setVisible(is_package)
+        self.media_options_group.setVisible(is_package)
+        self.result_contents_group.setVisible(is_package)
         self.transition_spin.setVisible(is_package)
         self.transition_spin.setEnabled(is_package)
         if self.transition_label is not None:
@@ -1911,7 +2794,7 @@ class MainWindow(QMainWindow):
         else:
             hint = "Kein gültiges Ziel-KI-Profil ausgewählt."
         self.storyboard_info_label.setText(hint)
-        self._update_collapsible_summaries()
+        self._update_tab_status_summaries()
 
     def _update_storyboard_mode_controls(self) -> None:
         use_ollama = self.prompt_mode_combo.currentText().startswith("Ollama")
@@ -1923,7 +2806,7 @@ class MainWindow(QMainWindow):
                 self.storyboard_info_label.text()
                 + " Die Szenenprompts werden zusätzlich von einem lokalen Ollama-Modell zielsystemspezifisch verfeinert."
             )
-        self._update_collapsible_summaries()
+        self._update_tab_status_summaries()
 
     def refresh_ollama_models(self) -> None:
         current = self.ollama_model_combo.currentText().strip()
@@ -2071,8 +2954,14 @@ class MainWindow(QMainWindow):
 
     def _current_media_package_settings(self) -> MediaPackageSettings:
         voice = self.voice_combo.currentData() or {}
+        if voice.get("backend") == "piper":
+            voice = self._voice_with_piper_options(voice)
         backend_key = str(voice.get("backend", ""))
         backend_name = BACKEND_LABELS.get(backend_key, backend_key or "Systemstandard")
+        voice_display_name = str(voice.get("name") or self.saved_voice_name or "Systemstandard")
+        if backend_key == "piper" and voice.get("speaker_name"):
+            style_raw = str(voice.get("speaker_name"))
+            voice_display_name += " — " + PIPER_STYLE_LABELS.get(style_raw, style_raw)
         width = max(256, int(self._storyboard_video_width))
         height = max(256, int(self._storyboard_video_height))
         aspect_ratio = self._storyboard_aspect_ratio or self._aspect_ratio_text(width, height)
@@ -2085,7 +2974,7 @@ class MainWindow(QMainWindow):
             transition_seconds=self._storyboard_transition_seconds,
             output_video="scifi_story.mp4",
             output_zip="scifi_story_package.zip",
-            voice_name=str(voice.get("name") or self.saved_voice_name or "Systemstandard"),
+            voice_name=voice_display_name,
             voice_id=str(voice.get("id") or ""),
             voice_backend=backend_name,
             voice_backend_key=backend_key,
@@ -2383,10 +3272,11 @@ class MainWindow(QMainWindow):
             "Originalautor und Textbestände: zeittresor.<br><br>"
             "Die Themes liegen als externe JSON-Dateien im Ordner <code>themes</code> und werden "
             "vor der Verwendung automatisch auf ausreichenden Textkontrast geprüft.<br><br>"
-            "Die Stimmensuche kombiniert Windows OneCore/WinRT, native Windows-SAPI und Qt.<br><br>"
+            "Die Stimmensuche kombiniert Windows OneCore/WinRT, native Windows-SAPI, Qt und optional installierte lokale Piper-Komplettpakete.<br>"
+            "Der Sprachmanager kann Piper-Laufzeit und deutsche Modelle vollständig in den Programmordner installieren und vorhandene Dateien wiederverwenden.<br><br>"
             "Berechnete Stories können samt der aktuell eingestellten Brückenatmosphäre als WAV "
             "und bei vorhandenem FFmpeg auch als MP3 exportiert werden.<br><br>"
-            "Die Oberfläche ist in die Kategorien Mission, Medienpaket, Sprache & Audio, Story & Trace und Einstellungen gegliedert; selten benötigte Medienoptionen bleiben einklappbar.<br><br>"
+            "Die Oberfläche ist in die Kategorien Mission, Medienpaket, Sprache &amp; Audio, Sprachmanager, Story &amp; Trace und Einstellungen gegliedert. Die jeweiligen Optionen werden innerhalb ihres Tabs direkt angezeigt und nicht zusätzlich in auf- und zuklappbaren Unterbereichen versteckt.<br><br>"
             "Zusätzlich können ausführbare Bildserien-Aufträge oder vollständige Gesamtpaket-Prompts für "
             "Szenenbilder, TTS-Audio, Videozusammenschnitt und ZIP-Ausgabe erzeugt werden. Die Ausgabe wird für "
             "ChatGPT, Grok, Gemini, Stable Diffusion oder andere Systeme angepasst. "
@@ -2418,7 +3308,15 @@ class MainWindow(QMainWindow):
         if self._storyboard_thread is not None:
             self._storyboard_thread.quit()
             self._storyboard_thread.wait(2000)
+        if self._tts_package_worker is not None:
+            self._tts_package_worker.cancel()
+        if self._tts_package_thread is not None:
+            self._tts_package_thread.quit()
+            self._tts_package_thread.wait(3000)
         self.sapi_service.shutdown()
+        self.runtime_diagnostics.breadcrumb("application_close")
+        self.runtime_diagnostics.close()
+        sys.excepthook = self._previous_excepthook
         super().closeEvent(event)
 
 
@@ -2428,6 +3326,8 @@ def main() -> int:
     app.setApplicationVersion(APP_VERSION)
     app.setStyle("Fusion")
     window = MainWindow()
+    sys.excepthook = window._handle_uncaught_exception
+    window.runtime_diagnostics.breadcrumb("main_window_shown")
     window.show()
     return app.exec()
 

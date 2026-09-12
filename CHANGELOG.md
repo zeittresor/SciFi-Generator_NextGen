@@ -1,5 +1,95 @@
 # Changelog
 
+## 60.26 — 2026-09-12
+
+- Fiktive MLS-Merknamen bleiben optional erhalten, sind bei neuen/frischen Konfigurationen nun standardmäßig ausgeschaltet.
+- Bereits gespeicherte Konfigurationen und Konfigurationsprofile behalten ihre explizite Einstellung `mls_speaker_aliases`; ein bewusst aktivierter Zustand wird also nicht überschrieben.
+- Beschriftung und Hilfetext der MLS-Aliasoption wurden präzisiert, damit frei erfundene Vornamen nicht als reale Identität oder verlässliche Geschlechtsangabe missverstanden werden.
+- `data/mls_speaker_aliases.json` auf Formatversion 2 angehoben und mit einem eindeutigen Hinweis zur rein mnemonischen Verwendung versehen.
+- Dokumentation `docs/MLS_ALIASES_v60.26.md` ergänzt.
+
+## 60.25 — 2026-09-12
+
+- Sprachmanager-Paketliste unterstützt jetzt Sortierung per Klick auf jeden Spaltenkopf; ein zweiter Klick kehrt die Sortierreihenfolge um.
+- Besonders die Spalte **Status** kann damit installierte und verfügbare Sprachpakete unmittelbar gruppieren.
+- Spaltenbreiten sind nun per Maus am Trenner frei veränderbar; der bisherige Stretch-Modus der ersten Spalte blockiert die Größenänderung nicht mehr.
+- Komplette Spalten können per Drag & Drop neu angeordnet werden.
+- Spaltenbreiten, Reihenfolge, Sortierspalte und Sortierrichtung werden automatisch gespeichert und in Konfigurationsprofile übernommen.
+- Beim Neuaufbau der Paketliste wird Sortierung intern kurz deaktiviert und danach wiederhergestellt, damit Zeilen beim Einfügen konsistent bleiben.
+- Neue Regressionstests und Dokumentation für die interaktive Sprachmanager-Tabelle.
+
+## 60.24 — 2026-09-12
+
+- Für alle 236 Sprecher des Piper-Modells MLS Deutsch wurden stabile, frei erfundene Vornamen als Merkhilfe ergänzt; die Zuordnung liegt extern in `data/mls_speaker_aliases.json`.
+- Die Alias-Anzeige ist unter **Einstellungen → Sprachoptionen** abschaltbar; ohne Aliase bleiben Sprecherposition und originale MLS-ID sichtbar.
+- Neuer Bereich **Konfigurationsprofile** zum Speichern und sofortigen Laden vollständiger Einstellungen als JSON.
+- Laufende Einstellungen werden nun verzögert automatisch und atomar gespeichert, statt ausschließlich beim normalen Beenden.
+- Bugfix: Der Story-Seed wird nun tatsächlich in der persistenten Konfiguration und in Konfigurationsprofilen gespeichert und wiederhergestellt.
+- Bugfix: Gespeicherte OneCore-/SAPI-Stimmen werden nach ihrem asynchronen Einlesen zuverlässig wiederhergestellt; ein temporärer Fallback überschreibt die gewünschte Voice-ID nicht mehr.
+- Konfigurationsimport akzeptiert zusätzlich ältere reine `settings.json`-Schnappschüsse.
+- README-Bedienungstext korrigiert: Seit v60.22 sind die Optionsgruppen in den Kategorie-Tabs direkt sichtbar und nicht mehr einklappbar.
+- Zusätzliche Verifikation für Aliasdatei, Profilfunktionen, Seed-Persistenz, atomisches Autosave und stabile Voice-Wiederherstellung.
+
+## 60.23 — 2026-09-12
+
+- MLS Deutsch wird jetzt als echtes Piper-Mehrsprecher-Modell behandelt; alle 236 `speaker_id_map`-Einträge werden auswählbar gemacht.
+- Große Mehrsprecher-Modelle verwenden eine direkt sichtbare, vertikal scrollbare Sprecherliste statt eines Such-/Texteingabefelds oder einer überlangen ComboBox.
+- Die Liste zeigt fortlaufende Sprecherposition, Piper-Speaker-ID und die originale MLS-Dataset-ID; der Benutzer muss keine ID vorab kennen.
+- Die MLS-Sprecherauswahl wird pro Paket gespeichert und für Live-TTS sowie WAV-/MP3-Export übernommen.
+- Kleine Piper-Stilsets wie Thorsten Emotional bleiben bewusst als kompakte ComboBox erhalten.
+- Doppelte Bezeichnung `MLS Deutsch (236 Sprecher) (medium / 236 Sprecher)` aufgeräumt.
+
+## 60.22 — 2026-09-12
+
+- Hotfix für den Startabbruch von v60.21: die Endlosschleife von `QSoundEffect` wird bindungsübergreifend als dokumentierter Loop-Wert `-2` gesetzt, statt direkt auf das in PyQt6 6.11 nicht vorhandene `QSoundEffect.Infinite` zuzugreifen.
+- Der Windows-Installationsprüfer importiert die GUI nicht mehr nur, sondern erzeugt testweise auch ein vollständiges `MainWindow` und schließt es wieder. Dadurch werden Qt-API-Fehler in `__init__` bereits während der Installation erkannt.
+- Die zusätzliche Einklapp-Ebene innerhalb der bereits kategorisierten Tabs wurde vollständig entfernt. Video-/Stimmenoptionen, Ergebnis-ZIP, Ollama, lokale Sprachausgabe, Brückenatmosphäre und Einstellungen erscheinen nun direkt als normale Gruppen in ihrem jeweiligen Tab.
+- Veraltete `CollapsibleSection`-Widgets und zugehörige Theme-Regeln entfernt; die Tabs sind damit die einzige primäre Navigationsebene.
+- Statuszusammenfassungen bleiben erhalten, ohne Bedienelemente zu verstecken.
+- README, GUI-Tests und Installationsverifikation an das direkte Tab-Layout angepasst.
+
+## 60.21 — 2026-09-12
+
+- Live-Brückenatmosphäre von einem zweiten `QMediaPlayer` auf einen dedizierten `QSoundEffect` mit vollständiger Endlosschleife umgestellt; besonders relevant bei paralleler Piper-/WinRT-Narration.
+- Race Condition beim Abbruch laufender Piper- und WinRT-Prozesse behoben: Prozessverbindungen werden vor `kill()`/`waitForFinished()` getrennt, damit verspätete Qt-Signale keinen neuen TTS-Zustand übernehmen oder doppelte Bereinigung auslösen.
+- Ein Stimmenwechsel während aktiver Wiedergabe/Synthese stoppt die alte Anforderung nun kontrolliert, bevor die neue Stimme aktiviert wird.
+- Neue optionale Einstellung **Erweitertes Laufzeit-Fehlerprotokoll schreiben**.
+- Laufzeitdiagnose protokolliert Breadcrumbs für Stimmenwahl, TTS-Zustände, Story-Erzeugung, Hintergrundsound und Audioexport sowie Python-Tracebacks; `faulthandler` wird bei aktivierter Diagnose ebenfalls eingeschaltet.
+- Neue Dokumentation `docs/RUNTIME_DIAGNOSTICS_v60.21.md`.
+
+## 60.20 — 2026-09-12
+
+- Fixed direct MP3 export with older FFmpeg builds. The story exporter no longer sends the unsupported `-hide_banner` option and now uses long-established `-acodec libmp3lame -ab 192k` syntax. WAV export is unchanged.
+- Added Piper prosody presets under **Sprache & Audio**. `Stabil / gleichmäßig` is the new default (`noise_scale=0.45`, `noise_w=0.35`) to reduce sentence-to-sentence voice/rhythm modulation; `Natürlich` uses the model defaults and `Ausdrucksstärker` deliberately allows more variation.
+- Thorsten Emotional is now represented as one installed voice plus a dedicated **Emotion / Stil** selector instead of eight separate voice entries. The eight upstream styles are Amused, Angry, Disgusted, Drunk, Neutral, Sleepy, Surprised and Whisper; the GUI presents German labels and uses Neutral by default.
+- Piper style and prosody settings are used consistently for live playback and WAV/MP3 export; the selected Thorsten Emotional style is also reflected in media-package voice metadata.
+- Existing v60.18/v60.19 saved Thorsten Emotional voice IDs such as `package:7` are migrated to the new dedicated style selector where possible.
+- Added regression tests for the Thorsten Emotional selector, Piper stability arguments and legacy-compatible FFmpeg MP3 arguments.
+
+## 60.19 — 2026-09-12
+
+- Hotfix: `pyqtSlot` wird in `app.py` jetzt korrekt aus `PyQt6.QtCore` importiert. In v60.18 führte der fehlende Import bereits beim Laden des Moduls zu einem `NameError`, noch bevor das Hauptfenster oder die normale Protokollierung gestartet werden konnte.
+- Neuer robuster `launcher.py`: Startfehler beim Import oder bei der GUI-Initialisierung werden unabhängig von der eigentlichen Anwendung nach `logs/startup_error.log` geschrieben.
+- `start_app.bat` und der Auto-Start des Installers verwenden den Diagnose-Launcher. Der manuelle Start zeigt bei einem Fehler zusätzlich den Pfad zur Logdatei an.
+- Installationsprüfung und Regressionstests prüfen nun explizit auf den zuvor übersehenen PyQt-Decorator-Import.
+- Keine Story-, TTS-Paket- oder Medienfunktionen aus v60.18 wurden entfernt.
+
+## 60.18 — 2026-09-12
+
+- Added a dedicated **Sprachmanager** category for downloadable/local reusable TTS complete packages.
+- Added Piper as a fourth local playback backend alongside Windows OneCore/WinRT, SAPI and Qt TextToSpeech.
+- Added ten curated German Piper package definitions: Eva K, Karlsson, Kerstin, MLS, Pavoque, Ramona, Thorsten low/medium/high and Thorsten Emotional.
+- Piper packages automatically provide the standalone runtime, runtime libraries/espeak-ng data, ONNX model and matching JSON configuration below `tts_packages/`; no system-wide Piper installation is required.
+- Added reuse-before-download discovery for existing Piper runtimes, runtime archives and exact matching model/config files in the application/project tree and common user download/document locations.
+- Shared one Piper runtime between multiple voice packages and kept the runtime/cache when an individual voice is removed.
+- Stored managed runtime/model paths relative to the portable application directory so installed packages survive moving the complete SciFi-Generator folder.
+- Added checksum/size verification for voice models/configurations and hardened ZIP/TAR extraction against path traversal and TAR links.
+- Added Piper playback with speed control, pause/resume, bridge ambience and Piper-based WAV/MP3 export including narration-volume mixing.
+- Added Windows x86_64 and Linux x86_64/aarch64 runtime definitions to the TTS package catalog while keeping the dependency-free console frontend unchanged.
+- Added a direct **Weitere Stimmen …** button from Speech & Audio and a View-menu shortcut to the Voice Manager.
+- Escaped literal ampersands in Qt tabs/buttons/actions, removing the unintended mnemonic underlines previously visible in `Sprache & Audio` and `Story & Trace`.
+- Added TTS package-manager regression tests, including fully offline reuse installation, portable-folder relocation and malicious archive traversal checks.
+
 ## 60.17 — 2026-09-10
 
 - Replaced the desktop GUI toolkit from PySide6 with PyQt6 while keeping the cross-platform standard-library console frontend independent of any Qt package.

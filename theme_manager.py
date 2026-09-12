@@ -136,24 +136,6 @@ QPushButton:pressed {{
     background-color: {p['button_pressed']};
     color: {p['button_text']};
 }}
-QPushButton#collapsibleHeader {{
-    text-align: left;
-    font-weight: 600;
-    padding: {px(7)}px {px(10)}px;
-    border-radius: {px(3)}px;
-}}
-QLabel#collapsibleSummary {{
-    background-color: {p['panel_bg']};
-    color: {p['window_text']};
-    border-left: 1px solid {p['border']};
-    border-right: 1px solid {p['border']};
-}}
-QWidget#collapsibleContent {{
-    background-color: {p['panel_bg']};
-    border-left: 1px solid {p['border']};
-    border-right: 1px solid {p['border']};
-    border-bottom: 1px solid {p['border']};
-}}
 QLabel#workflowIntro {{
     background-color: {p['panel_bg']};
     color: {p['window_text']};

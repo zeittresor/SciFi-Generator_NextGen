@@ -130,11 +130,23 @@ class WinRtTtsService(QObject):
         self.synthesis_ready.emit(str(self._output_path))
 
     def cancel(self) -> None:
-        if self._synth_process is not None:
-            self._synth_process.kill()
-            self._synth_process.waitForFinished(1000)
-            self._synth_process.deleteLater()
-            self._synth_process = None
+        process = self._synth_process
+        # Detach the active process before terminating it. QProcess.finished may be
+        # delivered while waitForFinished() is running; leaving self._synth_process
+        # attached used to let the completion slot and cancel() clean up the same
+        # object concurrently.
+        self._synth_process = None
+        if process is not None:
+            try:
+                process.finished.disconnect(self._synthesis_finished)
+            except (TypeError, RuntimeError):
+                pass
+            try:
+                if process.state() != QProcess.ProcessState.NotRunning:
+                    process.kill()
+                    process.waitForFinished(1000)
+            finally:
+                process.deleteLater()
         self._cleanup_input()
         self._cleanup_output()
 
@@ -334,3 +346,130 @@ class SapiTtsService(QObject):
         self.stop()
         self.thread.quit()
         self.thread.wait(1500)
+
+
+class PiperTtsService(QObject):
+    """Synthesizes speech with a locally installed Piper complete package."""
+
+    synthesis_ready = pyqtSignal(str)
+    error = pyqtSignal(str)
+    state_changed = pyqtSignal(str)
+
+    def __init__(self, temp_dir: Path, parent: QObject | None = None):
+        super().__init__(parent)
+        self.temp_dir = Path(temp_dir)
+        self.temp_dir.mkdir(parents=True, exist_ok=True)
+        self._process: QProcess | None = None
+        self._output_path: Path | None = None
+
+    def synthesize(
+        self, text: str, voice: dict, rate: int, volume: int,
+        *, noise_scale: float | None = 0.45, noise_w: float | None = 0.35,
+    ) -> None:
+        self.cancel()
+        engine_path = Path(str(voice.get("engine_path", "")))
+        model_path = Path(str(voice.get("model_path", "")))
+        config_path = Path(str(voice.get("config_path", "")))
+        if not engine_path.is_file():
+            self.error.emit(f"Piper-Laufzeit fehlt: {engine_path}")
+            return
+        if not model_path.is_file() or not config_path.is_file():
+            self.error.emit("Das ausgewählte Piper-Komplettpaket ist unvollständig. Bitte im Sprachmanager reparieren.")
+            return
+
+        fd, output_name = tempfile.mkstemp(prefix="scifi_piper_", suffix=".wav", dir=self.temp_dir)
+        os.close(fd)
+        self._output_path = Path(output_name)
+        self._output_path.unlink(missing_ok=True)
+
+        # Piper uses length_scale inversely: smaller values speak faster.
+        length_scale = max(0.55, min(1.65, 1.0 - (max(-10, min(10, int(rate))) * 0.045)))
+        args = [
+            "--model", str(model_path),
+            "--config", str(config_path),
+            "--output_file", str(self._output_path),
+            "--length_scale", f"{length_scale:.3f}",
+        ]
+        speaker_id = voice.get("speaker_id")
+        if speaker_id is not None:
+            args.extend(["--speaker", str(int(speaker_id))])
+        if noise_scale is not None:
+            args.extend(["--noise_scale", f"{float(noise_scale):.3f}"])
+        if noise_w is not None:
+            args.extend(["--noise_w", f"{float(noise_w):.3f}"])
+
+        process = QProcess(self)
+        self._process = process
+        process.setProgram(str(engine_path))
+        process.setArguments(args)
+        process.finished.connect(self._synthesis_finished)
+        process.errorOccurred.connect(self._process_error)
+        self.state_changed.emit("preparing")
+        process.start()
+        if not process.waitForStarted(3000):
+            self._process = None
+            process.deleteLater()
+            self._cleanup_output()
+            self.error.emit("Piper konnte nicht gestartet werden.")
+            self.state_changed.emit("error")
+            return
+        process.write(text.encode("utf-8"))
+        process.write(b"\n")
+        process.closeWriteChannel()
+
+    @pyqtSlot(QProcess.ProcessError)
+    def _process_error(self, _error: QProcess.ProcessError) -> None:
+        process = self.sender()
+        if process is None or process is not self._process:
+            return
+        message = bytes(process.readAllStandardError()).decode("utf-8", errors="replace").strip()
+        self.error.emit("Piper-Sprachausgabe fehlgeschlagen: " + (message or process.errorString()))
+
+    @pyqtSlot(int, QProcess.ExitStatus)
+    def _synthesis_finished(self, exit_code: int, _status: QProcess.ExitStatus) -> None:
+        process = self.sender()
+        if process is None or process is not self._process:
+            return
+        self._process = None
+        stderr = bytes(process.readAllStandardError()).decode("utf-8", errors="replace").strip()
+        process.deleteLater()
+        if exit_code != 0 or self._output_path is None or not self._output_path.is_file() or self._output_path.stat().st_size < 44:
+            self._cleanup_output()
+            self.error.emit("Piper-Sprachausgabe konnte nicht erzeugt werden: " + (stderr or f"Exit-Code {exit_code}"))
+            self.state_changed.emit("error")
+            return
+        self.synthesis_ready.emit(str(self._output_path))
+
+    def cancel(self) -> None:
+        process = self._process
+        # Break the association before killing the process. This prevents a queued
+        # finished/error signal from treating a canceled request as the currently
+        # selected voice request when the user switches voices quickly.
+        self._process = None
+        if process is not None:
+            try:
+                process.finished.disconnect(self._synthesis_finished)
+            except (TypeError, RuntimeError):
+                pass
+            try:
+                process.errorOccurred.disconnect(self._process_error)
+            except (TypeError, RuntimeError):
+                pass
+            try:
+                if process.state() != QProcess.ProcessState.NotRunning:
+                    process.kill()
+                    process.waitForFinished(1000)
+            finally:
+                process.deleteLater()
+        self._cleanup_output()
+
+    def release_output(self) -> None:
+        self._cleanup_output()
+
+    def _cleanup_output(self) -> None:
+        if self._output_path is not None:
+            try:
+                self._output_path.unlink(missing_ok=True)
+            except OSError:
+                pass
+            self._output_path = None

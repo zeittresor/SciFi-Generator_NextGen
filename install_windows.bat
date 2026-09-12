@@ -66,7 +66,7 @@ if errorlevel 1 goto :fail
  echo Press N to skip auto-start, or wait 10 seconds.
 choice /C YN /N /T 10 /D Y /M "Start application now? [Y/N] "
 if errorlevel 2 exit /b 0
-start "SciFi-Generator" ".venv\Scripts\pythonw.exe" "%CD%\app.py"
+start "SciFi-Generator" ".venv\Scripts\pythonw.exe" "%CD%\launcher.py"
 exit /b 0
 
 :fail
