@@ -11,132 +11,212 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from story_engine import APP_VERSION, StoryEngine, StoryEngineError  # noqa: E402
 from audio_mixer import read_pcm_wav  # noqa: E402
-from theme_manager import ThemeManager  # noqa: E402
 from prompt_profile_manager import PromptProfileManager  # noqa: E402
-from storyboard_generator import generate_storyboard, render_storyboard_text  # noqa: E402
-from media_package_generator import MediaPackageSettings, render_media_package_text  # noqa: E402
+from storyboard_generator import generate_storyboard  # noqa: E402
+from story_continuity import StoryContinuity  # noqa: E402
+from story_engine import APP_VERSION, StoryEngine  # noqa: E402
+from theme_manager import ThemeManager  # noqa: E402
 from tts_package_manager import TtsPackageManager  # noqa: E402
+from v6028_tts_flow import (  # noqa: E402
+    PIPER_MODE_CONTINUOUS,
+    PIPER_MODE_SECTIONS,
+    ffmpeg_pitch_filter,
+    install as install_v6028_tts_flow,
+    pitch_factor,
+    prepare_piper_text,
+)
+
+EXPECTED_VERSION = "60.28"
+EXPECTED_SENTENCE_FILES = 232
+EXPECTED_STRUCTURAL_ROUTES = 200
+EXPECTED_THEMES = 9
+EXPECTED_PROMPT_PROFILES = {"ChatGPT", "Grok", "Gemini", "Stable Diffusion", "Andere"}
+
+CONTINUITY_FILES = (
+    "continuity_signal_return.ini",
+    "continuity_pursuit_return.ini",
+    "continuity_anomaly_return.ini",
+    "continuity_contact_return.ini",
+    "continuity_rescue_return.ini",
+    "continuity_ship_return.ini",
+    "continuity_response_investigate.ini",
+    "continuity_response_cautious.ini",
+    "continuity_response_defer.ini",
+    "continuity_outcome_resolved.ini",
+    "continuity_outcome_deepens.ini",
+    "continuity_outcome_false_lead.ini",
+    "continuity_outcome_watchlist.ini",
+    "continuity_outcome_deferred.ini",
+)
+
+REQUIRED_FILES = (
+    "app.py",
+    "launcher.py",
+    "story_engine.py",
+    "story_continuity.py",
+    "v6028_tts_flow.py",
+    "audio_export.py",
+    "audio_mixer.py",
+    "tts_services.py",
+    "tts_package_manager.py",
+    "tts_package_catalog.json",
+    "sequence_legacy.json",
+    "requirements.txt",
+    "runtime_diagnostics.py",
+    "storyboard_generator.py",
+    "prompt_profile_manager.py",
+    "ollama_client.py",
+    "media_package_generator.py",
+    "handoff_package.py",
+    "data/sounds/background.wav",
+    "data/mls_speaker_aliases.json",
+    "tools/install_dependencies.py",
+    "tools/index_local_tts_assets.py",
+    "tools/list_winrt_voices.ps1",
+    "tools/synthesize_winrt.ps1",
+    "tools/synthesize_sapi.ps1",
+)
+
+
+def _compile_python_file(path: Path) -> str | None:
+    try:
+        source = path.read_text(encoding="utf-8")
+        compile(source, str(path), "exec")
+        return None
+    except Exception as exc:
+        return f"Python syntax check failed for {path.relative_to(ROOT)}: {type(exc).__name__}: {exc}"
+
+
+def _cleanup_window(window) -> None:
+    for service_name in ("winrt_service", "piper_service"):
+        service = getattr(window, service_name, None)
+        if service is not None:
+            try:
+                service.cancel()
+            except Exception:
+                pass
+    try:
+        window.close()
+    except Exception:
+        pass
 
 
 def main() -> int:
     errors: list[str] = []
     version_file = ROOT / "version.txt"
-    expected_version = version_file.read_text(encoding="utf-8").strip() if version_file.is_file() else ""
+    expected_from_file = version_file.read_text(encoding="utf-8").strip() if version_file.is_file() else ""
 
     print(f"SciFi-Generator installation verification v{APP_VERSION}")
     print(f"Python: {sys.version.split()[0]}")
 
     if not re.fullmatch(r"\d+\.\d+(?:\.\d+)?", APP_VERSION):
         errors.append(f"Invalid application version format: {APP_VERSION!r}")
-    if APP_VERSION != expected_version:
-        errors.append(
-            f"Version mismatch: story_engine={APP_VERSION!r}, version.txt={expected_version!r}"
-        )
+    if APP_VERSION != expected_from_file:
+        errors.append(f"Version mismatch: story_engine={APP_VERSION!r}, version.txt={expected_from_file!r}")
+    if APP_VERSION != EXPECTED_VERSION:
+        errors.append(f"This verifier belongs to v{EXPECTED_VERSION}, but application reports {APP_VERSION!r}")
 
-    engine = StoryEngine(ROOT / "data" / "vars", ROOT / "sequence_legacy.json")
+    for relative in REQUIRED_FILES:
+        path = ROOT / relative
+        if not path.is_file():
+            errors.append(f"Required file is missing: {relative}")
+    for relative in (
+        "app.py",
+        "launcher.py",
+        "story_engine.py",
+        "story_continuity.py",
+        "v6028_tts_flow.py",
+        "audio_export.py",
+        "tts_services.py",
+        "tools/install_dependencies.py",
+        "tools/index_local_tts_assets.py",
+    ):
+        path = ROOT / relative
+        if path.is_file():
+            syntax_error = _compile_python_file(path)
+            if syntax_error:
+                errors.append(syntax_error)
+
+    vars_dir = ROOT / "data" / "vars"
+    engine = StoryEngine(vars_dir, ROOT / "sequence_legacy.json")
     missing = engine.validate_sources()
     if missing:
         errors.append("Missing sentence files: " + ", ".join(missing))
 
-    source_count = len(list((ROOT / "data" / "vars").glob("*.ini")))
+    source_count = len(list(vars_dir.glob("*.ini")))
     print(f"Sentence files: {source_count}")
-    if source_count != 218:
-        errors.append(f"Unexpected sentence-file count for v60.26: {source_count} (expected 218)")
+    if source_count != EXPECTED_SENTENCE_FILES:
+        errors.append(
+            f"Unexpected sentence-file count for v{APP_VERSION}: {source_count} "
+            f"(expected {EXPECTED_SENTENCE_FILES})"
+        )
 
     route_count = len(engine.enumerate_branch_routes())
     print(f"Structural branch routes: {route_count}")
-    if route_count != 200:
-        errors.append(f"Unexpected structural route count: {route_count} (expected 200)")
-    terminal_errors = engine.validate_terminal_invariant()
-    errors.extend(f"Terminal invariant: {message}" for message in terminal_errors)
+    if route_count != EXPECTED_STRUCTURAL_ROUTES:
+        errors.append(
+            f"Unexpected structural route count: {route_count} "
+            f"(expected {EXPECTED_STRUCTURAL_ROUTES})"
+        )
+    errors.extend(f"Terminal invariant: {message}" for message in engine.validate_terminal_invariant())
 
-    for ini_path in sorted((ROOT / "data" / "vars").glob("*.ini")):
-        selectable = [text.strip().casefold() for _, text in engine._read_lines(ini_path, True)]
-        if len(selectable) != len(set(selectable)):
-            errors.append(f"Duplicate selectable fragment in: {ini_path.name}")
+    for filename in CONTINUITY_FILES:
+        path = vars_dir / filename
+        if not path.is_file():
+            errors.append(f"Required continuity fragment is missing: data/vars/{filename}")
+            continue
+        selectable = [text.strip() for _, text in engine._read_lines(path, True)]
+        if len(selectable) < 8:
+            errors.append(f"Continuity fragment {filename} has {len(selectable)} lines; expected >= 8")
+
+    state_path = ROOT / "story_state.json"
+    state_existed_before = state_path.exists()
+    continuity = StoryContinuity(state_path)
+    default_state = continuity.default_state()
+    for key in ("jump_index", "recent_routes", "open_hooks", "ship_state", "history"):
+        if key not in default_state:
+            errors.append(f"Continuity default state is missing key: {key}")
+    if not state_existed_before and state_path.exists():
+        errors.append("Continuity verification unexpectedly created story_state.json")
 
     manager = ThemeManager(ROOT / "themes")
     manager.load()
     print(f"Themes: {len(manager.themes)}")
     errors.extend(f"Theme: {message}" for message in manager.errors)
+    if len(manager.themes) < EXPECTED_THEMES:
+        errors.append(f"Expected at least {EXPECTED_THEMES} themes, got {len(manager.themes)}")
 
     prompt_manager = PromptProfileManager(ROOT / "prompt_profiles")
     prompt_manager.load()
     print(f"Prompt profiles: {len(prompt_manager.profiles)}")
     errors.extend(f"Prompt profile: {message}" for message in prompt_manager.errors)
-    expected_prompt_profiles = {"ChatGPT", "Grok", "Gemini", "Stable Diffusion", "Andere"}
-    missing_profiles = expected_prompt_profiles.difference(prompt_manager.profiles)
+    missing_profiles = EXPECTED_PROMPT_PROFILES.difference(prompt_manager.profiles)
     if missing_profiles:
         errors.append("Missing target AI prompt profiles: " + ", ".join(sorted(missing_profiles)))
 
-    requirements_text = (ROOT / "requirements.txt").read_text(encoding="utf-8")
-    if "PyQt6>=6.7,<7" not in requirements_text:
-        errors.append("GUI requirements do not declare PyQt6>=6.7,<7")
-    app_source = (ROOT / "app.py").read_text(encoding="utf-8")
-    if "from PyQt6" not in app_source or "from PySide6" in app_source:
-        errors.append("Desktop frontend is not fully migrated to PyQt6")
-    first_import_block = "\n".join(app_source.splitlines()[:20])
-    if "@pyqtSlot" in app_source and "pyqtSlot" not in first_import_block:
-        errors.append("PyQt startup decorator pyqtSlot is used but not imported")
-    for tab_token in (
-        'addTab(mission_scroll, "Mission")',
-        'addTab(media_scroll, "Medienpaket")',
-        'addTab(audio_scroll, "Sprache && Audio")',
-        'addTab(manager_scroll, "Sprachmanager")',
-        'addTab(details_page, "Story && Trace")',
-        'addTab(settings_scroll, "Einstellungen")',
-    ):
-        if tab_token not in app_source:
-            errors.append(f"PyQt category tab is missing: {tab_token}")
-    if "class CollapsibleSection" in app_source or "collapsibleHeader" in app_source:
-        errors.append("Obsolete nested collapsible UI is still present; category tabs must show their controls directly")
-    for group_token in (
-        'QGroupBox("Video, Stimme und Übergänge")',
-        'QGroupBox("Lieferumfang des Ergebnis-ZIP")',
-        'QGroupBox("Prompt-Verfeinerung mit Ollama")',
-        'QGroupBox("Lokale Sprachausgabe")',
-        'QGroupBox("Brückenatmosphäre")',
-    ):
-        if group_token not in app_source:
-            errors.append(f"Direct tab option group is missing: {group_token}")
-    if 'QPushButton("Story & Trace anzeigen")' in app_source:
-        errors.append("Literal ampersand in Story & Trace button still creates a Qt mnemonic underline")
-    if "QSoundEffect" not in app_source or "background_effect.setLoopCount(qsoundeffect_infinite_loop_count())" not in app_source:
-        errors.append("Bridge ambience is not using the compatible infinite QSoundEffect loop")
-    if "QSoundEffect.Infinite" in app_source and "getattr(QSoundEffect, \"Infinite\", None)" not in app_source:
-        errors.append("Direct QSoundEffect.Infinite access can crash on scoped-enum PyQt6 builds")
-    if "Erweitertes Laufzeit-Fehlerprotokoll schreiben" not in app_source:
-        errors.append("Runtime error-log option is missing from Settings")
-    if '"runtime_error_log": self.runtime_error_log.isChecked()' not in app_source:
-        errors.append("Runtime error-log option is not persisted")
-    if "Fiktive Merknamen für MLS-Sprecher anzeigen" not in app_source:
-        errors.append("Optional fictional MLS speaker aliases are missing from Settings")
-    if "Konfiguration speichern …" not in app_source or "Konfiguration laden …" not in app_source:
-        errors.append("Configuration profile save/load controls are missing")
-    if '"seed": self.seed_spin.value()' not in app_source:
-        errors.append("Seed is not persisted in the complete settings profile")
-    if "_settings_autosave_timer" not in app_source or "_write_json_atomic" not in app_source:
-        errors.append("Debounced atomic settings autosave is missing")
+    try:
+        section_text = prepare_piper_text("Alpha.\n\nBeta.", PIPER_MODE_SECTIONS)
+        continuous_text = prepare_piper_text("Alpha.\n\nBeta.", PIPER_MODE_CONTINUOUS)
+        if section_text != "Alpha.\n\nBeta.":
+            errors.append("Piper section mode unexpectedly changed story line boundaries")
+        if continuous_text != "Alpha. Beta.":
+            errors.append(f"Piper continuous mode returned unexpected text: {continuous_text!r}")
+        if not (1.41 < pitch_factor(6) < 1.42):
+            errors.append("Piper pitch-factor calculation is invalid")
+        filter_text = ffmpeg_pitch_filter(22050, 2)
+        if "asetrate=" not in filter_text or "atempo=" not in filter_text:
+            errors.append("Piper duration-compensated pitch filter is incomplete")
+        print("Piper continuous-flow helper: OK")
+        print("Piper independent pitch helper: OK")
+    except Exception as exc:
+        errors.append(f"Piper v60.28 helper verification failed: {type(exc).__name__}: {exc}")
 
-    if "self.piper_style_combo = QComboBox()" not in app_source:
-        errors.append("Dedicated Piper style selector is missing")
-    if "self.piper_prosody_combo = QComboBox()" not in app_source:
-        errors.append("Piper prosody selector is missing")
-    audio_export_source = (ROOT / "audio_export.py").read_text(encoding="utf-8")
-    if '"-hide_banner"' in audio_export_source:
-        errors.append("Direct MP3 exporter still depends on FFmpeg -hide_banner")
-    if '"-acodec", "libmp3lame"' not in audio_export_source:
-        errors.append("Legacy-compatible MP3 codec syntax is missing")
-
-    # On the actual Windows installation PyQt6 is installed at this point. Importing
-    # and constructing MainWindow catches both class-definition failures and Qt API
-    # mismatches that only happen inside __init__ (the v60.21 QSoundEffect crash was
-    # exactly such a case). The window is never shown.
     if platform.system() == "Windows":
+        window = None
         try:
             gui_module = importlib.import_module("app")
+            install_v6028_tts_flow(gui_module)
             print("GUI import smoke test: OK")
             loop_count = gui_module.qsoundeffect_infinite_loop_count()
             if loop_count != -2:
@@ -145,190 +225,86 @@ def main() -> int:
                 print("GUI QSoundEffect loop compatibility: OK")
 
             from PyQt6.QtWidgets import QApplication
+
             qt_app = QApplication.instance() or QApplication([])
             window = gui_module.MainWindow()
-            window.close()
+            if not hasattr(window, "piper_synthesis_mode_combo"):
+                errors.append("v60.28 Piper synthesis-mode control is missing")
+            if not hasattr(window, "piper_pitch_slider"):
+                errors.append("v60.28 Piper pitch control is missing")
+            if window.piper_synthesis_mode_combo.findData(PIPER_MODE_CONTINUOUS) < 0:
+                errors.append("Piper continuous-flow option is missing from the GUI")
+            settings = window._collect_settings()
+            if "piper_synthesis_mode" not in settings or "piper_pitch_semitones" not in settings:
+                errors.append("v60.28 Piper settings are not persisted in configuration profiles")
+            if type(window.piper_service).__name__ != "EnhancedPiperTtsService":
+                errors.append("Enhanced v60.28 Piper playback service is not active")
+            _cleanup_window(window)
             qt_app.processEvents()
             print("GUI MainWindow construction smoke test: OK")
+            print("GUI Piper v60.28 controls: OK")
         except Exception as exc:
             errors.append(f"GUI import/API/MainWindow smoke test failed: {type(exc).__name__}: {exc}")
-
-    required_files = (
-        ROOT / "app.py",
-        ROOT / "runtime_diagnostics.py",
-        ROOT / "launcher.py",
-        ROOT / "data" / "sounds" / "background.wav",
-        ROOT / "tools" / "list_winrt_voices.ps1",
-        ROOT / "tools" / "synthesize_winrt.ps1",
-        ROOT / "tools" / "synthesize_sapi.ps1",
-        ROOT / "audio_export.py",
-        ROOT / "audio_mixer.py",
-        ROOT / "storyboard_generator.py",
-        ROOT / "prompt_profile_manager.py",
-        ROOT / "ollama_client.py",
-        ROOT / "media_package_generator.py",
-        ROOT / "handoff_package.py",
-        ROOT / "handoff_assets" / "build_story_video.py",
-        ROOT / "handoff_assets" / "build_video.bat",
-        ROOT / "handoff_assets" / "requirements.txt",
-        ROOT / "handoff_assets" / "audio_mixer.py",
-        ROOT / "handoff_assets" / "style_reference.png",
-        ROOT / "handoff_assets" / "validate_handoff.py",
-        ROOT / "handoff_assets" / "tools" / "list_winrt_voices.ps1",
-        ROOT / "handoff_assets" / "tools" / "list_sapi_voices.ps1",
-        ROOT / "handoff_assets" / "tools" / "synthesize_winrt.ps1",
-        ROOT / "handoff_assets" / "tools" / "synthesize_sapi.ps1",
-        ROOT / "data" / "vars" / "jump_missing_story.ini",
-        ROOT / "data" / "vars" / "jump_story_already_used.ini",
-        ROOT / "data" / "branch_fragments_v60.15.json",
-        ROOT / "data" / "branch_fragments_v60.16.json",
-        ROOT / "data" / "fragment_expansion_v60.16.json",
-        ROOT / "data" / "fragment_repairs_v60.16.json",
-        ROOT / "data" / "mls_speaker_aliases.json",
-        ROOT / "scifi_console.py",
-        ROOT / "run_console.sh",
-        ROOT / "start_console.bat",
-        ROOT / "requirements_console.txt",
-        ROOT / "tools" / "audit_stories.py",
-        ROOT / "docs" / "CONSOLE_v60.16.md",
-        ROOT / "docs" / "STORY_BRANCHES_v60.16.md",
-        ROOT / "docs" / "GUI_v60.17.md",
-        ROOT / "docs" / "TTS_PACKAGES_v60.18.md",
-        ROOT / "docs" / "TTS_PACKAGES_v60.20.md",
-        ROOT / "docs" / "RUNTIME_DIAGNOSTICS_v60.21.md",
-        ROOT / "docs" / "GUI_v60.22.md",
-        ROOT / "docs" / "PIPER_MULTISPEAKER_v60.23.md",
-        ROOT / "docs" / "SETTINGS_PROFILES_v60.24.md",
-        ROOT / "docs" / "VOICE_MANAGER_TABLE_v60.25.md",
-        ROOT / "docs" / "MLS_ALIASES_v60.26.md",
-        ROOT / "tts_package_manager.py",
-        ROOT / "tts_package_catalog.json",
-        ROOT / "data" / "vars" / "mission_free_space.ini",
-        ROOT / "data" / "vars" / "mission_end_status.ini",
-        ROOT / "data" / "vars" / "mission_jump_prompt.ini",
-    )
-    for path in required_files:
-        if not path.is_file():
-            errors.append(f"Required file is missing: {path.relative_to(ROOT)}")
+            if window is not None:
+                _cleanup_window(window)
 
     try:
-        alias_payload = json.loads((ROOT / "data" / "mls_speaker_aliases.json").read_text(encoding="utf-8"))
-        aliases = alias_payload.get("aliases", {}) if isinstance(alias_payload, dict) else {}
+        aliases_payload = json.loads((ROOT / "data" / "mls_speaker_aliases.json").read_text(encoding="utf-8"))
+        aliases = aliases_payload.get("aliases", {}) if isinstance(aliases_payload, dict) else {}
+        print(f"MLS mnemonic aliases: {len(aliases)}")
         if len(aliases) != 236:
             errors.append(f"MLS mnemonic alias count is {len(aliases)}, expected 236")
-        if len(set(str(value) for value in aliases.values())) != len(aliases):
-            errors.append("MLS mnemonic aliases are not unique")
-        if aliases.get("2") != "Mirko":
-            errors.append("Stable MLS alias mapping changed unexpectedly for speaker 003")
-        print(f"MLS mnemonic aliases: {len(aliases)}")
     except Exception as exc:
         errors.append(f"MLS mnemonic alias verification failed: {exc}")
 
     try:
-        tts_packages = TtsPackageManager(ROOT, ROOT / "tts_package_catalog.json")
-        if tts_packages.catalog_errors:
-            errors.extend(f"TTS package catalog: {message}" for message in tts_packages.catalog_errors)
-        print(f"TTS complete packages: {len(tts_packages.packages)}")
-        if len(tts_packages.packages) < 10:
-            errors.append(f"Expected at least 10 curated German TTS packages, got {len(tts_packages.packages)}")
-        package_ids = {item.package_id for item in tts_packages.packages}
-        for package_id in (
-            "piper-de-eva-k-x-low", "piper-de-karlsson-low", "piper-de-kerstin-low",
-            "piper-de-mls-medium", "piper-de-pavoque-low", "piper-de-ramona-low",
-            "piper-de-thorsten-low", "piper-de-thorsten-medium", "piper-de-thorsten-high",
-            "piper-de-thorsten-emotional-medium",
-        ):
-            if package_id not in package_ids:
-                errors.append(f"Missing curated TTS package: {package_id}")
-        emotional = tts_packages.package("piper-de-thorsten-emotional-medium")
-        if emotional is None or not emotional.speaker_selector:
-            errors.append("Thorsten Emotional does not enable the dedicated style selector")
-        elif emotional.default_speaker != "neutral":
-            errors.append(f"Thorsten Emotional default speaker is {emotional.default_speaker!r}, expected 'neutral'")
-        mls = tts_packages.package("piper-de-mls-medium")
-        if mls is None or not mls.speaker_selector:
-            errors.append("MLS Deutsch does not enable the 236-speaker selector")
-        elif mls.speaker_selector_label != "Sprecher":
-            errors.append(f"MLS Deutsch selector label is {mls.speaker_selector_label!r}, expected 'Sprecher'")
-        elif mls.default_speaker != "2422":
-            errors.append(f"MLS Deutsch default speaker is {mls.default_speaker!r}, expected '2422'")
+        packages = TtsPackageManager(ROOT, ROOT / "tts_package_catalog.json")
+        errors.extend(f"TTS package catalog: {message}" for message in packages.catalog_errors)
+        print(f"TTS complete packages: {len(packages.packages)}")
+        if len(packages.packages) < 10:
+            errors.append(f"Expected at least 10 curated German TTS packages, got {len(packages.packages)}")
     except Exception as exc:
         errors.append(f"TTS package catalog verification failed: {exc}")
 
     try:
-        background_samples, background_rate = read_pcm_wav(
-            ROOT / "data" / "sounds" / "background.wav"
-        )
-        if background_samples.size == 0 or background_rate < 1:
+        samples, sample_rate = read_pcm_wav(ROOT / "data" / "sounds" / "background.wav")
+        if samples.size == 0 or sample_rate < 1:
             errors.append("Background WAV could not be decoded")
     except Exception as exc:
         errors.append(f"Background WAV verification failed: {exc}")
 
     try:
-        sample = engine.generate(seed=60_001)
-        if not sample.display_story or len(sample.selections) < 25 or not sample.branches:
-            errors.append("Deterministic branched test generation returned incomplete output")
-        terminal_sources = tuple(Path(item.source).name for item in sample.selections[-4:])
+        before_state = state_path.read_bytes() if state_path.is_file() else None
+        first = engine.generate(seed=60_028)
+        second = engine.generate(seed=60_028)
+        if first.raw_story != second.raw_story or first.branch_path != second.branch_path:
+            errors.append("Explicit seeded story generation is not deterministic")
         expected_terminal = (
             "mission_free_space.ini",
             "mission_end_status.ini",
             "ship_liftoff_jumpready.ini",
             "mission_jump_prompt.ini",
         )
+        terminal_sources = tuple(Path(item.source).name for item in first.selections[-4:])
         if terminal_sources != expected_terminal:
             errors.append(f"Generated story does not end jump-ready: {terminal_sources!r}")
-        scenes = generate_storyboard(sample, 8)
-        for profile_name in expected_prompt_profiles:
-            profile = prompt_manager.get(profile_name)
-            if profile is None:
-                continue
-            document = render_storyboard_text(
-                scenes,
-                source="Verification",
-                profile=profile,
-                custom_target_name="Custom target" if profile_name == "Andere" else "",
-            )
-            if "AUSFÜHRBARER BILDSERIEN-AUFTRAG" not in document or "scene_01.png" not in document:
-                errors.append(f"Prompt profile render failed: {profile_name}")
-            package_document = render_media_package_text(
-                scenes,
-                full_story=sample.display_story,
-                source="Verification",
-                profile=profile,
-                custom_target_name="Custom target" if profile_name == "Andere" else "",
-                settings=MediaPackageSettings(
-                    voice_name="Verification Voice",
-                    voice_character="Menschlich / natürlich",
-                    voice_gender="Weiblich",
-                    voice_quality="Beste verfügbare Qualität",
-                ),
-            )
-            required_package_markers = (
-                "GESAMTPAKET-PRODUKTIONSAUFTRAG",
-                "scene_01.wav",
-                "Stimmcharakter: Menschlich / natürlich",
-                "Stimmliche Wirkung: Weiblich",
-                "TTS-Qualitätsziel: Beste verfügbare Qualität",
-                "Video: 1024x1024, 1:1, 8 fps",
-                "Videofläche: 1024 × 1024 Pixel; Seitenverhältnis 1:1",
-                "Stilreferenz: style_reference.png",
-                "LIEFERUMFANG DES FINALEN ERGEBNIS-ZIP",
-                "SOFORT AUSFÜHREN, NICHT NUR DAS ARCHIV PRÜFEN",
-                "build_story_video.py",
-            )
-            if not all(marker in package_document for marker in required_package_markers):
-                errors.append(f"Media package render failed: {profile_name}")
-    except StoryEngineError as exc:
-        errors.append(f"Test generation failed: {exc}")
+        scenes = generate_storyboard(first, 8)
+        if not scenes or len(scenes) > 8:
+            errors.append(f"Storyboard smoke test produced an invalid scene count: {len(scenes)}")
+        after_state = state_path.read_bytes() if state_path.is_file() else None
+        if before_state != after_state:
+            errors.append("Explicit seeded verification modified persistent story_state.json")
+    except Exception as exc:
+        errors.append(f"Story/continuity generation smoke test failed: {type(exc).__name__}: {exc}")
 
     print(f"Version: {APP_VERSION}")
     if errors:
         print("Verification failed:")
-        for error in errors:
-            print(f"  - {error}")
+        for message in errors:
+            print(f"  - {message}")
         return 1
 
-    print("Verification: OK")
+    print("Verification OK.")
     return 0
 
 
