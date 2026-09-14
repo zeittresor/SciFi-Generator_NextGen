@@ -1,12 +1,23 @@
 # SciFi-Generator
 
-**Aktuelle Version: 60.26**
+**Aktuelle Version: 60.28**
 
 Der **SciFi-Generator** ist eine lokale Windows-Desktopanwendung, die zufällige Science-Fiction-Missionsberichte aus frei bearbeitbaren Textbausteinen zusammensetzt und anschließend mit einer installierten Text-to-Speech-Stimme vorliest.
 
-Beispiel Ausgabe:
+Beispiel Ausgabe (Windows TTS Stimme):
 
 https://github.com/user-attachments/assets/3faf7d43-e822-43bb-97c6-a5813b237d41
+
+Beispiel Ausgabe (Piper TTS Stimme Ramona):
+
+https://github.com/user-attachments/assets/30cead51-29eb-41da-b5ff-119fcc28f2fd
+
+https://github.com/user-attachments/assets/5153afb6-5df6-49ae-b269-be0d7c782dd8
+
+Beispiel Ausgabe (Piper TTS Stimme Thorsten-Voice Emotional / Angeduselt):
+
+https://github.com/user-attachments/assets/11e8348c-4bab-42d8-b7d1-86a4d4dc075a
+
 
 Bedienoberfläche:
 
@@ -18,10 +29,6 @@ Der Ablauf orientiert sich an der ursprünglichen Anwendung:
 
 1. **Sektor-Sprung berechnen** erzeugt eine neue Geschichte.
 2. **Sprung durchführen** liest die bereits berechnete Geschichte vor.
-
-Audio einschalten für eine zufällige Demo Story:
-
-https://github.com/user-attachments/assets/7b665fee-009d-4a79-aac8-8966de12d18f
 
 v60.15 (Bilder aus der vorherigen Version - nach der Output Verarbeitung):
 
