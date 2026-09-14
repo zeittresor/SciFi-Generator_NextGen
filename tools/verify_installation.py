@@ -202,7 +202,7 @@ def main() -> int:
             errors.append("Piper section mode unexpectedly changed story line boundaries")
         if continuous_text != "Alpha. Beta.":
             errors.append(f"Piper continuous mode returned unexpected text: {continuous_text!r}")
-        if not (1.99 < pitch_factor(12) < 2.01):
+        if not (1.41 < pitch_factor(6) < 1.42):
             errors.append("Piper pitch-factor calculation is invalid")
         filter_text = ffmpeg_pitch_filter(22050, 2)
         if "asetrate=" not in filter_text or "atempo=" not in filter_text:
