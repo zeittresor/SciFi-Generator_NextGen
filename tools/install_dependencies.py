@@ -49,7 +49,7 @@ PRUNE_DIR_NAMES = {
 
 
 def default_tree_search_root(project_root: Path) -> Path:
-    """Return the bounded parent-tree root used for dependency reuse.
+    r"""Return the bounded parent-tree root used for dependency reuse.
 
     For a project at D:\xxx\yyy\zzz this intentionally returns D:\xxx. If the
     project is too close to a filesystem root, we stop at its immediate parent
