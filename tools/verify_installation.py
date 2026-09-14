@@ -84,8 +84,8 @@ def main() -> int:
         errors.append(
             f"Version mismatch: story_engine={APP_VERSION!r}, version.txt={expected_version!r}"
         )
-    if APP_VERSION != "60.27":
-        errors.append(f"This verifier belongs to v60.27, but application reports {APP_VERSION!r}")
+    if APP_VERSION != "60.27.1":
+        errors.append(f"This verifier belongs to v60.27.1, but application reports {APP_VERSION!r}")
 
     vars_dir = ROOT / "data" / "vars"
     engine = StoryEngine(vars_dir, ROOT / "sequence_legacy.json")
@@ -113,9 +113,6 @@ def main() -> int:
         for message in engine.validate_terminal_invariant()
     )
 
-    # Every selectable fragment should be unique within its file. This catches
-    # accidental copy/paste inflation while still allowing similar wording across
-    # different context libraries.
     for ini_path in sorted(vars_dir.glob("*.ini")):
         selectable = [text.strip().casefold() for _, text in engine._read_lines(ini_path, True)]
         if len(selectable) != len(set(selectable)):
@@ -133,8 +130,6 @@ def main() -> int:
         if len(lines) < 8:
             errors.append(f"Continuity fragment {filename} has only {len(lines)} selectable lines; expected >= 8")
 
-    # Constructing the state model must be side-effect free; no story_state.json
-    # should be created merely by verifying an installation.
     state_path = ROOT / "story_state.json"
     state_existed_before = state_path.exists()
     continuity = StoryContinuity(state_path)
@@ -174,8 +169,6 @@ def main() -> int:
     if "_settings_autosave_timer" not in app_source or "_write_json_atomic" not in app_source:
         errors.append("Debounced atomic settings autosave is missing")
 
-    # On Windows construct the real MainWindow, but explicitly terminate the
-    # asynchronous voice-list probe before closing the smoke-test window.
     if platform.system() == "Windows":
         window = None
         try:
@@ -265,8 +258,6 @@ def main() -> int:
     except Exception as exc:
         errors.append(f"Background WAV verification failed: {exc}")
 
-    # Explicit seeds are diagnostic/stateless in v60.27. Generate twice to verify
-    # determinism and confirm that the guaranteed jump-ready ending is preserved.
     try:
         before_state = state_path.read_bytes() if state_path.is_file() else None
         first = engine.generate(seed=60_027)
