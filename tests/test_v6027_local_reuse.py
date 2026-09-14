@@ -2,16 +2,28 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from tools.install_dependencies import default_tree_search_root, discover_local_wheels
-from tools.index_local_tts_assets import stage_catalog_assets
+ROOT = Path(__file__).resolve().parents[1]
+TOOLS = ROOT / "tools"
+if str(TOOLS) not in sys.path:
+    sys.path.insert(0, str(TOOLS))
+
+from install_dependencies import default_tree_search_root, discover_local_wheels  # noqa: E402
+from index_local_tts_assets import stage_catalog_assets  # noqa: E402
 
 
 class LocalReuseTests(unittest.TestCase):
+    def test_installer_invokes_dependency_and_tts_reuse_helpers(self) -> None:
+        source = (ROOT / "install_windows.bat").read_text(encoding="utf-8")
+        self.assertIn('"tools\\install_dependencies.py"', source)
+        self.assertIn('"tools\\index_local_tts_assets.py"', source)
+        self.assertNotIn("pip install --upgrade pip", source)
+
     def test_default_search_root_uses_bounded_project_family(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
