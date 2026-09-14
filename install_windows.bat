@@ -47,15 +47,11 @@ if not exist ".venv\Scripts\python.exe" (
 )
 
  echo %ESC%[93m[3/4] Installing dependencies...%ESC%[0m
-".venv\Scripts\python.exe" -m pip install --upgrade pip
-if errorlevel 1 goto :fail
-if exist "wheelhouse\*.whl" (
-  echo %ESC%[90m[INFO] Installing from local wheelhouse.%ESC%[0m
-  ".venv\Scripts\python.exe" -m pip install --no-index --find-links wheelhouse -r requirements.txt
-) else (
-  echo %ESC%[90m[INFO] No wheelhouse found; using configured Python package index.%ESC%[0m
-  ".venv\Scripts\python.exe" -m pip install -r requirements.txt
+if not exist "tools\install_dependencies.py" (
+  echo %ESC%[91m[ERROR] Dependency installer helper is missing: tools\install_dependencies.py%ESC%[0m
+  goto :fail
 )
+".venv\Scripts\python.exe" "tools\install_dependencies.py" --requirements "requirements.txt"
 if errorlevel 1 goto :fail
 
  echo %ESC%[93m[4/4] Verifying application files...%ESC%[0m
