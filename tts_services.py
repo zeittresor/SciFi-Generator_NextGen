@@ -28,6 +28,23 @@ class WinRtTtsService(QObject):
     def available() -> bool:
         return os.name == "nt"
 
+    def _stop_voice_list_process(self) -> None:
+        """Stop a pending PowerShell voice enumeration without leaving QProcess alive."""
+        process = self._list_process
+        self._list_process = None
+        if process is None:
+            return
+        try:
+            process.finished.disconnect(self._voice_list_finished)
+        except (TypeError, RuntimeError):
+            pass
+        try:
+            if process.state() != QProcess.ProcessState.NotRunning:
+                process.kill()
+                process.waitForFinished(1000)
+        finally:
+            process.deleteLater()
+
     def refresh_voices(self) -> None:
         if not self.available():
             self.voices_ready.emit([])
@@ -37,8 +54,7 @@ class WinRtTtsService(QObject):
             self.error.emit(f"WinRT-Stimmen-Skript fehlt: {script}")
             self.voices_ready.emit([])
             return
-        if self._list_process is not None:
-            self._list_process.kill()
+        self._stop_voice_list_process()
         process = QProcess(self)
         self._list_process = process
         process.setProgram("powershell.exe")
@@ -130,6 +146,11 @@ class WinRtTtsService(QObject):
         self.synthesis_ready.emit(str(self._output_path))
 
     def cancel(self) -> None:
+        # Voice enumeration is asynchronous too. Closing the application or a GUI
+        # smoke test while it is still running used to leave powershell.exe attached
+        # to a QProcess that Qt then destroyed, producing a shutdown warning.
+        self._stop_voice_list_process()
+
         process = self._synth_process
         # Detach the active process before terminating it. QProcess.finished may be
         # delivered while waitForFinished() is running; leaving self._synth_process
