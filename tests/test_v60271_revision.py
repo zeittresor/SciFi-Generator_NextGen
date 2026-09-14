@@ -6,14 +6,14 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 
 
-class V60271RevisionTests(unittest.TestCase):
-    def test_revision_number_is_consistent(self) -> None:
+class InstallerRevisionRegressionTests(unittest.TestCase):
+    def test_current_version_is_consistent(self) -> None:
         version = (ROOT / "version.txt").read_text(encoding="utf-8").strip()
         verifier = (ROOT / "tools" / "verify_installation.py").read_text(encoding="utf-8")
         installer = (ROOT / "install_windows.bat").read_text(encoding="utf-8")
 
-        self.assertEqual(version, "60.27.1")
-        self.assertIn('APP_VERSION != "60.27.1"', verifier)
+        self.assertRegex(version, r"^\d+\.\d+(?:\.\d+)?$")
+        self.assertIn(f'EXPECTED_VERSION = "{version}"', verifier)
         self.assertIn('set /p "VERSION="<"version.txt"', installer)
         self.assertIn('Installer v%VERSION%', installer)
 
