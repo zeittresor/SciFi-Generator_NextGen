@@ -30,8 +30,11 @@ def _write_startup_error(exc: BaseException) -> None:
 
 def main() -> int:
     try:
-        from app import main as app_main
-        return int(app_main())
+        import app
+        from v6028_tts_flow import install as install_v6028_tts_flow
+
+        install_v6028_tts_flow(app)
+        return int(app.main())
     except BaseException as exc:
         _write_startup_error(exc)
         traceback.print_exc()
