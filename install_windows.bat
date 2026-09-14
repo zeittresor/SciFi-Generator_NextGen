@@ -46,13 +46,23 @@ if not exist ".venv\Scripts\python.exe" (
   echo %ESC%[90m[INFO] Existing .venv will be reused.%ESC%[0m
 )
 
- echo %ESC%[93m[3/4] Installing dependencies...%ESC%[0m
+ echo %ESC%[93m[3/4] Installing dependencies and indexing reusable local assets...%ESC%[0m
 if not exist "tools\install_dependencies.py" (
   echo %ESC%[91m[ERROR] Dependency installer helper is missing: tools\install_dependencies.py%ESC%[0m
   goto :fail
 )
 ".venv\Scripts\python.exe" "tools\install_dependencies.py" --requirements "requirements.txt"
 if errorlevel 1 goto :fail
+
+if exist "tools\index_local_tts_assets.py" (
+  echo %ESC%[90m[INFO] Scanning for reusable local TTS models and Piper runtimes...%ESC%[0m
+  ".venv\Scripts\python.exe" "tools\index_local_tts_assets.py"
+  if errorlevel 1 (
+    echo %ESC%[93m[WARN] Local TTS/model reuse scan failed; the application can still use/download voices later.%ESC%[0m
+  )
+) else (
+  echo %ESC%[93m[WARN] Optional TTS/model reuse scanner is missing.%ESC%[0m
+)
 
  echo %ESC%[93m[4/4] Verifying application files...%ESC%[0m
 ".venv\Scripts\python.exe" "tools\verify_installation.py"
