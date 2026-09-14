@@ -25,10 +25,12 @@ class StartupRegressionTests(unittest.TestCase):
         self.assertIn("pyqtSlot", used_decorators)
         self.assertIn("pyqtSlot", imported)
 
-    def test_launcher_creates_startup_diagnostic_log(self):
+    def test_launcher_creates_startup_diagnostic_log_and_installs_extensions(self):
         source = (ROOT / "launcher.py").read_text(encoding="utf-8")
         self.assertIn('STARTUP_LOG = LOG_DIR / "startup_error.log"', source)
-        self.assertIn('from app import main as app_main', source)
+        self.assertIn("import app", source)
+        self.assertIn("install_v6028_tts_flow(app)", source)
+        self.assertIn("return int(app.main())", source)
         self.assertIn('traceback.print_exc(file=handle)', source)
 
     def test_windows_launchers_use_diagnostic_launcher(self):
